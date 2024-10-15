@@ -1,24 +1,47 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Header from './components/Header/Header';
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
+import Category from './pages/Category';
+import SmartShopping from './pages/SmartShopping';
+import Unboxing from './pages/Unboxing';
+import Blog from './pages/Blog';
+import Contact from './pages/Contact';
+import SubCategoryList from './components/SubCategoryList';
+import ProductListing from './components/ProductListing';
+import BottomNav from './components/BottomNav/BottomNav';
+import Cart from './pages/Cart';
+import Login from './auth/Login.jsx/Login';
+import Checkout from './pages/ChekOut';
+import ProductDetails from './components/ProductDetails';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter basename='/en' lang='en'>
+        <Header />
+        <Navbar />
+        <BottomNav />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/category/:subcategory" element={<SubCategoryList />} />
+          <Route path="/category/:subcategory/:productlisting" element={<ProductListing />} />
+          <Route path="/category/:subcategory/:productlisting/:productdetail" element={<ProductDetails />} />
+          <Route path="/smart-shopping" element={<SmartShopping />} />
+          <Route path="/unboxing-challenge" element={<Unboxing />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact-us" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/chekout" element={<Checkout />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </>
   );
 }
 
