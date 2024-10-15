@@ -21,7 +21,7 @@ import ProductDetails from './components/ProductDetails';
 function App() {
   return (
     <>
-      <BrowserRouter basename='/en' lang='en'>
+      <BrowserRouter lang='en'>
         <Header />
         <Navbar />
         <BottomNav />
@@ -38,6 +38,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/chekout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Home />} />
         </Routes>
         <Footer />
       </BrowserRouter>
