@@ -2,7 +2,7 @@ import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Box, Link, useMediaQuery, useTheme, IconButton, Grid, Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
+import { Box,  useMediaQuery, useTheme, IconButton,  Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 
@@ -10,10 +10,6 @@ const NewArrivalsSlider = ({ productsCard }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
-
-    const handleOnClick = (e, item) => {
-        e.stopPropagation();
-    };
 
     const CustomButtonGroup = ({ next, previous }) => (
         <Box sx={{ position: "absolute", top: '50%', left: '-70px', right: '-70px', display: 'flex', justifyContent: 'space-between', transform: 'translateY(-50%)' }}>
@@ -48,7 +44,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                         View All
                     </Typography>
                 </Box>
-                <hr />
+                <hr className="mx-2" />
                 <Box sx={{ width: "100%", position: "relative", mt: 2 }}>
                     <Carousel
                         rtl={false}
@@ -90,31 +86,47 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                         sx={{ position: 'absolute', top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                     />
                                     <CardMedia
-                                        sx={{ minHeight: "276.37px", maxHeight: "400px", objectFit: "cover" }}
+                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}
                                         component="img"
                                         image={item.image}
                                         alt={item.title}
                                     />
                                 </Box>
-                                <CardContent>
-                                    <Typography variant="h6" sx={{ color: "#292b2c", fontWeight: 600, fontSize: "1rem", fontFamily: "Roboto, sans-serif", alignSelf: "flex-start" }} component="div">
+                                <CardContent sx={{ p: { xs: "8px", sm: "16px" } }}>
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            color: "#292b2c",
+                                            fontWeight: 600,
+                                            fontSize: { xs: "14px", sm: "1.1rem" },
+                                            alignSelf: "flex-start",
+                                            display: "-webkit-box",
+                                            overflow: "hidden",
+                                            WebkitBoxOrient: "vertical",
+                                            WebkitLineClamp: 2,
+                                            wordBreak: "break-all",
+                                            whiteSpace: "normal",
+                                            textOverflow: "ellipsis"
+                                        }}
+                                        component="div"
+                                    >
                                         {item.title}
                                     </Typography>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
-                                        <Typography variant="body1" sx={{ color: "#bb1f2a", fontWeight: 600 }}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+                                        <Typography variant="body1" noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
                                             {item.price}
                                         </Typography>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                            <IconButton onClick={() => alert('Added to cart!')} aria-label="add to cart">
-                                                <AddShoppingCart />
+                                            <IconButton sx={{ p: { xs: "4px", sm: "8px" } }} onClick={() => alert('Added to cart!')} aria-label="add to cart">
+                                                <AddShoppingCart sx={{ fontSize: { xs: "18px", sm: "1.5rem" } }} />
                                             </IconButton>
-                                            <IconButton onClick={() => alert('Added to wishlist!')} aria-label="add to wishlist">
-                                                <FavoriteBorder />
+                                            <IconButton sx={{ p: { xs: "4px", sm: "8px" } }} onClick={() => alert('Added to wishlist!')} aria-label="add to wishlist">
+                                                <FavoriteBorder sx={{ fontSize: { xs: "18px", sm: "1.5rem" } }} />
                                             </IconButton>
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                        <Rating name={`rating-${item.id}`} value={item.rating} readOnly />
+                                        <Rating sx={{ fontSize: { xs: "18px", sm: "1.5rem" } }} name={`rating-${item.id}`} value={item.rating} readOnly />
                                         <Typography variant="body2" sx={{ ml: 1 }}>
                                             ({item.rating})
                                         </Typography>

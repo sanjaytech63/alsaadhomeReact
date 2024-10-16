@@ -27,11 +27,11 @@ const SubCategoryList = () => {
             {/* Header Section */}
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
+                    <Box sx={{ display: { sm: "flex", xs: "block" }, justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Category
                         </Typography>
-                        <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                        <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px", }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                             <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
                             <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
                             <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category/subcategory">SubCategory</Link>
@@ -53,7 +53,7 @@ const SubCategoryList = () => {
                     <Grid container spacing={2} sx={{ pb: 4 }}>
                         {catList.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
-                                <Box 
+                                <Box
                                     onClick={handleNavigate}
                                     sx={{
                                         position: 'relative',

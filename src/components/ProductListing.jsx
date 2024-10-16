@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { Grid, Container, Box, Typography, Pagination, Breadcrumbs } from '@mui/material';
 import jsonData from "../../src/blogData.json";
-import BlogCards from '../components/BlogCards';
-import BlogSideBar from '../components/BlogSideBar';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import ProductListingSideBar from './ProductListingSideBar';
@@ -10,13 +8,13 @@ import ProductListingMainContant from './ProductListingMainContant';
 
 const ProductListing = () => {
     const [blogs, setBlogs] = useState(jsonData.blogPosts);
-    console.log(blogs);
+    console.log(setBlogs);
     return (
         <>
             <div style={{ minHeight: "100vh" }}>
                 <Box sx={{ bgcolor: "#f7f8fb" }}>
                     <Container>
-                        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
+                        <Box sx={{ display: { sm: "flex", xs: "block" },  justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
                             <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                                 Product List & Search
                             </Typography>

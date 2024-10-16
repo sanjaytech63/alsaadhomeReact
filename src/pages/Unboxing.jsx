@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumbs, Grid, Typography, Container, Box, Button } from '@mui/material';
+import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link } from 'react-router-dom';
 import UnboxingTopSection from '../components/UnboxingTopSection';
@@ -16,7 +16,7 @@ const Unboxing = () => {
             {/* Header Section */}
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
+                    <Box sx={{ display: {sm:"flex",xs:"block"}, justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Unboxing Challenge
                         </Typography>
@@ -42,7 +42,7 @@ const Unboxing = () => {
                                         transition: 'transform 0.3s ease',
                                         '&:hover': { opacity: 0.8, },
                                         width: "100%",
-                                        height: "500px",
+                                        height: { sm: "500px", xs: "200px" },
                                     }}
                                 >
                                     <img

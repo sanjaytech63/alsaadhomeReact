@@ -45,10 +45,10 @@ const BlogCard = () => {
         <div className="w-100 my-5">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
                 <Box sx={{ px: { xs: 2, sm: "0px" } }}>
-                    <Typography variant="h4" align="center" sx={{ fontWeight: 600, mb: 2 }}>
+                    <Typography variant="h4"  sx={{ fontWeight: 600, mb: 2,textAlign:{sm:"center", xs:"left"} }}>
                         Blogs
                     </Typography>
-                    <Typography sx={{ color: "#687188", mb: 4 }} variant="body1" align="center" >
+                    <Typography sx={{ color: "#687188", mb: 4,textAlign:{sm:"center", xs:"left"} }} variant="body1" align="center" >
                         We are pleased to provide educational information to help you choose your products
                     </Typography>
 

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
@@ -30,7 +30,7 @@ const Navbar = () => {
             <div style={{ borderBottom: "1px solid #ccc", }} className="w-100 py-1">
                 <Container>
                     <AppBar position="static" sx={{ backgroundColor: 'white', boxShadow: 'none' }}>
-                        <Toolbar sx={{ justifyContent: 'space-between' }}>
+                        <Toolbar sx={{ justifyContent: 'space-between', padding: "0px !important" }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <img src={logo} alt="logo" style={{ maxWidth: '100px', objectFit: "cover" }} />
                             </Box>
@@ -68,14 +68,14 @@ const Navbar = () => {
                             </Box>
                         </Toolbar>
                     </AppBar>
-                    <Drawer anchor="left" sx={{ width: { xs: '100%', md: '40%' } }} open={open} onClose={() => toggleDrawer(false)} PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}>
+                    <Drawer anchor="left" sx={{ width: { xs: '100%', md: '40%' }, padding: "0px !important" }} open={open} onClose={() => toggleDrawer(false)} PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}>
                         <Box
                             sx={{ width: { xs: '100%', md: '40%' }, paddingTop: '0px', }}
                             role="presentation"
                             onClick={() => toggleDrawer(false)}
                             onKeyDown={() => toggleDrawer(false)}
                         >
-                            <Box sx={{ textAlign: 'right', paddingRight: '1rem' }}>
+                            <Box sx={{ textAlign: 'right', }}>
                                 <IconButton onClick={() => toggleDrawer(false)}>
                                     <IoCloseOutline color='#292b2c' size={28} />
                                 </IconButton>

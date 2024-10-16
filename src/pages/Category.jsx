@@ -6,7 +6,7 @@ import catJsonData  from "../../src/blogData.json"
 const Category = () => {
 const nevigate = useNavigate()
    const [category,setCategory] = useState(catJsonData.categories)
-
+    console.log(setCategory)
     const handleNevigate = () => {
         nevigate(`/category/subcategory`)
     }

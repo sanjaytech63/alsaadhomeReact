@@ -43,7 +43,7 @@ const Header = () => {
     <div style={{ borderBottom: "1px solid #ccc" }} className="w-100 py-2">
        <Container>
         <div className="row align-items-center">
-          <div className="col-6 d-flex">
+          <div className="col-8 d-flex">
             <div className="">
               <FormControl>
                 <Select
@@ -62,8 +62,11 @@ const Header = () => {
                   }}
                 >
                   <MenuItem sx={{
-                    fontSize: "14px",
+                    
                     color: "#333",
+                    ".css-1x9jmrf":{
+                      fontSize: "14px",
+                    }
                   }} value="en">EN</MenuItem>
                   <MenuItem sx={{
                     fontSize: "14px",
@@ -102,7 +105,7 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="col-6 text-end">
+          <div className="col-4 text-end">
             <Button onClick={handleOpenLogin} sx={{
               color: 'black', fontWeight: 'bold',
               ":hover": {

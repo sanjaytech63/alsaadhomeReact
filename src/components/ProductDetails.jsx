@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Table, TableBody, TableRow, TableCell, Rating, IconButton } from '@mui/material';
-import tamaraImg from "../../src/assets/tamara.svg"
+import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Rating, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import tamaraImg from "../../src/assets/tamara.svg";
 import { Add, Remove } from '@mui/icons-material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { MdOutlineShoppingCart } from "react-icons/md";
@@ -32,7 +32,6 @@ const product = {
 };
 
 const products = [
-
     {
         id: 1,
         title: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
@@ -40,7 +39,7 @@ const products = [
         oldPrice: 99,
         discount: "51% Off",
         vatIncluded: true,
-        ratings: 0,
+        ratings: 2,
         colorOptions: [
             "https://al-saad-home.mo.cloudinary.net/uploads/products/14718/luri-121728653637.jpg",
             "https://al-saad-home.mo.cloudinary.net/uploads/pattern/luri-081728651944.jpg",
@@ -53,7 +52,6 @@ const products = [
         deliveryText: "Check your area to see if we deliver this product on same day or tomorrow.",
         paymentText: "Or split in 3 payments of AED 16.33 - No late fees, Sharia compliant!",
     },
-
 ];
 
 const productDetails = [
@@ -88,233 +86,235 @@ const productDetails = [
     }
 ];
 
-
 const ProductDetails = () => {
     const [selectedColor, setSelectedColor] = useState(products[0].colorOptions[0]);
-
     const [selectedImage, setSelectedImage] = useState(product.images[0].src);
 
     return (
-        <>
-            <div style={{ minHeight: "100vh" }}>
-                <Container maxWidth="lg" sx={{ my: 5 }}>
-                    <Grid container spacing={4}>
-                        {/* Image Gallery */}
-                        <Grid item xs={12} md={6}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <img src="https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg" alt="Selected" style={{ width: '100%', borderRadius: '8px' }} />
-                                <Grid container spacing={1} sx={{ marginTop: 2 }}>
-                                    {product.images.map((img, idx) => (
-                                        <Grid item xs={4} key={idx}>
-                                            <img
-                                                src={img.src}
-                                                alt={img.alt}
-                                                onClick={() => setSelectedImage(img.src)}
-                                                style={{
-                                                    width: '100%',
-                                                    cursor: 'pointer',
-                                                    border: selectedImage === img.src ? '1px solid lightgray' : '1px solid #bb1f2a',
-                                                    borderRadius: '8px'
-                                                }}
-                                            />
-                                        </Grid>
-                                    ))}
-                                </Grid>
-                            </Box>
-                        </Grid>
-
-                        {/* Product Details */}
-                        <Grid item xs={12} md={6}>
-                            <Box sx={{ padding: 2, maxWidth: '800px', margin: '0 auto' }}>
-                                {products.map((product) => (
-                                    <Box key={product.id}>
-                                        <Typography variant="h5" fontWeight="bold" gutterBottom>
-                                            {product.title}
-                                        </Typography>
-
-                                        {/* Rating Section */}
-                                        <Box display="flex" alignItems="center" mt={2} justifyContent="space-between">
-                                            {/* Price Section */}
-                                            <Box>
-                                                <div style={{ display: "flex", alignItems: "center" }}>
-                                                    <Typography variant="h6" color="#bb1f2a" fontWeight="600">
-                                                        {product.price} AED
-                                                    </Typography>
-                                                    <Typography variant="body1" sx={{ textDecoration: 'line-through' }}>
-                                                        {product.oldPrice} AED
-                                                    </Typography>
-
-                                                    <Typography variant="body2" color="green">
-                                                        ({product.discount})
-                                                    </Typography>
-                                                </div>
-                                                <Typography variant="body2" color="textSecondary" mt={1}>
-                                                    {product.vatIncluded ? "(Price includes VAT)" : ""}
-                                                </Typography>
-                                            </Box>
-
-                                            <Box>
-                                                <Rating name="no-value" value={null} />
-                                                <Typography component="legend"> (0) ratings</Typography>
-                                            </Box>
-                                        </Box>
-
-                                        {/* Color Selector */}
-                                        <Box mt={2}>
-                                            <Typography variant="body1" fontWeight="bold">
-                                                Color
-                                            </Typography>
-                                            <Box display="flex" gap={1} mt={1}>
-                                                {product.colorOptions.map((color, index) => (
-                                                    <img
-                                                        key={index}
-                                                        src={color}
-                                                        alt={`color-${index}`}
-                                                        style={{
-                                                            width: 50,
-                                                            height: 50,
-                                                            border: selectedColor === color ? '2px solid red' : '1px solid #ccc',
-                                                            borderRadius: '50%',
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        onClick={() => setSelectedColor(color)}
-                                                    />
-                                                ))}
-                                            </Box>
-                                        </Box>
-
-                                        {/* Size Selector */}
-                                        <Box sx={{ mt: 2, display: "flex", alignItems: "center", gap: 2 }}>
-                                            <Typography variant="body1" sx={{ color: "#687188" }}>
-                                                Size
-                                            </Typography>
-                                            <Typography sx={{ color: "#fff", padding: '3px 10px', backgroundColor: '#bb1f2a', borderRadius: "4px" }}>
-                                                {product.size}
-                                            </Typography>
-                                        </Box>
-
-                                        {/* Availability */}
-                                        <Box mt={2}>
-                                            <Typography variant="body1" sx={{ color: "#687188" }} fontWeight="bold">
-                                                Availability  <span style={{ color: "green" }}>{product.availability} Item{product.availability > 1 ? 's' : ''} in stock</span>
-                                            </Typography>
-                                        </Box>
-
-                                        {/* Delivery Area Selector */}
-                                        <Box mt={2}>
-                                            <Typography variant="body2" color="#687188">
-                                                {product.deliveryText}{' '}
-                                                <Typography variant="body2" color="#bb1f2a" component="span">
-                                                    Select Area
-                                                </Typography>
-                                            </Typography>
-                                        </Box>
-
-                                        {/* Payment Options */}
-                                        <Box sx={{ padding: 2, mt: 2, border: '1px solid #e0e0e0', borderRadius: '10px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <Box sx={{}}>
-                                                <Typography sx={{ fontSize: "14px", }} >{product.paymentText}{' '}</Typography>
-                                                <Typography sx={{ fontSize: "14px", }} ><strong><a href="#" className='text-black'>Learn more</a></strong></Typography>
-                                            </Box>
-                                            <img src={tamaraImg} alt="tamaraImg" />
-                                        </Box>
-                                    </Box>
+        <div style={{ minHeight: "100vh" }}>
+            <Container maxWidth="lg" sx={{ my: 5 }}>
+                <Grid container spacing={4}>
+                    {/* Image Gallery */}
+                    <Grid item xs={12} md={6}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <img src={selectedImage} alt="Selected" style={{ width: '100%', borderRadius: '8px' }} />
+                            <Grid container spacing={1} sx={{ marginTop: 2 }}>
+                                {product.images.map((img, idx) => (
+                                    <Grid item xs={4} key={idx}>
+                                        <img
+                                            src={img.src}
+                                            alt={img.alt}
+                                            onClick={() => setSelectedImage(img.src)}
+                                            style={{
+                                                width: '100%',
+                                                cursor: 'pointer',
+                                                border: selectedImage === img.src ? '1px solid lightgray' : '1px solid #bb1f2a',
+                                                borderRadius: '8px'
+                                            }}
+                                        />
+                                    </Grid>
                                 ))}
-                                <hr />
-                                <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, gap: 5 }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                                        <IconButton sx={{ p: 1, backgroundColor: "#eee", mr: 1 }}><Remove /></IconButton>
-                                        <Typography sx={{ border: "solid 1px #ddd", px: 2 }} variant="body1">1</Typography>
-                                        <IconButton sx={{ p: 1, backgroundColor: "#eee", ml: 1 }}><Add /></IconButton>
-                                    </Box>
-                                    <Button variant="contained" sx={{ backgroundColor: '#bb1f2a', padding: '13px 25px', }}><MdOutlineShoppingCart size={18} /> Add To Cart</Button>
-                                    <Typography ><FavoriteBorderIcon /></Typography>
-                                </Box>
-                                <hr />
-                            </Box>
-                            <Box sx={{ mb: 4 }}>
-                                {productDetails.map((product, index) => (
-                                    <Box key={index}>
-                                        {/* Model */}
-                                        <List>
-                                            <ListItem>
-                                                <Typography variant="body1"><strong color='#687188'>Model:</strong> {product.model}</Typography>
-                                            </ListItem>
-                                            <ListItem>
-                                                <Typography variant="body1">
-                                                    <strong color='#687188'>Brand:</strong>
-                                                    <Link sx={{ textDecoration: 'none', color: "#292b2c" }} href={product.brand.link} color="primary" target="_blank" rel="noopener">
-                                                        {` ${product.brand.name}`}
-                                                    </Link>
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem>
-                                                <Typography variant="body1">
-                                                    <strong color='#687188'>Tags:</strong>
-                                                    {product.tags.map((tag, idx) => (
-                                                        <React.Fragment key={idx}>
-                                                            <Link href={tag.link} rel="tag" sx={{ textDecoration: 'none', color: "#292b2c" }}>
-                                                                {tag.label}
-                                                            </Link>
-                                                            {idx < product.tags.length - 1 && ','}
-                                                        </React.Fragment>
-                                                    ))}
-                                                </Typography>
-                                            </ListItem>
-                                        </List>
-                                        {/* Share Section */}
-                                        <Box mt={3} display="flex" gap={2} alignItems="center">
-                                            <Typography variant="body1" color="#687188"><strong>Share:</strong></Typography>
-                                            <span style={{ backgroundColor: "#1877f2", padding: "4px 8px", borderRadius: "4px", color: "#fff" }}><FaFacebookF /></span>
-                                            <span style={{ backgroundColor: "#12af0a", padding: "3px", borderRadius: "4px", color: "#fff" }}><WhatsAppIcon /> </span>
-                                        </Box>
-                                        {/* Features */}
-                                        <Typography variant="h6" fontWeight="bold" mt={2}>Features</Typography>
-                                        <List>
-                                            {product.features.map((feature, idx) => (
-                                                <ListItem key={idx}>
-                                                    <Typography variant="body1">{feature}</Typography>
-                                                </ListItem>
-                                            ))}
-                                        </List>
-
-                                        {/* Product Details */}
-                                        <Typography variant="h6" fontWeight="bold" mt={2}>Product Details</Typography>
-                                        <Table sx={{ maxWidth: '100%' }}>
-                                            <TableBody>
-                                                <TableRow>
-                                                    <TableCell>
-                                                        <List>
-                                                            <ListItem>{product.productDetails.comforter}</ListItem>
-                                                            <ListItem>{product.productDetails.fittedSheet}</ListItem>
-                                                            <ListItem>{product.productDetails.pillowShams}</ListItem>
-                                                        </List>
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell>
-                                                        <strong>Color:</strong>
-                                                    </TableCell>
-                                                    <TableCell>{product.productDetails.color}</TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell>
-                                                        <strong>Material:</strong>
-                                                    </TableCell>
-                                                    <TableCell>{product.productDetails.material}</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-
-
-                                    </Box>
-                                ))}
-                            </Box>
-                        </Grid>
+                            </Grid>
+                        </Box>
                     </Grid>
-                </Container>
-            </div>
-        </>
+
+                    {/* Product Details */}
+                    <Grid item xs={12} md={6}>
+                        <Box sx={{}}>
+                            {products.map((product) => (
+                                <Box key={product.id}>
+                                    <Typography variant="h5" sx={{ fontSize: { sm: "1.5rem", xs: "1rem", fontWeight: 600 } }}>
+                                        {product.title}
+                                    </Typography>
+                                    {/* Price & Rating */}
+                                    <Box sx={{ display: { sm: "flex", xs: "block" } }} alignItems="center" justifyContent="space-between" mt={2}>
+                                        <Box>
+                                            <Box display="flex" alignItems="center">
+                                                <Typography variant="body2" color="#bb1f2a" fontWeight="600">
+                                                    {product.price} AED
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ textDecoration: 'line-through', mx: 2 }}>
+                                                    {product.oldPrice} AED
+                                                </Typography>
+                                                <Typography variant="body2" color="green">
+                                                    {product.discount}
+                                                </Typography>
+                                            </Box>
+                                            <Typography variant="body2" color="textSecondary" mt={1}>
+                                                {product.vatIncluded ? "(Price includes VAT)" : ""}
+                                            </Typography>
+                                        </Box>
+                                        <Box>
+                                            <Rating name="no-value" value={product.ratings} />
+                                            <Typography component="legend">({product.ratings}) ratings</Typography>
+                                        </Box>
+                                    </Box>
+
+                                    {/* Color Options */}
+                                    <Box mt={2}>
+                                        <Typography variant="body1" fontWeight="bold">
+                                            Color
+                                        </Typography>
+                                        <Box display="flex" gap={1} mt={1}>
+                                            {product.colorOptions.map((color, index) => (
+                                                <img
+                                                    key={index}
+                                                    src={color}
+                                                    alt={`color-${index}`}
+                                                    style={{
+                                                        width: 50,
+                                                        height: 50,
+                                                        border: selectedColor === color ? '2px solid red' : '1px solid #ccc',
+                                                        borderRadius: '50%',
+                                                        cursor: 'pointer',
+                                                    }}
+                                                    onClick={() => setSelectedColor(color)}
+                                                />
+                                            ))}
+                                        </Box>
+                                    </Box>
+
+                                    {/* Size */}
+                                    <Box mt={2} display="flex" alignItems="center" gap={2}>
+                                        <Typography variant="body1" color="#687188">
+                                            Size
+                                        </Typography>
+                                        <Typography sx={{ backgroundColor: '#bb1f2a', color: '#fff', padding: '3px 10px', borderRadius: '4px' }}>
+                                            {product.size}
+                                        </Typography>
+                                    </Box>
+
+                                    {/* Availability */}
+                                    <Box mt={2}>
+                                        <Typography variant="body1" sx={{ color: "#687188" }} fontWeight="bold">
+                                            Availability: <span style={{ color: "green" }}>{product.availability} Item{product.availability > 1 ? 's' : ''} in stock</span>
+                                        </Typography>
+                                    </Box>
+
+                                    {/* Delivery Text */}
+                                    <Box mt={2}>
+                                        <Typography variant="body2" color="#687188">
+                                            {product.deliveryText}{' '}
+                                            <Typography variant="body2" color="#bb1f2a" component="span">
+                                                Select Area
+                                            </Typography>
+                                        </Typography>
+                                    </Box>
+
+                                    {/* Payment Options */}
+                                    <Box sx={{ padding: 2, mt: 2, border: '1px solid #e0e0e0', borderRadius: '8px' }}>
+                                        <Box>
+                                            <Typography variant="body2" color="textSecondary">
+                                                {product.paymentText}
+                                            </Typography>
+                                            <img src={tamaraImg} alt="tamara" style={{ marginTop: '5px' }} />
+                                        </Box>
+                                    </Box>
+
+                                    {/* Quantity and Add to Cart */}
+                                    <Box sx={{ display: { xs: 'block', sm: 'flex' }, }} alignItems="center" gap={2} mt={2}>
+                                        <Box display="flex" alignItems="center">
+                                            <IconButton size="small">
+                                                <Remove />
+                                            </IconButton>
+                                            <Typography sx={{ border: "1px solid lightgray", }} px={2}>1</Typography>
+                                            <IconButton size="small">
+                                                <Add />
+                                            </IconButton>
+                                        </Box>
+
+                                        <Box sx={{ pt: { xs: 2, sm: 0 } }}>
+                                            <Button variant="contained" sx={{ backgroundColor: '#bb1f2a', color: '#fff', }} startIcon={<MdOutlineShoppingCart />}>
+                                                Add to Cart
+                                            </Button>
+                                            <IconButton color="#bb1f2a">
+                                                <FavoriteBorderIcon />
+                                            </IconButton>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            ))}
+                        </Box>
+                        <Box sx={{ mb: 4 }}>
+                            {productDetails.map((product, index) => (
+                                <Box key={index}>
+                                    {/* Model */}
+                                    <List>
+                                        <ListItem>
+                                            <Typography variant="body1"><strong color='#687188'>Model:</strong> {product.model}</Typography>
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="body1">
+                                                <strong color='#687188'>Brand:</strong>
+                                                <Link sx={{ textDecoration: 'none', color: "#292b2c" }} href={product.brand.link} color="primary" target="_blank" rel="noopener">
+                                                    {` ${product.brand.name}`}
+                                                </Link>
+                                            </Typography>
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="body1">
+                                                <strong color='#687188'>Tags:</strong>
+                                                {product.tags.map((tag, idx) => (
+                                                    <React.Fragment key={idx}>
+                                                        <Link href={tag.link} rel="tag" sx={{ textDecoration: 'none', color: "#292b2c" }}>
+                                                            {tag.label}
+                                                        </Link>
+                                                        {idx < product.tags.length - 1 && ','}
+                                                    </React.Fragment>
+                                                ))}
+                                            </Typography>
+                                        </ListItem>
+                                    </List>
+                                    {/* Share Section */}
+                                    <Box mt={3} display="flex" gap={2} alignItems="center">
+                                        <Typography variant="body1" color="#687188"><strong>Share:</strong></Typography>
+                                        <span style={{ backgroundColor: "#1877f2", padding: "4px 8px", borderRadius: "4px", color: "#fff" }}><FaFacebookF /></span>
+                                        <span style={{ backgroundColor: "#12af0a", padding: "3px", borderRadius: "4px", color: "#fff" }}><WhatsAppIcon /> </span>
+                                    </Box>
+                                    {/* Features */}
+                                    <Typography variant="h6" fontWeight="bold" mt={2}>Features</Typography>
+                                    <List>
+                                        {product.features.map((feature, idx) => (
+                                            <ListItem key={idx}>
+                                                <Typography variant="body1">{feature}</Typography>
+                                            </ListItem>
+                                        ))}
+                                    </List>
+
+                                    {/* Product Details */}
+                                    <Typography variant="h6" fontWeight="bold" mt={2}>Product Details</Typography>
+                                    <Table sx={{ maxWidth: '100%' }}>
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell>
+                                                    <List>
+                                                        <ListItem>{product.productDetails.comforter}</ListItem>
+                                                        <ListItem>{product.productDetails.fittedSheet}</ListItem>
+                                                        <ListItem>{product.productDetails.pillowShams}</ListItem>
+                                                    </List>
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell>
+                                                    <strong>Color:</strong>
+                                                </TableCell>
+                                                <TableCell>{product.productDetails.color}</TableCell>
+                                            </TableRow>
+                                            <TableRow>
+                                                <TableCell>
+                                                    <strong>Material:</strong>
+                                                </TableCell>
+                                                <TableCell>{product.productDetails.material}</TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </Box>
+                            ))}
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Container>
+        </div>
     );
 };
 

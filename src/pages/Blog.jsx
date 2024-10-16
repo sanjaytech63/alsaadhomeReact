@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { Grid, Container, Box, Typography, Pagination, Breadcrumbs } from '@mui/material';
 import jsonData from "../../src/blogData.json";
 import BlogCards from '../components/BlogCards';
@@ -9,8 +9,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const Blog = () => {
     const [blogs, setBlogs] = useState(jsonData.blogPosts);
-
-    console.log(blogs)
+    console.log(setBlogs);
     return (
             <Box sx={{ minHeight: "100vh", }}>
                 <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -40,7 +39,7 @@ const Blog = () => {
                                 ))}
                             </Grid>
                             {/* Pagination */}
-                            <Box mt={4} display="flex" justifyContent="center">
+                            <Box my={4} display="flex" justifyContent="left">
                                 <Pagination count={10} color="primary" />
                             </Box>
                         </Grid>

@@ -10,8 +10,8 @@ const Footer = () => {
       <Box
         sx={{
           backgroundColor: '#212121',
-          color: 'white', 
-       
+          color: 'white',
+
         }}
       >
         <Container maxWidth="lg">
@@ -177,10 +177,9 @@ const Footer = () => {
             textAlign: 'center',
             marginTop: '20px',
             borderTop: '1px solid #444',
-            paddingTop: '20px',
           }}
         >
-          <Typography sx={{ pb: 2 }} variant="body2">
+          <Typography sx={{ py: { xs: 0, sm: 2} }} variant="body2">
             © 2020-2024 All Rights Reserved by <strong>AL SAAD FURNITURE EST</strong>
           </Typography>
         </Box>

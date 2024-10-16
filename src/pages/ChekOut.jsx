@@ -34,7 +34,7 @@ const Checkout = () => {
                     <Grid item xs={12} md={6} >
                         <Box sx={{ my: 2, py: 2, backgroundColor: "#f7f7f7", px: 3, display: "flex", alignItems: "center", gap: 1 }}>
                             <LocalOfferIcon sx={{ color: "#bb1f2a" }} />
-                            <Typography color='#687188' variant="h6">Do you have a coupon?</Typography>
+                            <Typography color='#687188' sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="h6">Do you have a coupon?</Typography>
                         </Box>
                         <Box sx={{ border: '1px solid #e0e0e0', padding: 3 }}>
                             <Grid container alignItems="stretch">
@@ -163,14 +163,41 @@ const Checkout = () => {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} md={7} >
-                        <Box sx={{ border: '1px solid #e0e0e0', borderRadius: '5px', padding: 2, backgroundColor: "#f7f8fb" }}>
-                            <Typography sx={{ color: "#292b2c", fontSize: "22px", fontWeight: "700", mb: 2 }} variant="h6">Your Orders</Typography>
+                    <Grid item xs={12} md={7}>
+                        <Box
+                            sx={{
+                                border: '1px solid #e0e0e0',
+                                borderRadius: '5px',
+                                padding: 2,
+                                backgroundColor: "#f7f8fb"
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    color: "#292b2c",
+                                    fontSize: { xs: "18px", md: "22px" },
+                                    fontWeight: "700",
+                                    mb: 2
+                                }}
+                                variant="h6"
+                            >
+                                Your Orders
+                            </Typography>
                             <hr />
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 1 }}>
-                                <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600", }}>Photo </Typography>
-                                <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600", }}>Product</Typography>
-                                <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600", }}>Total</Typography>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    my: 1,
+                                    flexDirection: { xs: 'column', sm: 'row' }
+                                }}
+                            >
+                                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                    <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600" }}>Photo</Typography> -
+                                    <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600" }}>Product</Typography> -
+                                    <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600" }}>Total</Typography>
+                                </Box>
                             </Box>
                             <hr />
                             {orderData.map((product) => (
@@ -179,39 +206,125 @@ const Checkout = () => {
                                     display="flex"
                                     justifyContent="space-between"
                                     alignItems="center"
-                                    sx={{ marginBottom: 1 }}
+                                    sx={{
+                                        marginBottom: 1,
+                                        flexDirection: { xs: 'column', sm: 'row' },
+                                        textAlign: { xs: 'center', sm: 'left' }
+                                    }}
                                 >
-                                    <img style={{ width: "50px", height: "50px", objectFit: "cover" }} src={product.imgSrc} alt="product" />
+                                    <img
+                                        style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                                        src={product.imgSrc}
+                                        alt="product"
+                                    />
                                     <Typography>{product.name}</Typography>
                                     <Typography>{product.price}</Typography>
                                 </Box>
                             ))}
 
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 2 }}>
-                                <Typography>Sub Total: </Typography>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    my: 2,
+                                    flexDirection: { xs: 'column', sm: 'row' }
+                                }}
+                            >
+                                <Typography>Sub Total:</Typography>
                                 <Typography>{total} AED</Typography>
                             </Box>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 2 }}>
-                                <Typography>Flat Shipping Rate: </Typography>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    my: 2,
+                                    flexDirection: { xs: 'column', sm: 'row' }
+                                }}
+                            >
+                                <Typography>Flat Shipping Rate:</Typography>
                                 <Typography>{shipping} AED</Typography>
                             </Box>
                             <hr />
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 2 }}>
-                                <Typography sx={{ color: "#292b2c", fontSize: "22px", fontWeight: "700" }} variant="h6" gutterBottom>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    my: 2,
+                                    flexDirection: { xs: 'column', sm: 'row' }
+                                }}
+                            >
+                                <Typography
+                                    sx={{ color: "#292b2c", fontSize: { xs: "18px", md: "22px" }, fontWeight: "700" }}
+                                    variant="h6"
+                                    gutterBottom
+                                >
                                     Final Total:
                                 </Typography>
-                                <Typography sx={{ color: "#292b2c", fontSize: "22px", fontWeight: "700" }} variant="h6" gutterBottom>{finalTotal} AED</Typography>
+                                <Typography
+                                    sx={{ color: "#292b2c", fontSize: { xs: "18px", md: "22px" }, fontWeight: "700" }}
+                                    variant="h6"
+                                    gutterBottom
+                                >
+                                    {finalTotal} AED
+                                </Typography>
                             </Box>
                         </Box>
 
-                        <Box sx={{ border: '1px solid #e0e0e0', borderRadius: '5px', my: 2, padding: 2, backgroundColor: "#f7f8fb" }}>
-                            <Typography sx={{ color: "#292b2c", fontSize: "22px", fontWeight: "700" }} gutterBottom variant="h6">Payment Method</Typography>
-                            <Box sx={{ boxShadow: 2, padding: 2, display: 'flex', backgroundColor: "#fff", borderRadius: '10px', my: 2, }}>
+                        <Box
+                            sx={{
+                                border: '1px solid #e0e0e0',
+                                borderRadius: '5px',
+                                my: 4,
+                                padding: 2,
+                                backgroundColor: "#f7f8fb"
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    color: "#292b2c",
+                                    fontSize: { xs: "18px", md: "22px" },
+                                    fontWeight: "700"
+                                }}
+                                gutterBottom
+                                variant="h6"
+                            >
+                                Payment Method
+                            </Typography>
+                            <Box
+                                sx={{
+                                    boxShadow: 2,
+                                    padding: 2,
+                                    display: 'flex',
+                                    flexDirection: { xs: 'column', sm: 'row' },
+                                    backgroundColor: "#fff",
+                                    borderRadius: '10px',
+                                    my: 2
+                                }}
+                            >
                                 <FormControlLabel value="male" control={<Radio />} label="" />
-                                <Box sx={{ padding: 2, border: '1px solid #e0e0e0', borderRadius: '10px', width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <Box sx={{}}>
-                                        <Typography sx={{ fontSize: "14px", }} >Or split in 3 payments of <strong>AED 53.00</strong> - No late fees,</Typography>
-                                        <Typography sx={{ fontSize: "14px", }} >Sharia compliant! Tamara <strong><a href="#" className='text-black'>Learn more</a></strong></Typography>
+                                <Box
+                                    sx={{
+                                        padding: 2,
+                                        border: '1px solid #e0e0e0',
+                                        borderRadius: '10px',
+                                        width: '100%',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        flexDirection: { xs: 'column', sm: 'row' },
+                                        textAlign: { xs: 'center', sm: 'left' }
+                                    }}
+                                >
+                                    <Box>
+                                        <Typography sx={{ fontSize: "14px" }}>
+                                            Or split in 3 payments of <strong>AED 53.00</strong> - No late fees,
+                                        </Typography>
+                                        <Typography sx={{ fontSize: "14px" }}>
+                                            Sharia compliant! Tamara <strong><a href='https://www.tamara.com/' className='text-black'>Learn more</a></strong>
+                                        </Typography>
                                     </Box>
                                     <img src={tamaraImg} alt="tamaraImg" />
                                 </Box>
@@ -227,6 +340,7 @@ const Checkout = () => {
                             </Grid>
                         </Box>
                     </Grid>
+
                 </Grid>
             </Container>
         </Box>

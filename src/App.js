@@ -17,6 +17,7 @@ import Cart from './pages/Cart';
 import Login from './auth/Login.jsx/Login';
 import Checkout from './pages/ChekOut';
 import ProductDetails from './components/ProductDetails';
+import NotFoundPage from './components/NotPageFound';
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/chekout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>
