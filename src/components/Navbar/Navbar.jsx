@@ -33,7 +33,7 @@ const Navbar = () => {
                         <Toolbar sx={{ justifyContent: 'space-between', padding: "0px !important" }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <Link to="/">
-                                    <img src={logo} alt="logo" style={{ maxWidth: '100px', objectFit: "cover" }} />
+                                    <img src={logo} alt="logo" loading="lazy" style={{ maxWidth: '100px', objectFit: "cover" }} />
                                 </Link>
                             </Box>
                             <Box sx={{ display: { xs: 'none', md: 'flex', }, alignItems: 'center' }}>

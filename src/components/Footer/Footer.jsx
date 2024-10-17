@@ -37,16 +37,17 @@ const Footer = () => {
             container
             spacing={4}
             justifyContent="space-between"
-            direction={{ xs: 'column', sm: 'row', my: { xs: 2, sm: 5 } }}
+            direction={{ xs: 'column', sm: 'row', my: { xs: 0, sm: 5 } }}
           >
             <Grid item xs={12} md={3}>
               <Box sx={{ textAlign: { xs: 'left', md: 'left' } }}>
                 <img
                   src="https://al-saad-home.mo.cloudinary.net/assets/front/images/logo-footer.png"
                   alt="Al Saad Home Logo"
+                  loading="lazy"
                   style={{ maxWidth: '150px', marginBottom: '20px', color: "white" }}
                 />
-                <Typography variant="subtitle1">Your dreams start here</Typography>
+                <Typography fontSize={14} variant="subtitle1">Your dreams start here</Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={3}>
@@ -54,14 +55,14 @@ const Footer = () => {
                 My Account
               </Typography>
               <Box sx={{
-                lineHeight: 2,
+                lineHeight: 2.5,
               }}>
                 <Link sx={{
                   ":hover": {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} underline="none" color="inherit" display="block">
+                }} underline="none" fontSize={12} color="inherit" display="block">
                   My Account
                 </Link>
                 <Link sx={{
@@ -69,7 +70,7 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} underline="none" color="inherit" display="block">
+                }} underline="none" color="inherit" fontSize={12} display="block">
                   Orders History
                 </Link>
                 <Link sx={{
@@ -77,7 +78,7 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} underline="none" color="inherit" display="block">
+                }} underline="none" fontSize={12} color="inherit" display="block">
                   Wishlist
                 </Link>
                 <Link onClick={handleNevigatePrivacy} sx={{
@@ -85,7 +86,7 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} underline="none" color="inherit" display="block">
+                }} underline="none" fontSize={12} color="inherit" display="block">
                   Privacy
                 </Link>
                 <Link onClick={handleNevigateTerms} sx={{
@@ -93,7 +94,7 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} underline="none" color="inherit" display="block">
+                }} underline="none" fontSize={12} color="inherit" display="block">
                   Terms & Conditions
                 </Link>
                 <Link onClick={handleNevigateCategory} sx={{
@@ -101,7 +102,7 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} underline="none" color="inherit" display="block">
+                }} underline="none" fontSize={12} color="inherit" display="block">
                   Category
                 </Link>
               </Box>
@@ -117,7 +118,7 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} variant="body1" ml={1}>
+                }} variant="body1" fontSize={14} ml={1}>
                   UAE - Sharjah - Industrial Area 18
                 </Typography>
               </Box>
@@ -128,13 +129,13 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} variant="body1" ml={1}>
+                }} variant="body1" fontSize={14} ml={1}>
                   contact@alsaadhome.com
                 </Typography>
               </Box>
               <Box display="flex" alignItems="center">
                 <FaPhone />
-                <Typography variant="body1" ml={1}>
+                <Typography variant="body1" fontSize={14} ml={1}>
                   600 575 525
                 </Typography>
               </Box>
@@ -197,7 +198,7 @@ const Footer = () => {
             borderTop: '1px solid #444',
           }}
         >
-          <Typography sx={{ py: { xs: 0, sm: 2 } }} variant="body2">
+          <Typography sx={{ py: { xs: 0, sm: 2 },fontSize:"14px" }} variant="body2">
             © 2020-2024 All Rights Reserved by <strong>AL SAAD FURNITURE EST</strong>
           </Typography>
         </Box>

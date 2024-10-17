@@ -83,7 +83,7 @@ const RecentlyViewed = ({ productsCard }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card onClick={handleNavigate} key={item.id} sx={{ borderRadius: '8px', margin: { xs: 2, sm: "5px",cursor: "pointer" } }}>
+                            <Card onClick={handleNavigate} key={item.id} sx={{ borderRadius: '8px', margin: { xs: 2, sm: "5px", cursor: "pointer" } }}>
                                 <Box position="relative">
                                     <Chip
                                         label="New"
@@ -94,6 +94,7 @@ const RecentlyViewed = ({ productsCard }) => {
                                         component="img"
                                         image={item.image}
                                         alt={item.title}
+                                        loading="lazy"
                                     />
                                 </Box>
                                 <CardContent sx={{ p: { xs: "8px", sm: "16px" } }}>

@@ -106,7 +106,7 @@ const Login = ({ handleClose, open, handleOpenRegister }) => {
                                 <FaFacebookF color='#fff' />
                             </div>
                             <div style={{ width: "40px", height: "40px", display: "flex", justifyContent: "center", alignItems: "center", background: "#fff", borderRadius: "50%", boxShadow: "0 0 10px rgb(0 0 0 / 20%)" }} >
-                                <img src="https://al-saad-home.mo.cloudinary.net/assets/front/images/google-logo.png" alt="google-login" />
+                                <img src="https://al-saad-home.mo.cloudinary.net/assets/front/images/google-logo.png" loading='lazy' alt="google-login" />
                             </div>
                             <div style={{ width: "40px", height: "40px", display: "flex", justifyContent: "center", alignItems: "center", background: "#000", borderRadius: "50%" }} >
                                 <AppleIcon sx={{ fontSize: "30px", color: "#fff" }} />

@@ -34,6 +34,7 @@ const BannerSection = ({ bannerSection }) => {
                                         objectFit: 'cover',
                                         cursor: 'pointer'
                                     }}
+                                    loading="lazy"
                                     src={item.src}
                                     alt="saad"
                                 />

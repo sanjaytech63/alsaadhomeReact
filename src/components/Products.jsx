@@ -28,7 +28,7 @@ const Products = ({ products }) => {
                                 }}
                             >
                                 <Box component={"img"} onClick={handleNavigate}
-                                    style={{
+                                    sx={{
                                         width: "100%",
                                         height: "150px",
                                         objectFit: "cover",
@@ -36,6 +36,7 @@ const Products = ({ products }) => {
                                     }}
                                     src={product.src}
                                     alt="product-image"
+                                    loading="lazy"
                                 />
                             </Box>
                         </Grid>

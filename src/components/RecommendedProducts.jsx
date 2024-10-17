@@ -95,6 +95,7 @@ const RecommendedProducts = ({ productsCard }) => {
                                         component="img"
                                         image={item.image}
                                         alt={item.title}
+                                        loading="lazy"
                                     />
                                 </Box>
                                 <CardContent sx={{ p: { xs: "8px", sm: "16px" } }}>

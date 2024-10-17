@@ -52,6 +52,7 @@ const SmartShopping = () => {
                                             borderRadius: 4,
 
                                         }}
+                                         loading="lazy"
                                         src={cat.src}
                                         alt="category-image"
                                     />

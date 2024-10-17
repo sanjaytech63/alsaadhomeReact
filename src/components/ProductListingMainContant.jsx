@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, Box, IconButton } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Box, IconButton,Paper,InputBase } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import {  useNavigate } from 'react-router-dom';

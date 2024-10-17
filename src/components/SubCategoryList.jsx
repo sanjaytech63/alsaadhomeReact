@@ -74,6 +74,7 @@ const SubCategoryList = () => {
                                         }}
                                         src={cat.src}
                                         alt="category-image"
+                                         loading="lazy"
                                     />
                                     {/* Text on image */}
                                     <Box

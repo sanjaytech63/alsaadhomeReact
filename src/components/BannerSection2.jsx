@@ -36,6 +36,7 @@ const BannerSection2 = ({ bannerSection }) => {
                                     cursor: "pointer",
                                 }}
                                 src={item.src}
+                                 loading="lazy"
                                 alt="saad"
                             />
                         </Box>

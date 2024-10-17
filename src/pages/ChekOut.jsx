@@ -215,6 +215,7 @@ const Checkout = () => {
                                     <img
                                         style={{ width: "50px", height: "50px", objectFit: "cover" }}
                                         src={product.imgSrc}
+                                         loading="lazy"
                                         alt="product"
                                     />
                                     <Typography>{product.name}</Typography>
@@ -326,7 +327,7 @@ const Checkout = () => {
                                             Sharia compliant! Tamara <strong><a href='https://www.tamara.com/' className='text-black'>Learn more</a></strong>
                                         </Typography>
                                     </Box>
-                                    <img src={tamaraImg} alt="tamaraImg" />
+                                    <img src={tamaraImg}  loading="lazy" alt="tamaraImg" />
                                 </Box>
                             </Box>
                             <FormControlLabel

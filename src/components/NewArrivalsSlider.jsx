@@ -95,6 +95,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                     <CardMedia
                                         sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}
                                         component="img"
+                                         loading="lazy"
                                         image={item.image}
                                         alt={item.title}
                                     />

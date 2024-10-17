@@ -15,6 +15,7 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
                     component="img"
                     src={image}
                     alt={title}
+                     loading="lazy"
                     sx={{
                         maxWidth: { sm: '188px', xs: '110px' },
                         height: '100%',
@@ -27,7 +28,7 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
                     <Typography variant="h6" noWrap>{title}</Typography>
                     <Typography variant="body1" sx={{ mt: 1 }}><strong>Price:</strong> <strong>{price} AED</strong></Typography>
                     {color && <Typography variant="body1"><strong>Color: </strong>  <span style={{ backgroundColor: color, borderRadius: '50%', padding: '0 10px' }}> </span></Typography>}
-                    {pattern && <Typography variant="body1"><strong>Pattern: </strong> <img src={pattern} alt="pattern" style={{ width: '20px', height: '20px' }} /></Typography>}
+                    {pattern && <Typography variant="body1"><strong>Pattern: </strong> <img src={pattern} alt="pattern"  loading="lazy" style={{ width: '20px', height: '20px' }} /></Typography>}
                     <Typography variant="body1"><strong>Size: </strong> <strong>{size}</strong></Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
                         <IconButton sx={{ p: 1, backgroundColor: "#eee", mr: 1 }}><Remove /></IconButton>

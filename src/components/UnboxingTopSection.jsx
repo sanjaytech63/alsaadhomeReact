@@ -59,6 +59,7 @@ const UnboxingTopSection = () => {
                             >
                                 <img
                                     src={video.thumbnail}
+                                     loading="lazy"
                                     alt={`Video Thumbnail ${video.id}`}
                                     style={{ width: '100%', height: 'auto' }}
                                 />
@@ -115,7 +116,6 @@ const UnboxingTopSection = () => {
                                     width: '5px',
                                     height: '5px',
                                     padding: '3px',
-                                    backgroundColor: 'black',
                                     borderRadius: '50%',
                                     backgroundColor: "#687188",
                                     display: 'inline-block'
@@ -128,7 +128,6 @@ const UnboxingTopSection = () => {
                                     padding: '3px',
                                     width: '5px',
                                     height: '5px',
-                                    backgroundColor: 'black',
                                     borderRadius: '50%',
                                     backgroundColor: "#687188",
                                     display: 'inline-block'

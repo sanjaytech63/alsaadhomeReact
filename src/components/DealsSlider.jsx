@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Box,  useMediaQuery, useTheme, IconButton, Container, Typography } from "@mui/material";
+import { Box, useMediaQuery, useTheme, IconButton, Container, Typography } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -36,7 +36,7 @@ const DealsSlider = ({ DealsSlider }) => {
                         sm: "24px",
                     },
                 }}>Deals for you</Typography>
-                <hr  className="mx-2"/>
+                <hr className="mx-2" />
                 <Box sx={{ width: "100%", position: "relative", my: 3, }}>
                     <Carousel
                         additionalTransfrom={0}
@@ -75,13 +75,14 @@ const DealsSlider = ({ DealsSlider }) => {
                         ) :
                             (
                                 [...DealsSlider, ...DealsSlider].map((item, index) => (
-                                     <Box onClick={handleNavigate}
-                                    component={'img'}
+                                    <Box onClick={handleNavigate}
+                                        component={'img'}
                                         key={index}
                                         draggable="false"
                                         src={item.src}
                                         alt="DealsSlider"
-                                        style={{
+                                        loading="lazy"
+                                        sx={{
                                             width: "100%",
                                             height: matchesSM ? "200px" : "220px",
                                             objectFit: "cover",

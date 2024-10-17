@@ -82,6 +82,7 @@ const TopSlider = ({ sliderItems }) => {
                                             draggable="false"
                                             src={item.src}
                                             alt={item.slug}
+                                             loading="lazy"
                                             className={!matchesSM ? "rounded-circle" : "rounded-3"}
                                             sx={{
                                                 width: matchesSM ? "70px" : "97px",

@@ -108,6 +108,7 @@ const UnboxingBottomSection = () => {
                             <img
                                 draggable="true"
                                 src={video.thumbnail}
+                                 loading="lazy"
                                 alt={`Video Thumbnail ${video.id}`}
                                 style={{ width: '100%', height: 'auto', borderRadius: '10px' }}
                             />

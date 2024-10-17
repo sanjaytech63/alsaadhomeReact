@@ -53,6 +53,7 @@ const Unboxing = () => {
                                             borderRadius: "10px",
                                         }}
                                         src={cat.src}
+                                         loading="lazy"
                                         alt="category-image"
                                     />
                                 </Box>

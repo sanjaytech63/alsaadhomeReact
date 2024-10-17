@@ -56,6 +56,7 @@ const BannerSlider = ({ BannderSliderData }) => {
                                 onClick={handleNavigate}
                                 draggable="false"
                                 src={item.src}
+                                loading="lazy"
                                 alt="BannderSliderData"
                                 // className={!matchesSM ? "rounded-circle" : "rounded-3"}
                                 style={{

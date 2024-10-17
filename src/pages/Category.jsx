@@ -53,6 +53,7 @@ const Category = () => {
                                             height: "200px",
                                             objectFit: "cover",
                                         }}
+                                         loading="lazy"
                                         src={cat.src}
                                         alt="category-image"
                                     />

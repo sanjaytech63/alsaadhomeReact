@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Grid, Typography, Button, Box, List, ListItem, Link,Breadcrumbs, Rating, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Breadcrumbs, Rating, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
 import tamaraImg from "../../src/assets/tamara.svg";
 import { Add, Remove } from '@mui/icons-material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -111,13 +111,14 @@ const ProductDetails = () => {
                     {/* Image Gallery */}
                     <Grid item xs={12} md={6}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <img src={selectedImage} alt="Selected" style={{ width: '100%', borderRadius: '8px' }} />
+                            <img src={selectedImage} loading="lazy" alt="Selected" style={{ width: '100%', borderRadius: '8px' }} />
                             <Grid container spacing={1} sx={{ marginTop: 2 }}>
                                 {product.images.map((img, idx) => (
                                     <Grid item xs={4} key={idx}>
                                         <img
                                             src={img.src}
                                             alt={img.alt}
+                                            loading="lazy"
                                             onClick={() => setSelectedImage(img.src)}
                                             style={{
                                                 width: '100%',
@@ -174,6 +175,7 @@ const ProductDetails = () => {
                                                 <img
                                                     key={index}
                                                     src={color}
+                                                    loading="lazy"
                                                     alt={`color-${index}`}
                                                     style={{
                                                         width: 50,
@@ -221,7 +223,7 @@ const ProductDetails = () => {
                                             <Typography variant="body2" color="textSecondary">
                                                 {product.paymentText}
                                             </Typography>
-                                            <img src={tamaraImg} alt="tamara" style={{ marginTop: '5px' }} />
+                                            <img src={tamaraImg} loading="lazy" alt="tamara" style={{ marginTop: '5px' }} />
                                         </Box>
                                     </Box>
 
