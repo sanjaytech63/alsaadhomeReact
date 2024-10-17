@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, CardContent, CardMedia, Typography, Box, Grid, IconButton } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Box, IconButton } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 const ProductListingMainContant = ({ blog }) => {
 
@@ -24,7 +24,15 @@ const ProductListingMainContant = ({ blog }) => {
                     />
                 </Box>
                 <CardContent>
-                    <Typography variant="h6" sx={{ color: "#292b2c", fontWeight: 600, fontSize: "1rem", fontFamily: "Roboto, sans-serif" }} component="div">
+                    <Typography variant="h6" sx={{
+                        display: "-webkit-box",
+                        overflow: "hidden",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 2,
+                        wordBreak: "break-all",
+                        whiteSpace: "normal",
+                        textOverflow: "ellipsis", color: "#292b2c", fontWeight: 600, fontSize: "1rem", fontFamily: "Roboto, sans-serif"
+                    }} component="div">
                         {blog.title}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -34,7 +42,15 @@ const ProductListingMainContant = ({ blog }) => {
                             <ChatBubbleOutlineIcon sx={{ fontSize: '16px', color: 'gray' }} />
                         </IconButton>
                     </Box>
-                    <Typography sx={{ lineHeight: "28px", color: "#687188" }} variant="body2">
+                    <Typography sx={{
+                        display: "-webkit-box",
+                        overflow: "hidden",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 2,
+                        wordBreak: "break-all",
+                        whiteSpace: "normal",
+                        textOverflow: "ellipsis", lineHeight: "28px", color: "#687188"
+                    }} variant="body2">
                         {blog.description}
                     </Typography>
                 </CardContent>

@@ -1,7 +1,13 @@
 import { Box, Container, Grid } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const BannerSection = ({ bannerSection }) => {
+    const nevigate = useNavigate();
+
+    const handleNavigate = () => {
+        nevigate(`/category/subcategory/productlisting`)
+    };
     return (
         <Container sx={{ my: 2, px: 2 }}>
             <Grid
@@ -21,11 +27,12 @@ const BannerSection = ({ bannerSection }) => {
                                     '&:hover': { transform: 'scale(1.05)' },
                                 }}
                             >
-                                <img
+                                <img onClick={handleNavigate}
                                     style={{
                                         width: '100%',
                                         height: '100%',
                                         objectFit: 'cover',
+                                        cursor: 'pointer'
                                     }}
                                     src={item.src}
                                     alt="saad"

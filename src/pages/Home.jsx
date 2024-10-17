@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TopSlider from '../components/TopSlider';
 import BannderSlider from '../components/BannderSlider';
 import img1 from '../assets/img1.avif';
@@ -32,19 +32,35 @@ import NewArrivalsSlider from '../components/NewArrivalsSlider';
 import RecommendedProducts from '../components/RecommendedProducts';
 import RecentlyViewed from '../components/RecentlyViewed';
 import BlogCard from '../components/BlogCard';
-
+import Loading from "../components/Loading";
 
 const TopSliderData = [
-    { id: 1, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 2, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 3, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 4, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 5, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 6, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 7, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 8, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 9, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
-    { id: 10, text: "comforter", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg" },
+    { id: 1, text: "Beds & Mattress", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395825.jpeg", },
+    { id: 2, text: "Carpets", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395848.jpeg", },
+    {
+        id: 3, text: "Lighting ", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395866.jpeg",
+    },
+    {
+        id: 4, text: " Furniture", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395781.jpeg",
+    },
+    {
+        id: 5, text: " Bedding", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg",
+    },
+    {
+        id: 6, text: "Curtains ", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395757.jpeg",
+    },
+    {
+        id: 7, text: " Tableware", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395701.jpeg",
+    },
+    {
+        id: 8, text: "Kitchen Essentials ", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395803.jpeg"
+    },
+    {
+        id: 9, text: "Gardening Supplies ", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395885.jpeg",
+    },
+    {
+        id: 10, text: "Toys ", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395948.jpeg",
+    },
 ];
 
 const BannderSliderData = [
@@ -121,7 +137,7 @@ const productsCard = [
     {
         id: 2,
         title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-        image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg", 
+        image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
         price: "249 AED",
         rating: 5,
     },
@@ -139,7 +155,7 @@ const productsCard = [
         price: "179 AED",
         rating: 4,
     },
-   
+
 ];
 
 const recommendedProducts = [
@@ -153,7 +169,7 @@ const recommendedProducts = [
     {
         id: 2,
         title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-        image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg", 
+        image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
         price: "249 AED",
         rating: 5,
     },
@@ -171,7 +187,7 @@ const recommendedProducts = [
         price: "179 AED",
         rating: 4,
     },
-   
+
 ];
 
 const recentlyViewed = [
@@ -185,15 +201,28 @@ const recentlyViewed = [
     {
         id: 2,
         title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-        image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg", 
+        image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
         price: "249 AED",
         rating: 5,
     },
-    
-   
+
+
 ];
 
 const Home = () => {
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
+
+    if (loading) {
+        return <Loading />
+    }
+
     return (
         <>
             <div style={{ width: "100%", minHeight: "100vh" }}>
@@ -207,8 +236,8 @@ const Home = () => {
                 <BannerSection2 bannerSection={bannerSection2} />
                 <RecommendedProducts productsCard={recommendedProducts} />
                 <RecentlyViewed productsCard={recentlyViewed} />
-                <BlogCard/>
-                <Newsletter/>
+                <BlogCard />
+                <Newsletter />
             </div>
         </>
     );

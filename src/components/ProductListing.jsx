@@ -45,7 +45,7 @@ const ProductListing = () => {
                                 ))}
                             </Grid>
                             {/* Pagination */}
-                            <Box mt={4} display="flex" justifyContent="center">
+                            <Box my={4} display="flex" justifyContent="left">
                                 <Pagination count={10} color="primary" />
                             </Box>
                         </Grid>

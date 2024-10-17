@@ -3,8 +3,26 @@ import { Box, Grid, Typography, Link, IconButton, Container } from '@mui/materia
 import { FaFacebook, FaInstagram, FaSnapchat, FaTiktok, FaYoutube, FaPhone } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { CiLocationOn } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+
+  const nevigate = useNavigate();
+
+  const handleNevigateTerms = () => {
+    nevigate('/terms-of-use');
+  }
+  const handleNevigatePrivacy = () => {
+    nevigate('/privacy-policy');
+  }
+  const handleNevigateCategory = () => {
+    nevigate('/category');
+  }
+
+  const handleNevigateContactUs = () => {
+    nevigate('/contact-us');
+  }
+
   return (
     <>
       <Box
@@ -43,7 +61,7 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} href="#" underline="none" color="inherit" display="block">
+                }} underline="none" color="inherit" display="block">
                   My Account
                 </Link>
                 <Link sx={{
@@ -51,7 +69,7 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} href="#" underline="none" color="inherit" display="block">
+                }} underline="none" color="inherit" display="block">
                   Orders History
                 </Link>
                 <Link sx={{
@@ -59,31 +77,31 @@ const Footer = () => {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} href="#" underline="none" color="inherit" display="block">
+                }} underline="none" color="inherit" display="block">
                   Wishlist
                 </Link>
-                <Link sx={{
+                <Link onClick={handleNevigatePrivacy} sx={{
                   ":hover": {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} href="#" underline="none" color="inherit" display="block">
+                }} underline="none" color="inherit" display="block">
                   Privacy
                 </Link>
-                <Link sx={{
+                <Link onClick={handleNevigateTerms} sx={{
                   ":hover": {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} href="#" underline="none" color="inherit" display="block">
+                }} underline="none" color="inherit" display="block">
                   Terms & Conditions
                 </Link>
-                <Link sx={{
+                <Link onClick={handleNevigateCategory} sx={{
                   ":hover": {
                     cursor: "pointer",
                     color: "#bb1f2a"
                   }
-                }} href="#" underline="none" color="inherit" display="block">
+                }} underline="none" color="inherit" display="block">
                   Category
                 </Link>
               </Box>
@@ -94,7 +112,7 @@ const Footer = () => {
               </Typography>
               <Box display="flex" alignItems="center" mb={1}>
                 <CiLocationOn />
-                <Typography sx={{
+                <Typography onClick={handleNevigateContactUs} sx={{
                   ":hover": {
                     cursor: "pointer",
                     color: "#bb1f2a"
@@ -179,7 +197,7 @@ const Footer = () => {
             borderTop: '1px solid #444',
           }}
         >
-          <Typography sx={{ py: { xs: 0, sm: 2} }} variant="body2">
+          <Typography sx={{ py: { xs: 0, sm: 2 } }} variant="body2">
             © 2020-2024 All Rights Reserved by <strong>AL SAAD FURNITURE EST</strong>
           </Typography>
         </Box>

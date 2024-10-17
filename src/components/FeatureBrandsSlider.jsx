@@ -3,15 +3,17 @@ import Carousel from "react-multi-carousel";
 import { Box, Link, useMediaQuery, useTheme, IconButton, Typography, Container } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const FeatureBrandsSlider = ({ FeaturedBrands }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
 
+    const nevigate = useNavigate();
 
-    const handleOnClick = (e, item) => {
-        e.stopPropagation();
+    const handleNavigate = () => {
+        nevigate(`/category/subcategory/productlisting`)
     };
 
     const CustomButtonGroup = ({ next, previous }) => (
@@ -82,7 +84,7 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                                     key={index}
                                     component={"a"}
                                     to={`/${item.slug}`}
-                                    onClick={(e) => handleOnClick(e, item)}
+                                    onClick={handleNavigate}
                                     draggable={false}
                                     sx={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100%' }}
                                 >
@@ -92,6 +94,7 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                                             display: "inline-block",
                                             justifyContent: "center",
                                             alignItems: "center",
+                                            cursor: "pointer",
                                         }}
                                     >
                                         <img

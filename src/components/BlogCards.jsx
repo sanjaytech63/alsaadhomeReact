@@ -35,7 +35,8 @@ const BlogCards = ({ blog }) => {
                         </IconButton>
                     </Box>
                     <Typography sx={{
-                        lineHeight: "28px", color: "#687188", display: "-webkit-box",
+                        lineHeight: "28px", color: "#687188", 
+                        display: "-webkit-box",
                         overflow: "hidden",
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: 2,

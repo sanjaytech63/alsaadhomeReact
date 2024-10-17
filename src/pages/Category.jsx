@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link,useNavigate } from 'react-router-dom';
-import catJsonData  from "../../src/blogData.json"
+import { Link, useNavigate } from 'react-router-dom';
+import catJsonData from "../../src/blogData.json"
 const Category = () => {
-const nevigate = useNavigate()
-   const [category,setCategory] = useState(catJsonData.categories)
+    const nevigate = useNavigate()
+    const [category, setCategory] = useState(catJsonData.categories)
     console.log(setCategory)
     const handleNevigate = () => {
         nevigate(`/category/subcategory`)
@@ -17,12 +17,12 @@ const nevigate = useNavigate()
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
-                        <Typography variant="h5" sx={{ color: "#292b2c",textTransform: "capitalize",fontWeight: "700",fontSize:{sm:"24px",xs:"16px"} }} >
+                        <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Category
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                             <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
-                            <Link  style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
+                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
                         </Breadcrumbs>
                     </Box>
                 </Container>
@@ -34,7 +34,7 @@ const nevigate = useNavigate()
                     <Grid container spacing={2} sx={{ pb: 4 }}>
                         {category.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
-                                <Box 
+                                <Box
                                     onClick={handleNevigate}
                                     sx={{
                                         position: 'relative',
@@ -64,7 +64,7 @@ const nevigate = useNavigate()
                                             width: '100%',
                                             color: '#fff',
                                             textAlign: 'center',
-                                            fontSize:"16px",
+                                            fontSize: "16px",
                                             py: 1,
                                         }}
                                     >

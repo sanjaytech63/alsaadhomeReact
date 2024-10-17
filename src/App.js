@@ -18,6 +18,8 @@ import Login from './auth/Login.jsx/Login';
 import Checkout from './pages/ChekOut';
 import ProductDetails from './components/ProductDetails';
 import NotFoundPage from './components/NotPageFound';
+import TermsConditions from './components/TermsConditions';
+import PrivacyPolice from './components/PrivacyPolice';
 
 function App() {
   return (
@@ -39,8 +41,10 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/chekout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/terms-of-use" element={<TermsConditions />} />
+          <Route path="/privacy-policy" element={<PrivacyPolice />} />
           <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        </Routes>  
         <Footer />
       </BrowserRouter>
     </>

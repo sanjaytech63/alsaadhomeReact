@@ -32,16 +32,18 @@ const Navbar = () => {
                     <AppBar position="static" sx={{ backgroundColor: 'white', boxShadow: 'none' }}>
                         <Toolbar sx={{ justifyContent: 'space-between', padding: "0px !important" }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <img src={logo} alt="logo" style={{ maxWidth: '100px', objectFit: "cover" }} />
+                                <Link to="/">
+                                    <img src={logo} alt="logo" style={{ maxWidth: '100px', objectFit: "cover" }} />
+                                </Link>
                             </Box>
-                            <Box sx={{ display: { xs: 'none', md: 'flex', fontFamily: "Poppins, sans-serif" }, alignItems: 'center' }}>
+                            <Box sx={{ display: { xs: 'none', md: 'flex', }, alignItems: 'center' }}>
                                 {navList.map((item, index) => (
                                     <NavLink
                                         className={({ isActive }) =>
                                             isActive ? "active" : "inactive"
                                         }
                                         to={`/${item.slug}`}
-                                        style={{ margin: '0 15px', textDecoration: 'none', textTransform: "uppercase", fontSize: '14px', }}
+                                        style={{ margin: '0 15px', fontWeight: '500',  fontFamily: "Poppins, sans-serif", textDecoration: 'none', textTransform: "uppercase", fontSize: '14px', }}
                                         key={index}
                                     >
                                         {item.name}
@@ -88,7 +90,7 @@ const Navbar = () => {
                                                 isActive ? "active" : "inactive"
                                             }
                                             to={`/${item.slug}`}
-                                            style={{ margin: '0 15px', textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
+                                            style={{ margin: '0 15px',fontWeight: '500',  fontFamily: "Poppins", textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
                                             key={index}
                                         >
                                             {item.name}

@@ -3,12 +3,17 @@ import Carousel from "react-multi-carousel";
 import { Box,  useMediaQuery, useTheme, IconButton, Container, Typography } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const DealsSlider = ({ DealsSlider }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const nevigate = useNavigate();
 
+    const handleNavigate = () => {
+        nevigate(`/category/subcategory/productlisting`)
+    };
 
 
     const CustomButtonGroup = ({ next, previous }) => (
@@ -32,7 +37,7 @@ const DealsSlider = ({ DealsSlider }) => {
                     },
                 }}>Deals for you</Typography>
                 <hr  className="mx-2"/>
-                <Box sx={{ width: "100%", position: "relative", my: 3 }}>
+                <Box sx={{ width: "100%", position: "relative", my: 3, }}>
                     <Carousel
                         additionalTransfrom={0}
                         autoPlaySpeed={3000}
@@ -70,7 +75,7 @@ const DealsSlider = ({ DealsSlider }) => {
                         ) :
                             (
                                 [...DealsSlider, ...DealsSlider].map((item, index) => (
-                                     <Box
+                                     <Box onClick={handleNavigate}
                                     component={'img'}
                                         key={index}
                                         draggable="false"
@@ -80,7 +85,8 @@ const DealsSlider = ({ DealsSlider }) => {
                                             width: "100%",
                                             height: matchesSM ? "200px" : "220px",
                                             objectFit: "cover",
-                                            padding: '0px 10px'
+                                            padding: '0px 10px',
+                                            cursor: "pointer",
                                         }}
                                     />
                                 ))

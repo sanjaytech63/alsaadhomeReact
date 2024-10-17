@@ -2,14 +2,19 @@ import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Box,  useMediaQuery, useTheme, IconButton, Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
+import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 const RecommendedProducts = ({ productsCard }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
+    const nevigate = useNavigate();
 
+    const handleNavigate = () => {
+        nevigate(`/category/subcategory/productlisting/productdetail`)
+    };
 
     const CustomButtonGroup = ({ next, previous }) => (
         <Box sx={{ position: "absolute", top: '50%', left: '-70px', right: '-70px', display: 'flex', justifyContent: 'space-between', transform: 'translateY(-50%)' }}>
@@ -79,7 +84,7 @@ const RecommendedProducts = ({ productsCard }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card key={item.id} sx={{ borderRadius: '8px', margin: { xs: 2, sm: "5px" } }}>
+                            <Card onClick={handleNavigate} key={item.id} sx={{ borderRadius: '8px', margin: { xs: 2, sm: "5px", cursor: "pointer" } }}>
                                 <Box position="relative">
                                     <Chip
                                         label="New"

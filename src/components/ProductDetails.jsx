@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Rating, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import { Container, Grid, Typography, Button, Box, List, ListItem, Link,Breadcrumbs, Rating, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
 import tamaraImg from "../../src/assets/tamara.svg";
 import { Add, Remove } from '@mui/icons-material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaFacebookF } from "react-icons/fa";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
@@ -92,6 +93,19 @@ const ProductDetails = () => {
 
     return (
         <div style={{ minHeight: "100vh" }}>
+            <Box sx={{ bgcolor: "#f7f8fb" }}>
+                <Container>
+                    <Box sx={{ display: { xs: "block", sm: "flex" }, justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
+                        <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
+                            Product Detail
+                        </Typography>
+                        <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
+                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
+                        </Breadcrumbs>
+                    </Box>
+                </Container>
+            </Box>
             <Container maxWidth="lg" sx={{ my: 5 }}>
                 <Grid container spacing={4}>
                     {/* Image Gallery */}
