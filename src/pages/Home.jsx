@@ -182,8 +182,8 @@ const Home = () => {
             <NewArrivalsSlider productsCard={productsCard} />
             <Products products={products} />
             <BannerSection2 bannerSection={bannerSection2} />
-            <RecommendedProducts productsCard={recommendedProducts} />
-            <RecentlyViewed productsCard={recentlyViewed} />
+            <RecommendedProducts productsCard={productsCard} />
+            <RecentlyViewed productsCard={productsCard} />
             <BlogCard />
             <Newsletter />
         </div>
