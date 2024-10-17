@@ -88,7 +88,7 @@ const ProductListing = () => {
                                 <FormControl sx={{}} size="small" variant="outlined">
                                     <Select
                                         sx={{
-                                           
+
                                             '&:focus': { backgroundColor: 'transparent' },
                                             display: 'flex',
                                             alignItems: 'center',

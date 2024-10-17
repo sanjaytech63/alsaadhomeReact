@@ -32,7 +32,6 @@ import NewArrivalsSlider from '../components/NewArrivalsSlider';
 import RecommendedProducts from '../components/RecommendedProducts';
 import RecentlyViewed from '../components/RecentlyViewed';
 import BlogCard from '../components/BlogCard';
-import Loading from "../components/Loading";
 
 const TopSliderData = [
     { id: 1, text: "Beds & Mattress", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395825.jpeg", },
@@ -210,19 +209,7 @@ const recentlyViewed = [
 ];
 
 const Home = () => {
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, []);
-
-    if (loading) {
-        return <Loading />
-    }
-
+   
     return (
         <>
             <div style={{ width: "100%", minHeight: "100vh" }}>
