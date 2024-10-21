@@ -22,6 +22,16 @@ const Footer = () => {
   const handleNevigateContactUs = () => {
     nevigate('/contact-us');
   }
+  const handleNevigateMyAccount = () => {
+    nevigate('/my-account');
+  }
+
+  const handleNevigateOderHistory = () => {
+    nevigate('/order-history');
+  }
+  const handleNevigateWishlist = () => {
+    nevigate('/wishlist');
+  }
 
   return (
     <>
@@ -57,7 +67,7 @@ const Footer = () => {
               <Box sx={{
                 lineHeight: 2.5,
               }}>
-                <Link sx={{
+                <Link onClick={handleNevigateMyAccount} sx={{
                   ":hover": {
                     cursor: "pointer",
                     color: "#bb1f2a"
@@ -65,7 +75,7 @@ const Footer = () => {
                 }} underline="none" fontSize={12} color="inherit" display="block">
                   My Account
                 </Link>
-                <Link sx={{
+                <Link onClick={handleNevigateOderHistory} sx={{
                   ":hover": {
                     cursor: "pointer",
                     color: "#bb1f2a"
@@ -73,7 +83,7 @@ const Footer = () => {
                 }} underline="none" color="inherit" fontSize={12} display="block">
                   Orders History
                 </Link>
-                <Link sx={{
+                <Link onClick={handleNevigateWishlist} sx={{
                   ":hover": {
                     cursor: "pointer",
                     color: "#bb1f2a"
@@ -198,7 +208,7 @@ const Footer = () => {
             borderTop: '1px solid #444',
           }}
         >
-          <Typography sx={{ py: { xs: 0, sm: 2 },fontSize:"14px" }} variant="body2">
+          <Typography sx={{ py: { xs: 0, sm: 2 }, fontSize: "14px" }} variant="body2">
             © 2020-2024 All Rights Reserved by <strong>AL SAAD FURNITURE EST</strong>
           </Typography>
         </Box>

@@ -27,10 +27,10 @@ const Blog = () => {
                 </Box>
                 <Container maxWidth="lg" sx={{ py: 5,  }}>
                     <Grid  container spacing={4} className='any' sx={{ display: "flex", flexDirection: {xs: "column-reverse !important", sm: "row !important"}}}>
-                        <Grid item xs={12} md={4}>
+                        <Grid item xs={12} md={3}>
                             <BlogSideBar />
                         </Grid>
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={9}>
                             <Grid container spacing={4}>
                                 {blogs.map((blog) => (
                                     <Grid item xs={12} sm={6} md={4} key={blog.id}>
@@ -38,10 +38,6 @@ const Blog = () => {
                                     </Grid>
                                 ))}
                             </Grid>
-                            {/* Pagination */}
-                            <Box my={4} display="flex" justifyContent="left">
-                                <Pagination count={10} color="primary" />
-                            </Box>
                         </Grid>
                     </Grid>
                 </Container>

@@ -20,6 +20,17 @@ import ProductDetails from './components/ProductDetails';
 import NotFoundPage from './components/NotPageFound';
 import TermsConditions from './components/TermsConditions';
 import PrivacyPolice from './components/PrivacyPolice';
+import BlogDetails from './components/BlogDetails';
+import SmartShoppingBedroom from './components/SmartShoppingBedroom';
+import SmartShoppingLivingRoom from './SmartShoppingLivingRoom';
+import Dashboard from './components/Dashboard';
+import MyAccount from './components/MyAccount';
+import OderHistory from './components/OderHistory';
+import MyAdderss from './components/MyAdderss';
+import AccountDeatils from './components/AccountDeatils';
+import WishList from './components/WishList';
+import ChangePassword from './components/ChangePassword';
+import Logout from './components/Logout';
 
 function App() {
   return (
@@ -43,8 +54,19 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/terms-of-use" element={<TermsConditions />} />
           <Route path="/privacy-policy" element={<PrivacyPolice />} />
+          <Route path="/blog-details" element={<BlogDetails />} />
+          <Route path="/smart-shopping-bedroom" element={<SmartShoppingBedroom />} />
+          <Route path="/smart-shopping-living-room" element={<SmartShoppingLivingRoom />} />
+          <Route path="/oder-history" element={<Dashboard />} />
+          <Route path="/my-account" element={<MyAccount />} />
+          <Route path="/order-history" element={<OderHistory />} />
+          <Route path="/my-address" element={<MyAdderss />} />
+          <Route path="/account-details" element={<AccountDeatils />} />
+          <Route path="/wishlist" element={<WishList />} />
+          <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<NotFoundPage />} />
-        </Routes>  
+        </Routes>
         <Footer />
       </BrowserRouter>
     </>

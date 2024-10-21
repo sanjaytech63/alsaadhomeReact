@@ -12,6 +12,7 @@ import {
 
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import { useNavigate } from 'react-router-dom';
 
 const blogsData = [
     {
@@ -40,25 +41,38 @@ const blogsData = [
 const BlogCard = () => {
     // const theme = useTheme();
     // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const navigate = useNavigate();
 
+    const handleNaigate = () => {
+        navigate("/blog-details");
+    }
     return (
         <div className="w-100 my-5">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
                 <Box sx={{ px: { xs: 2, sm: "0px" } }}>
-                    <Typography variant="h4"  sx={{ fontWeight: 600, mb: 2,textAlign:{sm:"center", xs:"left"} }}>
+                    <Typography variant="h4" sx={{ fontWeight: 600,fontSize:{sm:"24px",xs:"16px"}, mb: 2, textAlign: { sm: "center", xs: "left" } }}>
                         Blogs
                     </Typography>
-                    <Typography sx={{ color: "#687188", mb: 4,textAlign:{sm:"center", xs:"left"} }} variant="body1" align="center" >
+                    <Typography sx={{ color: "#687188", mb: 4,fontSize:{sm:"16px",xs:"14px"}, textAlign: { sm: "center", xs: "left" } }} variant="body1" align="center" >
                         We are pleased to provide educational information to help you choose your products
                     </Typography>
 
                     <Grid container spacing={3} justifyContent="center">
                         {blogsData.map((blog) => (
                             <Grid item xs={12} sm={6} md={4} key={blog.id}>
-                                <Card key={blog.id} sx={{ borderRadius: '8px', margin: "5px" }}>
+                                <Card onClick={handleNaigate} key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer" }}>
                                     <Box position="relative">
                                         <CardMedia
-                                            sx={{ minHeight: "233px", maxHeight: "233px", objectFit: "cover" }}
+                                            sx={{
+                                                minHeight: "233px",
+                                                maxHeight: "233px",
+                                                objectFit: "cover",
+                                                overflow: "hidden",
+                                                transition: "transform 0.3s ease-in-out",
+                                                "&:hover": {
+                                                    transform: "scale(1.1)",
+                                                },
+                                            }}
                                             component="img"
                                             image={blog.image}
                                             alt={blog.title}
@@ -66,7 +80,7 @@ const BlogCard = () => {
                                         />
                                     </Box>
                                     <CardContent>
-                                        <Typography variant="h6" sx={{ color: "#292b2c", fontWeight: 600, fontSize: "1rem", fontFamily: "Roboto, sans-serif" }} component="div">
+                                        <Typography variant="h6" sx={{ color: "#292b2c", fontWeight: 600, fontSize: { xs: "15px", sm: "1rem" }, fontFamily: "Roboto, sans-serif" }} component="div">
                                             {blog.title}
                                         </Typography>
                                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -76,7 +90,7 @@ const BlogCard = () => {
                                                 <ChatBubbleOutlineIcon sx={{ fontSize: '16px', color: 'gray' }} />
                                             </IconButton>
                                         </Box>
-                                        <Typography sx={{ lineHeight: "28px", color: "#687188" }} variant="body2">
+                                        <Typography sx={{ lineHeight: "28px", color: "#687188", fontSize: { xs: "12px", sm: "15px" }, }} variant="body2">
                                             {blog.description}
                                         </Typography>
                                     </CardContent>

@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Box, Typography, Divider, List, ListItem, ListItemText, Chip, CardMedia, Paper, InputBase, IconButton } from '@mui/material';
 import jsonData from "../../src/blogData.json";
 import SearchIcon from '@mui/icons-material/Search';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const BlogSideBar = () => {
     const [recentPosts, setRecentPosts] = useState(jsonData.recentPosts);
     const [archive, setArchive] = useState(jsonData.archive);
     const [tags, setTags] = useState(jsonData.tags);
-    console.log( setRecentPosts, setArchive, setTags );
+    console.log(setRecentPosts, setArchive, setTags);
 
 
     return (
@@ -50,10 +51,11 @@ const BlogSideBar = () => {
             <Divider />
             <Box my={4}>
                 <Typography variant="h6" gutterBottom>Archive</Typography>
-                <List>
+                <List sx={{ padding: "0px !important" }}>
                     {archive.map((month, index) => (
-                        <ListItem key={index}>
-                            <ListItemText primary={month} />
+                        <ListItem sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0px !important", my: 1 }} key={index}>
+                            <span><KeyboardArrowRightIcon /></span> <ListItemText primary={month} />
+                            <span>(1)</span>
                         </ListItem>
                     ))}
                 </List>

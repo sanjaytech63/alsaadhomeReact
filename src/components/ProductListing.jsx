@@ -17,6 +17,71 @@ const ProductListing = () => {
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
 
+    const productsCard = [
+        {
+            id: 1,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+            price: "199 AED",
+            rating: 4,
+        },
+        {
+            id: 2,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+            price: "249 AED",
+            rating: 5,
+        },
+        {
+            id: 3,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+            price: "199 AED",
+            rating: 4,
+        },
+        {
+            id: 4,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+            price: "249 AED",
+            rating: 5,
+        },
+        {
+            id: 5,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+            price: "199 AED",
+            rating: 4,
+        },
+        {
+            id: 6,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+            price: "249 AED",
+            rating: 5,
+        },
+        {
+            id: 7,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+            price: "199 AED",
+            rating: 4,
+        },
+        {
+            id: 8,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+            price: "249 AED",
+            rating: 5,
+        },
+        {
+            id: 9,
+            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+            price: "199 AED",
+            rating: 4,
+        },
+    ];
     return (
         <>
             <div style={{ minHeight: "100vh" }}>
@@ -36,7 +101,7 @@ const ProductListing = () => {
                 </Box>
                 <Container maxWidth="lg" sx={{ py: 5 }}>
                     <Box sx={{ mb: 4 }}>
-                        <Typography variant="body1" sx={{ lineHeight: "28px", color: "#687188" }}>
+                        <Typography variant="body1" sx={{ lineHeight: "28px", color: "#687188", fontSize: { xs: "12px", sm: "16px" }, }}>
                             Explore our luxurious collection of king-size comforters, designed to elevate your sleep experience. Choose from a variety of styles, including hotel-inspired comforters, elegant embroidery, classic plain designs, plush velvet, breathable cotton, and soft microfiber. Find the perfect king-size comforter to match your style and comfort needs.
                         </Typography>
                     </Box>
@@ -158,18 +223,19 @@ const ProductListing = () => {
                         </Grid>
                         <Grid item xs={12} md={9}>
                             <Grid container spacing={4}>
-                                {blogs.map((blog) => (
-                                    <Grid item xs={12} sm={6} md={4} key={blog.id}>
-                                        <ProductListingMainContant blog={blog} />
+                                {productsCard.map((product) => (
+                                    <Grid item xs={12} sm={6} md={4} key={product.id}>
+                                        <ProductListingMainContant productsCard={product} />
                                     </Grid>
                                 ))}
                             </Grid>
-                            {/* Pagination */}
-                            <Box my={4} display="flex" justifyContent="left">
-                                <Pagination count={10} color="primary" />
-                            </Box>
+
                         </Grid>
                     </Grid>
+                    {/* Pagination */}
+                    <Box sx={{ my: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <Pagination count={10} variant="outlined" shape="rounded" />
+                    </Box>
                 </Container>
             </div>
         </>

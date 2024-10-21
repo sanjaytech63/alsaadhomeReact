@@ -5,12 +5,12 @@ import { LiaGripVerticalSolid } from "react-icons/lia";
 import { CiUser } from "react-icons/ci";
 import { BsHandIndexThumb } from "react-icons/bs";
 import { BsCart3 } from "react-icons/bs";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const BottomNav = () => {
     const isMobile = useMediaQuery("(max-width: 768px)");
     const location = useLocation();
-
+    const navigate = useNavigate();
     if (!isMobile) return null;
 
     const getActiveLink = (path) => location.pathname === path;
@@ -20,8 +20,9 @@ const BottomNav = () => {
         { to: "/category", label: "Category", icon: <LiaGripVerticalSolid /> },
         { to: "/smart-shopping", label: "Smart S...", icon: <BsHandIndexThumb /> },
         { to: "/unboxing-challenge", label: "Cart", icon: <BsCart3 /> },
-        { to: "/login", label: "Account", icon: <CiUser /> },
+        { to: "/my-account", label: "Account", icon: <CiUser /> },
     ];
+
 
     return (
         <Box
@@ -38,7 +39,7 @@ const BottomNav = () => {
         >
             {links.map(({ to, label, icon }) => (
                 <Box key={to} sx={{ flex: 1, textAlign: 'center' }}>
-                    <Link
+                    <Link 
                         to={to}
                         style={{
                             textDecoration: "none",
