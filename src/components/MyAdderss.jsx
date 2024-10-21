@@ -32,16 +32,17 @@ const MyAddress = () => {
           </Box>
         </Container>
       </Box>
-
-      {/* Main Content Section */}
-      <Container sx={{ my: 4 }}>
-        <Grid container spacing={3}>
-          {/* Sidebar - Order History Menu */}
-          <Grid sx={{my:"50px", bgcolor: 'white', boxShadow: 1, borderRadius: 1, mt: 3, }} item xs={12} sm={4} md={3}>
-            <Dashboard selectItem={3} />
+      <Container sx={{ mt: 4 }}>
+        <Grid container spacing={2}>
+          {/* Sidebar */}
+          <Grid item xs={12} sm={3}>
+            <Box sx={{ bgcolor: 'white', boxShadow: 1 }}>
+              <Dashboard selectItem={3} />
+            </Box>
           </Grid>
-          {/* Main Content Area */}
-          <Grid item xs={12} sm={8} md={9}>
+
+          {/* Main Content */}
+          <Grid item sx={{mb:{sm:0,xs:5}}} xs={12} sm={9}>
             <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1 }}>
               <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <Typography

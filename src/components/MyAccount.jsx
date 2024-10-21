@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
+
 const MyAccount = () => {
     return (
-        <div style={{ minHeight: '100vh', }}>
-            {/* Header Section */}
+        <div style={{ minHeight: '100vh' }}>
             <Box sx={{ bgcolor: '#f7f8fb', py: "30px" }}>
                 <Container>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -34,16 +34,17 @@ const MyAccount = () => {
                 </Container>
             </Box>
 
-            {/* Main Content Section */}
             <Container sx={{ mt: 4 }}>
-                <Grid container spacing={3}>
-                    {/* Sidebar - Order History Menu */}
-                    <Grid sx={{my:"50px", bgcolor: 'white', boxShadow: 1, borderRadius: 1, mt: 3, }} item xs={12} sm={4} md={3}>
-                        <Dashboard selectItem={1} />
+                <Grid container spacing={2}>
+                    {/* Sidebar */}
+                    <Grid item xs={12} sm={3}>
+                        <Box sx={{ bgcolor: 'white', boxShadow: 1 }}>
+                            <Dashboard selectItem={1} />
+                        </Box>
                     </Grid>
-                    {/* Main Content Area */}
-                    <Grid item xs={12} sm={8} md={9}>
-                        {/* "0 0 4px 0 #e9e9e9" boxshaddow */}
+
+                    {/* Main Content */}
+                    <Grid item sx={{mb:{sm:0,xs:5}}} xs={12} sm={9}>
                         <Box sx={{ bgcolor: 'white', p: 3, boxShadow: 1 }}>
                             <Typography
                                 variant="h5"
@@ -52,14 +53,49 @@ const MyAccount = () => {
                                 Dashboard
                             </Typography>
                             <hr />
-                            <Box sx={{ p: 1, display: "flex", alignItems: "center", gap: 2 }}>
-                                <Box sx={{ borderRadius: "50%", width: "150px", height: "150px" }} component={"img"} src="https://al-saad-home.mo.cloudinary.net/uploads/customers/1729493589.jpg" alt="img" loading='lazy' />
+                            <Box
+                                sx={{
+                                    p: { sm: 1, xs: 0 },
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: { sm: 2, xs: 1 },
+                                    flexDirection: { xs: 'column', sm: 'row' },
+                                    textAlign: { xs: 'center', sm: 'left' }
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        borderRadius: '50%',
+                                        width: { sm: '150px', xs: '70px' },
+                                        height: { sm: '150px', xs: '70px' }
+                                    }}
+                                    component={'img'}
+                                    src="https://al-saad-home.mo.cloudinary.net/uploads/customers/1729493589.jpg"
+                                    alt="Profile"
+                                    loading="lazy"
+                                />
                                 <Box>
-                                    <Typography variant="h6" x={{ color: '#292b2c', textTransform: 'capitalize', fontWeight: 500, fontSize: { sm: '14px', xs: '14px' }, ":hover": { color: "#bb1f2a" } }} >
-                                        <span><PersonOutlineOutlinedIcon /></span>   y2code dev
+                                    <Typography
+                                        sx={{
+                                            color: '#292b2c',
+                                            textTransform: 'capitalize',
+                                            fontWeight: 500,
+                                            fontSize: { sm: '14px', xs: '12px' },
+                                            ':hover': { color: '#bb1f2a' }
+                                        }}
+                                    >
+                                        <PersonOutlineOutlinedIcon /> y2code dev
                                     </Typography>
-                                    <Typography variant="h6" x={{ color: '#292b2c', textTransform: 'capitalize', fontWeight: 500, fontSize: { sm: '14px', xs: '14px' }, ":hover": { color: "#bb1f2a" } }} >
-                                        <span><MailOutlinedIcon /></span>   y2codedev@gmail.com
+                                    <Typography
+                                        sx={{
+                                            color: '#292b2c',
+                                            textTransform: 'capitalize',
+                                            fontWeight: 500,
+                                            fontSize: { sm: '14px', xs: '12px' },
+                                            ':hover': { color: '#bb1f2a' }
+                                        }}
+                                    >
+                                        <MailOutlinedIcon /> y2codedev@gmail.com
                                     </Typography>
                                 </Box>
                             </Box>

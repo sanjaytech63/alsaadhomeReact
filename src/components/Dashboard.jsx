@@ -17,7 +17,7 @@ const Dashboard = ({ selectItem }) => {
     const handleNavigation = (item) => {
         navigate(item.path);
     };
-    
+
     const menuItems = [
         {
             id: 1,
@@ -64,7 +64,7 @@ const Dashboard = ({ selectItem }) => {
     ];
 
     return (
-        <Box sx={{}}>
+        <Box  >
             <List>
                 {menuItems.map((item) => (
                     <ListItem

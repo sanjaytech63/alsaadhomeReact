@@ -32,22 +32,23 @@ const OderHistory = () => {
           </Box>
         </Container>
       </Box>
-
-      {/* Main Content Section */}
-      <Container sx={{ my: 4 }}>
-        <Grid container spacing={3}>
-          {/* Sidebar - Order History Menu */}
-          <Grid sx={{my:"50px", bgcolor: 'white', boxShadow: 1, borderRadius: 1, mt: 3, }} item xs={12} sm={4} md={3}>
-            <Dashboard selectItem={2} />
+      <Container sx={{ mt: 4 }}>
+        <Grid container spacing={2}>
+          {/* Sidebar */}
+          <Grid item xs={12} sm={3}>
+            <Box sx={{ bgcolor: 'white', boxShadow: 1 }}>
+              <Dashboard selectItem={2} />
+            </Box>
           </Grid>
-          {/* Main Content Area */}
-          <Grid item xs={12} sm={8} md={9}>
-            <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1,height:"60vh" }}>
+
+          {/* Main Content */}
+          <Grid item sx={{mb:{sm:0,xs:5}}} xs={12} sm={9}>
+            <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1, height: "60vh" }}>
               <Typography
                 variant="h5"
                 sx={{ color: '#292b2c', textTransform: 'capitalize', fontWeight: 700, fontSize: { sm: '24px', xs: '16px' } }}
               >
-                 Oder History
+                Oder History
               </Typography>
               <hr />
               {/* Add more content here */}

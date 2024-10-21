@@ -32,16 +32,17 @@ const AccountDeatils = () => {
           </Box>
         </Container>
       </Box>
-
-      {/* Main Content Section */}
-      <Container sx={{ my: 4 }}>
-        <Grid container spacing={3}>
-          {/* Sidebar - Order History Menu */}
-          <Grid sx={{my:"50px", bgcolor: 'white', boxShadow: 1, borderRadius: 1, mt: 3, }} item xs={12} sm={4} md={3}>
-            <Dashboard selectItem={4} />
+      <Container sx={{ mt: 4 }}>
+        <Grid container spacing={2}>
+          {/* Sidebar */}
+          <Grid item xs={12} sm={3}>
+            <Box sx={{ bgcolor: 'white', boxShadow: 1 }}>
+              <Dashboard selectItem={4} />
+            </Box>
           </Grid>
-          {/* Main Content Area */}
-          <Grid item xs={12} sm={8} md={9}>
+
+          {/* Main Content */}
+          <Grid item sx={{mb:{sm:0,xs:5}}} xs={12} sm={9}>
             <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1 }}>
               <Typography
                 variant="h5"
@@ -87,7 +88,7 @@ const AccountDeatils = () => {
               <Grid item xs={12} sm={6} my={2} >
                 <TextField fullWidth label="Your Name" required />
               </Grid>
-              <Button variant='contained' sx={{ color: "#fff", backgroundColor: "#bb1f2a",py:1.5,px:4 }}>Save</Button>
+              <Button variant='contained' sx={{ color: "#fff", backgroundColor: "#bb1f2a", py: 1.5, px: 4 }}>Save</Button>
             </Box>
           </Grid>
         </Grid>
