@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, ListItemText, Badge, Popover, Divider, Button, Typography } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
 import { Link, NavLink } from 'react-router-dom';
@@ -9,6 +9,38 @@ import SearchBar from '../SearchBar';
 const Navbar = () => {
     const [open, setOpen] = React.useState(false);
     const [openSearch, setSearchOpen] = useState(false);
+
+
+    const [cartItems, setCartItems] = useState([
+        { id: 1, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Luxury Faux Cashmere Digital Carpet", price: 249, quantity: 1 },
+        { id: 2, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+    ]);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openCart = Boolean(anchorEl);
+    const id = openCart ? 'simple-popover' : undefined;
+    const handleOpenCart = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseCart = () => {
+        setAnchorEl(null);
+    };
     const navList = [
         { name: "Home", slug: "" },
         { name: "Category", slug: "category" },
@@ -43,7 +75,7 @@ const Navbar = () => {
                                             isActive ? "active" : "inactive"
                                         }
                                         to={`/${item.slug}`}
-                                        style={{ margin: '0 15px', fontWeight: '500',  fontFamily: "Poppins, sans-serif", textDecoration: 'none', textTransform: "uppercase", fontSize: '14px', }}
+                                        style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins, sans-serif", textDecoration: 'none', textTransform: "uppercase", fontSize: '14px', }}
                                         key={index}
                                     >
                                         {item.name}
@@ -56,8 +88,10 @@ const Navbar = () => {
                                     <SearchBar setSearchOpen={setSearchOpen} openSearch={openSearch} />
                                 </IconButton>
                                 <Link to="/cart">
-                                    <IconButton>
-                                        <BsCart3 color='#292b2c' size={20} />
+                                    <IconButton onClick={handleOpenCart} aria-describedby={id} color="inherit">
+                                        <Badge badgeContent={cartItems.length} color="error">
+                                            <BsCart3 color='#292b2c' size={20} />
+                                        </Badge>
                                     </IconButton>
                                 </Link>
                                 <IconButton
@@ -67,6 +101,50 @@ const Navbar = () => {
                                 >
                                     <IoMenuOutline size={28} />
                                 </IconButton>
+                                <Popover sx={{top: "15px"}}
+                                    id={id}
+                                    open={openCart}
+                                    anchorEl={anchorEl}
+                                    onClose={handleCloseCart}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'center',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'center',
+                                    }}
+                                    PaperProps={{
+                                        style: { width: '300px' }
+                                    }}
+                                >
+                                    <Box p={2}>
+                                        <Typography variant="h6">Your Cart</Typography>
+                                        <Divider />
+                                        <List sx={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                            {cartItems.map((item) => (
+                                                <Box key={item.id} sx={{ display: 'flex', gap: 1, justifyContent: 'space-between' }}>
+                                                    <img style={{ width: "50px", marginBottom: "5px", height: "50px" }} src={item.img} alt="cart-img" />
+                                                    <ListItemText sx={{
+                                                        fontSize: "14px", fontWeight: "500",
+                                                        display: "-webkit-box",
+                                                        overflow: "hidden",
+                                                        WebkitBoxOrient: "vertical",
+                                                        WebkitLineClamp: 2,
+                                                        wordBreak: "break-all",
+                                                        whiteSpace: "normal",
+                                                        textOverflow: "ellipsis"
+                                                    }} primary={`${item.quantity}x ${item.name}`} />
+                                                    <Typography>{item.price}AED</Typography>
+                                                </Box>
+                                            ))}
+                                        </List>
+                                        <Box display="flex" justifyContent="space-between" mt={2}>
+                                            <Button variant="contained" sx={{backgroundColor:"#444"}} >View Cart</Button>
+                                            <Button variant="contained" sx={{backgroundColor:"#bb1f2a"}}>Checkout</Button>
+                                        </Box>
+                                    </Box>
+                                </Popover>
                             </Box>
                         </Toolbar>
                     </AppBar>
@@ -90,7 +168,7 @@ const Navbar = () => {
                                                 isActive ? "active" : "inactive"
                                             }
                                             to={`/${item.slug}`}
-                                            style={{ margin: '0 15px',fontWeight: '500',  fontFamily: "Poppins", textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
+                                            style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins", textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
                                             key={index}
                                         >
                                             {item.name}

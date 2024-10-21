@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Select, MenuItem, FormControl, Button,Container } from '@mui/material';
+import { Select, MenuItem, FormControl, Button, Container } from '@mui/material';
 import Login from '../../auth/Login.jsx/Login';
 import Register from '../../auth/Login.jsx/Register';
 
@@ -41,7 +41,7 @@ const Header = () => {
   }, [language]);
   return (
     <div style={{ borderBottom: "1px solid #ccc" }} className="w-100 py-2">
-       <Container>
+      <Container>
         <div className="row align-items-center">
           <div className="col-8 d-flex">
             <div className="">
@@ -62,16 +62,16 @@ const Header = () => {
                   }}
                 >
                   <MenuItem sx={{
-                    
+
                     color: "#333",
-                    ".css-1x9jmrf":{
+                    ".css-1x9jmrf": {
                       fontSize: "14px",
                     }
-                  }} value="en">EN</MenuItem>
+                  }} value="en"><img style={{maxWidth:"20px",height:"18px"}} src="https://al-saad-home.mo.cloudinary.net/assets/front/images/english.svg" alt="flag-icon" /> EN</MenuItem>
                   <MenuItem sx={{
                     fontSize: "14px",
                     color: "#333",
-                  }} value="ar">AR</MenuItem>
+                  }} value="ar"><img style={{maxWidth:"20px",height:"18px"}} src="https://al-saad-home.mo.cloudinary.net/assets/front/images/united-arab-emirates.png" alt="flag-icon" />AR</MenuItem>
                 </Select>
               </FormControl>
             </div>
