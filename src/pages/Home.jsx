@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import TopSlider from '../components/TopSlider';
 import BannderSlider from '../components/BannderSlider';
-import img1 from '../assets/pro1.jpg';
+import img1 from '../assets/pro3.jpg';
 import img2 from '../assets/pro2.jpg';
-import img3 from '../assets/pro3.jpg';
+import img3 from '../assets/pro1.jpg';
 import FeatureBrandsSlider from '../components/FeatureBrandsSlider';
 import DealsSlider from '../components/DealsSlider';
 import Products from '../components/Products';

@@ -7,30 +7,18 @@ import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
 
 const Navbar = () => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [openSearch, setSearchOpen] = useState(false);
 
+    const data = [
 
-    const [cartItems, setCartItems] = useState([
         { id: 1, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Luxury Faux Cashmere Digital Carpet", price: 249, quantity: 1 },
         { id: 2, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, quantity: 1 },
         { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-    ]);
+        { id: 4, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+        { id: 5, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+    ]
+
     const [anchorEl, setAnchorEl] = useState(null);
     const openCart = Boolean(anchorEl);
     const id = openCart ? 'simple-popover' : undefined;
@@ -89,7 +77,7 @@ const Navbar = () => {
                                 </IconButton>
                                 <Link to="/cart">
                                     <IconButton onClick={handleOpenCart} aria-describedby={id} color="inherit">
-                                        <Badge badgeContent={cartItems.length} color="error">
+                                        <Badge badgeContent={data.length} color="error">
                                             <BsCart3 color='#292b2c' size={20} />
                                         </Badge>
                                     </IconButton>
@@ -101,7 +89,7 @@ const Navbar = () => {
                                 >
                                     <IoMenuOutline size={28} />
                                 </IconButton>
-                                <Popover sx={{top: "15px"}}
+                                <Popover sx={{ top: "15px" }}
                                     id={id}
                                     open={openCart}
                                     anchorEl={anchorEl}
@@ -122,7 +110,7 @@ const Navbar = () => {
                                         <Typography variant="h6">Your Cart</Typography>
                                         <Divider />
                                         <List sx={{ maxHeight: '200px', overflowY: 'auto' }}>
-                                            {cartItems.map((item) => (
+                                            {data.map((item) => (
                                                 <Box key={item.id} sx={{ display: 'flex', gap: 1, justifyContent: 'space-between' }}>
                                                     <img style={{ width: "50px", marginBottom: "5px", height: "50px" }} src={item.img} alt="cart-img" />
                                                     <ListItemText sx={{
@@ -140,8 +128,8 @@ const Navbar = () => {
                                             ))}
                                         </List>
                                         <Box display="flex" justifyContent="space-between" mt={2}>
-                                            <Button variant="contained" sx={{backgroundColor:"#444"}} >View Cart</Button>
-                                            <Button variant="contained" sx={{backgroundColor:"#bb1f2a"}}>Checkout</Button>
+                                            <Button variant="contained" sx={{ backgroundColor: "#444" }} >View Cart</Button>
+                                            <Button variant="contained" sx={{ backgroundColor: "#bb1f2a" }}>Checkout</Button>
                                         </Box>
                                     </Box>
                                 </Popover>
