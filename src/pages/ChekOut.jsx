@@ -37,8 +37,8 @@ const Checkout = () => {
                             <Typography color='#687188' sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="h6">Do you have a coupon?</Typography>
                         </Box>
                         <Box sx={{ border: '1px solid #e0e0e0', padding: 3 }}>
-                            <Grid container alignItems="stretch">
-                                <Grid item xs={8}>
+                            <Grid container alignItems="stretch" gap={2}>
+                                <Grid item xs={7}>
                                     <TextField
                                         fullWidth
                                         label="Enter Coupon Code"
@@ -47,10 +47,7 @@ const Checkout = () => {
                                             height: '52px',
                                             '& .MuiOutlinedInput-root': {
                                                 height: '100%',
-                                                borderTopLeftRadius: '10px',
-                                                borderTopRightRadius: '0px',
-                                                borderBottomLeftRadius: '10px',
-                                                borderBottomRightRadius: '0px',
+
                                             },
                                         }}
                                     />
@@ -63,10 +60,6 @@ const Checkout = () => {
                                             height: '52px',
                                             padding: 0,
                                             backgroundColor: "#bb1f2a",
-                                            borderTopLeftRadius: '0px',
-                                            borderBottomLeftRadius: '0px',
-                                            borderTopRightRadius: '10px',
-                                            borderBottomRightRadius: '10px',
                                         }}
                                     >
                                         Apply Coupon
@@ -94,8 +87,10 @@ const Checkout = () => {
                             <TextField fullWidth label="Name" variant="outlined" sx={{ marginBottom: 2 }} />
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                 <FormControl fullWidth>
-                                    <Select fullWidth
+                                    <Select
+                                        fullWidth
                                         variant="outlined"
+                                        defaultValue="Select Country Code"
                                         sx={{
                                             padding: '1px 4px',
                                             border: '1px solid #ccc',
@@ -107,21 +102,37 @@ const Checkout = () => {
                                             }
                                         }}
                                     >
-                                        <MenuItem sx={{
-                                            fontSize: "14px",
-                                            color: "#333",
-                                        }} value="+ 971">+ 971</MenuItem>
-                                        <MenuItem sx={{
-                                            fontSize: "14px",
-                                            color: "#333",
-                                        }} value="+ 968">+ 968</MenuItem>
+                                        <MenuItem value="Select Country Code" disabled hidden>
+                                            Select Country Code
+                                        </MenuItem>
+                                        <MenuItem
+                                            sx={{
+                                                fontSize: "14px",
+                                                color: "#333",
+                                            }}
+                                            value="+ 971"
+                                        >
+                                            + 971
+                                        </MenuItem>
+                                        <MenuItem
+                                            sx={{
+                                                fontSize: "14px",
+                                                color: "#333",
+                                            }}
+                                            value="+ 968"
+                                        >
+                                            + 968
+                                        </MenuItem>
                                     </Select>
                                 </FormControl>
+
                                 <TextField fullWidth label="Enter Mobile Number" required />
                             </Box>
+
                             <Box sx={{ display: 'flex', mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                 <FormControl fullWidth>
                                     <Select fullWidth
+                                        defaultValue="Select Country Code"
                                         variant="outlined"
                                         sx={{
                                             padding: '1px 4px',
@@ -134,6 +145,9 @@ const Checkout = () => {
                                             }
                                         }}
                                     >
+                                        <MenuItem value="Select Country Code" disabled hidden>
+                                            Select Country Code
+                                        </MenuItem>
                                         <MenuItem sx={{
                                             fontSize: "14px",
                                             color: "#333",
@@ -151,12 +165,12 @@ const Checkout = () => {
                             <Button fullWidth variant="contained" color="error" sx={{ marginBottom: 2 }}>
                                 Shipping Address
                             </Button>
-                            <Select fullWidth variant="outlined" defaultValue="" sx={{ marginBottom: 2 }}>
-                                <MenuItem value="">Select Country</MenuItem>
+                            <Select fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
+                                <MenuItem value="Select Country">Select Country</MenuItem>
                                 <MenuItem value="uae">United Arab Emirates</MenuItem>
                             </Select>
-                            <Select fullWidth variant="outlined" defaultValue="" sx={{ marginBottom: 2 }}>
-                                <MenuItem value="">Select City</MenuItem>
+                            <Select fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
+                                <MenuItem value="Select Country">Select Country</MenuItem>
                                 <MenuItem value="dubai">Dubai</MenuItem>
                             </Select>
                             <TextField fullWidth label="Address" variant="outlined" sx={{ marginBottom: 2 }} />
@@ -215,7 +229,7 @@ const Checkout = () => {
                                     <img
                                         style={{ width: "50px", height: "50px", objectFit: "cover" }}
                                         src={product.imgSrc}
-                                         loading="lazy"
+                                        loading="lazy"
                                         alt="product"
                                     />
                                     <Typography>{product.name}</Typography>
@@ -327,7 +341,7 @@ const Checkout = () => {
                                             Sharia compliant! Tamara <strong><a href='https://www.tamara.com/' className='text-black'>Learn more</a></strong>
                                         </Typography>
                                     </Box>
-                                    <img src={tamaraImg}  loading="lazy" alt="tamaraImg" />
+                                    <img src={tamaraImg} loading="lazy" alt="tamaraImg" />
                                 </Box>
                             </Box>
                             <FormControlLabel

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Container, Box, Typography, Pagination, Breadcrumbs, Button, } from '@mui/material';
+
+import { Grid, Container, Box, Typography, Pagination, Breadcrumbs, Button, PaginationItem, } from '@mui/material';
 // import jsonData from "../../src/blogData.json";
 import BlogCards from '../components/BlogCards';
 import BlogSideBar from '../components/BlogSideBar';
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import instance from '../EndPoint';
 import Loading from '../components/Loading';
+import { useState, useEffect } from 'react';
 
 // ?page=1&limit=10
 const Blog = () => {
@@ -20,7 +21,7 @@ const Blog = () => {
         setLoading(true);
         try {
             const response = await instance.get(`/randomproducts/?page=${pageNumber}&limit=10`);
-            setBlog((prevBlog) => [...prevBlog, ...response.data.data.data]);
+            setBlog(response.data.data.data);
             setTotalPages(response.data.data.totalPages);
         } catch (error) {
             console.error("Error fetching blogs:", error);
@@ -29,7 +30,10 @@ const Blog = () => {
         }
     };
 
-  
+
+    const handleChangePage = (e,newPage) => {
+        setPageNumber(newPage);
+    };
 
 
     useEffect(() => {
@@ -71,9 +75,19 @@ const Blog = () => {
                     </Grid>
                 </Grid>
                 {/* Pagination */}
-                <Box sx={{ my: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <Pagination page={pageNumber} count={totalPages} onChange={(e, page) => setPageNumber(page)} variant="outlined" shape="rounded" />
-                </Box>
+                {totalPages > 1 && (
+                    <Box display="flex" justifyContent="center" my={4}>
+                        <Pagination
+                            sx={{ fontSize: { xs: '12px', sm: '14px' } }}
+                            count={totalPages}
+                            page={pageNumber}
+                            size='small'
+                            onChange={handleChangePage}
+                            shape='rounded'
+                            color='error'
+                        />
+                    </Box>
+                )}
             </Container>
         </Box>
     );

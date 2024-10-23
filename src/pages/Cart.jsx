@@ -1,13 +1,21 @@
 import { Box, Typography, Container, Breadcrumbs, Card, CardContent, Grid, IconButton, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaShoppingCart } from "react-icons/fa";
 import { Add, Remove, Delete } from '@mui/icons-material';
 import SearchBar from '../components/SearchBar';
 
 const Cart = ({ image, title, price, color, size, pattern }) => {
-    
+    const [quantity, setQuantity] = useState(0);
+
+    const incrementQuantity = () => {
+        setQuantity(quantity + 1);
+    }
+
+    const decrementQuantity = () => {
+        setQuantity(quantity - 1);
+    }
     return (
         <Card sx={{ display: 'flex', mb: 2 }}>
             <Box sx={{ width: { xs: '40%', md: '30%' }, display: 'flex', alignItems: 'center' }}>
@@ -15,7 +23,7 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
                     component="img"
                     src={image}
                     alt={title}
-                     loading="lazy"
+                    loading="lazy"
                     sx={{
                         maxWidth: { sm: '188px', xs: '110px' },
                         height: '100%',
@@ -28,12 +36,12 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
                     <Typography variant="h6" noWrap>{title}</Typography>
                     <Typography variant="body1" sx={{ mt: 1 }}><strong>Price:</strong> <strong>{price} AED</strong></Typography>
                     {color && <Typography variant="body1"><strong>Color: </strong>  <span style={{ backgroundColor: color, borderRadius: '50%', padding: '0 10px' }}> </span></Typography>}
-                    {pattern && <Typography variant="body1"><strong>Pattern: </strong> <img src={pattern} alt="pattern"  loading="lazy" style={{ width: '20px', height: '20px' }} /></Typography>}
+                    {pattern && <Typography variant="body1"><strong>Pattern: </strong> <img src={pattern} alt="pattern" loading="lazy" style={{ width: '20px', height: '20px' }} /></Typography>}
                     <Typography variant="body1"><strong>Size: </strong> <strong>{size}</strong></Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                        <IconButton sx={{ p: 1, backgroundColor: "#eee", mr: 1 }}><Remove /></IconButton>
-                        <Typography sx={{ border: "solid 1px #ddd", px: 2 }} variant="body1">1</Typography>
-                        <IconButton sx={{ p: 1, backgroundColor: "#eee", ml: 1 }}><Add /></IconButton>
+                        <IconButton onClick={decrementQuantity} sx={{ p: 1, backgroundColor: "#eee", mr: 1 }}><Remove /></IconButton>
+                        <Typography sx={{ border: "solid 1px #ddd", px: 2 }} variant="body1">{quantity}</Typography>
+                        <IconButton onClick={incrementQuantity} sx={{ p: 1, backgroundColor: "#eee", ml: 1 }}><Add /></IconButton>
                         <IconButton sx={{ color: 'red', ml: 'auto' }}><Delete /></IconButton>
                     </Box>
                 </CardContent>
@@ -67,7 +75,7 @@ const CartPage = () => {
         <>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
-                    <Box sx={{ display: {sm:"flex",xs:"block"}, justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
+                    <Box sx={{ display: { sm: "flex", xs: "block" }, justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Shopping Cart
                         </Typography>

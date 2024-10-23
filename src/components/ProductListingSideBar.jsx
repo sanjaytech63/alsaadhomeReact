@@ -120,7 +120,9 @@ const ProductListingSideBar = () => {
                                 },
                                 px: 1,
                                 borderRadius: "4px",
+                                cursor: "pointer",
                             }}
+                            onClick={() => document.getElementById(`radio-${tag}-${index}`).click()}
                         >
                             <input
                                 type="radio"
@@ -144,6 +146,7 @@ const ProductListingSideBar = () => {
                         </Box>
                     ))}
                 </Box>
+
             </Box>
 
             <Box mt={4}>
@@ -176,11 +179,13 @@ const ProductListingSideBar = () => {
                                 },
                                 px: 1,
                                 borderRadius: "4px",
+                                cursor: "pointer",
                             }}
+                            onClick={() => document.getElementById(`radio-${label}-${index}`).click()}
                         >
                             <input
                                 type="radio"
-                                id={`radio-${index}`}
+                                id={`radio-${label}-${index}`}
                                 name="brand"
                                 style={{ marginRight: "8px" }}
                             />
@@ -232,11 +237,13 @@ const ProductListingSideBar = () => {
                                 },
                                 px: 1,
                                 borderRadius: "4px",
+                                cursor: "pointer",
                             }}
+                            onClick={() => document.getElementById(`radio-${label}-${index}`).click()}
                         >
                             <input
                                 type="radio"
-                                id={`radio-${index}`}
+                                id={`radio-${label}-${index}`}
                                 name="brand"
                                 style={{ marginRight: "8px" }}
                             />
@@ -273,7 +280,6 @@ const ProductListingSideBar = () => {
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                     {material.map(({ text }, index) => (
-
                         <Box
                             key={index}
                             sx={{
@@ -287,11 +293,13 @@ const ProductListingSideBar = () => {
                                 },
                                 px: 1,
                                 borderRadius: "4px",
+                                cursor: "pointer",
                             }}
+                            onClick={() => document.getElementById(`radio-${text}-${index}`).click()}
                         >
                             <input
                                 type="radio"
-                                id={`radio-${index}`}
+                                id={`radio-${text}-${index}`}
                                 name="brand"
                                 style={{ marginRight: "8px" }}
                             />
@@ -343,11 +351,14 @@ const ProductListingSideBar = () => {
                                 },
                                 px: 1,
                                 borderRadius: "4px",
+                                cursor: "pointer",
                             }}
+                            onClick={() => document.getElementById(`radio-${name}-${index}`).click()}
+
                         >
                             <input
                                 type="radio"
-                                id={`radio-${index}`}
+                                id={`radio-${name}-${index}`}
                                 name="brand"
                                 style={{ marginRight: "8px" }}
                             />
@@ -369,7 +380,7 @@ const ProductListingSideBar = () => {
                 </Box>
             </Box>
 
-            <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4, alignItems: "center" }}>
+            <Box sx={{ display: "flex", gap: 2, mt: 4, alignItems: "center" }}>
                 <Button variant="contained" sx={{ backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Apply</Button>
                 <Button variant="contained" sx={{ backgroundColor: "#343a40", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Reset</Button>
             </Box>

@@ -31,6 +31,8 @@ import AccountDeatils from './components/AccountDeatils';
 import WishList from './components/WishList';
 import ChangePassword from './components/ChangePassword';
 import Logout from './components/Logout';
+import { ToastContainer } from 'react-toastify';
+import Register from './auth/Login.jsx/Register';
 
 function App() {
   return (
@@ -52,6 +54,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/chekout" element={<Checkout />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/terms-of-use" element={<TermsConditions />} />
           <Route path="/privacy-policy" element={<PrivacyPolice />} />
           <Route path="/blog-details" element={<BlogDetails />} />
@@ -69,6 +72,7 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
+      <ToastContainer containerId="containerA"/>
     </>
   );
 }

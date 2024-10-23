@@ -4,7 +4,7 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useNavigate } from 'react-router-dom';
 import Slecton from './Slecton';
 
-const BlogCards = ({ blog,loading }) => {
+const BlogCards = ({ blog, loading }) => {
 
 
     const navigate = useNavigate();
@@ -40,7 +40,7 @@ const BlogCards = ({ blog,loading }) => {
                             display: "-webkit-box",
                             overflow: "hidden",
                             WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 2,
+                            WebkitLineClamp: 1,
                             wordBreak: "break-all",
                             whiteSpace: "normal",
                             textOverflow: "ellipsis", color: "#292b2c", fontWeight: 600, fontSize: { xs: "12px", sm: "15px" }, fontFamily: "Roboto, sans-serif"

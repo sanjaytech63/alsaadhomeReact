@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Grid, Modal, TextField, Typography, Select, MenuItem, FormControl, } from '@mui/material';
+import { Box, Button, Grid, Modal, TextField, Typography, Select, MenuItem, CircularProgress, } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
@@ -28,26 +28,26 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
 
     const navigate = useNavigate();
 
-    const handleSubmit = async (event) => {
+    const userRegister = async (event) => {
         event.preventDefault();
         if (!formData.username || !formData.email || !formData.password) {
-            toast.error("All fields are required.");
+            toast.error("All fields are required.", { containerId: 'register' });
+            return;
+        }
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(formData.email)) {
+            toast.error("Please enter a valid email address.", { containerId: 'register' });
             return;
         }
 
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailPattern.test(formData.email)) {
-            toast.error("Please enter a valid email address.");
-            return;
-        }
 
         try {
             setLoading(true);
             const response = await axiosInstance.post(`/register`, formData);
             console.log('Response:', response);
-            if (response.status) {
+            if (response.status === 201) {
+                toast.success(response.data.message, { containerId: 'register' });
                 handleClose();
-                toast.success(response.data.message);
                 navigate('/');
                 setFormData({
                     email: "",
@@ -55,17 +55,23 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                     username: "",
                 });
             }
-            setLoading(false);
         } catch (error) {
             console.error('Error:', error);
-            console.log('Error response:', error.response);
             if (error.response && error.response.status === 400) {
-                toast.error(error.response.data.message || 'User already exists.');
+                toast.error("User already exists. Please enter a different username or email.", { containerId: 'register' });
             } else {
-                toast.error(error.response.data.message || 'Registration failed, please try again.');
+                toast.error("Registration failed, please try again.", { containerId: 'register' });
+                setFormData({
+                    email: "",
+                    password: "",
+                    username: "",
+                });
             }
+        } finally {
+            setLoading(false);
         }
     };
+
 
     const handleChange = (event) => {
         setFormData({
@@ -86,7 +92,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
             >
                 <Box
                     sx={{
-                        width: { xs: '90%', sm: '80%', md: '60%', lg: '40%' },
+                        width: { xs: '90%', sm: '50%', md: '50%', lg: '40%' },
                         bgcolor: 'background.paper',
                         borderRadius: 2,
                         boxShadow: 24,
@@ -117,10 +123,22 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                             <TextField onChange={handleChange} name='password' value={formData.password} fullWidth label="Password" required />
                         </Grid>
                         <Grid item xs={12}>
-                            <Button onClick={handleSubmit} fullWidth variant="contained" sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}>
-                                {loading ? 'Loading...' : 'Register'}
+                            <Button
+                                onClick={userRegister}
+                                fullWidth
+                                variant="contained"
+                                sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}
+                            >
+                                {loading ? (
+                                    <>
+                                        <CircularProgress size={20} sx={{ color: "#fff", mr: 3 }} /> <span>Loading...</span>
+                                    </>
+                                ) : (
+                                    'Register'
+                                )}
                             </Button>
                         </Grid>
+
                         <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", my: 1 }}>
                             <Typography variant="body2" color='#6c757d'>Already have an account?
                                 <span onClick={switchToLogin} style={{ cursor: 'pointer', color: '#bb1f2a', fontWeight: 'bold' }}> Log in</span>
@@ -129,7 +147,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                     </Grid>
                 </Box>
             </Modal>
-            <ToastContainer />
+            <ToastContainer containerId="register" />
         </div>
     );
 };

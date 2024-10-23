@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
-import { Box, Button, Grid, Modal, TextField, Typography, Select, MenuItem, FormControl, Checkbox, } from '@mui/material';
+import { Box, Button, Grid, Modal, TextField, Typography, Select, MenuItem, FormControl, Checkbox, CircularProgress, } from '@mui/material';
 import { FaFacebookF } from "react-icons/fa";
 import AppleIcon from '@mui/icons-material/Apple';
 import { Close } from '@mui/icons-material';
-const Login = ({ handleClose, open, handleOpenRegister }) => {
+
+
+const Login = ({ handleClose, open, handleOpenRegister,loginUser,loading,handleChange,formData }) => {
+  
     const [language, setLanguage] = useState('+ 971');
-    const handleLanguageChange = (event) => {
-        setLanguage(event.target.value);
-    };
+
+    // const handleLanguageChange = (event) => {
+    //     setLanguage(event.target.value);
+    // };
 
     const switchToRegister = () => {
         handleClose();
         handleOpenRegister();
     };
+
     return (
         <div style={{}}>
             <Modal sx={{ overflowY: "scroll" }}
@@ -41,7 +46,7 @@ const Login = ({ handleClose, open, handleOpenRegister }) => {
                         <Close sx={{ cursor: 'pointer', }} onClick={handleClose} />
                     </Box>
                     <Grid container spacing={3}>
-                        <Grid item xs={12} sm={12}>
+                        {/* <Grid item xs={12} sm={12}>
                             <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#6c757d'> Mobile Number</Typography>
                             <Box sx={{ display: 'flex', mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                 <FormControl fullWidth>
@@ -72,13 +77,17 @@ const Login = ({ handleClose, open, handleOpenRegister }) => {
                                 </FormControl>
                                 <TextField fullWidth label="Enter Mobile Number" required />
                             </Box>
+                        </Grid> */}
+                        <Grid item xs={12} sm={12}>
+                            <Typography sx={{ fontSize: { sm: "18px", xs: "14px" }, mb: 2 }} variant="body2" color='#6c757d'> Email</Typography>
+                            <TextField type="email" name='email' value={formData.email} onChange={handleChange} fullWidth label="Enter Email" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                                 <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#6c757d'> Password</Typography>
                                 <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#bb1f2a'> Login by Email</Typography>
                             </Box>
-                            <TextField fullWidth label="Enter Password" required />
+                            <TextField type="password" name='password' value={formData.password} onChange={handleChange} fullWidth label="Enter Password" required />
                         </Grid>
                         <Grid item xs={12}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -90,10 +99,22 @@ const Login = ({ handleClose, open, handleOpenRegister }) => {
                             </Box>
                         </Grid>
                         <Grid item xs={12}>
-                            <Button fullWidth variant="contained" sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}>
-                                Login
+                            <Button
+                                onClick={loginUser}
+                                fullWidth
+                                variant="contained"
+                                sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}
+                            >
+                                {loading ? (
+                                    <>
+                                        <CircularProgress size={20} sx={{ color: "#fff", mr: 3 }} /> <span>Loading...</span>
+                                    </>
+                                ) : (
+                                    'Login'
+                                )}
                             </Button>
                         </Grid>
+
                         <Grid item xs={12}>
                             <div className='d-flex align-items-center justify-content-space-between gap-2'>
                                 <span style={{ backgroundColor: "#ddd", height: "1px", width: "100%", }}></span>
@@ -120,6 +141,7 @@ const Login = ({ handleClose, open, handleOpenRegister }) => {
                     </Grid>
                 </Box>
             </Modal>
+            
         </div>
     );
 }

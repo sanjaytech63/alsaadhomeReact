@@ -111,8 +111,8 @@ const Navbar = () => {
                                         <Divider />
                                         <List sx={{ maxHeight: '200px', overflowY: 'auto' }}>
                                             {data.map((item) => (
-                                                <Box key={item.id} sx={{ display: 'flex', gap: 1, justifyContent: 'space-between' }}>
-                                                    <img style={{ width: "50px", marginBottom: "5px", height: "50px" }} src={item.img} alt="cart-img" />
+                                                <Box key={item.id} sx={{ display: 'flex', gap: 3, justifyContent: 'space-between', alignItems: 'center' }}>
+                                                    <img style={{ width: "50px",  height: "50px" }} src={item.img} alt="cart-img" />
                                                     <ListItemText sx={{
                                                         fontSize: "14px", fontWeight: "500",
                                                         display: "-webkit-box",
@@ -123,7 +123,7 @@ const Navbar = () => {
                                                         whiteSpace: "normal",
                                                         textOverflow: "ellipsis"
                                                     }} primary={`${item.quantity}x ${item.name}`} />
-                                                    <Typography>{item.price}AED</Typography>
+                                                    <Typography sx={{ fontSize: "14px", fontWeight: "500",}}>{item.price}AED</Typography>
                                                 </Box>
                                             ))}
                                         </List>
