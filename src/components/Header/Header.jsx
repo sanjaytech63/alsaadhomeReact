@@ -210,6 +210,7 @@ const Header = () => {
                 sx={{
                   color: 'black',
                   fontWeight: 'bold',
+                  fontSize: { sm: "14px", xs: "12px" },
                   ":hover": {
                     color: '#bb1f2a',
                     background: '#fff',
