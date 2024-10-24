@@ -8,7 +8,6 @@ import { FaFacebookF } from "react-icons/fa";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Carousel from "react-multi-carousel";
-import ReactImageMagnify from 'react-image-magnify';
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
     price: 149,
@@ -118,21 +117,11 @@ const ProductDetails = () => {
                     {/* Image Gallery */}
                     <Grid item xs={12} md={6}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <ReactImageMagnify
-                                    {...{
-                                        smallImage: {
-                                            alt: 'Selected Product',
-                                            isFluidWidth: true,
-                                            src: selectedImage,
-                                        },
-                                        largeImage: {
-                                            src: selectedImage,
-                                            width: 1200,
-                                            height: 800,
-                                        },
-                                        enlargedImagePosition: 'over',
-                                        style: { borderRadius: '8px' },
-                                    }}
+                                <img
+                                    src={selectedImage}
+                                    loading="lazy"
+                                    alt="Selected"
+                                    style={{ width: '100%', borderRadius: '8px' }}
                                 />
                             <Box sx={{ width: '100%', position: 'relative', mt: 2 }}>
                                 <Carousel
