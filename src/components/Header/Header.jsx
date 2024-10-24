@@ -7,7 +7,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axiosInstance from '../../auth/RegisterEndPoint';
+import axiosInstance from '../../auth/apiEndPoint';
+import ApiService from '../../auth/ApiService/ApiService.jsx';
 
 const Header = () => {
   const [loading, setLoading] = useState(false);
@@ -66,7 +67,6 @@ const Header = () => {
     }
 
     try {
-      // Attach the token to the Authorization header
       const response = await axiosInstance.post(`/logout`, {}, {
         headers: {
           Authorization: `Bearer ${JSON.parse(token)}`
@@ -116,7 +116,7 @@ const Header = () => {
 
     try {
       setLoading(true);
-      const response = await axiosInstance.post(`/login`, formData);
+      const response = await ApiService.loginUser(formData);
       if (response.data.success) {
         handleCloseLogin();
         const { accessToken, refreshToken } = response.data.data;

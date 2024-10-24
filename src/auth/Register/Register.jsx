@@ -4,8 +4,8 @@ import { Close } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axiosInstance from '../RegisterEndPoint';
 import { useNavigate } from 'react-router-dom';
+import ApiService from '../ApiService/ApiService';
 
 const Register = ({ handleClose, open, handleOpenLogin }) => {
     const [loading, setLoading] = useState(false);
@@ -43,7 +43,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
 
         try {
             setLoading(true);
-            const response = await axiosInstance.post(`/register`, formData);
+            const response = await ApiService.registerUser(formData);
             console.log('Response:', response);
             if (response.status === 201) {
                 toast.success(response.data.message, { containerId: 'register' });
