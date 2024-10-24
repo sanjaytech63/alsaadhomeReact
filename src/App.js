@@ -32,7 +32,7 @@ import WishList from './components/WishList';
 import ChangePassword from './components/ChangePassword';
 import Logout from './components/Logout';
 import { ToastContainer } from 'react-toastify';
-import Register from './auth/Login.jsx/Register';
+import Register from './auth/Register/Register';
 
 function App() {
   return (

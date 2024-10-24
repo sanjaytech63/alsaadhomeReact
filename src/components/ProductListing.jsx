@@ -234,7 +234,7 @@ const ProductListing = () => {
                     </Grid>
                     {/* Pagination */}
                     <Box sx={{ my: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <Pagination  size='small' count={10} variant="outlined" shape="rounded" />
+                        <Pagination size='small' count={10} variant="outlined" shape="rounded" />
                     </Box>
                 </Container>
             </div>

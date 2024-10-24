@@ -70,7 +70,7 @@ const SmartShopping = () => {
                                     sx={{
                                         position: 'absolute',
                                         top: "0%",
-                                        zIndex: 9999,
+                                       
                                         left: "50%",
                                         transform: 'translate(-50%, -50%)',
                                         display: 'flex',
@@ -129,7 +129,7 @@ const SmartShopping = () => {
                                     sx={{
                                         position: 'absolute',
                                         top: "0%",
-                                        zIndex: 9999,
+                                       
                                         left: "50%",
                                         transform: 'translate(-50%, -50%)',
                                         display: 'flex',

@@ -7,7 +7,8 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaFacebookF } from "react-icons/fa";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
+import Carousel from "react-multi-carousel";
+import ReactImageMagnify from 'react-image-magnify';
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
     price: 149,
@@ -26,6 +27,12 @@ const product = {
         hardness: "Super Soft"
     },
     images: [
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 1' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 2' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 3' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 1' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 2' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 3' },
         { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 1' },
         { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 2' },
         { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 3' }
@@ -111,28 +118,72 @@ const ProductDetails = () => {
                     {/* Image Gallery */}
                     <Grid item xs={12} md={6}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                            <img src={selectedImage} loading="lazy" alt="Selected" style={{ width: '100%', borderRadius: '8px' }} />
-                            <Grid container spacing={1} sx={{ marginTop: 2 }}>
-                                {product.images.map((img, idx) => (
-                                    <Grid item xs={4} key={idx}>
-                                        <img
-                                            src={img.src}
-                                            alt={img.alt}
-                                            loading="lazy"
-                                            onClick={() => setSelectedImage(img.src)}
-                                            style={{
-                                                width: '100%',
-                                                cursor: 'pointer',
-                                                border: selectedImage === img.src ? '1px solid lightgray' : '1px solid #bb1f2a',
-                                                borderRadius: '8px'
-                                            }}
-                                        />
-                                    </Grid>
-                                ))}
-                            </Grid>
+                                <ReactImageMagnify
+                                    {...{
+                                        smallImage: {
+                                            alt: 'Selected Product',
+                                            isFluidWidth: true,
+                                            src: selectedImage,
+                                        },
+                                        largeImage: {
+                                            src: selectedImage,
+                                            width: 1200,
+                                            height: 800,
+                                        },
+                                        enlargedImagePosition: 'over',
+                                        style: { borderRadius: '8px' },
+                                    }}
+                                />
+                            <Box sx={{ width: '100%', position: 'relative', mt: 2 }}>
+                                <Carousel
+                                    additionalTransfrom={0}
+                                    autoPlaySpeed={3000}
+                                    renderButtonGroupOutside
+                                    arrows={false}
+                                    draggable={true}
+                                    infinite={true}
+                                    responsive={{
+                                        desktop: {
+                                            breakpoint: { max: 3000, min: 1024 },
+                                            items: 3,
+                                        },
+                                        laptop: {
+                                            breakpoint: { max: 1024, min: 768 },
+                                            items: 3,
+                                        },
+                                        tablet: {
+                                            breakpoint: { max: 768, min: 464 },
+                                            items: 3,
+                                        },
+                                        mobile: {
+                                            breakpoint: { max: 464, min: 0 },
+                                            items: 3,
+                                        },
+                                    }}
+                                    showDots={false}
+                                    slidesToSlide={3}
+                                    swipeable={true}
+                                >
+                                    {product.images && product.images.map((img, idx) => (
+                                        <Box sx={{ px: 1 }}>
+                                            < img key={idx}
+                                                src={img.src}
+                                                alt={img.alt}
+                                                loading="lazy"
+                                                onClick={() => setSelectedImage(img.src)}
+                                                style={{
+                                                    width: '100%',
+                                                    cursor: 'pointer',
+                                                    border: selectedImage === img.src ? '1px solid lightgray' : '1px solid #bb1f2a',
+                                                    borderRadius: '8px',
+                                                }}
+                                            />
+                                        </Box>
+                                    ))}
+                                </Carousel>
+                            </Box>
                         </Box>
                     </Grid>
-
                     {/* Product Details */}
                     <Grid item xs={12} md={6}>
                         <Box sx={{}}>

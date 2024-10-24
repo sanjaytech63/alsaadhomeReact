@@ -35,7 +35,7 @@ import BlogCard from '../components/BlogCard';
 
 
 const TopSliderData = [
-    { id: 1, text: "Beds & Mattress", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395825.jpeg", },
+    { id: 1, text: "Bedding", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395825.jpeg", },
     { id: 2, text: "Carpets", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395848.jpeg", },
     {
         id: 3, text: "Lighting ", src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395866.jpeg",

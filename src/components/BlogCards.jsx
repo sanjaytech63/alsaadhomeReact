@@ -2,11 +2,16 @@ import { Card, CardContent, CardMedia, Typography, Box, IconButton, Rating, Skel
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useNavigate } from 'react-router-dom';
+import BlogShimmer from './BlogShimmer';
 
-const BlogCards = ({ blog }) => {
+const BlogCards = ({ blog,loading }) => {
     const navigate = useNavigate();
     const handleNavigative = () => {
         navigate("/blog-details");
+    }
+
+    if(loading){
+        return <BlogShimmer/>
     }
 
     return (

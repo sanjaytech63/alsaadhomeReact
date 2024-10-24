@@ -5,8 +5,8 @@ import AppleIcon from '@mui/icons-material/Apple';
 import { Close } from '@mui/icons-material';
 
 
-const Login = ({ handleClose, open, handleOpenRegister,loginUser,loading,handleChange,formData }) => {
-  
+const Login = ({ handleClose, open, handleOpenRegister, loginUser, loading, handleChange, formData }) => {
+
     const [language, setLanguage] = useState('+ 971');
 
     // const handleLanguageChange = (event) => {
@@ -141,7 +141,7 @@ const Login = ({ handleClose, open, handleOpenRegister,loginUser,loading,handleC
                     </Grid>
                 </Box>
             </Modal>
-            
+
         </div>
     );
 }

@@ -18,11 +18,13 @@ const Blog = () => {
     const [totalPages, setTotalPages] = useState(1);
 
     const fetchProducts = async (pageNumber) => {
-        setLoading(true);
+       
         try {
+            setLoading(true);
             const response = await instance.get(`/randomproducts/?page=${pageNumber}&limit=10`);
             setBlog(response.data.data.data);
             setTotalPages(response.data.data.totalPages);
+            setLoading(false);
         } catch (error) {
             console.error("Error fetching blogs:", error);
         } finally {
@@ -40,9 +42,9 @@ const Blog = () => {
         fetchProducts(pageNumber);
     }, [pageNumber]);
 
-    if (loading) {
-        return <Loading />
-    }
+    // if (loading) {
+    //     return <Loading />
+    // }
 
     return (
         <Box sx={{ minHeight: "100vh", }}>

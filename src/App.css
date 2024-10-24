@@ -42,3 +42,13 @@ body {
   transform: scale(1.1);
 }
 
+.react-multi-carousel-dot button {
+  background-color: #bb1f2a !important;
+  width: 20px !important;
+  height: 20px !important;
+  border: #bb1f2a solid 2px !important;
+}
+
+.react-multi-carousel-dot--active button {
+  background-color: #fff !important;
+}

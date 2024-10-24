@@ -34,7 +34,7 @@ const BottomNav = () => {
                 bottom: 0,
                 boxShadow: 2,
                 backgroundColor: "#fff",
-                zIndex: 100,
+                zIndex: 9999,
             }}
         >
             {links.map(({ to, label, icon }) => (

@@ -7,7 +7,6 @@ const BlogSideBar = () => {
     const [recentPosts, setRecentPosts] = useState(jsonData.recentPosts);
     const [archive, setArchive] = useState(jsonData.archive);
     const [tags, setTags] = useState(jsonData.tags);
-    console.log(setRecentPosts, setArchive, setTags);
 
 
     return (

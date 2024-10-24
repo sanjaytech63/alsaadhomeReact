@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Select, MenuItem, FormControl, Button, Container } from '@mui/material';
 import Login from '../../auth/Login.jsx/Login';
-import Register from '../../auth/Login.jsx/Register';
+import Register from '../../auth/Register/Register.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useNavigate } from 'react-router-dom';
@@ -198,7 +198,7 @@ const Header = () => {
                     }}
                   >
                     <MenuItem value="Oman">Oman</MenuItem>
-                    <MenuItem value="United Arab Emirates">United Arab Emirates</MenuItem>
+                    <MenuItem value="United Arab Emirates">United Arab</MenuItem>
                   </Select>
                 </FormControl>
               </div>

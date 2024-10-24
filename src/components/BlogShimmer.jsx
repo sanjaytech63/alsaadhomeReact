@@ -1,7 +1,7 @@
 import { Box, Skeleton } from '@mui/material'
 import React from 'react'
 
-const Slecton = () => {
+const BlogShimmer = () => {
     return (
         <Box sx={{ borderRadius: '8px', mb: 4 }}>
             <Skeleton variant="rectangular" animation="wave" height="233px" width="100%" sx={{ borderRadius: '8px 8px 0 0' }} />
@@ -25,4 +25,4 @@ const Slecton = () => {
     )
 }
 
-export default Slecton
+export default BlogShimmer
