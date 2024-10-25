@@ -5,12 +5,11 @@ import { LiaGripVerticalSolid } from "react-icons/lia";
 import { CiUser } from "react-icons/ci";
 import { BsHandIndexThumb } from "react-icons/bs";
 import { BsCart3 } from "react-icons/bs";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const BottomNav = () => {
     const isMobile = useMediaQuery("(max-width: 768px)");
     const location = useLocation();
-    const navigate = useNavigate();
     if (!isMobile) return null;
 
     const getActiveLink = (path) => location.pathname === path;

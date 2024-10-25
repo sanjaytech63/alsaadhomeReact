@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Select, MenuItem, FormControl, Button, Container,Box } from '@mui/material';
+import { Select, MenuItem, FormControl, Button, Container } from '@mui/material';
 import Login from '../../auth/Login.jsx/Login';
 import Register from '../../auth/Register/Register.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -154,8 +154,8 @@ const Header = () => {
       <CssBaseline />
       <div style={{ borderBottom: "1px solid #ccc" }} className="w-100 py-2">
         <Container>
-          <Box display="flex" alignItems="center" p={0}>
-            <Box flex={9} p={0} display="flex" justifyContent={language === 'ar' ? 'flex-start' : 'flex-start'}>
+          <div className="row align-items-center">
+            <div className={`col-9 d-flex ${language === 'ar' ? 'justify-content-start' : 'justify-content-start'}`}>
               <FormControl>
                 <Select
                   value={language}
@@ -172,45 +172,39 @@ const Header = () => {
                     },
                   }}
                 >
-                  <MenuItem sx={{ alignItems: "center", fontSize: "14px" }} value="en">
-                    <img
-                      src="https://al-saad-home.mo.cloudinary.net/assets/front/images/english.svg"
-                      alt="flag-icon"
-                      style={{ maxWidth: "20px", height: "16px", marginRight: "10px" }}
-                    /> EN
+                  <MenuItem sx={{ alignItems: "center", fontSize: "14px", }} value="en">
+                    <img style={{ maxWidth: "20px", height: "16px", marginRight: "10px" }} src="https://al-saad-home.mo.cloudinary.net/assets/front/images/english.svg" alt="flag-icon" /> EN
                   </MenuItem>
-                  <MenuItem sx={{ alignItems: "center", fontSize: "14px" }} value="ar">
-                    <img
-                      src="https://al-saad-home.mo.cloudinary.net/assets/front/images/united-arab-emirates.png"
-                      alt="flag-icon"
-                      style={{ maxWidth: "20px", height: "14px", marginRight: "10px" }}
-                    /> AR
+                  <MenuItem sx={{ alignItems: "center", fontSize: "14px", }} value="ar">
+                    <img style={{ maxWidth: "20px", height: "14px", marginRight: "10px" }} src="https://al-saad-home.mo.cloudinary.net/assets/front/images/united-arab-emirates.png" alt="flag-icon" /> AR
                   </MenuItem>
                 </Select>
               </FormControl>
-              <FormControl>
-                <Select
-                  value={country}
-                  onChange={handleCountryChange}
-                  variant="outlined"
-                  sx={{
-                    padding: '1px 4px',
-                    border: 'none',
-                    '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-                    ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                      padding: "3.5px 0px",
-                      fontSize: "14px",
-                      color: "#333",
-                    },
-                  }}
-                >
-                  <MenuItem value="Oman">Oman</MenuItem>
-                  <MenuItem value="United Arab Emirates">United Arab</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
+              <div>
+                <FormControl>
+                  <Select
+                    value={country}
+                    onChange={handleCountryChange}
+                    variant="outlined"
+                    sx={{
+                      padding: '1px 4px',
+                      border: 'none',
+                      '.MuiOutlinedInput-notchedOutline': { border: 'none' },
+                      ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
+                        padding: "3.5px 0px",
+                        fontSize: "14px",
+                        color: "#333",
+                      },
+                    }}
+                  >
+                    <MenuItem value="Oman">Oman</MenuItem>
+                    <MenuItem value="United Arab Emirates">United Arab</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
 
-            <Box flex={3} textAlign={language === 'ar' ? 'start' : 'end'}>
+            <div className={`col-3 ${language === 'ar' ? 'text-start' : 'text-end'}`}>
               <Button
                 onClick={token ? userLogout : handleOpenLogin}
                 sx={{
@@ -239,9 +233,8 @@ const Header = () => {
                 handleOpenLogin={handleOpenLogin}
                 handleClose={handleCloseRegister}
               />
-            </Box>
-          </Box>
-
+            </div>
+          </div>
         </Container>
         <ToastContainer containerId="login" />
       </div>

@@ -4,6 +4,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link, useNavigate } from 'react-router-dom';
 import catJsonData from "../../src/blogData.json"
 const Category = () => {
+    
     const nevigate = useNavigate()
     const [category, setCategory] = useState(catJsonData.categories)
     console.log(setCategory)

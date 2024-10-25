@@ -1,4 +1,320 @@
 {
+  "topSlider": [
+    {
+      "id": 1,
+      "text": "Bedding",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395825.jpeg"
+    },
+    {
+      "id": 2,
+      "text": "Carpets",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395848.jpeg"
+    },
+    {
+      "id": 3,
+      "text": "Lighting ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395866.jpeg"
+    },
+    {
+      "id": 4,
+      "text": " Furniture",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395781.jpeg"
+    },
+    {
+      "id": 5,
+      "text": " Bedding",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg"
+    },
+    {
+      "id": 6,
+      "text": "Curtains ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395757.jpeg"
+    },
+    {
+      "id": 7,
+      "text": " Tableware",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395701.jpeg"
+    },
+    {
+      "id": 8,
+      "text": "Kitchen Essentials ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395803.jpeg"
+    },
+    {
+      "id": 9,
+      "text": "Gardening Supplies ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395885.jpeg"
+    },
+    {
+      "id": 10,
+      "text": "Toys ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395948.jpeg"
+    }
+  ],
+  "featureBrands": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617183227.jpeg"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171371.jpeg"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171561.jpeg"
+    },
+    {
+      "id": 4,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171499.jpeg"
+    },
+    {
+      "id": 5,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171787.jpeg"
+    },
+    {
+      "id": 6,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171344.jpeg"
+    },
+    {
+      "id": 7,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171822.jpeg"
+    },
+    {
+      "id": 8,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171714.jpeg"
+    },
+    {
+      "id": 9,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171499.jpeg"
+    },
+    {
+      "id": 10,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171787.jpeg"
+    },
+    {
+      "id": 11,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171344.jpeg"
+    },
+    {
+      "id": 12,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171822.jpeg"
+    },
+    {
+      "id": 13,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171371.jpeg"
+    }
+  ],
+  "dealsSlider": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/mattress1719324716.png"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/duvet-cover1723016133.jpg"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/beds1721910782.jpg"
+    },
+    {
+      "id": 4,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/bathroom-accessories-21719326201.png"
+    },
+    {
+      "id": 5,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/silk1719324454.png"
+    },
+    {
+      "id": 6,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/hospitality1719324486.png"
+    }
+  ],
+  "bannerSection1": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/whatsapp-image-2024-09-23-at-14-39-28-e30168a61727088375.jpg"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/mattress-banner-11719125300.jpg"
+    }
+  ],
+  "bannerSection2": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/towel-banner1712324714.jpg"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/kitchen1719326296.png"
+    }
+  ],
+  "recommendedProducts": [
+    {
+      "id": 1,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+      "price": "199 AED",
+      "rating": 4
+    },
+    {
+      "id": 2,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "179 AED",
+      "rating": 3
+    },
+    {
+      "id": 4,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "179 AED",
+      "rating": 4
+    }
+  ],
+  "recentlyViewedProducts": [
+    {
+      "id": 1,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+      "price": "199 AED",
+      "rating": 4
+    },
+    {
+      "id": 2,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    }
+  ],
+  "newArrivals": [
+    {
+      "id": 1,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+      "price": "199 AED",
+      "rating": 4
+    },
+    {
+      "id": 2,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "179 AED",
+      "rating": 3
+    },
+    {
+      "id": 4,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "179 AED",
+      "rating": 4
+    }
+  ],
+  "bannerSliderData": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/beding-11719324280.png"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/bathroom-11719324354.png"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/pillow1719324400.png"
+    }
+  ],
+  "imageData": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/carington-031723280021.jpg"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/daren-gy-561723279953.jpg"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/crown-3471723278798.jpg"
+    },
+    {
+      "id": 4,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/belinda-amw-27485-beige1718881732.jpg"
+    },
+    {
+      "id": 5,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/geometry-awm-27391-taupe1723280280.jpg"
+    },
+    {
+      "id": 6,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/24-21706780940.jpg"
+    },
+    {
+      "id": 7,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/48-petroleum-21718881949.jpg"
+    },
+    {
+      "id": 8,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/red21706781536.jpg"
+    },
+    {
+      "id": 9,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/verona-q-0011723282223.jpg"
+    },
+    {
+      "id": 10,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/21706781596.jpg"
+    },
+    {
+      "id": 11,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/high-crest-cotton-mattress-topper-11685197057.jpeg"
+    },
+    {
+      "id": 12,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/spring-breeze-31685195479.jpg"
+    },
+    {
+      "id": 13,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/winter-flower-31685195506.jpg"
+    },
+    {
+      "id": 14,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/jameel-11685195593.jpg"
+    },
+    {
+      "id": 15,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/japanese-cherry-blossom-11685195620.jpg"
+    },
+    {
+      "id": 16,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/towel-banner1712324714.jpg"
+    },
+    {
+      "id": 17,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/kitchen1719326296.png"
+    },
+    {
+      "id": 18,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/29/thumb/shutterstock_18449552951729412423.jpg"
+    }
+  ],
   "blogPosts": [
     {
       "id": 1,
