@@ -6,7 +6,6 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const TopSlider = ({ topSlider }) => {
-    console.log(topSlider,"=====")
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
