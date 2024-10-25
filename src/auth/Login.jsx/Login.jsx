@@ -20,7 +20,7 @@ const Login = ({ handleClose, open, handleOpenRegister, loginUser, loading, hand
 
     return (
         <div style={{}}>
-            <Modal sx={{ overflowY: "scroll" }}
+            <Modal sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"

@@ -34,6 +34,7 @@ import Logout from './components/Logout';
 import { ToastContainer } from 'react-toastify';
 import Register from './auth/Register/Register';
 
+
 function App() {
   return (
     <>
@@ -72,7 +73,7 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
-      <ToastContainer containerId="containerA"/>
+      <ToastContainer containerId="containerA" />
     </>
   );
 }

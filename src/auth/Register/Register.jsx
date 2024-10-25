@@ -83,8 +83,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
 
     return (
         <div>
-            <Modal
-                sx={{ overflowY: "scroll" }}
+            <Modal sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
