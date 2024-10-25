@@ -155,7 +155,7 @@ const Header = () => {
       <div style={{ borderBottom: "1px solid #ccc" }} className="w-100 py-2">
         <Container>
           <div className="row align-items-center">
-            <div className={`col-9 d-flex ${language === 'ar' ? 'justify-content-start' : 'justify-content-start'}`}>
+            <div className={`header_left_sec col-9 d-flex ${language === 'ar' ? 'justify-content-start' : 'justify-content-start'}`}>
               <FormControl>
                 <Select
                   value={language}

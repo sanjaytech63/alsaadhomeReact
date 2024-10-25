@@ -1,69 +1,70 @@
 body {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
 }
 
 .custom-select {
-  outline: none;
-  border: 1px solid #ccc;
+	outline: none;
+	border: 1px solid #ccc;
 }
 
 .custom-select:focus {
-  outline: none;
-  border-color: #ccc;
+	outline: none;
+	border-color: #ccc;
 }
 
 .active {
-  color: #bb1f2a;
-
+	color: #bb1f2a;
 }
 
 .inactive {
-  color: #292b2c;
+	color: #292b2c;
 }
 
-
 .inactive:hover {
-  color: #bb1f2a;
+	color: #bb1f2a;
 }
 
 .active:hover {
-  color: #bb1f2a;
+	color: #bb1f2a;
 }
 
-
 .blog-image {
-  transition: transform 0.3s ease-in-out;
+	transition: transform 0.3s ease-in-out;
 }
 
 .blog-card:hover .blog-image {
-  transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .react-multi-carousel-dot button {
-  background-color: #bb1f2a !important;
-  width: 20px !important;
-  height: 20px !important;
-  border: #bb1f2a solid 2px !important;
+	background-color: #bb1f2a !important;
+	width: 20px !important;
+	height: 20px !important;
+	border: #bb1f2a solid 2px !important;
 }
 
 .react-multi-carousel-dot--active button {
-  background-color: #fff !important;
+	background-color: #fff !important;
 }
 
 .react-multiple-carousel__arrow {
-  background: #bb1f2a !important;
-  border-radius: 5px !important;
-  min-width: 35px !important;
-  min-height: 35px !important;
+	background: #bb1f2a !important;
+	border-radius: 5px !important;
+	min-width: 35px !important;
+	min-height: 35px !important;
 }
 
 .react-multiple-carousel__arrow--right {
-  right: calc(1% + 2px) !important;
+	right: calc(1% + 2px) !important;
 }
 
 .react-multiple-carousel__arrow--left {
-  left: calc(1% + 2px) !important;
+	left: calc(1% + 2px) !important;
+}
+
+.header_left_sec {
+	padding: 3.5px 0px !important;
 }
