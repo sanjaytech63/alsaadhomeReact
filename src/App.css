@@ -52,3 +52,18 @@ body {
 .react-multi-carousel-dot--active button {
   background-color: #fff !important;
 }
+
+.react-multiple-carousel__arrow {
+  background: #bb1f2a !important;
+  border-radius: 5px !important;
+  min-width: 35px !important;
+  min-height: 35px !important;
+}
+
+.react-multiple-carousel__arrow--right {
+  right: calc(1% + 2px) !important;
+}
+
+.react-multiple-carousel__arrow--left {
+  left: calc(1% + 2px) !important;
+}

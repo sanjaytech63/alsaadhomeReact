@@ -38,7 +38,7 @@ const SmartShopping = () => {
             </Box>
             <Container>
                 <Box sx={{ my: 5, display: "flex", alignItems: "center", gap: 3, flexDirection: { xs: "column", sm: "row" } }}>
-                    <Box sx={{ my: {sm:5,xs:2} }}>
+                    <Box sx={{ my: { sm: 5, xs: 2 } }}>
                         {bedroom?.map((cat) => (
                             <Box key={cat.id}
                                 sx={{
@@ -60,7 +60,6 @@ const SmartShopping = () => {
                                         height: "100%",
                                         objectFit: "cover",
                                         borderRadius: 4,
-
                                     }}
                                     loading="lazy"
                                     src={cat.src}
@@ -70,7 +69,6 @@ const SmartShopping = () => {
                                     sx={{
                                         position: 'absolute',
                                         top: "0%",
-                                       
                                         left: "50%",
                                         transform: 'translate(-50%, -50%)',
                                         display: 'flex',
@@ -97,7 +95,7 @@ const SmartShopping = () => {
                             </Box>
                         ))}
                     </Box>
-                    <Box sx={{ my: {sm:5,xs:2} }}>
+                    <Box sx={{ my: { sm: 5, xs: 2 } }}>
                         {livingroom?.map((cat) => (
                             <Box key={cat.id}
                                 sx={{
@@ -119,7 +117,6 @@ const SmartShopping = () => {
                                         height: "100%",
                                         objectFit: "cover",
                                         borderRadius: 4,
-
                                     }}
                                     loading="lazy"
                                     src={cat.src}
@@ -129,7 +126,6 @@ const SmartShopping = () => {
                                     sx={{
                                         position: 'absolute',
                                         top: "0%",
-                                       
                                         left: "50%",
                                         transform: 'translate(-50%, -50%)',
                                         display: 'flex',

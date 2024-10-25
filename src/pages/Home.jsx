@@ -213,7 +213,7 @@ const Home = () => {
 
     return (
         <>
-            <div style={{ width: "100%", minHeight: "100vh" }}>
+            <div className='min-h-screen w-100'>
                 <TopSlider sliderItems={TopSliderData} />
                 <BannderSlider BannderSliderData={BannderSliderData} />
                 <FeatureBrandsSlider FeaturedBrands={FeaturedBrands} />

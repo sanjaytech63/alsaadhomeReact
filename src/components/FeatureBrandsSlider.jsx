@@ -36,9 +36,10 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                         xs: 2,
                         sm: "0px",
                     },
-                    textAlign:{
+                    textAlign: {
                         xs: "left",
-                        sm: "center",},
+                        sm: "center",
+                    },
                     fontSize: {
                         xs: "18px",
                         sm: "28px",
@@ -75,7 +76,7 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                         slidesToSlide={3}
                         swipeable
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
-                        >
+                    >
                         {FeaturedBrands.length <= 0 ? (
                             ""
                         ) : (
@@ -97,13 +98,13 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                                             cursor: "pointer",
                                         }}
                                     >
-                                        <img
+                                        <Box component={"img"}
                                             draggable="false"
                                             src={item.src}
                                             alt={item.slug}
-                                             loading="lazy"
+                                            loading="lazy"
                                             className={!matchesSM ? "rounded-circle" : "rounded-3"}
-                                            style={{
+                                            sx={{
                                                 width: matchesSM ? "70px" : "97px",
                                                 height: matchesSM ? "70px" : "97px",
                                                 objectFit: "cover",

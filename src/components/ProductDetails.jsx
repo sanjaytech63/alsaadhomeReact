@@ -128,7 +128,7 @@ const ProductDetails = () => {
                                     additionalTransfrom={0}
                                     autoPlaySpeed={3000}
                                     renderButtonGroupOutside
-                                    arrows={false}
+                                    arrows={true}
                                     draggable={true}
                                     infinite={true}
                                     responsive={{

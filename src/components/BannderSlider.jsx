@@ -41,25 +41,22 @@ const BannerSlider = ({ BannderSliderData }) => {
                             items: 1,
                         },
                     }}
-
                     showDots={true}
                     slidesToSlide={1}
                     swipeable
-
                 >
                     {BannderSliderData.length <= 0 ? (
                         ""
                     ) : (
                         BannderSliderData.map((item, index) => (
-                            <img
+                            <Box component="img"
                                 key={index}
                                 onClick={handleNavigate}
                                 draggable="false"
                                 src={item.src}
                                 loading="lazy"
                                 alt="BannderSliderData"
-                                // className={!matchesSM ? "rounded-circle" : "rounded-3"}
-                                style={{
+                                sx={{
                                     width: matchesSM ? "100%" : "100%",
                                     height: matchesSM ? "300px" : "600px",
                                     objectFit: "cover",
