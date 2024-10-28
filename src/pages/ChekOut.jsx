@@ -1,12 +1,20 @@
-import React from 'react';
-import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControlLabel, useMediaQuery, FormControl, Radio } from '@mui/material';
+import React, { useState } from 'react';
+import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControlLabel, useMediaQuery, FormControl, Radio, Dialog, DialogTitle, IconButton, DialogContent } from '@mui/material';
 import { FaRegCreditCard } from "react-icons/fa6";
-
+import CloseIcon from '@mui/icons-material/Close';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import tamaraImg from "../../src/assets/tamara.svg"
 const Checkout = () => {
     const isMobile = useMediaQuery('(max-width:600px)');
+    const [open, setOpen] = useState(false);
 
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const orderData = [
         {
@@ -112,7 +120,7 @@ const Checkout = () => {
                                             }}
                                             value="+ 971"
                                         >
-                                            + 971
+                                            <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
                                         </MenuItem>
                                         <MenuItem
                                             sx={{
@@ -121,7 +129,7 @@ const Checkout = () => {
                                             }}
                                             value="+ 968"
                                         >
-                                            + 968
+                                            <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
                                         </MenuItem>
                                     </Select>
                                 </FormControl>
@@ -151,29 +159,61 @@ const Checkout = () => {
                                         <MenuItem sx={{
                                             fontSize: "14px",
                                             color: "#333",
-                                        }} value="+ 971">+ 971</MenuItem>
+                                        }} value="+ 971">
+                                            <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
+                                        </MenuItem>
                                         <MenuItem sx={{
                                             fontSize: "14px",
                                             color: "#333",
-                                        }} value="+ 968">+ 968</MenuItem>
+                                        }} value="+ 968">
+                                            <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
+                                        </MenuItem>
                                     </Select>
                                 </FormControl>
                                 <TextField fullWidth label="Whatsapp Mobile Number" required />
                             </Box>
                             <TextField fullWidth label="Email" variant="outlined" sx={{ my: 2 }} />
 
-                            <Button fullWidth variant="contained" color="error" sx={{ marginBottom: 2 }}>
+                            <Button onClick={handleOpen} fullWidth variant="contained" color="error" sx={{ marginBottom: 2 }}>
                                 Shipping Address
                             </Button>
+                            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+                                <DialogTitle>
+                                    <TextField label="Enter a location" variant="outlined" sx={{ width: '90%', marginBottom: 2 }} />
+                                    <IconButton
+                                        edge="end"
+                                        color="inherit"
+                                        onClick={handleClose}
+                                        aria-label="close"
+                                        sx={{ position: 'absolute', right: "20px", top: "20px" }}
+                                    >
+                                        <CloseIcon />
+                                    </IconButton>
+                                </DialogTitle>
+                                <DialogContent>
+                                    <Box sx={{ height: '400px', width: '100%' }}>
+                                        <iframe
+                                            src="https://www.google.com/maps?q=Shanghai+location&output=embed"
+                                            style={{ border: 0, width: '100%', height: '100%' }}
+                                            allowFullScreen
+                                            loading="lazy"
+                                            title="Google Maps"
+                                        />
+                                    </Box>
+                                </DialogContent>
+                            </Dialog>
                             <Select fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
-                                <MenuItem value="Select Country">Select Country</MenuItem>
+                                <MenuItem value="Select Country">Select City</MenuItem>
                                 <MenuItem value="uae">United Arab Emirates</MenuItem>
                             </Select>
                             <Select fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
                                 <MenuItem value="Select Country">Select Country</MenuItem>
                                 <MenuItem value="dubai">Dubai</MenuItem>
                             </Select>
-                            <TextField fullWidth label="Address" variant="outlined" sx={{ marginBottom: 2 }} />
+                            <TextField fullWidth label="Appartment No." variant="outlined" sx={{ marginBottom: 2 }} />
+                            <TextField fullWidth label="Building No." variant="outlined" sx={{ marginBottom: 2 }} />
+                            <TextField fullWidth label="Note" variant="outlined" sx={{ marginBottom: 2 }} />
+                            <TextField fullWidth label="Adderss" variant="outlined" sx={{ marginBottom: 2 }} />
                         </Box>
                     </Grid>
 
