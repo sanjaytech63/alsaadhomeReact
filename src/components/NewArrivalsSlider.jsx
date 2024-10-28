@@ -1,11 +1,12 @@
 import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
-import React from "react";
+import React, { useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+
 
 const NewArrivalsSlider = ({ productsCard }) => {
     const theme = useTheme();
@@ -28,6 +29,8 @@ const NewArrivalsSlider = ({ productsCard }) => {
             </IconButton>
         </Box>
     );
+
+  
 
     return (
         <div className="w-100 my-5">
@@ -86,7 +89,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card  key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" } }}>
+                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" } }}>
                                 <Box position="relative">
                                     <Chip
                                         label="New"
@@ -142,8 +145,8 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                    <Rating name="no-value" value={null} />
-                                        <Typography variant="body2" sx={{ ml: 1,color:"#9a9696" }}>
+                                        <Rating name="no-value" value={null} />
+                                        <Typography variant="body2" sx={{ ml: 1, color: "#9a9696" }}>
                                             ({item.rating})
                                         </Typography>
                                     </Box>

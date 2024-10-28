@@ -19,8 +19,8 @@ const BannerSection = ({ bannerSection }) => {
                 {
                     bannerSection && bannerSection.map((item, index) => (
                         <Grid item xs={12} sm={6}>
-                            <Box 
-                                key={item.id}
+                            <Box
+                                key={index}
                                 sx={{
                                     overflow: 'hidden',
                                     transition: 'transform 0.3s ease',

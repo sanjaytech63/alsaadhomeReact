@@ -35,7 +35,8 @@ const Navbar = () => {
         { name: "Smart Shopping", slug: "smart-shopping" },
         { name: "Unboxing Challenge", slug: "unboxing-challenge" },
         { name: "Blog", slug: "blog" },
-        { name: "Contact Us", slug: "contact-us" }
+        { name: "Contact Us", slug: "contact-us" },
+        { name: "Todo", slug: "todo" }
     ];
 
     const handleClickOpen = () => {
@@ -112,7 +113,7 @@ const Navbar = () => {
                                         <List sx={{ maxHeight: '200px', overflowY: 'auto' }}>
                                             {data.map((item) => (
                                                 <Box key={item.id} sx={{ display: 'flex', gap: 3, justifyContent: 'space-between', alignItems: 'center' }}>
-                                                    <img style={{ width: "50px",  height: "50px" }} src={item.img} alt="cart-img" />
+                                                    <img style={{ width: "50px", height: "50px" }} src={item.img} alt="cart-img" />
                                                     <ListItemText sx={{
                                                         fontSize: "14px", fontWeight: "500",
                                                         display: "-webkit-box",
@@ -123,7 +124,7 @@ const Navbar = () => {
                                                         whiteSpace: "normal",
                                                         textOverflow: "ellipsis"
                                                     }} primary={`${item.quantity}x ${item.name}`} />
-                                                    <Typography sx={{ fontSize: "14px", fontWeight: "500",}}>{item.price}AED</Typography>
+                                                    <Typography sx={{ fontSize: "14px", fontWeight: "500", }}>{item.price}AED</Typography>
                                                 </Box>
                                             ))}
                                         </List>

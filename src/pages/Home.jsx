@@ -1,6 +1,6 @@
 import React from 'react';
 import TopSlider from '../components/TopSlider';
-// import BannderSlider from '../components/BannderSlider';
+import BannderSlider from '../components/BannderSlider';
 import FeatureBrandsSlider from '../components/FeatureBrandsSlider';
 import DealsSlider from '../components/DealsSlider';
 import Products from '../components/Products';
@@ -19,7 +19,7 @@ const Home = () => {
         <>
             <div className='min-h-screen w-100'>
                 <TopSlider topSlider={jsonData.topSlider} />
-                {/* <BannderSlider BannderSliderData={jsonData.bannerSliderData} /> */}
+                <BannderSlider BannderSliderData={jsonData.bannerSliderData} />
                 <FeatureBrandsSlider FeaturedBrands={jsonData.featureBrands} />
                 <DealsSlider DealsSlider={jsonData.dealsSlider} />
                 <BannerSection bannerSection={jsonData.bannerSection1} />

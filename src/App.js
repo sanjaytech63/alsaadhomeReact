@@ -33,6 +33,7 @@ import ChangePassword from './components/ChangePassword';
 import Logout from './components/Logout';
 import { ToastContainer } from 'react-toastify';
 import Register from './auth/Register/Register';
+import Todo from './components/Todo';
 
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
           <Route path="/wishlist" element={<WishList />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/todo" element={<Todo />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />

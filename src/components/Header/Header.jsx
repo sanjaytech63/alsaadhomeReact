@@ -25,7 +25,6 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const storedToken = localStorage.getItem('accessToken');
     if (storedToken) {
