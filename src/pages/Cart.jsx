@@ -7,14 +7,18 @@ import { Add, Remove, Delete } from '@mui/icons-material';
 import SearchBar from '../components/SearchBar';
 
 const Cart = ({ image, title, price, color, size, pattern }) => {
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 
     const incrementQuantity = () => {
-        setQuantity(quantity + 1);
+        if (quantity !== 10) {
+            setQuantity(quantity + 1);
+        }
     }
 
     const decrementQuantity = () => {
-        setQuantity(quantity - 1);
+        if (quantity !== 1) {
+            setQuantity(quantity - 1);
+        }
     }
     return (
         <Card sx={{ display: 'flex', mb: 2 }}>

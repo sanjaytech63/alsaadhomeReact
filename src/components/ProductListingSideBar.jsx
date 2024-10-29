@@ -12,6 +12,7 @@ const ProductListingSideBar = () => {
     const [thickness, setThickness] = useState(jsonData.thickness);
     const [material, setMaterial] = useState(jsonData.material);
     const [styles, setStyles] = useState(jsonData.styles);
+    const [color, setColor] = useState(jsonData.colors);
     const [sortOrder, setSortOrder] = useState('');
 
     const handleChange = (event) => {
@@ -223,7 +224,6 @@ const ProductListingSideBar = () => {
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                     {thickness.map(({ label }, index) => (
-
                         <Box
                             key={index}
                             sx={{
@@ -320,7 +320,26 @@ const ProductListingSideBar = () => {
                     ))}
                 </Box>
             </Box>
-
+            <Box mt={4}>
+                <Typography
+                    variant="h5"
+                    sx={{
+                        my: 2,
+                        color: "#292b2c",
+                        fontWeight: "600",
+                        fontSize: "1.5rem",
+                        fontFamily: "Roboto, sans-serif",
+                    }}
+                >
+                    Color
+                </Typography>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, }}>
+                    {color.map((col, index) => (
+                        <Typography key={index} sx={{ boxShadow: 3, padding: "10px", borderRadius: "50%", cursor: "pointer", backgroundColor: col.hex, fontSize: "14px", border: "solid 1px #fff", }}>
+                        </Typography>
+                    ))}
+                </Box>
+            </Box>
             <Box mt={4}>
                 <Typography
                     variant="h5"
@@ -334,10 +353,8 @@ const ProductListingSideBar = () => {
                 >
                     Styles
                 </Typography>
-
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                     {styles.map(({ name }, index) => (
-
                         <Box
                             key={index}
                             sx={{
@@ -354,7 +371,6 @@ const ProductListingSideBar = () => {
                                 cursor: "pointer",
                             }}
                             onClick={() => document.getElementById(`radio-${name}-${index}`).click()}
-
                         >
                             <input
                                 type="radio"
@@ -379,7 +395,6 @@ const ProductListingSideBar = () => {
                     ))}
                 </Box>
             </Box>
-
             <Box sx={{ display: "flex", gap: 2, mt: 4, alignItems: "center" }}>
                 <Button variant="contained" sx={{ backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Apply</Button>
                 <Button variant="contained" sx={{ backgroundColor: "#343a40", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Reset</Button>
