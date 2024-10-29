@@ -65,9 +65,9 @@ body {
 	left: calc(1% + 2px) !important;
 }
 
-.header_left_sec {
+/* .header_left_sec {
 	padding: 3.5px 0px !important;
-}
+} */
 
 @media screen and (max-width: 600px) {
 	.react-multiple-carousel__arrow--right {

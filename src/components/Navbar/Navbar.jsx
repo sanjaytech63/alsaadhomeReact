@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, ListItemText, Badge, Popover, Divider, Button, Typography } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
@@ -9,7 +9,7 @@ import SearchBar from '../SearchBar';
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [openSearch, setSearchOpen] = useState(false);
-
+    const [isScrolled, setIsScrolled] = useState(false);
     const data = [
 
         { id: 1, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Luxury Faux Cashmere Digital Carpet", price: 249, quantity: 1 },
@@ -46,11 +46,34 @@ const Navbar = () => {
         setOpen(!open);
     };
 
+
+    const handleScroll = () => {
+        if (window.scrollY > 110) {
+            setIsScrolled(true);
+        } else {
+            setIsScrolled(false);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+
     return (
         <>
             <div style={{ borderBottom: "1px solid #ccc", }} className="w-100 py-1">
-                <Container>
-                    <AppBar position="static" sx={{ backgroundColor: 'white', boxShadow: 'none' }}>
+                <AppBar sx={{
+                    position: isScrolled ? "fixed" : "sticky",
+                    top: 0,
+                    backgroundColor: 'white',
+                    boxShadow: isScrolled ? 2 : 'none',
+                    transition: 'all 0.3s ease',
+                    zIndex: 9999,
+                    transform: isScrolled ? 'translateY(0)' : 'translateY(0)',
+                }}>
+                    <Container maxWidth="lg">
                         <Toolbar sx={{ justifyContent: 'space-between', padding: "0px !important" }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <Link to="/">
@@ -136,38 +159,39 @@ const Navbar = () => {
                                 </Popover>
                             </Box>
                         </Toolbar>
-                    </AppBar>
-                    <Drawer anchor="left" sx={{ width: { xs: '100%', md: '40%' }, padding: "0px !important" }} open={open} onClose={() => toggleDrawer(false)} PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}>
-                        <Box
-                            sx={{ width: { xs: '100%', md: '40%' }, paddingTop: '0px', }}
-                            role="presentation"
-                            onClick={() => toggleDrawer(false)}
-                            onKeyDown={() => toggleDrawer(false)}
-                        >
-                            <Box sx={{ textAlign: 'right', }}>
-                                <IconButton onClick={() => toggleDrawer(false)}>
-                                    <IoCloseOutline color='#292b2c' size={28} />
-                                </IconButton>
-                            </Box>
-                            <List>
-                                {navList.map((item, index) => (
-                                    <ListItem button key={index}>
-                                        <NavLink
-                                            className={({ isActive }) =>
-                                                isActive ? "active" : "inactive"
-                                            }
-                                            to={`/${item.slug}`}
-                                            style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins", textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
-                                            key={index}
-                                        >
-                                            {item.name}
-                                        </NavLink>
-                                    </ListItem>
-                                ))}
-                            </List>
+                    </Container>
+                </AppBar>
+
+                <Drawer anchor="left" sx={{ width: { xs: '100%', md: '40%' }, padding: "0px !important" }} open={open} onClose={() => toggleDrawer(false)} PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}>
+                    <Box
+                        sx={{ width: { xs: '100%', md: '40%' }, paddingTop: '0px', }}
+                        role="presentation"
+                        onClick={() => toggleDrawer(false)}
+                        onKeyDown={() => toggleDrawer(false)}
+                    >
+                        <Box sx={{ textAlign: 'right', }}>
+                            <IconButton onClick={() => toggleDrawer(false)}>
+                                <IoCloseOutline color='#292b2c' size={28} />
+                            </IconButton>
                         </Box>
-                    </Drawer>
-                </Container>
+                        <List>
+                            {navList.map((item, index) => (
+                                <ListItem button key={index}>
+                                    <NavLink
+                                        className={({ isActive }) =>
+                                            isActive ? "active" : "inactive"
+                                        }
+                                        to={`/${item.slug}`}
+                                        style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins", textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
+                                        key={index}
+                                    >
+                                        {item.name}
+                                    </NavLink>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Box>
+                </Drawer>
             </div>
         </>
     );

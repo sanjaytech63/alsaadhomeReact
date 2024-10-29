@@ -19,7 +19,7 @@ const Todolist = ({ todo, loading, onDelete, handleToggle, onEdit }) => {
 
     if (loading) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" sx={{ minHeight: '50vh' }}>
+            <Box display="flex" justifyContent="center" alignItems="center" >
                 <CircularProgress />
             </Box>
         );
@@ -38,7 +38,7 @@ const Todolist = ({ todo, loading, onDelete, handleToggle, onEdit }) => {
                                     flexDirection: isMobile ? 'column' : 'row',
                                     justifyContent: 'space-between',
                                     alignItems: isMobile ? 'flex-start' : 'center',
-                                    mb: 2, // Space between list items
+                                    mb: 2,
                                 }}
                                 divider
                             >
@@ -81,7 +81,6 @@ const Todolist = ({ todo, loading, onDelete, handleToggle, onEdit }) => {
                                             cursor: 'pointer',
                                             padding: 1,
                                             '&:hover': { backgroundColor: '#bb1f2a',  color: '#fff' },
-                                          
                                         }}
                                     >
                                         <RiDeleteBin6Line size={20} />
@@ -93,8 +92,9 @@ const Todolist = ({ todo, loading, onDelete, handleToggle, onEdit }) => {
                                         sx={{
                                             boxShadow: 2,
                                             borderRadius: '50%',
+                                            cursor: 'pointer',
                                             padding: 1,
-                                            '&:hover': { backgroundColor: '#cce5ff' }
+                                            '&:hover': { backgroundColor: '#bb1f2a',  color: '#fff' },
                                         }}
                                     >
                                         <FaRegEdit size={20} />
