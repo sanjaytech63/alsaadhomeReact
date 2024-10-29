@@ -70,7 +70,6 @@ const Navbar = () => {
                     backgroundColor: 'white',
                     boxShadow: isScrolled ? 2 : 'none',
                     transition: 'all 0.3s ease',
-                    zIndex: 9999,
                     transform: isScrolled ? 'translateY(0)' : 'translateY(0)',
                 }}>
                     <Container maxWidth="lg">
