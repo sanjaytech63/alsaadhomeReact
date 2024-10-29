@@ -32,8 +32,8 @@ const Checkout = () => {
     ];
 
     const total = 448.00;
-    const shipping = 0.00;
-    const finalTotal = total;
+    const shipping = 10.00;
+    const finalTotal = total + shipping;
 
     return (
         <Box sx={{ padding: isMobile ? 2 : 4 }}>

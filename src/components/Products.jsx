@@ -13,7 +13,7 @@ const Products = ({ products }) => {
             <Container maxWidth="lg" sx={{ px: 2 }}>
                 <Grid container spacing={2}>
                     {products && products.map((product, index) => (
-                        <Grid item xs={6} sm={6} md={3} key={index}>
+                        <Grid sx={{ cursor: "pointer" }} item xs={6} sm={6} md={3} key={index}>
                             <Box
                                 sx={{
                                     boxShadow: 3,
@@ -22,8 +22,6 @@ const Products = ({ products }) => {
                                     transition: 'transform 0.3s ease',
                                     '&:hover': {
                                         transform: 'scale(1.05)',
-                                        crusor: "pointer",
-
                                     },
                                 }}
                             >
@@ -32,7 +30,6 @@ const Products = ({ products }) => {
                                         width: "100%",
                                         height: "150px",
                                         objectFit: "cover",
-                                        crusor: "pointer",
                                     }}
                                     src={product.src}
                                     alt="product-image"

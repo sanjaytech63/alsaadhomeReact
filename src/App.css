@@ -68,3 +68,13 @@ body {
 .header_left_sec {
 	padding: 3.5px 0px !important;
 }
+
+@media screen and (max-width: 600px) {
+	.react-multiple-carousel__arrow--right {
+		display: none !important;
+	}
+
+	.react-multiple-carousel__arrow--left {
+		display: none !important;
+	}
+}

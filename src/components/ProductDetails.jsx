@@ -46,7 +46,7 @@ const products = [
         oldPrice: 99,
         discount: "51% Off",
         vatIncluded: true,
-        ratings: 2,
+        ratings: 0,
         colorOptions: [
             "https://al-saad-home.mo.cloudinary.net/uploads/products/14718/luri-121728653637.jpg",
             "https://al-saad-home.mo.cloudinary.net/uploads/pattern/luri-081728651944.jpg",
@@ -96,7 +96,18 @@ const productDetails = [
 const ProductDetails = () => {
     const [selectedColor, setSelectedColor] = useState(products[0].colorOptions[0]);
     const [selectedImage, setSelectedImage] = useState(product.images[0].src);
+    const [count, setCount] = useState(1);
 
+ 
+    const incrementChange = () => {
+        setCount(count + 1);
+    }
+
+    const dicrementChange = () => {
+        if (count !== 0) {
+            setCount(count - 1);
+        }
+    }
     return (
         <div style={{ minHeight: "100vh" }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -117,12 +128,12 @@ const ProductDetails = () => {
                     {/* Image Gallery */}
                     <Grid item xs={12} md={6}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <img
-                                    src={selectedImage}
-                                    loading="lazy"
-                                    alt="Selected"
-                                    style={{ width: '100%', borderRadius: '8px' }}
-                                />
+                            <img
+                                src={selectedImage}
+                                loading="lazy"
+                                alt="Selected"
+                                style={{ width: '100%', borderRadius: '8px' }}
+                            />
                             <Box sx={{ width: '100%', position: 'relative', mt: 2 }}>
                                 <Carousel
                                     additionalTransfrom={0}
@@ -185,13 +196,13 @@ const ProductDetails = () => {
                                     <Box sx={{ display: { sm: "flex", xs: "block" } }} alignItems="center" justifyContent="space-between" mt={2}>
                                         <Box>
                                             <Box display="flex" alignItems="center">
-                                                <Typography variant="body2" color="#bb1f2a" fontWeight="600">
+                                                <Typography sx={{ fontSize: { sm: "1.5rem", xs: "1rem" }, fontWeight: "500", color: "#bb1f2a" }} >
                                                     {product.price} AED
                                                 </Typography>
-                                                <Typography variant="body2" sx={{ textDecoration: 'line-through', mx: 2 }}>
+                                                <Typography sx={{ fontSize: { sm: "1.5rem", xs: "1rem" }, fontWeight: "500", color: "green", textDecoration: 'line-through', mx: 2 }}>
                                                     {product.oldPrice} AED
                                                 </Typography>
-                                                <Typography variant="body2" color="green">
+                                                <Typography sx={{ fontSize: { sm: "1.5rem", xs: "1rem" }, fontWeight: "500", color: "green", }}>
                                                     {product.discount}
                                                 </Typography>
                                             </Box>
@@ -200,7 +211,7 @@ const ProductDetails = () => {
                                             </Typography>
                                         </Box>
                                         <Box>
-                                            <Rating name="no-value" value={product.ratings} />
+                                            <Rating disabled value={product.ratings} />
                                             <Typography component="legend">({product.ratings}) ratings</Typography>
                                         </Box>
                                     </Box>
@@ -270,11 +281,11 @@ const ProductDetails = () => {
                                     {/* Quantity and Add to Cart */}
                                     <Box sx={{ display: { xs: 'block', sm: 'flex' }, }} alignItems="center" gap={2} mt={2}>
                                         <Box display="flex" alignItems="center">
-                                            <IconButton size="small">
+                                            <IconButton onClick={dicrementChange} size="small">
                                                 <Remove />
                                             </IconButton>
-                                            <Typography sx={{ border: "1px solid lightgray", }} px={2}>1</Typography>
-                                            <IconButton size="small">
+                                            <Typography sx={{ border: "1px solid lightgray", }} px={2}>{count}</Typography>
+                                            <IconButton onClick={incrementChange} size="small">
                                                 <Add />
                                             </IconButton>
                                         </Box>
@@ -294,7 +305,6 @@ const ProductDetails = () => {
                         <Box sx={{ mb: 4 }}>
                             {productDetails.map((product, index) => (
                                 <Box key={index}>
-                                    {/* Model */}
                                     <List>
                                         <ListItem>
                                             <Typography variant="body1"><strong color='#687188'>Model:</strong> {product.model}</Typography>

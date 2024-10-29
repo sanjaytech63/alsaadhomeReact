@@ -102,7 +102,8 @@ const TopSlider = ({ topSlider }) => {
                                             fontWeight: "500",
                                             fontSize: "14px",
                                             marginTop: "10px",
-
+                                            cursor: "pointer",
+                                            "&:hover": { color: "#bb1f2a", }
                                         }}>
                                             {item.text}
                                         </Typography>

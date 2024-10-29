@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TopSlider from '../components/TopSlider';
 import BannderSlider from '../components/BannderSlider';
 import FeatureBrandsSlider from '../components/FeatureBrandsSlider';
@@ -11,10 +11,10 @@ import NewArrivalsSlider from '../components/NewArrivalsSlider';
 import RecommendedProducts from '../components/RecommendedProducts';
 import RecentlyViewed from '../components/RecentlyViewed';
 import BlogCard from '../components/BlogCard';
-import blogDataJson from "../blogData.json"
-
+import blogDataJson from "../blogData.json";
 const Home = () => {
-    const jsonData = (blogDataJson);
+    const jsonData = blogDataJson;
+
     return (
         <>
             <div className='min-h-screen w-100'>

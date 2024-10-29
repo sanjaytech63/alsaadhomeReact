@@ -4,14 +4,14 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useNavigate } from 'react-router-dom';
 import BlogShimmer from './BlogShimmer';
 
-const BlogCards = ({ blog,loading }) => {
+const BlogCards = ({ blog, loading }) => {
     const navigate = useNavigate();
     const handleNavigative = () => {
         navigate("/blog-details");
     }
 
-    if(loading){
-        return <BlogShimmer/>
+    if (loading) {
+        return <BlogShimmer />
     }
 
     return (

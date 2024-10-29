@@ -30,7 +30,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
         </Box>
     );
 
-  
+
 
     return (
         <div className="w-100 my-5">
@@ -117,9 +117,11 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                             WebkitLineClamp: 2,
                                             wordBreak: "break-all",
                                             whiteSpace: "normal",
-                                            textOverflow: "ellipsis"
+                                            textOverflow: "ellipsis",
+                                            ":hover": {
+                                                color: "#bb1f2a",
+                                            }
                                         }}
-                                        component="div"
                                     >
                                         {item.title}
                                     </Typography>
@@ -145,7 +147,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                        <Rating name="no-value" value={null} />
+                                        <Rating name="read-only" value={null} />
                                         <Typography variant="body2" sx={{ ml: 1, color: "#9a9696" }}>
                                             ({item.rating})
                                         </Typography>

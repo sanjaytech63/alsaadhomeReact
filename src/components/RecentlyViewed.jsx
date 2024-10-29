@@ -111,9 +111,12 @@ const RecentlyViewed = ({ productsCard }) => {
                                             WebkitLineClamp: 2,
                                             wordBreak: "break-all",
                                             whiteSpace: "normal",
-                                            textOverflow: "ellipsis"
+                                            textOverflow: "ellipsis",
+                                            ":hover": {
+                                                color: "#bb1f2a",
+                                            }
                                         }}
-                                        component="div"
+                                
                                     >
                                         {item.title}
                                     </Typography>

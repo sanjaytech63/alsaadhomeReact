@@ -31,7 +31,7 @@ const DealsSlider = ({ DealsSlider }) => {
         <div className="w-100 my-4">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
                 <Typography variant="h5" sx={{
-                    fontWeight: 600, mb: 2, textAlign: "left", mx: 2, fontSize: {
+                    fontWeight: 600, mb: 2, textTransform: "capitalize", textAlign: "left", mx: 2, fontSize: {
                         xs: "18px",
                         sm: "24px",
                     },

@@ -4,7 +4,7 @@ import React from 'react';
 const Newsletter = () => {
     return (
         <div style={{ backgroundColor: "#bb1f2a" }} className="text-white py-5">
-             <Container maxWidth="lg" sx={{ px: 2 }}>
+             <Container maxWidth="lg" sx={{ px: 2,mb:4 }}>
                 <div className="row align-items-center">
                     <div className="col-md-6">
                         <h3 style={{fontWeight:"700"}} className="mb-0 text-white text-capitalize">Subscribe to Our Newsletter</h3>

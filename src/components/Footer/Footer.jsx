@@ -57,7 +57,7 @@ const Footer = () => {
                   loading="lazy"
                   style={{ maxWidth: '150px', marginBottom: '20px', color: "white" }}
                 />
-                <Typography fontSize={14} variant="subtitle1">Your dreams start here</Typography>
+                <Typography fontSize={14} >Your dreams start here</Typography>
               </Box>
             </Grid>
             <Grid item xs={12} md={3}>
