@@ -63,7 +63,7 @@ const BlogSideBar = () => {
             <Box mt={4}>
                 <Typography variant="h6" gutterBottom>Tags</Typography>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, }} >
-                    {tags.map((tag, index) => (
+                    {tags.map((tag) => (
                         <Chip sx={{
                             cursor: "pointer",
                             backgroundColor: "#f7f7f7",
@@ -78,7 +78,7 @@ const BlogSideBar = () => {
                             },
 
                         }}
-                            key={index} label={tag} variant="outlined" />
+                            key={tag.id} label={tag.label} variant="outlined" />
                     ))}
                 </Box>
             </Box>

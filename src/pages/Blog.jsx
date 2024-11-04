@@ -46,6 +46,7 @@ const Blog = () => {
     //     return <Loading />
     // }
 
+
     return (
         <Box sx={{ minHeight: "100vh", }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>

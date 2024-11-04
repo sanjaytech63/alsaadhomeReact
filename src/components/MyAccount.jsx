@@ -77,18 +77,19 @@ const MyAccount = () => {
                                     textAlign: { xs: 'center', sm: 'left' }
                                 }}
                             >
-                                    <Box onClick={handleIconClick}
-                                        sx={{
-                                            borderRadius: '50%',
-                                            cursor: 'pointer',
-                                            width: { sm: '130px', xs: '70px' },
-                                            height: { sm: '130px', xs: '70px' }
-                                        }}
-                                        component={'img'}
-                                        src={file ?? 'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG.png'}
-                                        alt="Profile"
-                                        loading="lazy"
-                                    />
+                                <Box onClick={handleIconClick}
+                                    sx={{
+                                        borderRadius: '50%',
+                                        cursor: 'pointer',
+                                        objectFit: 'cover',
+                                        width: { sm: '130px', xs: '70px' },
+                                        height: { sm: '130px', xs: '70px' }
+                                    }}
+                                    component={'img'}
+                                    src={file ?? 'https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG.png'}
+                                    alt="Profile"
+                                    loading="lazy"
+                                />
                                 <Box>
                                     <Typography
                                         sx={{

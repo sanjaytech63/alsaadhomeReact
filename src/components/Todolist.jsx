@@ -70,7 +70,7 @@ const Todolist = ({ todo, loading, onDelete, handleToggle, onEdit }) => {
                                         }
                                     />
                                 </Box>
-                                <Box display="flex" alignItems="center" gap={2} sx={{ flexDirection: isMobile ? 'row' : 'row', width: '100%' }}>
+                                <Box display="flex" alignItems="center" gap={2} justifyContent={ 'flex-end'} sx={{ flexDirection: isMobile ? 'row' : 'row', width: '100%' }}>
                                     <Typography
                                         onClick={() => onDelete(item._id)}
                                         variant="outlined"
@@ -80,7 +80,7 @@ const Todolist = ({ todo, loading, onDelete, handleToggle, onEdit }) => {
                                             boxShadow: 2,
                                             cursor: 'pointer',
                                             padding: 1,
-                                            '&:hover': { backgroundColor: '#bb1f2a',  color: '#fff' },
+                                            '&:hover': { backgroundColor: '#bb1f2a', color: '#fff' },
                                         }}
                                     >
                                         <RiDeleteBin6Line size={20} />
@@ -94,7 +94,7 @@ const Todolist = ({ todo, loading, onDelete, handleToggle, onEdit }) => {
                                             borderRadius: '50%',
                                             cursor: 'pointer',
                                             padding: 1,
-                                            '&:hover': { backgroundColor: '#bb1f2a',  color: '#fff' },
+                                            '&:hover': { backgroundColor: '#bb1f2a', color: '#fff' },
                                         }}
                                     >
                                         <FaRegEdit size={20} />

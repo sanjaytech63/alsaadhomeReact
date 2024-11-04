@@ -4,10 +4,9 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link, useNavigate } from 'react-router-dom';
 import catJsonData from "../../src/blogData.json"
 const Category = () => {
-    
+
     const nevigate = useNavigate()
     const [category, setCategory] = useState(catJsonData.categories)
-    console.log(setCategory)
     const handleNevigate = () => {
         nevigate(`/category/subcategory`)
     }
@@ -28,8 +27,12 @@ const Category = () => {
                     </Box>
                 </Container>
             </Box>
-
             {/* Category list */}
+            <Container maxWidth="lg">
+                <Typography variant="body1" sx={{ lineHeight: "28px", color: "#687188", mt: 3, fontSize: { xs: "12px", sm: "16px" }, }}>
+                    Cosmetics Online Shopping Dubai UAE. Al Saad Home is a leading Mattress online store to Buy Perfume, Air Freshener Online leading Mattress online store to Buy Perfume, Air Freshener Online in UAE at the best prices.
+                </Typography>
+            </Container>
             <Container>
                 <Box sx={{ my: 5 }}>
                     <Grid container spacing={2} sx={{ pb: 4 }}>
@@ -54,7 +57,7 @@ const Category = () => {
                                             height: "200px",
                                             objectFit: "cover",
                                         }}
-                                         loading="lazy"
+                                        loading="lazy"
                                         src={cat.src}
                                         alt="category-image"
                                     />
