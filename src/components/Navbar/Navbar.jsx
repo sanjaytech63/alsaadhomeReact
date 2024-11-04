@@ -65,6 +65,7 @@ const Navbar = () => {
         <>
             <div style={{ borderBottom: "1px solid #ccc", }} className="w-100 py-1">
                 <AppBar sx={{
+                    minHeight: "65px",
                     position: isScrolled ? "fixed" : "sticky",
                     top: 0,
                     backgroundColor: 'white',
@@ -93,25 +94,23 @@ const Navbar = () => {
                                     </NavLink>
                                 ))}
                             </Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <IconButton>
-                                    <IoSearchOutline onClick={handleClickOpen} color='#292b2c' size={20} />
-                                    <SearchBar setSearchOpen={setSearchOpen} openSearch={openSearch} />
-                                </IconButton>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <IoSearchOutline className='search_icon' onClick={handleClickOpen} color='#292b2c' size={20} />
+                                <SearchBar setSearchOpen={setSearchOpen} openSearch={openSearch} />
                                 <Link to="/cart">
-                                    <IconButton onClick={handleOpenCart} aria-describedby={id} color="inherit">
+                                    <Typography onClick={handleOpenCart} aria-describedby={id} color="inherit">
                                         <Badge badgeContent={data.length} color="error">
-                                            <BsCart3 color='#292b2c' size={20} />
+                                            <BsCart3 className='cart_icon' color='#292b2c' size={20} />
                                         </Badge>
-                                    </IconButton>
+                                    </Typography>
                                 </Link>
-                                <IconButton
+                                <Box
                                     edge="end"
-                                    sx={{ display: { xs: 'block', md: 'none' }, color: '#292b2c', }}
+                                    sx={{ display: { xs: 'block', md: 'none' }, color: '#292b2c', ml: "10px" }}
                                     onClick={() => toggleDrawer(true)}
                                 >
                                     <IoMenuOutline size={28} />
-                                </IconButton>
+                                </Box>
                                 <Popover sx={{ top: "15px" }}
                                     id={id}
                                     open={openCart}

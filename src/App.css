@@ -81,3 +81,21 @@ body {
 		display: none !important;
 	}
 }
+
+.search_icon {
+	cursor: pointer !important;
+}
+
+.search_icon:hover {
+	color: #bb1f2a !important;
+}
+
+.cart_icon:hover {
+	color: #bb1f2a !important;
+}
+
+.form-control:focus {
+	border-color: none !important;
+	outline: none !important;
+	box-shadow: none !important;
+}

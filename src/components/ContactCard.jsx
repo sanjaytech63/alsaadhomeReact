@@ -7,8 +7,25 @@ const ContactCard = ({ location }) => {
     return (
         <Card sx={{ boxShadow: 2 }}>
             <CardContent>
-                <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+                <Box
+                    className="contact-card"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    sx={{
+                        cursor: "pointer",
+                        justifyContent: "center",
+                        "&:hover .contact-box": {
+                            backgroundColor: "#bb1f2a",
+                            color: "#fff",
+                        },
+                        "&:hover .contact-icon": {
+                            color: "#fff",
+                        },
+                    }}
+                >
                     <Box
+                        className="contact-box"
                         sx={{
                             width: "80px",
                             height: "80px",
@@ -17,24 +34,12 @@ const ContactCard = ({ location }) => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            cursor: "pointer",
-                            "&:hover": {
-                                backgroundColor: "#bb1f2a",
-                                color: "#fff",
-                            },
                             transition: "all 0.3s ease",
                             margin: "8px",
+                            color: "#bb1f2a",
                         }}
                     >
-                        <ImMap2
-                            size={30}
-                            sx={{
-                                color: '#bb1f2a',
-                                '&:hover': {
-                                    color: '#fff',
-                                },
-                            }}
-                        />
+                        <ImMap2 className="contact-icon"  size={30} />
                     </Box>
                     <Typography
                         variant="h6"
@@ -50,6 +55,7 @@ const ContactCard = ({ location }) => {
                         {location.location}
                     </Typography>
                 </Box>
+
             </CardContent>
         </Card>
     );

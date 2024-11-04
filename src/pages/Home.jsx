@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import TopSlider from '../components/TopSlider';
 import BannderSlider from '../components/BannderSlider';
 import FeatureBrandsSlider from '../components/FeatureBrandsSlider';

@@ -106,7 +106,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                         <Typography variant="h6" sx={{ fontSize: { sm: "20px", xs: "16px" }, fontWeight: 600 }} component="h2" gutterBottom>
                             Create an Account
                         </Typography>
-                        <Close sx={{ cursor: 'pointer' }} onClick={handleClose} />
+                        <Close sx={{ cursor: 'pointer', margin: "20px" }} onClick={handleClose} />
                     </Box>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={12}>

@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { FaShoppingCart } from "react-icons/fa";
 import { Add, Remove, Delete } from '@mui/icons-material';
 import SearchBar from '../components/SearchBar';
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 const Cart = ({ image, title, price, color, size, pattern }) => {
     const [quantity, setQuantity] = useState(1);
@@ -20,8 +21,13 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
             setQuantity(quantity - 1);
         }
     }
+
+    const handleDelete = () => {
+        alert('Item deleted');
+    }
+
     return (
-        <Card sx={{ display: 'flex', mb: 2 }}>
+        <Card sx={{ display: 'flex', mb: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
             <Box sx={{ width: { xs: '40%', md: '30%' }, display: 'flex', alignItems: 'center' }}>
                 <Box
                     component="img"
@@ -42,11 +48,15 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
                     {color && <Typography variant="body1"><strong>Color: </strong>  <span style={{ backgroundColor: color, borderRadius: '50%', padding: '0 10px' }}> </span></Typography>}
                     {pattern && <Typography variant="body1"><strong>Pattern: </strong> <img src={pattern} alt="pattern" loading="lazy" style={{ width: '20px', height: '20px' }} /></Typography>}
                     <Typography variant="body1"><strong>Size: </strong> <strong>{size}</strong></Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                        <IconButton onClick={decrementQuantity} sx={{ p: 1, backgroundColor: "#eee", mr: 1 }}><Remove /></IconButton>
-                        <Typography sx={{ border: "solid 1px #ddd", px: 2 }} variant="body1">{quantity}</Typography>
-                        <IconButton onClick={incrementQuantity} sx={{ p: 1, backgroundColor: "#eee", ml: 1 }}><Add /></IconButton>
-                        <IconButton sx={{ color: 'red', ml: 'auto' }}><Delete /></IconButton>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: "5px" }}>
+                            <Typography onClick={decrementQuantity} sx={{ backgroundColor: "#eee", mr: 1 }}><Remove /></Typography>
+                            <Typography sx={{ border: "solid 1px #ddd", px: 2 }} variant="body1">{quantity}</Typography>
+                            <Typography onClick={incrementQuantity} sx={{ backgroundColor: "#eee",ml:1   }}><Add /></Typography>
+                        </Box>
+                        <Box component="span" onClick={handleDelete} sx={{ color: '#bb1f2a', cursor: 'pointer',mr: 2  }}>
+                            <RiDeleteBin5Line size={25} />
+                        </Box>
                     </Box>
                 </CardContent>
             </Box>
@@ -103,10 +113,13 @@ const CartPage = () => {
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ p: 2, border: "solid 1px #ddd" }}>
+                        <Box sx={{ p: 3, mb: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
+
+                        </Box>
+                        <Box sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
                             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-around", my: 2 }}>
-                                <Typography sx={{ color: "#212529" }}>Sub Total</Typography>
-                                <Typography sx={{ color: "#212529" }} >448.00 AED</Typography>
+                                <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "600", fontSize: { sm: "18px", xs: "16px" } }}>Sub Total</Typography>
+                                <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "600", fontSize: { sm: "18px", xs: "16px" } }} >448.00 AED</Typography>
                             </Box>
                             <Button onClick={() => nevigate('/chekout')} variant="contained" sx={{ backgroundColor: "#bb1f2a", padding: "10px", mt: 1 }} fullWidth>
                                 Proceed To Checkout

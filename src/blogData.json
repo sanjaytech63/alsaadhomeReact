@@ -195,6 +195,27 @@
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
       "price": "249 AED",
       "rating": 5
+    },
+    {
+      "id": 3,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 4,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 5,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
     }
   ],
   "newArrivals": [
@@ -427,44 +448,72 @@
     "February 2024"
   ],
   "tags": [
-    "Innovation",
-    "Decoration ideas",
-    "Warm and cozy",
-    "Innovation",
-    "Decoration ideas",
-    "Warm and cozy"
+    {
+      "id": 1,
+      "label": "Innovation"
+    },
+    {
+      "id": 2,
+      "label": "Decoration ideas"
+    },
+    {
+      "id": 3,
+      "label": "Warm and cozy"
+    },
+    {
+      "id": 4,
+      "label": "Innovation"
+    },
+    {
+      "id": 5,
+      "label": "Decoration ideas"
+    },
+    {
+      "id": 6,
+      "label": "Warm and cozy"
+    }
   ],
   "sizes": [
     {
+      "id": 1,
       "label": "240 X 260"
     },
     {
+      "id": 2,
       "label": "230 X 250"
     },
     {
+      "id": 3,
       "label": "230 X 260"
     },
     {
+      "id": 4,
       "label": "260 X 250"
     },
     {
+      "id": 5,
       "label": "King"
     },
     {
+      "id": 6,
       "label": "250 X 270"
     },
     {
+      "id": 7,
       "label": "Super King"
     }
   ],
   "thickness": [
     {
+      "id": 1,
       "label": "Fluffy"
     },
     {
+      "id": 2,
       "label": "Medium"
     },
     {
+      "id": 3,
       "label": "Heavy"
     }
   ],
@@ -488,90 +537,88 @@
       "text": "Cotton Blend"
     }
   ],
-  
-    "colors": [
-        {
-            "name": "Red",
-            "hex": "#FF0000"
-        },
-        {
-            "name": "Green",
-            "hex": "#00FF00"
-        },
-        {
-            "name": "Blue",
-            "hex": "#0000FF"
-        },
-        {
-            "name": "Yellow",
-            "hex": "#FFFF00"
-        },
-        {
-            "name": "Cyan",
-            "hex": "#00FFFF"
-        },
-        {
-            "name": "Magenta",
-            "hex": "#FF00FF"
-        },
-        {
-            "name": "Orange",
-            "hex": "#FFA500"
-        },
-        {
-            "name": "Purple",
-            "hex": "#800080"
-        },
-        {
-            "name": "Lime",
-            "hex": "#00FF00"
-        },
-        {
-            "name": "Pink",
-            "hex": "#FFC0CB"
-        },
-        {
-            "name": "Brown",
-            "hex": "#A52A2A"
-        },
-        {
-            "name": "Gray",
-            "hex": "#808080"
-        },
-        {
-            "name": "Black",
-            "hex": "#000000"
-        },
-        {
-            "name": "White",
-            "hex": "#FFFFFF"
-        },
-        {
-            "name": "Silver",
-            "hex": "#C0C0C0"
-        },
-        {
-            "name": "Gold",
-            "hex": "#FFD700"
-        },
-        {
-            "name": "Beige",
-            "hex": "#F5F5DC"
-        },
-        {
-            "name": "Olive",
-            "hex": "#808000"
-        },
-        {
-            "name": "Teal",
-            "hex": "#008080"
-        },
-        {
-            "name": "Navy",
-            "hex": "#000080"
-        }
-    ],
-
+  "colors": [
+    {
+      "name": "Red",
+      "hex": "#FF0000"
+    },
+    {
+      "name": "Green",
+      "hex": "#00FF00"
+    },
+    {
+      "name": "Blue",
+      "hex": "#0000FF"
+    },
+    {
+      "name": "Yellow",
+      "hex": "#FFFF00"
+    },
+    {
+      "name": "Cyan",
+      "hex": "#00FFFF"
+    },
+    {
+      "name": "Magenta",
+      "hex": "#FF00FF"
+    },
+    {
+      "name": "Orange",
+      "hex": "#FFA500"
+    },
+    {
+      "name": "Purple",
+      "hex": "#800080"
+    },
+    {
+      "name": "Lime",
+      "hex": "#00FF00"
+    },
+    {
+      "name": "Pink",
+      "hex": "#FFC0CB"
+    },
+    {
+      "name": "Brown",
+      "hex": "#A52A2A"
+    },
+    {
+      "name": "Gray",
+      "hex": "#808080"
+    },
+    {
+      "name": "Black",
+      "hex": "#000000"
+    },
+    {
+      "name": "White",
+      "hex": "#FFFFFF"
+    },
+    {
+      "name": "Silver",
+      "hex": "#C0C0C0"
+    },
+    {
+      "name": "Gold",
+      "hex": "#FFD700"
+    },
+    {
+      "name": "Beige",
+      "hex": "#F5F5DC"
+    },
+    {
+      "name": "Olive",
+      "hex": "#808000"
+    },
+    {
+      "name": "Teal",
+      "hex": "#008080"
+    },
+    {
+      "name": "Navy",
+      "hex": "#000080"
+    }
+  ],
   "styles": [
     {
       "name": "Plain"

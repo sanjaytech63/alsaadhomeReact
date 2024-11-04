@@ -16,7 +16,7 @@ const BlogCards = ({ blog, loading }) => {
 
     return (
         <>
-            <Card onClick={handleNavigative} key={blog.id} sx={{ borderRadius: '8px', mb: 4 }}>
+            <Card onClick={handleNavigative} key={blog.id} sx={{ borderRadius: '8px', mb: 4, cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }}>
                 <Box position="relative">
                     <CardMedia
                         sx={{

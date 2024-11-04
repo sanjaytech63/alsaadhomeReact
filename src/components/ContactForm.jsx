@@ -42,7 +42,7 @@ const ContactForm = ({ location }) => {
                             {/* Submit Button */}
                             <Grid item xs={12}>
                                 <Box display="flex" alignSelf={"start"}>
-                                    <Button variant="contained"  sx={{ px: 4, py: 1.5,background: "#bb1f2a", color: "#fff" }}>
+                                    <Button variant="contained" sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}>
                                         Send Message
                                     </Button>
                                 </Box>
@@ -55,8 +55,22 @@ const ContactForm = ({ location }) => {
                 <Grid item xs={12} md={6}>
                     <Card sx={{ boxShadow: 2, mb: 2 }}>
                         <CardContent>
-                            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-                                <Box
+                            <Box className="contact-card"
+                                display="flex"
+                                flexDirection="column"
+                                alignItems="center"
+                                sx={{
+                                    cursor: "pointer",
+                                    justifyContent: "center",
+                                    "&:hover .contact-box": {
+                                        backgroundColor: "#bb1f2a",
+                                        color: "#fff",
+                                    },
+                                    "&:hover .contact-icon": {
+                                        color: "#fff",
+                                    },
+                                }}>
+                                <Box className="contact-box"
                                     sx={{
                                         width: "80px",
                                         height: "80px",
@@ -66,23 +80,12 @@ const ContactForm = ({ location }) => {
                                         justifyContent: "center",
                                         alignItems: "center",
                                         cursor: "pointer",
-                                        "&:hover": {
-                                            backgroundColor: "#bb1f2a",
-                                            color: "#fff",
-                                        },
+                                        color: "#bb1f2a",
                                         transition: "all 0.3s ease",
                                         margin: "8px",
                                     }}
                                 >
-                                    <Email
-                                        size={30}
-                                        sx={{
-                                            color: '#bb1f2a',
-                                            '&:hover': {
-                                                color: '#fff',
-                                            },
-                                        }}
-                                    />
+                                    <Email className='contact-icon' size={30} />
                                 </Box>
                                 <Typography
                                     variant="h6"
@@ -102,8 +105,22 @@ const ContactForm = ({ location }) => {
                     </Card>
                     <Card sx={{ boxShadow: 2 }}>
                         <CardContent>
-                            <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center">
-                                <Box
+                            <Box className="contact-card"
+                                display="flex"
+                                flexDirection="column"
+                                alignItems="center"
+                                sx={{
+                                    cursor: "pointer",
+                                    justifyContent: "center",
+                                    "&:hover .contact-box": {
+                                        backgroundColor: "#bb1f2a",
+                                        color: "#fff",
+                                    },
+                                    "&:hover .contact-icon": {
+                                        color: "#fff",
+                                    },
+                                }}>
+                                <Box className="contact-box"
                                     sx={{
                                         width: "80px",
                                         height: "80px",
@@ -113,23 +130,12 @@ const ContactForm = ({ location }) => {
                                         justifyContent: "center",
                                         alignItems: "center",
                                         cursor: "pointer",
-                                        "&:hover": {
-                                            backgroundColor: "#bb1f2a",
-                                            color: "#fff",
-                                        },
+                                        color: "#bb1f2a",
                                         transition: "all 0.3s ease",
                                         margin: "8px",
                                     }}
                                 >
-                                    <Phone
-                                        size={30}
-                                        sx={{
-                                            color: '#bb1f2a',
-                                            '&:hover': {
-                                                color: '#fff',
-                                            },
-                                        }}
-                                    />
+                                    <Phone className='contact-icon' size={30} />
                                 </Box>
                                 <Typography
                                     variant="h6"

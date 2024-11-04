@@ -60,7 +60,7 @@ const Contact = () => {
                             <Box sx={{ height: '100%', width: '100%' }}>
                                 <iframe
                                     src="https://www.google.com/maps?q=Shanghai+location&output=embed"
-                                    style={{ border: 0, width: '100%', height: '400px' }}
+                                    style={{ border: 0, width: '100%', height: '640px' }}
                                     allowFullScreen
                                     loading="lazy"
                                     title="Google Maps"

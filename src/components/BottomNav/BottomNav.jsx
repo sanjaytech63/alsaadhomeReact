@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, useMediaQuery } from '@mui/material';
+import { Badge, Box, Typography, useMediaQuery } from '@mui/material';
 import { IoHomeOutline } from "react-icons/io5";
 import { LiaGripVerticalSolid } from "react-icons/lia";
 import { CiUser } from "react-icons/ci";
@@ -18,7 +18,7 @@ const BottomNav = () => {
         { to: "/", label: "Home", icon: <IoHomeOutline /> },
         { to: "/category", label: "Category", icon: <LiaGripVerticalSolid /> },
         { to: "/smart-shopping", label: "Smart S...", icon: <BsHandIndexThumb /> },
-        { to: "/unboxing-challenge", label: "Cart", icon: <BsCart3 /> },
+        { to: "/cart", label: "Cart", icon: <BsCart3 />, badge: 5 },
         { to: "/my-account", label: "Account", icon: <CiUser /> },
     ];
 
@@ -36,9 +36,9 @@ const BottomNav = () => {
                 zIndex: 9999,
             }}
         >
-            {links.map(({ to, label, icon }) => (
+            {links.map(({ to, label, icon, badge }) => (
                 <Box key={to} sx={{ flex: 1, textAlign: 'center' }}>
-                    <Link 
+                    <Link
                         to={to}
                         style={{
                             textDecoration: "none",
@@ -55,7 +55,18 @@ const BottomNav = () => {
                                 color: getActiveLink(to) ? "#bb1f2a" : "#292b2c"
                             }}
                         >
-                            {icon}
+                            <Badge
+                                badgeContent={badge}
+                                color="error"
+                                sx={{
+                                    "& .MuiBadge-badge": {
+                                        backgroundColor: "#bb1f2a",
+                                        color: "#fff",
+                                    }
+                                }}
+                            >
+                                {icon}
+                            </Badge>
                         </div>
                         <Typography
                             sx={{

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const TopSlider = ({ topSlider }) => {
     const theme = useTheme();
-    const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
+    const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
 
     const nevigate = useNavigate();
     const handleNevigate = () => {
@@ -73,9 +73,11 @@ const TopSlider = ({ topSlider }) => {
                                     <Box
                                         sx={{
                                             position: "relative",
-                                            display: "inline-block",
-                                            justifyContent: "center",
+                                            display: "flex",
+                                            // justifyContent: "center",
                                             alignItems: "center",
+                                            flexDirection: "column",
+                                            cursor: "pointer",
                                         }}
                                     >
                                         <Box component={"img"}

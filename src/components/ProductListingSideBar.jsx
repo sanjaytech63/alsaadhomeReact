@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Chip, CardMedia, Paper, InputBase, Select, MenuItem, FormControl, InputLabel, } from '@mui/material';
+import { Box, Typography, Button, Chip, CardMedia, Paper, InputBase, Select, MenuItem, FormControl, InputLabel, colors, } from '@mui/material';
 import Switch from '@mui/material/Switch';
-
+import CheckIcon from '@mui/icons-material/Check';
 import { OptionGroup as BaseOptionGroup } from '@mui/base/OptionGroup';
 import jsonData from "../../src/blogData.json";
+import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
 
 
 const ProductListingSideBar = () => {
@@ -18,6 +19,52 @@ const ProductListingSideBar = () => {
     const handleChange = (event) => {
         setSortOrder(event.target.value);
     };
+
+    const [selectedBrands, setSelectedBrands] = useState([]);
+    const [selectedSizes, setSelectedSizes] = useState([]);
+    const [selectedThickness, setSelectedThickness] = useState([]);
+    const [selectedMetrail, setSelectedMetrail] = useState([]);
+    const [selectedStyles, setSelectedStyles] = useState([]);
+    const [selectedColor, setSelectedColor] = useState([]);
+
+    const tagsToggle = (tag) => {
+        setSelectedBrands(prev =>
+            prev.includes(tag) ? prev.filter(item => item !== tag) : [...prev, tag]
+        );
+    };
+
+    const sizesToggle = (size) => {
+        setSelectedSizes(prev =>
+            prev.includes(size) ? prev.filter(item => item !== size) : [...prev, size]
+        );
+    };
+
+    const thicknessToggle = (think) => {
+        setSelectedThickness(prev =>
+            prev.includes(think) ? prev.filter(item => item !== think) : [...prev, think]
+        );
+    };
+
+    const materialToggle = (metrail) => {
+        setSelectedMetrail(prev =>
+            prev.includes(metrail) ? prev.filter(item => item !== metrail) : [...prev, metrail]
+        );
+    };
+    const stylesToggle = (style) => {
+        setSelectedStyles(prev =>
+            prev.includes(style) ? prev.filter(item => item !== style) : [...prev, style]
+        );
+    };
+
+    const toggleColorSelection = (id) => {
+        setSelectedColor(prevSelected =>
+            prevSelected.includes(id)
+                ? prevSelected.filter(colorId => colorId !== id)
+                : [...prevSelected, id]
+        );
+    };
+
+
 
     return (
         <Box sx={{ width: "100%", mb: 3 }}>
@@ -40,14 +87,13 @@ const ProductListingSideBar = () => {
                     </Typography>
                     <FormControl sx={{ width: "100%" }} fullWidth size="small" variant="outlined">
                         <InputLabel id="sort-order-label">Sort</InputLabel>
-                        <Select
+                        <Select defaultValue='Sort'
                             sx={{ padding: "3px" }}
                             labelId="sort-order-label"
                             id="sortOrder"
                             value={sortOrder}
                             label="Sort"
                             onChange={handleChange}
-
                         >
                             <MenuItem value="">
                                 <em>Sort</em>
@@ -107,47 +153,48 @@ const ProductListingSideBar = () => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                    {tags.map((tag, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                backgroundColor: "#eee",
-                                color: "#000",
-                                display: "flex",
-                                alignItems: "center",
-                                "&:hover": {
-                                    backgroundColor: "#bb1f2a",
-                                    color: "#fff",
-                                },
-                                px: 1,
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => document.getElementById(`radio-${tag}-${index}`).click()}
-                        >
-                            <input
-                                type="radio"
-                                id={`radio-${tag}-${index}`}
-                                name="brand"
-                                style={{ marginRight: "8px" }}
-                            />
+                    {tags.map((tag) => {
+                        let isSelected = selectedBrands.includes(tag.id)
+                        return (
                             <Chip
+                                key={tag.id}
+                                label={tag.label}
+                                clickable
+                                onClick={() => tagsToggle(tag.id)}
+                                icon={
+                                    isSelected ? (
+                                        <CheckCircle sx={{ fontSize: "15px" }} />
+                                    ) : (
+                                        <RadioButtonUnchecked sx={{ fontSize: "15px" }} />
+                                    )
+                                }
                                 sx={{
-                                    cursor: "pointer",
-                                    color: "inherit",
-                                    fontSize: "14px",
-                                    border: "none",
-                                    "&:hover": {
-                                        color: "#fff",
+                                    backgroundColor: isSelected ? "#bb1f2a" : "#eee",
+                                    color: isSelected ? "#fff" : "#000",
+                                    borderRadius: "4px",
+                                    fontWeight: "600",
+                                    "& .MuiChip-icon": {
+                                        color: isSelected ? "#fff" : "#292b2c",
                                     },
+                                    "&:hover": {
+                                        backgroundColor: isSelected ? "#bb1f2a" : "#ddd",
+                                    }
                                 }}
-                                label={tag}
-                                variant="outlined"
                             />
-                        </Box>
-                    ))}
+                        )
+                    })}
                 </Box>
 
+                <Typography
+                    sx={{
+                        mt: 2,
+                        color: "#bb1f2a",
+                        fontWeight: "600",
+                        cursor: "pointer",
+                    }}
+                >
+                    Show More
+                </Typography>
             </Box>
 
             <Box mt={4}>
@@ -165,46 +212,36 @@ const ProductListingSideBar = () => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                    {sizes.map(({ label }, index) => (
-
-                        <Box
-                            key={index}
-                            sx={{
-                                backgroundColor: "#eee",
-                                color: "#000",
-                                display: "flex",
-                                alignItems: "center",
-                                "&:hover": {
-                                    backgroundColor: "#bb1f2a",
-                                    color: "#fff",
-                                },
-                                px: 1,
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => document.getElementById(`radio-${label}-${index}`).click()}
-                        >
-                            <input
-                                type="radio"
-                                id={`radio-${label}-${index}`}
-                                name="brand"
-                                style={{ marginRight: "8px" }}
-                            />
+                    {sizes.map((sizes) => {
+                        let isSelected = selectedSizes.includes(sizes.id)
+                        return (
                             <Chip
+                                key={sizes.id}
+                                label={sizes.label}
+                                clickable
+                                onClick={() => sizesToggle(sizes.id)}
+                                icon={
+                                    isSelected ? (
+                                        <CheckCircle sx={{ fontSize: "15px" }} />
+                                    ) : (
+                                        <RadioButtonUnchecked sx={{ fontSize: "15px" }} />
+                                    )
+                                }
                                 sx={{
-                                    cursor: "pointer",
-                                    color: "inherit",
-                                    fontSize: "14px",
-                                    border: "none",
-                                    "&:hover": {
-                                        color: "#fff",
+                                    backgroundColor: isSelected ? "#bb1f2a" : "#eee",
+                                    color: isSelected ? "#fff" : "#000",
+                                    borderRadius: "4px",
+                                    fontWeight: "600",
+                                    "& .MuiChip-icon": {
+                                        color: isSelected ? "#fff" : "#292b2c",
                                     },
+                                    "&:hover": {
+                                        backgroundColor: isSelected ? "#bb1f2a" : "#ddd",
+                                    }
                                 }}
-                                label={label}
-                                variant="outlined"
                             />
-                        </Box>
-                    ))}
+                        )
+                    })}
                 </Box>
             </Box>
 
@@ -223,45 +260,36 @@ const ProductListingSideBar = () => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                    {thickness.map(({ label }, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                backgroundColor: "#eee",
-                                color: "#000",
-                                display: "flex",
-                                alignItems: "center",
-                                "&:hover": {
-                                    backgroundColor: "#bb1f2a",
-                                    color: "#fff",
-                                },
-                                px: 1,
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => document.getElementById(`radio-${label}-${index}`).click()}
-                        >
-                            <input
-                                type="radio"
-                                id={`radio-${label}-${index}`}
-                                name="brand"
-                                style={{ marginRight: "8px" }}
-                            />
+                    {thickness.map((thickness, index) => {
+                        let isSelected = selectedThickness.includes(index)
+                        return (
                             <Chip
+                                key={index}
+                                label={thickness.label}
+                                clickable
+                                onClick={() => thicknessToggle(index)}
+                                icon={
+                                    isSelected ? (
+                                        <CheckCircle sx={{ fontSize: "15px" }} />
+                                    ) : (
+                                        <RadioButtonUnchecked sx={{ fontSize: "15px" }} />
+                                    )
+                                }
                                 sx={{
-                                    cursor: "pointer",
-                                    color: "inherit",
-                                    fontSize: "14px",
-                                    border: "none",
-                                    "&:hover": {
-                                        color: "#fff",
+                                    backgroundColor: isSelected ? "#bb1f2a" : "#eee",
+                                    color: isSelected ? "#fff" : "#000",
+                                    borderRadius: "4px",
+                                    fontWeight: "600",
+                                    "& .MuiChip-icon": {
+                                        color: isSelected ? "#fff" : "#292b2c",
                                     },
+                                    "&:hover": {
+                                        backgroundColor: isSelected ? "#bb1f2a" : "#ddd",
+                                    }
                                 }}
-                                label={label}
-                                variant="outlined"
                             />
-                        </Box>
-                    ))}
+                        )
+                    })}
                 </Box>
             </Box>
             <Box mt={4}>
@@ -279,45 +307,36 @@ const ProductListingSideBar = () => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                    {material.map(({ text }, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                backgroundColor: "#eee",
-                                color: "#000",
-                                display: "flex",
-                                alignItems: "center",
-                                "&:hover": {
-                                    backgroundColor: "#bb1f2a",
-                                    color: "#fff",
-                                },
-                                px: 1,
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => document.getElementById(`radio-${text}-${index}`).click()}
-                        >
-                            <input
-                                type="radio"
-                                id={`radio-${text}-${index}`}
-                                name="brand"
-                                style={{ marginRight: "8px" }}
-                            />
+                    {material.map((material, index) => {
+                        let isSelected = selectedMetrail.includes(index)
+                        return (
                             <Chip
+                                key={index}
+                                label={material.text}
+                                clickable
+                                onClick={() => materialToggle(index)}
+                                icon={
+                                    isSelected ? (
+                                        <CheckCircle sx={{ fontSize: "15px" }} />
+                                    ) : (
+                                        <RadioButtonUnchecked sx={{ fontSize: "15px" }} />
+                                    )
+                                }
                                 sx={{
-                                    cursor: "pointer",
-                                    color: "inherit",
-                                    fontSize: "14px",
-                                    border: "none",
-                                    "&:hover": {
-                                        color: "#fff",
+                                    backgroundColor: isSelected ? "#bb1f2a" : "#eee",
+                                    color: isSelected ? "#fff" : "#000",
+                                    borderRadius: "4px",
+                                    fontWeight: "600",
+                                    "& .MuiChip-icon": {
+                                        color: isSelected ? "#fff" : "#292b2c",
                                     },
+                                    "&:hover": {
+                                        backgroundColor: isSelected ? "#bb1f2a" : "#ddd",
+                                    }
                                 }}
-                                label={text}
-                                variant="outlined"
                             />
-                        </Box>
-                    ))}
+                        )
+                    })}
                 </Box>
             </Box>
             <Box mt={4}>
@@ -333,11 +352,38 @@ const ProductListingSideBar = () => {
                 >
                     Color
                 </Typography>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, }}>
-                    {color.map((col, index) => (
-                        <Typography key={index} sx={{ boxShadow: 3, padding: "10px", borderRadius: "50%", cursor: "pointer", backgroundColor: col.hex, fontSize: "14px", border: "solid 1px #fff", }}>
-                        </Typography>
-                    ))}
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                    {color.map((col, index) => {
+                        const isSelected = selectedColor.includes(index);
+                        return (
+                            <Box
+                                key={index}
+                                onClick={() => toggleColorSelection(index)}
+                                sx={{
+                                    width: "25px",
+                                    height: "25px",
+                                    borderRadius: "50%",
+                                    cursor: "pointer",
+                                    backgroundColor: col.hex,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    position: "relative",
+                                    boxShadow: isSelected ? "0 0 0 2px #bb1f2a" : "0 0 0 1px #fff",
+                                }}
+                            >
+                                {isSelected && (
+                                    <CheckIcon
+                                        sx={{
+                                            color: "#fff",
+                                            fontSize: "20px",
+                                            position: "absolute",
+                                        }}
+                                    />
+                                )}
+                            </Box>
+                        );
+                    })}
                 </Box>
             </Box>
             <Box mt={4}>
@@ -354,52 +400,43 @@ const ProductListingSideBar = () => {
                     Styles
                 </Typography>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                    {styles.map(({ name }, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                backgroundColor: "#eee",
-                                color: "#000",
-                                display: "flex",
-                                alignItems: "center",
-                                "&:hover": {
-                                    backgroundColor: "#bb1f2a",
-                                    color: "#fff",
-                                },
-                                px: 1,
-                                borderRadius: "4px",
-                                cursor: "pointer",
-                            }}
-                            onClick={() => document.getElementById(`radio-${name}-${index}`).click()}
-                        >
-                            <input
-                                type="radio"
-                                id={`radio-${name}-${index}`}
-                                name="brand"
-                                style={{ marginRight: "8px" }}
-                            />
+                    {styles.map(({ name }, index) => {
+                        let isSelected = selectedStyles.includes(index)
+                        return (
                             <Chip
-                                sx={{
-                                    cursor: "pointer",
-                                    color: "inherit",
-                                    fontSize: "14px",
-                                    border: "none",
-                                    "&:hover": {
-                                        color: "#fff",
-                                    },
-                                }}
+                                key={index}
                                 label={name}
-                                variant="outlined"
+                                clickable
+                                onClick={() => stylesToggle(index)}
+                                icon={
+                                    isSelected ? (
+                                        <CheckCircle sx={{ fontSize: "15px" }} />
+                                    ) : (
+                                        <RadioButtonUnchecked sx={{ fontSize: "15px" }} />
+                                    )
+                                }
+                                sx={{
+                                    backgroundColor: isSelected ? "#bb1f2a" : "#eee",
+                                    color: isSelected ? "#fff" : "#000",
+                                    borderRadius: "4px",
+                                    fontWeight: "600",
+                                    "& .MuiChip-icon": {
+                                        color: isSelected ? "#fff" : "#292b2c",
+                                    },
+                                    "&:hover": {
+                                        backgroundColor: isSelected ? "#bb1f2a" : "#ddd",
+                                    }
+                                }}
                             />
-                        </Box>
-                    ))}
+                        )
+                    })}
                 </Box>
             </Box>
             <Box sx={{ display: "flex", gap: 2, mt: 4, alignItems: "center" }}>
                 <Button variant="contained" sx={{ backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Apply</Button>
                 <Button variant="contained" sx={{ backgroundColor: "#343a40", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Reset</Button>
             </Box>
-        </Box>
+        </Box >
     );
 };
 

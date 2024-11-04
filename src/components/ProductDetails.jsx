@@ -104,7 +104,7 @@ const ProductDetails = () => {
     }
 
     const dicrementChange = () => {
-        if (count !== 0) {
+        if (count !== 1) {
             setCount(count - 1);
         }
     }
@@ -231,7 +231,7 @@ const ProductDetails = () => {
                                                     style={{
                                                         width: 50,
                                                         height: 50,
-                                                        border: selectedColor === color ? '2px solid red' : '1px solid #ccc',
+                                                        border: selectedColor === color ? '2px solid #bb1f2a' : '1px solid #ccc',
                                                         borderRadius: '50%',
                                                         cursor: 'pointer',
                                                     }}

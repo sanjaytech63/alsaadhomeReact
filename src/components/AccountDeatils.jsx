@@ -42,7 +42,7 @@ const AccountDeatils = () => {
           </Grid>
 
           {/* Main Content */}
-          <Grid item sx={{mb:{sm:0,xs:5}}} xs={12} sm={9}>
+          <Grid item sx={{ mb: { sm: 0, xs: 5 } }} xs={12} sm={9}>
             <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1 }}>
               <Typography
                 variant="h5"
@@ -61,26 +61,32 @@ const AccountDeatils = () => {
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                 <FormControl fullWidth>
                   <Select fullWidth
+                    defaultValue="Select Country Code"
                     variant="outlined"
                     sx={{
-                      padding: '1px 4px',
                       border: '1px solid #ccc',
                       '.MuiOutlinedInput-notchedOutline': { border: 'none' },
                       ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                        padding: "13px 13px",
                         fontSize: "14px",
                         color: "#333",
                       }
                     }}
                   >
+                    <MenuItem value="Select Country Code" disabled hidden>
+                      Select Country Code
+                    </MenuItem>
                     <MenuItem sx={{
                       fontSize: "14px",
                       color: "#333",
-                    }} value="+ 971">+ 971</MenuItem>
+                    }} value="+ 971">
+                      <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
+                    </MenuItem>
                     <MenuItem sx={{
                       fontSize: "14px",
                       color: "#333",
-                    }} value="+ 968">+ 968</MenuItem>
+                    }} value="+ 968">
+                      <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
+                    </MenuItem>
                   </Select>
                 </FormControl>
                 <TextField fullWidth label="Enter Mobile Number" required />
