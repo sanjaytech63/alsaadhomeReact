@@ -9,6 +9,7 @@ const ApiService = {
     updateTodo: (id, data) => axiosInstance.patch(`/todos/${id}`, data),
     addTodo: (data) => axiosInstance.post('/todos/', data),
     getProducts: () => axiosInstance.get('/ecommerce/products'),
+    createProducts: (data) => axiosInstance.post('/ecommerce/products',data),
 };
 
 export default ApiService;

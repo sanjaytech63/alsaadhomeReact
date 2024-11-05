@@ -91,7 +91,6 @@ function App() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/todo" element={<Todo />} />
           <Route path="*" element={<NotFoundPage />} />
-          
         </Routes>
         <Footer />
       </BrowserRouter>

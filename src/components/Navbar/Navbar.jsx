@@ -36,7 +36,8 @@ const Navbar = () => {
         { name: "Unboxing Challenge", slug: "unboxing-challenge" },
         { name: "Blog", slug: "blog" },
         { name: "Contact Us", slug: "contact-us" },
-        { name: "Todo", slug: "todo" }
+        { name: "Todo", slug: "todo" },
+        { name: "Product", slug: "product" }
     ];
 
     const handleClickOpen = () => {

@@ -11,33 +11,10 @@ import RecommendedProducts from '../components/RecommendedProducts';
 import RecentlyViewed from '../components/RecentlyViewed';
 import BlogCard from '../components/BlogCard';
 import blogDataJson from "../blogData.json";
-import { useEffect, useState } from 'react';
-import ApiService from '../auth/ApiService/ApiService';
 const Home = () => {
-    const [loading, setLoading] = useState(false);
-    const [products, setProducts] = useState([]);
     const jsonData = blogDataJson;
 
-    const getProducts = async () => {
-        try {
-            setLoading(true);
-            const response = await ApiService.getProducts();
-            if (response.statusCode === 200) {
-                setProducts(response);
-            }
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            console.error(error);
-
-        }
-    }
-    console.log(products);
-
-    useEffect(() => {
-        getProducts();
-    }, [])
-
+    
     return (
         <>
             <div className='min-h-screen w-100'>

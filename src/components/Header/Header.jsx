@@ -59,7 +59,6 @@ const Header = () => {
 
   const userLogout = async () => {
     const token = localStorage.getItem('accessToken');
-    console.log("Token:", token);
     if (!token) {
       toast.error("Unauthorized request. Please log in again.", { containerId: 'login' });
       return;

@@ -98,6 +98,7 @@ const ProductListingSideBar = () => {
                             <MenuItem value="">
                                 <em>Sort</em>
                             </MenuItem>
+                            <Box sx={{ml: 2 }}>
                             <BaseOptionGroup label="Price" value={'LTH'}>
                                 <MenuItem value="LTH">Low to High</MenuItem>
                                 <MenuItem value="HTL">High to Low</MenuItem>
@@ -110,6 +111,7 @@ const ProductListingSideBar = () => {
                                 <MenuItem value="MQ">Most Quantity</MenuItem>
                                 <MenuItem value="LQ">Less Quantity</MenuItem>
                             </BaseOptionGroup>
+                            </Box>
                         </Select>
                     </FormControl>
                 </Box>

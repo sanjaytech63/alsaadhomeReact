@@ -4,24 +4,61 @@ import { useNavigate } from 'react-router-dom';
 import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
 
 const ProductListingMainContant = ({ productsCard }) => {
-    const nevigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleNavigate = () => {
-        nevigate(`/category/subcategory/productlisting/productdetail`)
+        navigate(`/category/subcategory/productlisting/productdetail`)
     }
+
     return (
         <>
-            <Card sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" } }}>
-                <Box position="relative">
+            <Card sx={{
+                borderTopLeftRadius: '8px',
+                borderTopRightRadius: '8px',
+                borderBottomLeftRadius: "0px",
+                borderBottomRightRadius: "0px",
+                margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }
+            }}>
+                <Box position="relative" sx={{ display: "block" }}>
                     <Chip
                         label="New"
                         sx={{ position: 'absolute', top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                     />
-                    <CardMedia onClick={handleNavigate}
-                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}
+                    <CardMedia
+                        onClick={handleNavigate}
+                        sx={{
+                            minHeight: { sm: "276.37px", xs: "175px" },
+                            maxHeight: { sm: "400px", xs: "175px" },
+                            objectFit: "cover",
+                            transition: "opacity 0.3s ease-in-out",
+                            position: "relative",
+                        }}
                         component="img"
                         image={productsCard.image}
                         alt={productsCard.title}
+                        loading="lazy"
+                    />
+
+                    {/* Hover image */}
+                    <CardMedia
+                        sx={{
+                            minHeight: { sm: "276.37px", xs: "175px" },
+                            maxHeight: { sm: "400px", xs: "175px" },
+                            objectFit: "cover",
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            opacity: 0,
+                            transition: 'opacity 0.3s ease-in-out',
+                            "&:hover": {
+                                opacity: 1,
+                            },
+                        }}
+                        component="img"
+                        image="https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg"
+                        alt="Hover image"
                         loading="lazy"
                     />
                 </Box>
