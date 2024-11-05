@@ -5,8 +5,7 @@ import BlogCards from '../components/BlogCards';
 import BlogSideBar from '../components/BlogSideBar';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import instance from '../EndPoint';
-import Loading from '../components/Loading';
+import instance from '../EndPoint'; 
 import { useState, useEffect } from 'react';
 
 // ?page=1&limit=10

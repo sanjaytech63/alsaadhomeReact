@@ -34,9 +34,10 @@ import Logout from './components/Logout';
 import { ToastContainer } from 'react-toastify';
 import Register from './auth/Register/Register';
 import Todo from './components/Todo';
-import { Zoom, Fab} from '@mui/material';
+import { Zoom, Fab } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState, useEffect } from 'react';
+import PrivateRoute from './auth/PrivateRoute/PrivateRoute';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -61,7 +62,18 @@ function App() {
         <BottomNav />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route element={<PrivateRoute />} >
+            <Route path="/oder-history" element={<Dashboard />} />
+            <Route path="/my-account" element={<MyAccount />} />
+            <Route path="/order-history" element={<OderHistory />} />
+            <Route path="/my-address" element={<MyAdderss />} />
+            <Route path="/account-details" element={<AccountDeatils />} />
+            <Route path="/wishlist" element={<WishList />} />
+            <Route path="/change-password" element={<ChangePassword />} />
+          </Route>
           <Route path="/category" element={<Category />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/category/:subcategory" element={<SubCategoryList />} />
           <Route path="/category/:subcategory/:productlisting" element={<ProductListing />} />
           <Route path="/category/:subcategory/:productlisting/:productdetail" element={<ProductDetails />} />
@@ -71,23 +83,15 @@ function App() {
           <Route path="/contact-us" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/chekout" element={<Checkout />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/terms-of-use" element={<TermsConditions />} />
           <Route path="/privacy-policy" element={<PrivacyPolice />} />
           <Route path="/blog-details" element={<BlogDetails />} />
           <Route path="/smart-shopping-bedroom" element={<SmartShoppingBedroom />} />
           <Route path="/smart-shopping-living-room" element={<SmartShoppingLivingRoom />} />
-          <Route path="/oder-history" element={<Dashboard />} />
-          <Route path="/my-account" element={<MyAccount />} />
-          <Route path="/order-history" element={<OderHistory />} />
-          <Route path="/my-address" element={<MyAdderss />} />
-          <Route path="/account-details" element={<AccountDeatils />} />
-          <Route path="/wishlist" element={<WishList />} />
-          <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/todo" element={<Todo />} />
           <Route path="*" element={<NotFoundPage />} />
+          
         </Routes>
         <Footer />
       </BrowserRouter>

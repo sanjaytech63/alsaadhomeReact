@@ -59,7 +59,7 @@ const Header = () => {
 
   const userLogout = async () => {
     const token = localStorage.getItem('accessToken');
-
+    console.log("Token:", token);
     if (!token) {
       toast.error("Unauthorized request. Please log in again.", { containerId: 'login' });
       return;
@@ -72,11 +72,11 @@ const Header = () => {
         }
       });
 
-      if (response.data.success) {
+      if (response.status === 200) {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         setToken(null);
-
+        navigate('/');
         toast.success(response.data.message || "Logout successful.", { containerId: 'login' });
       } else {
         throw new Error("Logout failed.");
