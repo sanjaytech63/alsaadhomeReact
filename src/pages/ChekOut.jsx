@@ -174,7 +174,7 @@ const Checkout = () => {
                             </Box>
                             <TextField fullWidth label="Email" variant="outlined" sx={{ my: 2 }} />
 
-                            <Button onClick={handleOpen} fullWidth variant="contained" color="error" sx={{ marginBottom: 2 }}>
+                            <Button onClick={handleOpen} fullWidth variant="contained" sx={{ marginBottom: 2, backgroundColor: "#bb1f2a" }}>
                                 Shipping Address
                             </Button>
                             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">

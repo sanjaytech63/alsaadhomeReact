@@ -804,5 +804,53 @@
         }
       ]
     }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "name": "Cannon Duvet Cover Set Without Filling 3 PCS - Baby Pink",
+      "imageUrl": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/3013/thumb/cov-little-star-pink-12-1-.jpg",
+      "color": {
+        "name": "Baby Pink",
+        "hexCode": "#ECC3CB"
+      },
+      "size": "110 x 140",
+      "model": "Ca-Q.Cover-3 Pcs-Little Star-Pink",
+      "quantity": 1,
+      "price": {
+        "currency": "AED",
+        "amount": 149
+      },
+      "rating": {
+        "label": "Give Rating and Review",
+        "icon": "StarBorderOutlinedIcon",
+        "hoverColor": "#bb1f2a",
+        "defaultColor": "#222425",
+        "cursor": "pointer"
+      }
+    },
+    {
+      "id": 1,
+      "name": "Cannon Duvet Cover Set Without Filling 3 PCS - Baby Pink",
+      "imageUrl": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/3013/thumb/cov-little-star-pink-12-1-.jpg",
+      "color": {
+        "name": "Baby Pink",
+        "hexCode": "#ECC3CB"
+      },
+      "size": "110 x 140",
+      "model": "Ca-Q.Cover-3 Pcs-Little Star-Pink",
+      "quantity": 1,
+      "price": {
+        "currency": "AED",
+        "amount": 149
+      },
+      "rating": {
+        "label": "Give Rating and Review",
+        "icon": "StarBorderOutlinedIcon",
+        "hoverColor": "#bb1f2a",
+        "defaultColor": "#222425",
+        "cursor": "pointer"
+      }
+    }
   ]
 }

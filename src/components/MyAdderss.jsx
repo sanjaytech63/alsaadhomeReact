@@ -1,10 +1,21 @@
-import React from 'react';
-import { Box, Breadcrumbs, Container, Typography, Grid, Button } from '@mui/material';
+import React,{ useState} from 'react';
+import { Box, Breadcrumbs, Container, Typography, Grid, Button, Dialog, DialogTitle, TextField, IconButton, DialogContent } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import { MdEdit } from "react-icons/md";
+import CloseIcon from '@mui/icons-material/Close';
 
 const MyAddress = () => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
@@ -42,7 +53,7 @@ const MyAddress = () => {
           </Grid>
 
           {/* Main Content */}
-          <Grid item sx={{mb:{sm:0,xs:5}}} xs={12} sm={9}>
+          <Grid item sx={{ mb: { sm: 0, xs: 5 } }} xs={12} sm={9}>
             <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1 }}>
               <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <Typography
@@ -51,7 +62,32 @@ const MyAddress = () => {
                 >
                   MyAdderss
                 </Typography>
-                <Button variant="contained" sx={{ backgroundColor: "#bb1f2a", color: "#fff" }}>Add Address</Button>
+                <Button onClick={handleOpen} variant="contained" sx={{ backgroundColor: "#bb1f2a", color: "#fff" }}>Add Address</Button>
+                <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+                  <DialogTitle>
+                    <TextField label="Enter a location" variant="outlined" sx={{ width: '90%', marginBottom: 2 }} />
+                    <IconButton
+                      edge="end"
+                      color="inherit"
+                      onClick={handleClose}
+                      aria-label="close"
+                      sx={{ position: 'absolute', right: "20px", top: "20px" }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </DialogTitle>
+                  <DialogContent>
+                    <Box sx={{ height: '400px', width: '100%' }}>
+                      <iframe
+                        src="https://www.google.com/maps?q=Shanghai+location&output=embed"
+                        style={{ border: 0, width: '100%', height: '100%' }}
+                        allowFullScreen
+                        loading="lazy"
+                        title="Google Maps"
+                      />
+                    </Box>
+                  </DialogContent>
+                </Dialog>
               </Box>
               <hr />
               <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -64,8 +100,29 @@ const MyAddress = () => {
                 <Typography variant="h6" sx={{ color: '#292b2c', textTransform: 'capitalize', fontWeight: 700, fontSize: { sm: '16px', xs: '16px' } }} >
                   Address
                 </Typography>
+
                 <Typography variant="h6" sx={{ color: '#292b2c', textTransform: 'capitalize', fontWeight: 700, fontSize: { sm: '16px', xs: '16px' } }} >
                   Actions
+                </Typography>
+              </Box>
+              <hr />
+              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '16px' } }} >
+                  United Arab Emirates
+                </Typography>
+                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '16px' } }} >
+                  Al Ain
+                </Typography>
+                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '16px' } }} >
+                  V3WW+9G Muhayriqah Saudi Arabia
+                </Typography>
+                <Typography sx={{ color: '#292b2c', display: "flex", alignItems: "center", gap: "10px", textTransform: 'capitalize', fontSize: { sm: '16px', xs: '16px' } }} >
+                  <Typography sx={{ borderRadius: "5px", p: "5px", backgroundColor: "#bb1f2a", color: "#eee", cursor: "pointer" }}>
+                    <MdEdit size={20} />
+                  </Typography>
+                  <Typography sx={{ borderRadius: "5px", p: "5px", backgroundColor: "#bb1f2a", color: "#eee",cursor: "pointer" }}>
+                    <RiDeleteBin5Line size={20} />
+                  </Typography>
                 </Typography>
               </Box>
             </Box>

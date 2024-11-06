@@ -3,7 +3,6 @@ import { Box, Breadcrumbs, Container, Typography, Grid, Card, Chip, CardMedia, C
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 const WishList = () => {
   const data = [{

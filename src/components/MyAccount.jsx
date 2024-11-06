@@ -79,6 +79,7 @@ const MyAccount = () => {
                             >
                                 <Box onClick={handleIconClick}
                                     sx={{
+                                        border:"1px solid #dee2e6",
                                         borderRadius: '50%',
                                         cursor: 'pointer',
                                         objectFit: 'cover',

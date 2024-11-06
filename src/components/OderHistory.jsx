@@ -1,10 +1,14 @@
 import React from 'react';
-import { Box, Breadcrumbs, Container, Typography, Grid } from '@mui/material';
+import { Box, Breadcrumbs, Container, Typography, Grid, TableContainer, Table, TableBody, TableRow, TableCell, Button } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Dashboard from './Dashboard';
-
 const OderHistory = () => {
+  const navigate = useNavigate();
+
+  const navigateToOrder = () => {
+      navigate('/oder-details')
+  }
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
@@ -42,7 +46,7 @@ const OderHistory = () => {
           </Grid>
 
           {/* Main Content */}
-          <Grid item sx={{mb:{sm:0,xs:5}}} xs={12} sm={9}>
+          <Grid item sx={{ mb: { sm: 0, xs: 5 } }} xs={12} sm={9}>
             <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1, height: "60vh" }}>
               <Typography
                 variant="h5"
@@ -51,7 +55,44 @@ const OderHistory = () => {
                 Oder History
               </Typography>
               <hr />
-              {/* Add more content here */}
+              <Box sx={{ px: 2, borderRadius: 1, boxShadow: " 0 0 4px 0 #e9e9e9" }}>
+                <TableContainer sx={{}}>
+                  <Table>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: 700 }}>
+                          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                            <span className="order-num">124368</span>
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary">
+                            Nov 06, 2024
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="right">
+                          <Button onClick={navigateToOrder} variant="contained" sx={{ color: 'white', backgroundColor: "#bb1f2a" }} size="large">
+                            View
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                      {/* Order Status */}
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: 700, borderBottom: "none" }}>Order Status</TableCell>
+                        <TableCell sx={{ borderBottom: "none", display: "flex", justifyContent: "flex-end" }}>Pending</TableCell>
+                      </TableRow>
+                      {/* Items */}
+                      <TableRow >
+                        <TableCell sx={{ fontWeight: 700, borderBottom: "none" }}>Items</TableCell>
+                        <TableCell sx={{ borderBottom: "none", display: "flex", justifyContent: "flex-end" }}>2 Items</TableCell>
+                      </TableRow>
+                      {/* Price */}
+                      <TableRow>
+                        <TableCell sx={{ fontWeight: 700, borderBottom: "none" }}>Price</TableCell>
+                        <TableCell sx={{ borderBottom: "none", display: "flex", justifyContent: "flex-end" }}>328.33 AED</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
             </Box>
           </Grid>
         </Grid>

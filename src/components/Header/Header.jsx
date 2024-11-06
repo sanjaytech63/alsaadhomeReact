@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Select, MenuItem, FormControl, Button, Container } from '@mui/material';
+import { Select, MenuItem, FormControl, Button, Container, Box, Typography } from '@mui/material';
 import Login from '../../auth/Login.jsx/Login';
 import Register from '../../auth/Register/Register.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -9,6 +9,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosInstance from '../../auth/apiEndPoint';
 import ApiService from '../../auth/ApiService/ApiService.jsx';
+import { TfiUser } from "react-icons/tfi";
+
 
 const Header = () => {
   const [loading, setLoading] = useState(false);
@@ -24,6 +26,10 @@ const Header = () => {
   const [openRegister, setOpenRegister] = useState(false);
 
   const navigate = useNavigate();
+
+  const navigateToProfile = () => {
+    navigate('/my-account');
+  }
 
   useEffect(() => {
     const storedToken = localStorage.getItem('accessToken');
@@ -147,6 +153,10 @@ const Header = () => {
     });
   };
 
+
+
+
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -204,10 +214,10 @@ const Header = () => {
 
             <div className={`col-3 ${language === 'ar' ? 'text-start' : 'text-end'}`}>
               <Button
-                onClick={token ? userLogout : handleOpenLogin}
+                onClick={token ? navigateToProfile : handleOpenLogin}
                 sx={{
-                  color: 'black',
-                  fontWeight: 'bold',
+                  color: '#2b2f4c',
+                  textTransform: "capitalize",
                   fontSize: { sm: "14px", xs: "12px" },
                   ":hover": {
                     color: '#bb1f2a',
@@ -215,7 +225,11 @@ const Header = () => {
                   },
                 }}
               >
-                {token ? "Logout" : "Login"}
+                {token ? (<Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: "6px" } }}>
+                  <Typography><TfiUser /></Typography>
+                  <Typography sx={{ fontSize: { sm: "14px", xs: "12px", }, display: { xs: "none", sm: "block" } }}> Sanjay Choudhary</Typography>
+                </Box>)
+                  : ("Login")}
               </Button>
               <Login
                 open={openLogin}

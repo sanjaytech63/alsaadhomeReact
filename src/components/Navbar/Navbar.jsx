@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, ListItemText, Badge, Popover, Divider, Button, Typography } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, Badge, Divider, Button, Typography } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
 
@@ -10,25 +10,20 @@ const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [openSearch, setSearchOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    const data = [
+    const [isHovered, setIsHovered] = useState(false);
 
-        { id: 1, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Luxury Faux Cashmere Digital Carpet", price: 249, quantity: 1 },
-        { id: 2, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, quantity: 1 },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 4, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
-        { id: 5, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Al Saad Home Tencel 300", price: 300, quantity: 1 },
+    const data = [
+        { id: 1, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Luxury Faux Cashmere Digital Carpet", price: 249, },
+        { id: 2, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
+        { id: 4, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
+        { id: 5, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
+        { id: 6, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
     ]
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const openCart = Boolean(anchorEl);
-    const id = openCart ? 'simple-popover' : undefined;
-    const handleOpenCart = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
 
-    const handleCloseCart = () => {
-        setAnchorEl(null);
-    };
     const navList = [
         { name: "Home", slug: "" },
         { name: "Category", slug: "category" },
@@ -36,8 +31,7 @@ const Navbar = () => {
         { name: "Unboxing Challenge", slug: "unboxing-challenge" },
         { name: "Blog", slug: "blog" },
         { name: "Contact Us", slug: "contact-us" },
-        { name: "Todo", slug: "todo" },
-        { name: "Product", slug: "product" }
+        { name: "Todo", slug: "todo" }
     ];
 
     const handleClickOpen = () => {
@@ -61,6 +55,15 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const navigate = useNavigate();
+
+    const navigateToChekout = () => {
+        navigate("/chekout");
+    }
+
+    const navigateToCart = () => {
+        navigate("/cart");
+    }
 
     return (
         <>
@@ -98,13 +101,17 @@ const Navbar = () => {
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <IoSearchOutline className='search_icon' onClick={handleClickOpen} color='#292b2c' size={20} />
                                 <SearchBar setSearchOpen={setSearchOpen} openSearch={openSearch} />
-                                <Link to="/cart">
-                                    <Typography onClick={handleOpenCart} aria-describedby={id} color="inherit">
-                                        <Badge badgeContent={data.length} color="error">
-                                            <BsCart3 className='cart_icon' color='#292b2c' size={20} />
-                                        </Badge>
-                                    </Typography>
-                                </Link>
+                                {/* <Link to="/cart"> */}
+                                <Typography onMouseEnter={handleMouseEnter}
+                                    onMouseLeave={handleMouseLeave} color="inherit">
+                                    <Badge badgeContent={data.length} color="error">
+                                        <div
+                                            style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} >
+                                            <BsCart3 cursor={"pointer"} className='cart_icon' color='#292b2c' size={20} />
+                                        </div>
+                                    </Badge>
+                                </Typography>
+                                {/* </Link> */}
                                 <Box
                                     edge="end"
                                     sx={{ display: { xs: 'block', md: 'none' }, color: '#292b2c', ml: "10px" }}
@@ -112,50 +119,63 @@ const Navbar = () => {
                                 >
                                     <IoMenuOutline size={28} />
                                 </Box>
-                                <Popover sx={{ top: "15px" }}
-                                    id={id}
-                                    open={openCart}
-                                    anchorEl={anchorEl}
-                                    onClose={handleCloseCart}
-                                    anchorOrigin={{
-                                        vertical: 'bottom',
-                                        horizontal: 'center',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'center',
-                                    }}
-                                    PaperProps={{
-                                        style: { width: '300px' }
-                                    }}
-                                >
-                                    <Box p={2}>
-                                        <Typography variant="h6">Your Cart</Typography>
+
+                                {isHovered && (
+                                    <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+                                        sx={{
+                                            position: 'absolute',
+                                            top: '50px',
+                                            right: '0',
+                                            width: '400px',
+                                            padding: '10px',
+                                            backgroundColor: 'white',
+                                            boxShadow: 3,
+                                            zIndex: 999,
+                                        }}
+                                    >
+                                        <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#292b2c' }}>Your Cart</Typography>
                                         <Divider />
                                         <List sx={{ maxHeight: '200px', overflowY: 'auto' }}>
                                             {data.map((item) => (
-                                                <Box key={item.id} sx={{ display: 'flex', gap: 3, justifyContent: 'space-between', alignItems: 'center' }}>
-                                                    <img style={{ width: "50px", height: "50px" }} src={item.img} alt="cart-img" />
-                                                    <ListItemText sx={{
-                                                        fontSize: "14px", fontWeight: "500",
-                                                        display: "-webkit-box",
-                                                        overflow: "hidden",
-                                                        WebkitBoxOrient: "vertical",
-                                                        WebkitLineClamp: 2,
-                                                        wordBreak: "break-all",
-                                                        whiteSpace: "normal",
-                                                        textOverflow: "ellipsis"
-                                                    }} primary={`${item.quantity}x ${item.name}`} />
-                                                    <Typography sx={{ fontSize: "14px", fontWeight: "500", }}>{item.price}AED</Typography>
+                                                <Box
+                                                    key={item.id}
+                                                    sx={{ display: 'flex', gap: 3, my: 1, justifyContent: 'space-between', alignItems: 'center' }}
+                                                >
+                                                    <img style={{ width: '50px', height: '50px' }} src={item.img} alt="cart-img" />
+                                                    <Typography
+                                                        sx={{
+                                                            fontSize: '14px',
+                                                            WebkitBoxOrient: 'vertical',
+                                                            WebkitLineClamp: 1,
+                                                            display: '-webkit-box',
+                                                            overflow: 'hidden',
+
+                                                            wordBreak: 'break-all',
+                                                            whiteSpace: 'normal',
+                                                            textOverflow: 'ellipsis',
+                                                            color: '#292b2c',
+                                                            fontWeight: '600',
+                                                        }}
+                                                    >
+                                                        {item.quantity}  {item.name}
+                                                    </Typography>
+                                                    <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#292b2c', display: 'flex', alignItems: 'center', gap: "4px" }}><span>AED</span> <span>{item.price}</span></Typography>
                                                 </Box>
                                             ))}
                                         </List>
                                         <Box display="flex" justifyContent="space-between" mt={2}>
-                                            <Button variant="contained" sx={{ backgroundColor: "#444" }} >View Cart</Button>
-                                            <Button variant="contained" sx={{ backgroundColor: "#bb1f2a" }}>Checkout</Button>
+                                            <Button onClick={() => {
+                                                navigateToCart();
+                                                handleMouseLeave();
+                                            }} variant="contained" sx={{ backgroundColor: '#000' }}>
+                                                View Cart
+                                            </Button>
+                                            <Button onClick={() => { navigateToChekout(); handleMouseLeave(); }} variant="contained" sx={{ backgroundColor: '#bb1f2a' }}>
+                                                Checkout
+                                            </Button>
                                         </Box>
                                     </Box>
-                                </Popover>
+                                )}
                             </Box>
                         </Toolbar>
                     </Container>
@@ -191,7 +211,7 @@ const Navbar = () => {
                         </List>
                     </Box>
                 </Drawer>
-            </div>
+            </div >
         </>
     );
 };

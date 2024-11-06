@@ -38,6 +38,8 @@ import { Zoom, Fab } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState, useEffect } from 'react';
 import PrivateRoute from './auth/PrivateRoute/PrivateRoute';
+import OrderDetails from './components/OrderDetails';
+import OderTable from './components/OrderTable';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -62,15 +64,17 @@ function App() {
         <BottomNav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route element={<PrivateRoute />} >
-            <Route path="/oder-history" element={<Dashboard />} />
-            <Route path="/my-account" element={<MyAccount />} />
-            <Route path="/order-history" element={<OderHistory />} />
-            <Route path="/my-address" element={<MyAdderss />} />
-            <Route path="/account-details" element={<AccountDeatils />} />
-            <Route path="/wishlist" element={<WishList />} />
-            <Route path="/change-password" element={<ChangePassword />} />
-          </Route>
+          {/* <Route element={<PrivateRoute />} >
+           
+          </Route> */}
+          <Route path="/oder-details" element={<OderTable />} />
+          <Route path="/oder-history" element={<Dashboard />} />
+          <Route path="/my-account" element={<MyAccount />} />
+          <Route path="/order-history" element={<OderHistory />} />
+          <Route path="/my-address" element={<MyAdderss />} />
+          <Route path="/account-details" element={<AccountDeatils />} />
+          <Route path="/wishlist" element={<WishList />} />
+          <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/category" element={<Category />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
