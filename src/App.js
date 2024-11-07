@@ -40,6 +40,7 @@ import { useState, useEffect } from 'react';
 import PrivateRoute from './auth/PrivateRoute/PrivateRoute';
 import OrderDetails from './components/OrderDetails';
 import OderTable from './components/OrderTable';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -57,7 +58,7 @@ function App() {
   };
 
   return (
-    <>
+    <div>
       <BrowserRouter lang='en'>
         <Header />
         <Navbar />
@@ -98,8 +99,8 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
-      <ToastContainer containerId="containerA" />
-
+     
+     
       <Zoom in={showScroll}>
         <Fab
           onClick={scrollToTop}
@@ -125,7 +126,8 @@ function App() {
           <KeyboardArrowUpIcon />
         </Fab>
       </Zoom>
-    </>
+      <ToastContainer/>
+    </div>
   );
 }
 

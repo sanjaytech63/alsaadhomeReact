@@ -126,7 +126,7 @@ const Navbar = () => {
                                             position: 'absolute',
                                             top: '50px',
                                             right: '0',
-                                            width: '400px',
+                                            width: { sm: '400px', xs: "289px" },
                                             padding: '10px',
                                             backgroundColor: 'white',
                                             boxShadow: 3,

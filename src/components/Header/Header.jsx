@@ -7,7 +7,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axiosInstance from '../../auth/apiEndPoint';
 import ApiService from '../../auth/ApiService/ApiService.jsx';
 import { TfiUser } from "react-icons/tfi";
 
@@ -63,45 +62,7 @@ const Header = () => {
     },
   });
 
-  const userLogout = async () => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      toast.error("Unauthorized request. Please log in again.", { containerId: 'login' });
-      return;
-    }
 
-    try {
-      const response = await axiosInstance.post(`/logout`, {}, {
-        headers: {
-          Authorization: `Bearer ${JSON.parse(token)}`
-        }
-      });
-
-      if (response.status === 200) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        setToken(null);
-        navigate('/');
-        toast.success(response.data.message || "Logout successful.", { containerId: 'login' });
-      } else {
-        throw new Error("Logout failed.");
-      }
-
-    } catch (error) {
-
-      console.error("Logout Error:", error);
-
-      if (error.response && error.response.status === 401) {
-        toast.error("Unauthorized request. Please log in again.", { containerId: 'login' });
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        setToken(null);
-
-      } else {
-        toast.error("Failed to log out. Please try again.", { containerId: 'login' });
-      }
-    }
-  };
 
 
 

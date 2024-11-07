@@ -51,14 +51,15 @@ const AccountDeatils = () => {
                 Account details
               </Typography>
               <hr />
-              <Grid item xs={12} >
-                <TextField fullWidth label="Your Name" required />
-              </Grid>
-              <Typography
-                sx={{ color: '#292b2c', my: 2, textTransform: 'capitalize', fontSize: { sm: '14px', xs: '14px' } }}
-
-              >Mobile Number</Typography>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth label="Your Name" required />
+                </Grid>
+                <Grid item xs={12} sm={6} >
+                  <TextField fullWidth label="Enter Your Email" required />
+                </Grid>
+              </Box>
+              <Box sx={{ display: 'flex', my: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                 <FormControl fullWidth>
                   <Select fullWidth
                     defaultValue="Select Country Code"
@@ -69,6 +70,7 @@ const AccountDeatils = () => {
                       ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
                         fontSize: "14px",
                         color: "#333",
+                        padding: "17px 13px"
                       }
                     }}
                   >
@@ -91,9 +93,6 @@ const AccountDeatils = () => {
                 </FormControl>
                 <TextField fullWidth label="Enter Mobile Number" required />
               </Box>
-              <Grid item xs={12} sm={6} my={2} >
-                <TextField fullWidth label="Your Name" required />
-              </Grid>
               <Button variant='contained' sx={{ color: "#fff", backgroundColor: "#bb1f2a", py: 1.5, px: 4 }}>Save</Button>
             </Box>
           </Grid>

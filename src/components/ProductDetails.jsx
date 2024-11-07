@@ -8,7 +8,9 @@ import { FaFacebookF } from "react-icons/fa";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Carousel from "react-multi-carousel";
-import { PiLineSegmentsFill } from "react-icons/pi";
+import { PiLineSegmentLight } from "react-icons/pi";
+
+
 
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
@@ -138,26 +140,32 @@ const ProductDetails = () => {
                                     style={{ width: '100%', borderRadius: '8px' }}
                                 />
                                 <Box sx={{ position: "absolute", top: "20%", right: "15%", }}>
-                                    <Typography variant="h6" sx={{ color: '#292b2c', borderRadius: '50px', backgroundColor: "rgba(255, 255, 255, 0.67)", fontWeight: '500', fontSize: '14px', px: 2, py: 1 }}>
+                                    <Typography variant="h6" sx={{ color: '#292b2c', position: 'relative', borderRadius: '50px', backgroundColor: "rgba(255, 255, 255, 0.67)", fontWeight: '500', fontSize: '14px', px: 2, py: 1 }}>
                                         Pillow
                                     </Typography>
-                                    <Typography ><PiLineSegmentsFill size={30} /></Typography>
-                                    <Typography
-
-                                        sx={{
-                                            backgroundColor: "rgba(255, 255, 255, 0.67)",
-                                            width: '30px',
-                                            height: '30px',
-                                            borderRadius: '50%',
-                                            opacity: '0.8',
-                                            animation: 'pulse 0.4s ease-in-out infinite',
-                                            '@keyframes pulse': {
-                                                '0%': { transform: 'scale(0.5)', opacity: 0 },
-                                                '50%': { transform: 'scale(1.1)', opacity: 1 },
-                                                '100%': { transform: 'scale(0.5)', opacity: 0 }
-                                            }
-                                        }}
-                                    />
+                                    <Box sx={{ position: "absolute", bottom: "-58px", right: "35%", }}>
+                                        <Typography sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            transform: 'rotate(-35deg)',
+                                        }} >
+                                            <PiLineSegmentLight size={30} /></Typography>
+                                        <Typography
+                                            sx={{
+                                                backgroundColor: "rgba(255, 255, 255, 0.67)",
+                                                width: '30px',
+                                                height: '30px',
+                                                borderRadius: '50%',
+                                                opacity: '0.8',
+                                                animation: 'pulse 0.4s ease-in-out infinite',
+                                                '@keyframes pulse': {
+                                                    '0%': { transform: 'scale(0.5)', opacity: 0 },
+                                                    '50%': { transform: 'scale(1.1)', opacity: 1 },
+                                                    '100%': { transform: 'scale(0.5)', opacity: 0 }
+                                                }
+                                            }}
+                                        />
+                                    </Box>
                                 </Box>
                                 <Box sx={{ position: "absolute", top: "40%", left: "15%", }}>
                                     <Typography variant="h6" sx={{ color: '#292b2c', borderRadius: '50px', backgroundColor: "rgba(255, 255, 255, 0.67)", fontWeight: '500', fontSize: '14px', px: 2, py: 1 }}>
