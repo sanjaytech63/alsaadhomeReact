@@ -13,7 +13,7 @@ const BannerSlider = ({ BannderSliderData }) => {
     };
 
     return (
-        <div className="w-100 my-4">
+        <Box sx={{ width: "100%",mb: { xs: 2, sm: 4},mt: { xs: 0, sm: 2} }}>
             <Box sx={{ width: "100%" }}>
                 <Carousel
                     additionalTransfrom={0}
@@ -55,7 +55,7 @@ const BannerSlider = ({ BannderSliderData }) => {
                             alt={`BannerSlide-${index}`}
                             sx={{
                                 width: "100%",
-                                height: matchesSM ? "300px" : "600px",
+                                height: matchesSM ? "200px" : "600px",
                                 objectFit: "cover",
                                 cursor: "pointer",
                             }}
@@ -63,7 +63,7 @@ const BannerSlider = ({ BannderSliderData }) => {
                     ))}
                 </Carousel>
             </Box>
-        </div>
+        </Box>
     );
 };
 

@@ -142,7 +142,7 @@ const RecentlyViewed = ({ productsCard }) => {
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                    <Rating name="no-value" value={null} />
+                                    <Rating sx={{fontSize: { xs: "1.1rem", sm: "1.5rem"} }} name="no-value" value={null} />
                                         <Typography variant="body2" sx={{ ml: 1,color:"#9a9696" }}>
                                             ({item.rating})
                                         </Typography>

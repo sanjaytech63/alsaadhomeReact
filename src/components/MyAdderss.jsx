@@ -1,4 +1,4 @@
-import React,{ useState} from 'react';
+import React, { useState } from 'react';
 import { Box, Breadcrumbs, Container, Typography, Grid, Button, Dialog, DialogTitle, TextField, IconButton, DialogContent } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link } from 'react-router-dom';
@@ -106,21 +106,28 @@ const MyAddress = () => {
                 </Typography>
               </Box>
               <hr />
-              <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '16px' } }} >
+              <Box sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 1,
+                overflowX: "auto",
+                whiteSpace: "nowrap",
+              }}>
+                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '14px' } }} >
                   United Arab Emirates
                 </Typography>
-                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '16px' } }} >
+                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '14px' } }} >
                   Al Ain
                 </Typography>
-                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '16px' } }} >
+                <Typography sx={{ color: '#292b2c', textTransform: 'capitalize', fontSize: { sm: '16px', xs: '14px' } }} >
                   V3WW+9G Muhayriqah Saudi Arabia
                 </Typography>
                 <Typography sx={{ color: '#292b2c', display: "flex", alignItems: "center", gap: "10px", textTransform: 'capitalize', fontSize: { sm: '16px', xs: '16px' } }} >
                   <Typography sx={{ borderRadius: "5px", p: "5px", backgroundColor: "#bb1f2a", color: "#eee", cursor: "pointer" }}>
                     <MdEdit size={20} />
                   </Typography>
-                  <Typography sx={{ borderRadius: "5px", p: "5px", backgroundColor: "#bb1f2a", color: "#eee",cursor: "pointer" }}>
+                  <Typography sx={{ borderRadius: "5px", p: "5px", backgroundColor: "#bb1f2a", color: "#eee", cursor: "pointer" }}>
                     <RiDeleteBin5Line size={20} />
                   </Typography>
                 </Typography>
