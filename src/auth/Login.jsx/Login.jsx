@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Grid, Modal, TextField, Typography, Select, MenuItem, FormControl, Checkbox, CircularProgress, } from '@mui/material';
+import { Box, Button, Grid, Modal, TextField, Typography, Checkbox, CircularProgress, } from '@mui/material';
 import { FaFacebookF } from "react-icons/fa";
 import AppleIcon from '@mui/icons-material/Apple';
 import { Close } from '@mui/icons-material';
@@ -19,7 +19,7 @@ const Login = ({ handleClose, open, handleOpenRegister, loginUser, loading, hand
     };
 
     return (
-        <div style={{}}>
+        <div>
             <Modal sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
                 open={open}
                 onClose={handleClose}
@@ -80,14 +80,14 @@ const Login = ({ handleClose, open, handleOpenRegister, loginUser, loading, hand
                         </Grid> */}
                         <Grid item xs={12} sm={12}>
                             <Typography sx={{ fontSize: { sm: "18px", xs: "14px" }, mb: 2 }} variant="body2" color='#6c757d'> Email</Typography>
-                            <TextField type="email" name='email' value={formData.email} onChange={handleChange} fullWidth label="Enter Email" required />
+                            <TextField type="email" name='email' value={formData?.email} onChange={handleChange} fullWidth label="Enter Email" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                                 <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#6c757d'> Password</Typography>
                                 <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#bb1f2a'> Login by Email</Typography>
                             </Box>
-                            <TextField type="password" name='password' value={formData.password} onChange={handleChange} fullWidth label="Enter Password" required />
+                            <TextField type="password" name='password' value={formData?.password} onChange={handleChange} fullWidth label="Enter Password" required />
                         </Grid>
                         <Grid item xs={12}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>

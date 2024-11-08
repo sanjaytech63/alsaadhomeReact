@@ -37,24 +37,31 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
                     sx={{
                         maxWidth: { sm: '188px', xs: '110px' },
                         height: '100%',
+                        objectFit: 'cover'
                     }}
                 />
 
             </Box>
             <Box sx={{ width: '70%', }}>
                 <CardContent>
-                    <Typography variant="h6" noWrap>{title}</Typography>
-                    <Typography variant="body1" sx={{ mt: 1 }}><strong>Price:</strong> <strong>{price} AED</strong></Typography>
-                    {color && <Typography variant="body1"><strong>Color: </strong>  <span style={{ backgroundColor: color, borderRadius: '50%', padding: '0 10px' }}> </span></Typography>}
-                    {pattern && <Typography variant="body1"><strong>Pattern: </strong> <img src={pattern} alt="pattern" loading="lazy" style={{ width: '20px', height: '20px' }} /></Typography>}
-                    <Typography variant="body1"><strong>Size: </strong> <strong>{size}</strong></Typography>
+                    <Typography sx={{
+                        fontSize: { sm: '1.1rem', xs: '1rem' }, fontWeight: 600, textTransform: 'capitalize', display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        WebkitLineClamp: 2,
+                    }}>{title}</Typography>
+                    <Typography variant="body1" sx={{ fontWeight: '500' }}>Price: {price} AED</Typography>
+                    {color && <Typography variant="body1" sx={{ fontWeight: '500' }}>Color:   <span style={{ backgroundColor: color, borderRadius: '50%', padding: '0 10px' }}> </span></Typography>}
+                    {pattern && <Typography variant="body1" sx={{ fontWeight: '500' }}>Pattern:  <img src={pattern} alt="pattern" loading="lazy" style={{ width: '20px', height: '20px' }} /></Typography>}
+                    <Typography variant="body1" sx={{ fontWeight: '500' }}>Size:  {size}</Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: "5px" }}>
                             <Typography onClick={decrementQuantity} sx={{ backgroundColor: "#eee", mr: 1 }}><Remove /></Typography>
                             <Typography sx={{ border: "solid 1px #ddd", px: 2 }} variant="body1">{quantity}</Typography>
-                            <Typography onClick={incrementQuantity} sx={{ backgroundColor: "#eee",ml:1   }}><Add /></Typography>
+                            <Typography onClick={incrementQuantity} sx={{ backgroundColor: "#eee", ml: 1 }}><Add /></Typography>
                         </Box>
-                        <Box component="span" onClick={handleDelete} sx={{ color: '#bb1f2a', cursor: 'pointer',mr: 2  }}>
+                        <Box component="span" onClick={handleDelete} sx={{ color: '#bb1f2a', cursor: 'pointer', mr: 2 }}>
                             <RiDeleteBin5Line size={25} />
                         </Box>
                     </Box>
@@ -113,9 +120,6 @@ const CartPage = () => {
                     </Grid>
 
                     <Grid item xs={12} md={4}>
-                        <Box sx={{ p: 3, mb: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
-
-                        </Box>
                         <Box sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
                             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-around", my: 2 }}>
                                 <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "600", fontSize: { sm: "18px", xs: "16px" } }}>Sub Total</Typography>

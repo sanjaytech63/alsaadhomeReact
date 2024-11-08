@@ -175,7 +175,7 @@ const Header = () => {
 
             <div className={`col-3 ${language === 'ar' ? 'text-start' : 'text-end'}`}>
               <Button
-                onClick={token ? navigateToProfile : handleOpenLogin}
+                onClick={token ? handleOpenLogin : navigateToProfile}
                 sx={{
                   color: '#2b2f4c',
                   textTransform: "capitalize",
