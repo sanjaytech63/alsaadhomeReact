@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Button, Grid, Modal, TextField, Typography, Select, MenuItem, CircularProgress, } from '@mui/material';
+import { Box, Button, Grid, Modal, TextField, Typography, CircularProgress, } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../ApiService/ApiService';
+import { showToast } from '../../utils/helper';
 
 const Register = ({ handleClose, open, handleOpenLogin }) => {
     const [loading, setLoading] = useState(false);
@@ -30,12 +30,12 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
     const userRegister = async (event) => {
         event.preventDefault();
         if (!formData.username || !formData.email || !formData.password) {
-            toast.error("All fields are required.", { containerId: 'register' });
+            showToast("error", "All fields are required.");
             return;
         }
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailPattern.test(formData.email)) {
-            toast.error("Please enter a valid email address.", { containerId: 'register' });
+            showToast("error", "Please enter a valid email address.");
             return;
         }
 
@@ -45,7 +45,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
             const response = await ApiService.registerUser(formData);
             console.log('Response:', response);
             if (response.status === 201) {
-                toast.success(response.data.message, { containerId: 'register' });
+                showToast("success", 'Registered successfully');
                 handleClose();
                 navigate('/');
                 setFormData({
@@ -57,9 +57,9 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
         } catch (error) {
             console.error('Error:', error);
             if (error.response && error.response.status === 400) {
-                toast.error("User already exists. Please enter a different username or email.", { containerId: 'register' });
+                showToast("error", "User already exists. Please enter a different username or email.");
             } else {
-                toast.error("Registration failed, please try again.", { containerId: 'register' });
+                showToast("error", "User already exists. Please enter a different username or email.");
                 setFormData({
                     email: "",
                     password: "",
@@ -145,7 +145,6 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                     </Grid>
                 </Box>
             </Modal>
-            <ToastContainer containerId="register" />
         </div>
     );
 };

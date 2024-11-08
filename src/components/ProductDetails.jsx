@@ -8,9 +8,6 @@ import { FaFacebookF } from "react-icons/fa";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Carousel from "react-multi-carousel";
-import { PiLineSegmentLight } from "react-icons/pi";
-
-
 
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
@@ -104,7 +101,9 @@ const ProductDetails = () => {
 
 
     const incrementChange = () => {
-        setCount(count + 1);
+        if (count !== 10) {
+            setCount(count + 1);
+        }
     }
 
     const dicrementChange = () => {
@@ -112,6 +111,74 @@ const ProductDetails = () => {
             setCount(count - 1);
         }
     }
+
+    const tags = [
+        { id: 1, label: 'Duvet Cover', position: { top: 120, left: 60 } },
+        { id: 2, label: 'Bedspread', position: { top: 20, right: 100 } },
+        { id: 3, label: 'Throw', position: { top: 200, right: 110 } },
+    ];
+
+    const styles = {
+        tagContainer: {
+            position: 'absolute',
+            width: '100%',
+            top: 0,
+        },
+        tagWrapper: {
+            position: 'absolute',
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'row',
+            height: 100,
+            justifyContent: 'space-between',
+
+        },
+        tagTextContainer: {
+            backgroundColor: '#fff',
+            borderRadius: 10,
+            paddingX: 1,
+            paddingY: 0.5,
+            alignItems: 'center',
+            alignSelf: 'flex-start',
+        },
+        tagText: {
+            color: '#000',
+            fontSize: 12,
+            fontWeight: '600',
+        },
+        circle: {
+            backgroundColor: 'rgba(255, 255, 255, 0.67)',
+            width: 30,
+            height: 30,
+            borderRadius: '50%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex',
+            animation: 'pulse 1s infinite ease-in-out',
+        },
+        circle1: {
+            backgroundColor: 'rgba(255, 255, 255, 0.67)',
+            width: 20,
+            height: 20,
+            borderRadius: '50%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex',
+        },
+        circle2: {
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            borderWidth: 2,
+            backgroundColor: 'rgb(230 221 221 / 67%)',
+            display: 'flex',
+        },
+        '@keyframes pulse': {
+            '0%': { transform: 'scale(1)', opacity: 1 },
+            '50%': { transform: 'scale(1.2)', opacity: 0.7 },
+            '100%': { transform: 'scale(1)', opacity: 1 },
+        },
+    };
     return (
         <div style={{ minHeight: "100vh" }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -139,43 +206,27 @@ const ProductDetails = () => {
                                     alt="Selected"
                                     style={{ width: '100%', borderRadius: '8px' }}
                                 />
-                                <Box sx={{ position: "absolute", top: "20%", right: "15%", }}>
-                                    <Typography variant="h6" sx={{ color: '#292b2c', position: 'relative', borderRadius: '50px', backgroundColor: "rgba(255, 255, 255, 0.67)", fontWeight: '500', fontSize: '14px', px: 2, py: 1 }}>
-                                        Pillow
-                                    </Typography>
-                                    <Box sx={{ position: "absolute", bottom: "-58px", right: "35%", }}>
-                                        <Typography sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            transform: 'rotate(-35deg)',
-                                        }} >
-                                            <PiLineSegmentLight size={30} /></Typography>
-                                        <Typography
-                                            sx={{
-                                                backgroundColor: "rgba(255, 255, 255, 0.67)",
-                                                width: '30px',
-                                                height: '30px',
-                                                borderRadius: '50%',
-                                                opacity: '0.8',
-                                                animation: 'pulse 0.4s ease-in-out infinite',
-                                                '@keyframes pulse': {
-                                                    '0%': { transform: 'scale(0.5)', opacity: 0 },
-                                                    '50%': { transform: 'scale(1.1)', opacity: 1 },
-                                                    '100%': { transform: 'scale(0.5)', opacity: 0 }
-                                                }
-                                            }}
-                                        />
-                                    </Box>
-                                </Box>
-                                <Box sx={{ position: "absolute", top: "40%", left: "15%", }}>
-                                    <Typography variant="h6" sx={{ color: '#292b2c', borderRadius: '50px', backgroundColor: "rgba(255, 255, 255, 0.67)", fontWeight: '500', fontSize: '14px', px: 2, py: 1 }}>
-                                        Throw
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ position: "absolute", bottom: "20%", right: "15%", }}>
-                                    <Typography variant="h6" sx={{ color: '#292b2c', borderRadius: '50px', backgroundColor: "rgba(255, 255, 255, 0.67)", fontWeight: '500', fontSize: '14px', px: 2, py: 1 }}>
-                                        Crapt
-                                    </Typography>
+                                <Box sx={styles.tagContainer}>
+                                    {tags.map(tag => (
+                                        <Box key={tag.id} sx={[styles.tagWrapper, tag.position]}>
+                                            <Box sx={styles.circle}>
+                                                <Box sx={styles.circle1}>
+                                                    <Box sx={styles.circle2} />
+                                                </Box>
+                                            </Box>
+                                            <Box sx={{ flexDirection: 'column', position: 'absolute', top: 35, left: 30, display: 'flex' }}>
+                                                <Box sx={{ height: 17, width: 2, backgroundColor: '#000', alignSelf: 'flex-end', color: '#000' }} />
+                                                <Box sx={{ height: 2, width: 40, backgroundColor: '#000', color: '#000' }} />
+                                            </Box>
+                                            {/* Uncomment for arrow image */}
+                                            {/* <img src={ImagePath.arrowUp} style={{ height: 30, width: 40 }} alt="arrow" /> */}
+                                            <Box sx={styles.tagTextContainer}>
+                                                <Typography variant="body2" sx={styles.tagText}>
+                                                    {tag.label}
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                    ))}
                                 </Box>
                             </Box>
 

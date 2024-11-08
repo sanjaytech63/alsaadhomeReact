@@ -1,34 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Select, MenuItem, FormControl, Button, Container, Box, Typography } from '@mui/material';
+import { Select, MenuItem, FormControl, Button, Container, Box, Typography, Modal } from '@mui/material';
 import Login from '../../auth/Login.jsx/Login';
 import Register from '../../auth/Register/Register.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ApiService from '../../auth/ApiService/ApiService.jsx';
 import { TfiUser } from "react-icons/tfi";
-
+import { showToast } from '../../utils/helper.jsx';
+import useAuthStore from '../../store/authStore.js';
 
 const Header = () => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
+  const [userData, setUserData] = useState();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const [open, setOpen] = useState(false);
   const [language, setLanguage] = useState('en');
   const [country, setCountry] = useState('United Arab Emirates');
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
 
-  const navigate = useNavigate();
+  const handleLogoutConfirmation = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const navigateToProfile = () => {
-    navigate('/my-account');
-  }
+  const navigate = useNavigate();
+  const { user, isAuthenticated, logoutUser } = useAuthStore();
+  const handleLogout = () => {
+    handleClose()
+    logoutUser();
+    navigate('/');
+  };
 
   useEffect(() => {
     const storedToken = localStorage.getItem('accessToken');
@@ -65,44 +71,30 @@ const Header = () => {
 
 
 
-
   const loginUser = async (event) => {
     event.preventDefault();
     if (!formData.email || !formData.password) {
-      toast.error("All fields are required.", { containerId: 'login' });
+      showToast("error", "All fields are required.");
       return;
     }
 
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(formData.email)) {
-      toast.error("Please enter a valid email address.", { containerId: 'login' });
+      showToast("error", "Please enter a valid email address.");
       return;
     }
 
     try {
       setLoading(true);
-      const response = await ApiService.loginUser(formData);
-      if (response.data.success) {
-        handleCloseLogin();
-        const { accessToken, refreshToken } = response.data.data;
-        setToken(accessToken);
-        localStorage.setItem('accessToken', JSON.stringify(accessToken));
-        localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
-
-        toast.success(response.data.message, { containerId: 'login' });
-        navigate('/');
-        setFormData({
-          email: "",
-          password: "",
-        });
-      }
+      useAuthStore.getState().loginUser(formData)
+      handleCloseLogin();
       setLoading(false);
     } catch (error) {
       setLoading(false);
       if (error.response && error.response.status === 400) {
-        toast.error(error.response.data.message || 'User does not exist.', { containerId: 'login' });
+        showToast("error", 'Invalid email or password.');
       } else {
-        toast.error('Login failed, please try again.', { containerId: 'login' });
+        showToast("error", 'User does not exist.');
       }
     }
   };
@@ -113,10 +105,6 @@ const Header = () => {
       [event.target.name]: event.target.value,
     });
   };
-
-
-
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -175,7 +163,7 @@ const Header = () => {
 
             <div className={`col-3 ${language === 'ar' ? 'text-start' : 'text-end'}`}>
               <Button
-                onClick={token ? handleOpenLogin : navigateToProfile}
+                onClick={isAuthenticated ? handleLogoutConfirmation : handleOpenLogin}
                 sx={{
                   color: '#2b2f4c',
                   textTransform: "capitalize",
@@ -186,11 +174,14 @@ const Header = () => {
                   },
                 }}
               >
-                {token ? (<Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: "6px" } }}>
-                  <Typography><TfiUser /></Typography>
-                  <Typography sx={{ fontSize: { sm: "14px", xs: "12px", }, display: { xs: "none", sm: "block" } }}> Sanjay Choudhary</Typography>
+                {isAuthenticated ? (<Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: "6px" } }}>
+                  <Typography><TfiUser size={20} /></Typography>
+                  <Typography sx={{ mt: "2px", fontSize: { sm: "14px", xs: "12px", }, display: { xs: "none", sm: "block" } }}>{user?.username}</Typography>
                 </Box>)
-                  : ("Login")}
+                  : (
+                    <Typography onClick={handleOpenLogin} sx={{ fontSize: { sm: "14px", xs: "12px", }, }}>Login</Typography>
+                  )
+                }
               </Button>
               <Login
                 open={openLogin}
@@ -208,8 +199,23 @@ const Header = () => {
               />
             </div>
           </div>
+          {/* Logout Confirmation Modal */}
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Modal sx={{ display: 'flex', justifyContent: 'center', margin: 'auto', alignItems: 'center', overflow: 'auto', width: '300px', }} open={open} onClose={handleClose}>
+              <Box sx={{ p: 4, backgroundColor: 'white', borderRadius: 2, textAlign: 'center' }}>
+                <Typography variant="h6" gutterBottom>Are you sure you want to logout?</Typography>
+                <Button
+                  variant="contained"
+                  onClick={handleLogout}
+                  sx={{ mr: 2, backgroundColor: '#bb1f2a', color: '#fff', cursor: 'pointer' }}
+                >
+                  Yes
+                </Button>
+                <Button variant="contained" sx={{ mr: 2, backgroundColor: '#000', color: '#fff', cursor: 'pointer' }} onClick={handleClose}>No</Button>
+              </Box>
+            </Modal>
+          </Box>
         </Container>
-        <ToastContainer containerId="login" />
       </div>
     </ThemeProvider>
   );

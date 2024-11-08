@@ -4,8 +4,11 @@ import { Zoom, Fab } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState, useEffect } from 'react';
 import RoutesFile from './routes/Routes';
+import useAuthStore from './store/authStore';
 
 function App() {
+   const { checkAuth } =  useAuthStore();
+
   const [showScroll, setShowScroll] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +23,10 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
   return (
     <div>
       <RoutesFile />
