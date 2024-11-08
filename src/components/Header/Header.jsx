@@ -87,7 +87,10 @@ const Header = () => {
     try {
       setLoading(true);
       useAuthStore.getState().loginUser(formData)
-      handleCloseLogin();
+      if (isAuthenticated) {
+        handleCloseLogin();
+      }
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
