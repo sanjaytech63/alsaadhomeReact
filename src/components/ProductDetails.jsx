@@ -154,7 +154,7 @@ const ProductDetails = () => {
             justifyContent: 'center',
             alignItems: 'center',
             display: 'flex',
-            animation: 'pulse 1s infinite ease-in-out',
+            animation: 'pulse 0.9s infinite ease-in-out',
         },
         circle1: {
             backgroundColor: 'rgba(255, 255, 255, 0.67)',
