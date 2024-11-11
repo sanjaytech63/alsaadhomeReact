@@ -11,6 +11,25 @@ const useAuthStore = create(
             isAuthenticated: false,
             loading: false,
 
+            // Register User
+            registerUser: async (params) => {
+                set({ loading: true });
+                try {
+                    const response = await ApiService.registerUser(params);
+                    if (response.status) {
+                        showToast("success", 'Registered successfully');
+                    }
+                    set({ loading: false });
+                } catch (error) {
+                    showToast('error', 'Registration failed. Please try again.');
+                    console.error('Registration Error:', error);
+                    return false;
+                } finally {
+                    set({ loading: false });
+                }
+            },
+
+            // Login User
             loginUser: async (params) => {
                 set({ loading: true });
                 try {
@@ -26,24 +45,37 @@ const useAuthStore = create(
                         showToast('success', 'Logged in successfully');
                     } else {
                         showToast('error', response.data.message);
-                        set({ loading: false });
                     }
-                } catch (error) {
                     set({ loading: false });
+                } catch (error) {
                     showToast('error', 'Login failed. Please try again.');
+                } finally {
+                    set({ loading: false });
                 }
             },
 
-            logoutUser: () => {
-                set({ user: null, accessToken: null, isAuthenticated: false });
-                localStorage.removeItem('accessToken');
-                showToast('success', 'Logged out successfully');
+            // Logout User
+            logoutUser: async () => {
+                try {
+                    const response = await ApiService.logoutUser();
+                    if (response?.status === 200) {
+                        set({ user: null, accessToken: null, isAuthenticated: false });
+                        showToast('success', 'Logged out successfully');
+                    } else {
+                        showToast('error', 'Logout failed!');
+                    }
+                } catch (error) {
+                    showToast('error', 'Something went wrong during logout!');
+                    console.error('Logout error:', error);
+                }
             },
 
             checkAuth: () => {
-                const storedToken = localStorage.getItem('accessToken');
-                if (storedToken) {
-                    set({ accessToken: storedToken, isAuthenticated: true });
+                const { accessToken } = get();
+                if (accessToken) {
+                    set({ isAuthenticated: true });
+                } else {
+                    set({ user: null, accessToken: null, isAuthenticated: false });
                 }
             },
         }),

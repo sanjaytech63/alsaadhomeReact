@@ -8,7 +8,7 @@ const Category = () => {
     const nevigate = useNavigate()
     const [category, setCategory] = useState(catJsonData.categories)
     const handleNevigate = () => {
-        nevigate(`/category/subcategory`)
+       
     }
 
     return (
@@ -39,7 +39,7 @@ const Category = () => {
                         {category.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
                                 <Box
-                                    onClick={handleNevigate}
+                                    onClick={() =>  nevigate(`/category/${cat.title.trim()}`)}
                                     sx={{
                                         position: 'relative',
                                         boxShadow: 3,

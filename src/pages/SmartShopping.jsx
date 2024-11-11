@@ -7,11 +7,11 @@ const SmartShopping = () => {
     const navigate = useNavigate();
 
     const handleNavigateBedroom = () => {
-        navigate("/smart-shopping-bedroom")
+        navigate("/smart-shopping/category/badroom")
     }
 
     const handleNavigateLivingRoom = () => {
-        navigate("/smart-shopping-living-room")
+        navigate("/smart-shopping/category/livingroom")
     }
     const bedroom = [
         { id: 1, src: "https://al-saad-home.mo.cloudinary.net/uploads/engagement_categories/whatsapp-image-2024-03-18-at-17-09-16-322c00c41710767542.jpg", title: "Bedroom" },

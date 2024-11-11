@@ -31,7 +31,6 @@ const Navbar = () => {
         { name: "Unboxing Challenge", slug: "unboxing-challenge" },
         { name: "Blog", slug: "blog" },
         { name: "Contact Us", slug: "contact-us" },
-        { name: "Todo", slug: "todo" }
     ];
 
     const handleClickOpen = () => {
@@ -124,7 +123,7 @@ const Navbar = () => {
                                     <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                                         sx={{
                                             position: 'absolute',
-                                            top: '50px',
+                                            top: '46px',
                                             right: '0',
                                             width: { sm: '400px', xs: "289px" },
                                             padding: '10px',

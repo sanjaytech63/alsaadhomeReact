@@ -1,7 +1,7 @@
 import React from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 const SubCategoryList = () => {
 
@@ -22,6 +22,7 @@ const SubCategoryList = () => {
         nevigate(`/category/subcategory/productlisting`)
     }
 
+    let {subcategory} = useParams()
     return (
         <Box sx={{ minHeight: "100vh" }}>
             {/* Header Section */}
@@ -54,7 +55,13 @@ const SubCategoryList = () => {
                         {catList && catList?.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
                                 <Box
-                                    onClick={handleNavigate}
+                                    onClick={() => {
+                                        if(subcategory){
+                                            nevigate(`/category/${subcategory.trim()}/${cat.title.trim()}`)
+                                        } else {
+                                            nevigate(`/category/${'subcategory'}/${cat.title.trim()}`)
+                                        }
+                                    }  }
                                     sx={{
                                         position: 'relative',
                                         boxShadow: 3,

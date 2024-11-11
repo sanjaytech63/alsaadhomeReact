@@ -3,11 +3,10 @@ import { Box, Button, Grid, Modal, TextField, Typography, CircularProgress, } fr
 import { Close } from '@mui/icons-material';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-import ApiService from '../ApiService/ApiService';
 import { showToast } from '../../utils/helper';
+import useAuthStore from '../../store/authStore';
 
 const Register = ({ handleClose, open, handleOpenLogin }) => {
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -26,48 +25,30 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
     };
 
     const navigate = useNavigate();
-
+    const { loading } = useAuthStore();
     const userRegister = async (event) => {
         event.preventDefault();
+
+        // Validate form fields
         if (!formData.username || !formData.email || !formData.password) {
             showToast("error", "All fields are required.");
             return;
         }
+
+        // Validate email format
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailPattern.test(formData.email)) {
             showToast("error", "Please enter a valid email address.");
             return;
         }
 
+        const { registerUser, loading } = useAuthStore.getState();
+        await registerUser(formData);
 
-        try {
-            setLoading(true);
-            const response = await ApiService.registerUser(formData);
-            console.log('Response:', response);
-            if (response.status === 201) {
-                showToast("success", 'Registered successfully');
-                handleClose();
-                navigate('/');
-                setFormData({
-                    email: "",
-                    password: "",
-                    username: "",
-                });
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            if (error.response && error.response.status === 400) {
-                showToast("error", "User already exists. Please enter a different username or email.");
-            } else {
-                showToast("error", "User already exists. Please enter a different username or email.");
-                setFormData({
-                    email: "",
-                    password: "",
-                    username: "",
-                });
-            }
-        } finally {
-            setLoading(false);
+        if (loading === false) {
+            handleClose();
+            navigate('/');
+            setFormData({ email: "", password: "", username: "" });
         }
     };
 

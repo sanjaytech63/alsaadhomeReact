@@ -17,7 +17,6 @@ const Blog = () => {
     const [totalPages, setTotalPages] = useState(1);
 
     const fetchProducts = async (pageNumber) => {
-       
         try {
             setLoading(true);
             const response = await instance.get(`/randomproducts/?page=${pageNumber}&limit=10`);
@@ -31,20 +30,13 @@ const Blog = () => {
         }
     };
 
-
     const handleChangePage = (e,newPage) => {
         setPageNumber(newPage);
     };
 
-
     useEffect(() => {
         fetchProducts(pageNumber);
     }, [pageNumber]);
-
-    // if (loading) {
-    //     return <Loading />
-    // }
-
 
     return (
         <Box sx={{ minHeight: "100vh", }}>

@@ -45,7 +45,7 @@ const SmartShoppingBedroom = () => {
     const nevigate = useNavigate();
 
     const handleNavigate = () => {
-        nevigate(`/category/subcategory/productlisting/productdetail`)
+        nevigate(`/smart-shopping/details/222`)
     }
     return (
         <div>

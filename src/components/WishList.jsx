@@ -82,7 +82,11 @@ const WishList = () => {
                       WebkitLineClamp: 2,
                       wordBreak: "break-all",
                       whiteSpace: "normal",
-                      textOverflow: "ellipsis"
+                      textOverflow: "ellipsis",
+                      cursor: "pointer",
+                      ":hover": {
+                        color: "#bb1f2a"
+                      }
                     }}
                     component="div"
                   >

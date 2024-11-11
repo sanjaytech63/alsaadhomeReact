@@ -7,13 +7,13 @@ const OderHistory = () => {
   const navigate = useNavigate();
 
   const navigateToOrder = () => {
-      navigate('/oder-details')
+    navigate('/oder-details')
   }
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
       <Box sx={{ bgcolor: '#f7f8fb', py: "30px" }}>
-        <Container>
+        <Container maxWidth={"lg"}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography
               variant="h5"
@@ -55,7 +55,7 @@ const OderHistory = () => {
                 Oder History
               </Typography>
               <hr />
-              <Box sx={{ px: 2, borderRadius: 1, boxShadow: " 0 0 4px 0 #e9e9e9" }}>
+              <Box sx={{ width: { sm: "60%", xs: "100%" }, px: 2, borderRadius: 1, boxShadow: " 0 0 4px 0 #e9e9e9" }}>
                 <TableContainer sx={{}}>
                   <Table>
                     <TableBody>

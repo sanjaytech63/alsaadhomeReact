@@ -11,16 +11,28 @@ const RecentlyViewed = ({ productsCard }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const nevigate = useNavigate();
-
+    const isRTL = theme.direction === 'rtl';
     const handleNavigate = () => {
-        nevigate(`/category/subcategory/productlisting/productdetail`)
-    };
+        nevigate(`/prodect/123`)
+    }
     const CustomButtonGroup = ({ next, previous }) => (
-        <Box sx={{ position: "absolute", top: '50%', left: '-70px', right: '-70px', display: 'flex', justifyContent: 'space-between', transform: 'translateY(-50%)' }}>
-            <IconButton onClick={previous} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
+        <Box
+            sx={{
+                position: "absolute",
+                top: '50%',
+                left: '-70px',
+                right: '-70px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                transform: 'translateY(-50%)',
+                direction: isRTL ? 'rtl' : 'ltr'
+            }}
+        >
+            {/* Adjust arrow navigation based on RTL */}
+            <IconButton onClick={isRTL ? next : previous} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
                 <MdOutlineArrowBackIos />
             </IconButton>
-            <IconButton onClick={next} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
+            <IconButton onClick={isRTL ? previous : next} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
                 <MdOutlineArrowForwardIos />
             </IconButton>
         </Box>
@@ -51,7 +63,7 @@ const RecentlyViewed = ({ productsCard }) => {
                 <hr className="mx-2" />
                 <Box sx={{ width: "100%", position: "relative", mt: 2 }}>
                     <Carousel
-                        rtl={false}
+                        rtl={isRTL}
                         additionalTransfrom={0}
                         autoPlaySpeed={3000}
                         renderButtonGroupOutside
@@ -83,7 +95,7 @@ const RecentlyViewed = ({ productsCard }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card  key={item.id} sx={{ borderTopLeftRadius: '8px',borderTopRightRadius: '8px',borderBottomLeftRadius:"0px",borderBottomRightRadius:"0px", margin: { xs: 2, sm: "5px", cursor: "pointer",boxShadow:"0 0 7px rgb(0 0 0 / 10%)" } }}>
+                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" } }}>
                                 <Box position="relative">
                                     <Chip
                                         label="New"
@@ -116,7 +128,7 @@ const RecentlyViewed = ({ productsCard }) => {
                                                 color: "#bb1f2a",
                                             }
                                         }}
-                                
+
                                     >
                                         {item.title}
                                     </Typography>
@@ -142,8 +154,8 @@ const RecentlyViewed = ({ productsCard }) => {
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                    <Rating sx={{fontSize: { xs: "1.1rem", sm: "1.5rem"} }} name="no-value" value={null} />
-                                        <Typography variant="body2" sx={{ ml: 1,color:"#9a9696" }}>
+                                        <Rating sx={{ fontSize: { xs: "1.1rem", sm: "1.5rem" } }} name="no-value" value={null} />
+                                        <Typography variant="body2" sx={{ ml: 1, color: "#9a9696" }}>
                                             ({item.rating})
                                         </Typography>
                                     </Box>

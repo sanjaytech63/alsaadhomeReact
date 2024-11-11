@@ -1,8 +1,9 @@
 import React from 'react'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import RecommendedProducts from './components/RecommendedProducts'
+
 import { Box, Breadcrumbs, Container, Typography, Grid } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import RecommendedProducts from './RecommendedProducts';
 
 const SmartShoppingLivingRoom = () => {
     const recommendedProducts = [
@@ -44,7 +45,7 @@ const SmartShoppingLivingRoom = () => {
     const nevigate = useNavigate();
 
     const handleNavigate = () => {
-        nevigate(`/category/subcategory/productlisting/productdetail`)
+        nevigate(`/smart-shopping/details/222`)
     }
     return (
         <div>

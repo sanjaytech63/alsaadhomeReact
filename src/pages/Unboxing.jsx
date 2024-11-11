@@ -61,7 +61,7 @@ const Unboxing = () => {
                         ))}
                     </Grid>
                     <Box sx={{}}>
-                        <Box sx={{ textAlign: 'left', mb: 2 }}>
+                        <Box sx={{  mb: 2 }}>
                             <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
                                 Participate in The Unboxing Challenge
                             </Typography>

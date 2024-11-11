@@ -1,4 +1,5 @@
 import axios from "axios";
+import useAuthStore from "../store/authStore";
 
 const axiosInstance = axios.create({
     baseURL: "https://api.freeapi.app/api/v1",
@@ -9,10 +10,9 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     config => {
-        const token = localStorage.getItem('accessToken');
-        console.log(token);
+        const token = useAuthStore.getState().accessToken;
         if (token) {
-            config.headers['Authorization'] = `Bearer ${JSON.parse(token)}`;
+            config.headers['Authorization'] = `Bearer ${token}`;
         }
         return config;
     },

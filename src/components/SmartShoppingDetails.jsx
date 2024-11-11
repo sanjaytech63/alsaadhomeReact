@@ -27,15 +27,15 @@ const product = {
         hardness: "Super Soft"
     },
     images: [
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 1' },
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 2' },
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 3' },
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 1' },
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 2' },
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 3' },
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 1' },
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 2' },
-        { src: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg', alt: 'Pillow Image 3' }
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 1' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 2' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 3' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 1' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 2' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 3' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 1' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 2' },
+        { src: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14718/thumb/luri-121728653637.jpg', alt: 'Pillow Image 3' }
     ]
 };
 
@@ -94,7 +94,7 @@ const productDetails = [
     }
 ];
 
-const ProductDetails = () => {
+const SmartShoppingDetails = () => {
     const [selectedColor, setSelectedColor] = useState(products[0].colorOptions[0]);
     const [selectedImage, setSelectedImage] = useState(product.images[0].src);
     const [count, setCount] = useState(1);
@@ -112,9 +112,73 @@ const ProductDetails = () => {
         }
     }
 
+    const tags = [
+        { id: 1, label: 'Duvet Cover', position: { top: 120, left: 60 } },
+        { id: 2, label: 'Bedspread', position: { top: 20, right: 100 } },
+        { id: 3, label: 'Throw', position: { top: 200, right: 110 } },
+    ];
 
+    const styles = {
+        tagContainer: {
+            position: 'absolute',
+            width: '100%',
+            top: 0,
+        },
+        tagWrapper: {
+            position: 'absolute',
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'row',
+            height: 100,
+            justifyContent: 'space-between',
 
-
+        },
+        tagTextContainer: {
+            backgroundColor: '#fff',
+            borderRadius: 10,
+            paddingX: 1,
+            paddingY: 0.5,
+            alignItems: 'center',
+            alignSelf: 'flex-start',
+        },
+        tagText: {
+            color: '#000',
+            fontSize: 12,
+            fontWeight: '600',
+        },
+        circle: {
+            backgroundColor: 'rgba(255, 255, 255, 0.67)',
+            width: 30,
+            height: 30,
+            borderRadius: '50%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex',
+            animation: 'pulse 0.9s infinite ease-in-out',
+        },
+        circle1: {
+            backgroundColor: 'rgba(255, 255, 255, 0.67)',
+            width: 20,
+            height: 20,
+            borderRadius: '50%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex',
+        },
+        circle2: {
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            borderWidth: 2,
+            backgroundColor: 'rgb(230 221 221 / 67%)',
+            display: 'flex',
+        },
+        '@keyframes pulse': {
+            '0%': { transform: 'scale(1)', opacity: 1 },
+            '50%': { transform: 'scale(1.2)', opacity: 0.7 },
+            '100%': { transform: 'scale(1)', opacity: 1 },
+        },
+    };
     return (
         <div style={{ minHeight: "100vh" }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -142,6 +206,28 @@ const ProductDetails = () => {
                                     alt="Selected"
                                     style={{ width: '100%', borderRadius: '8px' }}
                                 />
+                                <Box sx={styles.tagContainer}>
+                                    {tags.map(tag => (
+                                        <Box key={tag.id} sx={[styles.tagWrapper, tag.position]}>
+                                            <Box sx={styles.circle}>
+                                                <Box sx={styles.circle1}>
+                                                    <Box sx={styles.circle2} />
+                                                </Box>
+                                            </Box>
+                                            <Box sx={{ flexDirection: 'column', position: 'absolute', top: 35, left: 30, display: 'flex' }}>
+                                                <Box sx={{ height: 17, width: 2, backgroundColor: '#000', alignSelf: 'flex-end', color: '#000' }} />
+                                                <Box sx={{ height: 2, width: 40, backgroundColor: '#000', color: '#000' }} />
+                                            </Box>
+                                            {/* Uncomment for arrow image */}
+                                            {/* <img src={ImagePath.arrowUp} style={{ height: 30, width: 40 }} alt="arrow" /> */}
+                                            <Box sx={styles.tagTextContainer}>
+                                                <Typography variant="body2" sx={styles.tagText}>
+                                                    {tag.label}
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                    ))}
+                                </Box>
                             </Box>
 
                             <Box sx={{ width: '100%', position: 'relative', mt: 2 }}>
@@ -394,4 +480,4 @@ const ProductDetails = () => {
     );
 };
 
-export default ProductDetails;
+export default SmartShoppingDetails;

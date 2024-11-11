@@ -7,25 +7,25 @@ const ProductListingMainContant = ({ productsCard }) => {
     const navigate = useNavigate();
 
     const handleNavigate = () => {
-        navigate(`/category/subcategory/productlisting/productdetail`)
+        navigate(`/prodect/123`)
     }
 
     return (
         <>
-            <Card sx={{
+            <Card sx={{ 
                 borderTopLeftRadius: '8px',
                 borderTopRightRadius: '8px',
                 borderBottomLeftRadius: "0px",
                 borderBottomRightRadius: "0px",
                 margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }
             }}>
-                <Box position="relative" sx={{ display: "block" }}>
+                <Box   onClick={handleNavigate} position="relative" sx={{ display: "block" }}>
                     <Chip
                         label="New"
                         sx={{ position: 'absolute', top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                     />
                     <CardMedia
-                        onClick={handleNavigate}
+                      
                         sx={{
                             minHeight: { sm: "276.37px", xs: "175px" },
                             maxHeight: { sm: "400px", xs: "175px" },

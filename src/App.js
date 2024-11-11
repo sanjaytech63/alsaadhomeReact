@@ -3,12 +3,11 @@ import { ToastContainer } from 'react-toastify';
 import { Zoom, Fab } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState, useEffect } from 'react';
-import RoutesFile from './routes/Routes';
 import useAuthStore from './store/authStore';
+import router from './routes/Routes';
+import { RouterProvider } from 'react-router-dom';
 
 function App() {
-   const { checkAuth } =  useAuthStore();
-
   const [showScroll, setShowScroll] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -25,11 +24,12 @@ function App() {
 
 
   useEffect(() => {
-    checkAuth();
+    useAuthStore.getState().checkAuth();
   }, []);
+
   return (
     <div>
-      <RoutesFile />
+    <RouterProvider router={router} />
       <Zoom in={showScroll}>
         <Fab
           onClick={scrollToTop}
@@ -57,7 +57,7 @@ function App() {
       </Zoom>
       <ToastContainer />
     </div>
-  );
+  )
 }
 
 export default App;

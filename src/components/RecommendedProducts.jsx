@@ -11,21 +11,34 @@ const RecommendedProducts = ({ productsCard }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const nevigate = useNavigate();
-
+    const isRTL = theme.direction === 'rtl';
     const handleNavigate = () => {
-        nevigate(`/category/subcategory/productlisting/productdetail`)
+        nevigate(`/prodect/123`)
     };
 
     const CustomButtonGroup = ({ next, previous }) => (
-        <Box sx={{ position: "absolute", top: '50%', left: '-70px', right: '-70px', display: 'flex', justifyContent: 'space-between', transform: 'translateY(-50%)' }}>
-            <IconButton onClick={previous} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
+        <Box
+            sx={{
+                position: "absolute",
+                top: '50%',
+                left: '-70px',
+                right: '-70px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                transform: 'translateY(-50%)',
+                direction: isRTL ? 'rtl' : 'ltr'
+            }}
+        >
+            {/* Adjust arrow navigation based on RTL */}
+            <IconButton onClick={isRTL ? next : previous} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
                 <MdOutlineArrowBackIos />
             </IconButton>
-            <IconButton onClick={next} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
+            <IconButton onClick={isRTL ? previous : next} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
                 <MdOutlineArrowForwardIos />
             </IconButton>
         </Box>
     );
+
 
     return (
         <div className="w-100 ">
@@ -52,7 +65,7 @@ const RecommendedProducts = ({ productsCard }) => {
                 <hr className="mx-2" />
                 <Box sx={{ width: "100%", position: "relative", mt: 2 }}>
                     <Carousel
-                        rtl={false}
+                          rtl={isRTL}
                         additionalTransfrom={0}
                         autoPlaySpeed={3000}
                         renderButtonGroupOutside

@@ -28,7 +28,7 @@ const Checkout = () => {
             name: "Al Saad Home Microgel Pillow - ( 50  X 75 ) cm - Super Soft x 1",
             price: "99 AED",
             imgSrc: "https://al-saad-home.mo.cloudinary.net/uploads/products/14682/thumb/micro-gel-pillow-11727870637.jpg"
-        }
+        },
     ];
 
     const total = 448.00;
@@ -55,7 +55,6 @@ const Checkout = () => {
                                             height: '52px',
                                             '& .MuiOutlinedInput-root': {
                                                 height: '100%',
-
                                             },
                                         }}
                                     />
@@ -75,7 +74,6 @@ const Checkout = () => {
                                 </Grid>
                             </Grid>
                         </Box>
-
                     </Grid>
 
                     <Grid item xs={12}>
@@ -94,83 +92,94 @@ const Checkout = () => {
                         <Box sx={{}}>
                             <TextField fullWidth label="Name" variant="outlined" sx={{ marginBottom: 2 }} />
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-                                <FormControl fullWidth>
-                                    <Select
-                                        fullWidth
-                                        variant="outlined"
-                                        defaultValue="Select Country Code"
-                                        sx={{
-                                            padding: '1px 4px',
-                                            border: '1px solid #ccc',
-                                            '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-                                            ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                                                padding: "13px 13px",
-                                                fontSize: "14px",
-                                                color: "#333",
-                                            }
-                                        }}
-                                    >
-                                        <MenuItem value="Select Country Code" disabled hidden>
-                                            Select Country Code
-                                        </MenuItem>
-                                        <MenuItem
-                                            sx={{
-                                                fontSize: "14px",
-                                                color: "#333",
-                                            }}
-                                            value="+ 971"
-                                        >
-                                            <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
-                                        </MenuItem>
-                                        <MenuItem
-                                            sx={{
-                                                fontSize: "14px",
-                                                color: "#333",
-                                            }}
-                                            value="+ 968"
-                                        >
-                                            <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
-                                        </MenuItem>
-                                    </Select>
-                                </FormControl>
-
-                                <TextField fullWidth label="Enter Mobile Number" required />
+                                <Grid container spacing={2}>
+                                    <Grid item xs={3}>
+                                        <FormControl fullWidth>
+                                            <Select
+                                                fullWidth
+                                                variant="outlined"
+                                                defaultValue="Select Country Code"
+                                                sx={{
+                                                    padding: '2px 4px',
+                                                    border: '1px solid #ccc',
+                                                    '.MuiOutlinedInput-notchedOutline': { border: 'none' },
+                                                    ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
+                                                        padding: "13px 13px",
+                                                        fontSize: "14px",
+                                                        color: "#333",
+                                                    }
+                                                }}
+                                            >
+                                                <MenuItem value="Select Country Code" disabled hidden>
+                                                    Select Country Code
+                                                </MenuItem>
+                                                <MenuItem
+                                                    sx={{
+                                                        fontSize: "14px",
+                                                        color: "#333",
+                                                    }}
+                                                    value="+ 971"
+                                                >
+                                                    <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
+                                                </MenuItem>
+                                                <MenuItem
+                                                    sx={{
+                                                        fontSize: "14px",
+                                                        color: "#333",
+                                                    }}
+                                                    value="+ 968"
+                                                >
+                                                    <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
+                                                </MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={9}>
+                                        <TextField fullWidth type='number' label="Enter Mobile Number" required />
+                                    </Grid>
+                                </Grid>
                             </Box>
 
                             <Box sx={{ display: 'flex', mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-                                <FormControl fullWidth>
-                                    <Select fullWidth
-                                        defaultValue="Select Country Code"
-                                        variant="outlined"
-                                        sx={{
-                                            padding: '1px 4px',
-                                            border: '1px solid #ccc',
-                                            '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-                                            ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                                                padding: "13px 13px",
-                                                fontSize: "14px",
-                                                color: "#333",
-                                            }
-                                        }}
-                                    >
-                                        <MenuItem value="Select Country Code" disabled hidden>
-                                            Select Country Code
-                                        </MenuItem>
-                                        <MenuItem sx={{
-                                            fontSize: "14px",
-                                            color: "#333",
-                                        }} value="+ 971">
-                                            <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
-                                        </MenuItem>
-                                        <MenuItem sx={{
-                                            fontSize: "14px",
-                                            color: "#333",
-                                        }} value="+ 968">
-                                            <img style={{ width: "30px", height: "30px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
-                                        </MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <TextField fullWidth label="Whatsapp Mobile Number" required />
+                                <Grid container spacing={2}>
+                                    <Grid item xs={3}>
+                                        <FormControl fullWidth>
+                                            <Select fullWidth
+                                                defaultValue="Select Country Code"
+                                                variant="outlined"
+                                                sx={{
+                                                    padding: '2px 4px',
+                                                    border: '1px solid #ccc',
+                                                    '.MuiOutlinedInput-notchedOutline': { border: 'none' },
+                                                    ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
+                                                        padding: "13px 13px",
+                                                        fontSize: "14px",
+                                                        color: "#333",
+                                                    }
+                                                }}
+                                            >
+                                                <MenuItem value="Select Country Code" disabled hidden>
+                                                    Select Country Code
+                                                </MenuItem>
+                                                <MenuItem sx={{
+                                                    fontSize: "14px",
+                                                    color: "#333",
+                                                }} value="+ 971">
+                                                    <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
+                                                </MenuItem>
+                                                <MenuItem sx={{
+                                                    fontSize: "14px",
+                                                    color: "#333",
+                                                }} value="+ 968">
+                                                    <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
+                                                </MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={9}>
+                                        <TextField fullWidth type="number" label="Whatsapp Mobile Number" required />
+                                    </Grid>
+                                </Grid>
                             </Box>
                             <TextField fullWidth label="Email" variant="outlined" sx={{ my: 2 }} />
 

@@ -6,9 +6,9 @@ import BlogShimmer from './BlogShimmer';
 
 const BlogCards = ({ blog, loading }) => {
     const navigate = useNavigate();
-    const handleNavigative = () => {
-        navigate("/blog-details");
-    }
+    // const handleNavigative = () => {
+    //     navigate("/blog-details");
+    // }
 
     if (loading) {
         return <BlogShimmer />
@@ -16,7 +16,7 @@ const BlogCards = ({ blog, loading }) => {
 
     return (
         <>
-            <Card onClick={handleNavigative} key={blog.id} sx={{ borderRadius: '8px', mb: 4, cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }}>
+            <Card onClick={() => navigate(`${blog.title}`)} key={blog.id} sx={{ borderRadius: '8px', mb: 4, cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }}>
                 <Box position="relative">
                     <CardMedia
                         sx={{
