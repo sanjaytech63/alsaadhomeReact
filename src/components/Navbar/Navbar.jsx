@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, Badge, Divider, Button, Typography } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, Badge, Divider, Button, Typography, useTheme } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -23,7 +23,7 @@ const Navbar = () => {
 
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
-
+    const theme = useTheme();
     const navList = [
         { name: "Home", slug: "" },
         { name: "Category", slug: "category" },
@@ -119,12 +119,22 @@ const Navbar = () => {
                                     <IoMenuOutline size={28} />
                                 </Box>
 
-                                {isHovered && (
+
+                            
+                            </Box>
+                        </Toolbar>
+                      
+                    </Container>
+                    <Container maxWidth="lg" alignItems="flex-start" sx={{display: "flex", flexDirection: "column"}} >
+
+                   
+                    {isHovered && (
                                     <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                                         sx={{
                                             position: 'absolute',
                                             top: '46px',
-                                            right: '0',
+                                            // [theme.direction === 'rtl' ? 'left' :  'right']: '0',
+                                            alignSelf: 'flex-end',
                                             width: { sm: '400px', xs: "289px" },
                                             padding: '10px',
                                             backgroundColor: 'white',
@@ -175,9 +185,7 @@ const Navbar = () => {
                                         </Box>
                                     </Box>
                                 )}
-                            </Box>
-                        </Toolbar>
-                    </Container>
+                                 </Container>
                 </AppBar>
 
                 <Drawer anchor="left" sx={{ width: { xs: '100%', md: '40%' }, padding: "0px !important" }} open={open} onClose={() => toggleDrawer(false)} PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}>
@@ -195,7 +203,7 @@ const Navbar = () => {
                         <List>
                             {navList.map((item, index) => (
                                 <ListItem button key={index}>
-                                    <NavLink
+                                    <NavLink onClick={() => toggleDrawer(false)}
                                         className={({ isActive }) =>
                                             isActive ? "active" : "inactive"
                                         }

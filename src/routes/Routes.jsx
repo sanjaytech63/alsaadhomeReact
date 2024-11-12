@@ -84,7 +84,7 @@ export default router;
 function Layout() {
   return (
     <div>
-      <Suspense >
+      <Suspense fallback={<Loading />}>
         <Header />
         <Navbar />
         <BottomNav />
@@ -95,5 +95,5 @@ function Layout() {
         <ScrollRestoration />
       </Suspense>
     </div>
-  )
+  );
 }

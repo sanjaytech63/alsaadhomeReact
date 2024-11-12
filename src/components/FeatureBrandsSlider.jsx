@@ -11,8 +11,8 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
 
     const navigate = useNavigate();
 
-    const handleNavigate = (slug) => {
-        navigate(`/category/subcategory/productlisting/${slug}`);
+    const handleNavigate = () => {
+        navigate(`/category/subcategory/productlisting`);
     };
 
     // Custom Button Group for Navigation Arrows
@@ -106,11 +106,12 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                                         loading="lazy"
                                         className={!matchesSM ? "rounded-circle" : "rounded-3"}
                                         sx={{
+                                            borderRadius: "50%",
                                             width: matchesSM ? "70px" : "97px",
                                             height: matchesSM ? "70px" : "97px",
                                             objectFit: "cover",
-                                            border: "3px solid #cfe9f6",
-                                            "&:hover": { border: "3px solid #bb1f2a" }
+                                            border: { xs: "none", sm: "3px solid #cfe9f6" },
+                                            "&:hover": { border: { xs: "none", sm: "3px solid #bb1f2a" } }
                                         }}
                                     />
                                 </Box>

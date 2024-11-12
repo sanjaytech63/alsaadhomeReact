@@ -104,11 +104,11 @@ const PrivacyPolice = () => {
 
     return (
         <div style={{ width: "100%", minHeight: "100vh" }}>
-            <Container maxWidth="lg" sx={{ py: 5 }}>
+            <Container maxWidth="lg" sx={{ py: 3 }}>
                 <Grid container justifyContent="center">
                     <Grid item xs={12}>
                         {privacyData.map((section, index) => (
-                            <Box key={index} mt={2} mb={4}>
+                            <Box key={index}  mb={4}>
                                 <Typography variant="h6" gutterBottom>
                                     Introduction
                                 </Typography>

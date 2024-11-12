@@ -6,7 +6,7 @@ const Products = ({ products }) => {
     const nevigate = useNavigate();
 
     const handleNavigate = () => {
-        nevigate(`/category/subcategory/productlisting/productdetail`)
+        nevigate(`/prodect/123`)
     };
     return (
         <div className="my-4">

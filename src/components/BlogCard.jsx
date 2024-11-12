@@ -43,24 +43,22 @@ const BlogCard = () => {
     // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const navigate = useNavigate();
 
-    const handleNaigate = () => {
-        navigate("/blog-details");
-    }
+
     return (
         <div className="w-100 my-5">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
                 <Box sx={{ px: { xs: 2, sm: "0px" } }}>
-                    <Typography variant="h4" sx={{ fontWeight: 600,fontSize:{sm:"24px",xs:"16px"}, mb: 2, textAlign: { sm: "center", xs: "left" } }}>
+                    <Typography variant="h4" sx={{ fontWeight: 600, fontSize: { sm: "24px", xs: "16px" }, mb: 2, textAlign: { sm: "center", xs: "left" } }}>
                         Blogs
                     </Typography>
-                    <Typography sx={{ color: "#687188", mb: 4,fontSize:{sm:"16px",xs:"14px"}, textAlign: { sm: "center", xs: "left" } }} variant="body1" align="center" >
+                    <Typography sx={{ color: "#687188", mb: 4, fontSize: { sm: "16px", xs: "14px" }, textAlign: { sm: "center", xs: "left" } }} variant="body1" align="center" >
                         We are pleased to provide educational information to help you choose your products
                     </Typography>
 
                     <Grid container spacing={3} justifyContent="center">
                         {blogsData.map((blog) => (
                             <Grid item xs={12} sm={6} md={4} key={blog.id}>
-                                <Card onClick={handleNaigate} key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer" }}>
+                                <Card onClick={() => navigate(`/blog/${blog.title}`)} key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer" }}>
                                     <Box position="relative">
                                         <CardMedia
                                             sx={{

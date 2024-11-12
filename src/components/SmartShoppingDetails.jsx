@@ -154,7 +154,7 @@ const SmartShoppingDetails = () => {
             justifyContent: 'center',
             alignItems: 'center',
             display: 'flex',
-            animation: 'pulse 0.9s infinite ease-in-out',
+            animation: 'pulse 0.8s infinite ease-in-out',
         },
         circle1: {
             backgroundColor: 'rgba(255, 255, 255, 0.67)',
@@ -164,6 +164,7 @@ const SmartShoppingDetails = () => {
             justifyContent: 'center',
             alignItems: 'center',
             display: 'flex',
+            // animation: 'pulse 0.4s infinite ease-in-out',
         },
         circle2: {
             width: 10,
@@ -172,11 +173,7 @@ const SmartShoppingDetails = () => {
             borderWidth: 2,
             backgroundColor: 'rgb(230 221 221 / 67%)',
             display: 'flex',
-        },
-        '@keyframes pulse': {
-            '0%': { transform: 'scale(1)', opacity: 1 },
-            '50%': { transform: 'scale(1.2)', opacity: 0.7 },
-            '100%': { transform: 'scale(1)', opacity: 1 },
+            // animation: 'pulse 0.5s infinite ease-in-out',
         },
     };
     return (

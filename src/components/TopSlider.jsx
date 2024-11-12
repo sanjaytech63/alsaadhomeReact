@@ -10,8 +10,8 @@ const TopSlider = ({ topSlider }) => {
     const isRTL = theme.direction === 'rtl';
 
     const navigate = useNavigate();
-    const handleNavigate = (slug) => {
-        navigate(`/category/${slug}`);
+    const handleNavigate = () => {
+        navigate(`/category`);
     };
 
     const CustomButtonGroup = ({ next, previous }) => (

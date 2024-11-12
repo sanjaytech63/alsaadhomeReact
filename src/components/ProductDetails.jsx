@@ -9,6 +9,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Carousel from "react-multi-carousel";
 
+import ReactImageMagnify from 'react-image-magnify';
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
     price: 149,
@@ -113,8 +114,6 @@ const ProductDetails = () => {
     }
 
 
-
-
     return (
         <div style={{ minHeight: "100vh" }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -136,12 +135,32 @@ const ProductDetails = () => {
                     <Grid item xs={12} md={6}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Box sx={{ width: '100%', position: 'relative' }}>
-                                <img
+                                {/* <Magnifier
                                     src={selectedImage}
                                     loading="lazy"
                                     alt="Selected"
+
                                     style={{ width: '100%', borderRadius: '8px' }}
-                                />
+                                /> */}
+                                <div className="image-magnifier-container">
+                                    <ReactImageMagnify
+                                        {...{
+                                            smallImage: {
+                                                alt: 'Wristwatch by Ted Baker London',
+                                                isFluidWidth: true,
+                                                src: selectedImage,
+                                            },
+                                            largeImage: {
+                                                src: selectedImage,
+                                                width: 1200,
+                                                height: 1800,
+                                            },
+                                            enlargedImageContainerStyle: { zIndex: 10 },
+                                            enlargedImagePosition: 'over',
+                                        }}
+                                    />
+                                </div>
+
                             </Box>
 
                             <Box sx={{ width: '100%', position: 'relative', mt: 2 }}>

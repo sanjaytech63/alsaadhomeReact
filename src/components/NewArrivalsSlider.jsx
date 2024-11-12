@@ -93,41 +93,21 @@ const NewArrivalsSlider = ({ productsCard }) => {
                         swipeable
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
-                        {productsCard?.map((item) => (
-                            <Card
-                                key={item.id}
-                                sx={{
-                                    borderTopLeftRadius: '8px',
-                                    borderTopRightRadius: '8px',
-                                    cursor: "pointer",
-                                    margin: { xs: 2, sm: "5px" },
-                                    boxShadow: "0 0 7px rgba(0, 0, 0, 0.1)"
-                                }}
-                                onClick={() => handleNavigate(item.id)}
-                            >
-                                {/* Product Image with Chip */}
+                        {productsCard && productsCard.map((item) => (
+                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" } }}>
                                 <Box position="relative">
                                     <Chip
                                         label="New"
-                                        sx={{
-                                            position: 'absolute',
-                                            top: 10,
-                                            right: 10,
-                                            backgroundColor: "#bb1f2a",
-                                            color: "#fff",
-                                            borderRadius: "0px"
-                                        }}
+                                        sx={{ position: 'absolute', top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                     />
-                                    <CardMedia
-                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
+                                    <CardMedia onClick={handleNavigate}
+                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}
                                         component="img"
-                                        loading="lazy"
                                         image={item.image}
                                         alt={item.title}
+                                        loading="lazy"
                                     />
                                 </Box>
-
-                                {/* Card Content */}
                                 <CardContent sx={{ p: { xs: "8px", sm: "16px" } }}>
                                     <Typography
                                         variant="h6"
@@ -135,32 +115,47 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                             color: "#292b2c",
                                             fontWeight: 600,
                                             fontSize: { xs: "15px", sm: "1rem" },
+                                            alignSelf: "flex-start",
                                             display: "-webkit-box",
-                                            WebkitLineClamp: 2,
                                             overflow: "hidden",
+                                            WebkitBoxOrient: "vertical",
+                                            WebkitLineClamp: 2,
+                                            wordBreak: "break-all",
+                                            whiteSpace: "normal",
                                             textOverflow: "ellipsis",
-                                            ":hover": { color: "#bb1f2a" }
+                                            ":hover": {
+                                                color: "#bb1f2a",
+                                            }
                                         }}
+
                                     >
                                         {item.title}
                                     </Typography>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-                                        <Typography variant="body1" sx={{ color: "#bb1f2a", fontWeight: 600 }}>
+                                        <Typography variant="body1" noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
                                             {item.price}
                                         </Typography>
-                                        <Box sx={{ display: 'flex', gap: 2 }}>
-                                            <IconButton onClick={() => alert('Added to cart!')} aria-label="add to cart">
-                                                <AddShoppingCart />
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                            <IconButton sx={{
+                                                p: { xs: "4px", sm: "8px" }, boxShadow: 2, ":hover": {
+                                                    backgroundColor: "#bb1f2a", color: "#fff"
+                                                }
+                                            }} onClick={() => alert('Added to cart!')} aria-label="add to cart">
+                                                <AddShoppingCart sx={{ fontSize: "1rem" }} />
                                             </IconButton>
-                                            <IconButton onClick={() => alert('Added to wishlist!')} aria-label="add to wishlist">
-                                                <FavoriteBorder />
+                                            <IconButton sx={{
+                                                p: { xs: "4px", sm: "8px" }, boxShadow: 2, ":hover": {
+                                                    backgroundColor: "#bb1f2a", color: "#fff"
+                                                }
+                                            }} onClick={() => alert('Added to wishlist!')} aria-label="add to wishlist">
+                                                <FavoriteBorder sx={{ fontSize: "1rem" }} />
                                             </IconButton>
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                        <Rating name="read-only" value={item.rating} readOnly />
+                                        <Rating sx={{ fontSize: { xs: "1.1rem", sm: "1.5rem" } }} name="no-value" value={null} />
                                         <Typography variant="body2" sx={{ ml: 1, color: "#9a9696" }}>
-                                            ({item.ratingCount})
+                                            ({item.rating})
                                         </Typography>
                                     </Box>
                                 </CardContent>

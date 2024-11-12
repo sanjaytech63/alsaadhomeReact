@@ -150,7 +150,7 @@ const Footer = () => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} md={3} textAlign={{ xs: 'left', md: 'left' }}>
+            <Grid item xs={12} md={3} >
               <Typography variant="h6" gutterBottom>
                 Social Media
               </Typography>
@@ -202,7 +202,9 @@ const Footer = () => {
           </Grid>
         </Container>
         <Box
-          sx={{
+          sx={{pb: { xs: 10, sm: 0},
+            pt: { xs: 2, sm: 0},
+            px: { xs:1, sm: 0},
             textAlign: 'center',
             marginTop: '20px',
             borderTop: '1px solid #444',

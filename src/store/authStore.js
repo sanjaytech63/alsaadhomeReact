@@ -34,7 +34,7 @@ const useAuthStore = create(
                 set({ loading: true });
                 try {
                     const response = await ApiService.loginUser(params);
-                    if (response.status === 200) {
+                    if (response.status) {
                         const { user, accessToken } = response.data.data;
                         set({
                             user,
@@ -58,7 +58,7 @@ const useAuthStore = create(
             logoutUser: async () => {
                 try {
                     const response = await ApiService.logoutUser();
-                    if (response?.status === 200) {
+                    if (response.status) {
                         set({ user: null, accessToken: null, isAuthenticated: false });
                         showToast('success', 'Logged out successfully');
                     } else {
