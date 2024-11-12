@@ -120,72 +120,70 @@ const Navbar = () => {
                                 </Box>
 
 
-                            
+
                             </Box>
                         </Toolbar>
-                      
+
                     </Container>
-                    <Container maxWidth="lg" alignItems="flex-start" sx={{display: "flex", flexDirection: "column"}} >
+                    <Container maxWidth="lg" alignItems="flex-start" sx={{ display: "flex", flexDirection: "column" }} >
+                        {isHovered && (
+                            <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+                                sx={{
+                                    position: 'absolute',
+                                    top: '46px',
+                                    // [theme.direction === 'rtl' ? 'left' :  'right']: '0',
+                                    alignSelf: 'flex-end',
+                                    width: { sm: '400px', xs: "289px" },
+                                    padding: '10px',
+                                    backgroundColor: 'white',
+                                    boxShadow: 3,
+                                    zIndex: 999,
+                                }}
+                            >
+                                <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#292b2c' }}>Your Cart</Typography>
+                                <Divider />
+                                <List sx={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                    {data.map((item) => (
+                                        <Box
+                                            key={item.id}
+                                            sx={{ display: 'flex', gap: 3, my: 1, justifyContent: 'space-between', alignItems: 'center' }}
+                                        >
+                                            <img style={{ width: '50px', height: '50px' }} src={item.img} alt="cart-img" />
+                                            <Typography
+                                                sx={{
+                                                    fontSize: '14px',
+                                                    WebkitBoxOrient: 'vertical',
+                                                    WebkitLineClamp: 1,
+                                                    display: '-webkit-box',
+                                                    overflow: 'hidden',
 
-                   
-                    {isHovered && (
-                                    <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
-                                        sx={{
-                                            position: 'absolute',
-                                            top: '46px',
-                                            // [theme.direction === 'rtl' ? 'left' :  'right']: '0',
-                                            alignSelf: 'flex-end',
-                                            width: { sm: '400px', xs: "289px" },
-                                            padding: '10px',
-                                            backgroundColor: 'white',
-                                            boxShadow: 3,
-                                            zIndex: 999,
-                                        }}
-                                    >
-                                        <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#292b2c' }}>Your Cart</Typography>
-                                        <Divider />
-                                        <List sx={{ maxHeight: '200px', overflowY: 'auto' }}>
-                                            {data.map((item) => (
-                                                <Box
-                                                    key={item.id}
-                                                    sx={{ display: 'flex', gap: 3, my: 1, justifyContent: 'space-between', alignItems: 'center' }}
-                                                >
-                                                    <img style={{ width: '50px', height: '50px' }} src={item.img} alt="cart-img" />
-                                                    <Typography
-                                                        sx={{
-                                                            fontSize: '14px',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 1,
-                                                            display: '-webkit-box',
-                                                            overflow: 'hidden',
-
-                                                            wordBreak: 'break-all',
-                                                            whiteSpace: 'normal',
-                                                            textOverflow: 'ellipsis',
-                                                            color: '#292b2c',
-                                                            fontWeight: '600',
-                                                        }}
-                                                    >
-                                                        {item.quantity}  {item.name}
-                                                    </Typography>
-                                                    <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#292b2c', display: 'flex', alignItems: 'center', gap: "4px" }}><span>AED</span> <span>{item.price}</span></Typography>
-                                                </Box>
-                                            ))}
-                                        </List>
-                                        <Box display="flex" justifyContent="space-between" mt={2}>
-                                            <Button onClick={() => {
-                                                navigateToCart();
-                                                handleMouseLeave();
-                                            }} variant="contained" sx={{ backgroundColor: '#000' }}>
-                                                View Cart
-                                            </Button>
-                                            <Button onClick={() => { navigateToChekout(); handleMouseLeave(); }} variant="contained" sx={{ backgroundColor: '#bb1f2a' }}>
-                                                Checkout
-                                            </Button>
+                                                    wordBreak: 'break-all',
+                                                    whiteSpace: 'normal',
+                                                    textOverflow: 'ellipsis',
+                                                    color: '#292b2c',
+                                                    fontWeight: '600',
+                                                }}
+                                            >
+                                                {item.quantity}  {item.name}
+                                            </Typography>
+                                            <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#292b2c', display: 'flex', alignItems: 'center', gap: "4px" }}><span>AED</span> <span>{item.price}</span></Typography>
                                         </Box>
-                                    </Box>
-                                )}
-                                 </Container>
+                                    ))}
+                                </List>
+                                <Box display="flex" justifyContent="space-between" mt={2}>
+                                    <Button onClick={() => {
+                                        navigateToCart();
+                                        handleMouseLeave();
+                                    }} variant="contained" sx={{ backgroundColor: '#000' }}>
+                                        View Cart
+                                    </Button>
+                                    <Button onClick={() => { navigateToChekout(); handleMouseLeave(); }} variant="contained" sx={{ backgroundColor: '#bb1f2a' }}>
+                                        Checkout
+                                    </Button>
+                                </Box>
+                            </Box>
+                        )}
+                    </Container>
                 </AppBar>
 
                 <Drawer anchor="left" sx={{ width: { xs: '100%', md: '40%' }, padding: "0px !important" }} open={open} onClose={() => toggleDrawer(false)} PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}>

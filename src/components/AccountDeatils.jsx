@@ -51,17 +51,37 @@ const AccountDeatils = () => {
                 Account details
               </Typography>
               <hr />
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-                <Grid item xs={12} sm={6}>
-                  <TextField fullWidth label="Your Name" required />
-                </Grid>
-                <Grid item xs={12} sm={6} >
-                  <TextField fullWidth label="Enter Your Email" required />
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: 2,
+                }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField fullWidth label="Your Name" required />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField fullWidth label="Enter Your Email" required />
+                  </Grid>
                 </Grid>
               </Box>
-              <Box sx={{ display: 'flex', my: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  my: 2,
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: 2,
+                }}
+              >
                 <Grid container spacing={2}>
-                  <Grid item xs={2}>
+                  <Grid item xs={12} sm={2}>
                     <FormControl fullWidth>
                       <Select
                         fullWidth
@@ -72,41 +92,46 @@ const AccountDeatils = () => {
                           border: '1px solid #ccc',
                           '.MuiOutlinedInput-notchedOutline': { border: 'none' },
                           ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                            padding: "13px 13px",
-                            fontSize: "14px",
-                            color: "#333",
-                          }
+                            padding: '13px',
+                            fontSize: '14px',
+                            color: '#333',
+                          },
                         }}
                       >
                         <MenuItem value="Select Country Code" disabled hidden>
                           Select Country Code
                         </MenuItem>
                         <MenuItem
-                          sx={{
-                            fontSize: "14px",
-                            color: "#333",
-                          }}
+                          sx={{ fontSize: '14px', color: '#333' }}
                           value="+ 971"
                         >
-                          <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
+                          <img
+                            style={{ width: '23px', height: '23px', marginRight: '4px' }}
+                            src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
+                            alt="UAE Flag"
+                          />{' '}
+                          + 971
                         </MenuItem>
                         <MenuItem
-                          sx={{
-                            fontSize: "14px",
-                            color: "#333",
-                          }}
+                          sx={{ fontSize: '14px', color: '#333' }}
                           value="+ 968"
                         >
-                          <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
+                          <img
+                            style={{ width: '23px', height: '23px', marginRight: '4px' }}
+                            src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
+                            alt="Oman Flag"
+                          />{' '}
+                          + 968
                         </MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={10}>
-                    <TextField fullWidth type='number' label="Enter Mobile Number" required />
+                  <Grid item xs={12} sm={10}>
+                    <TextField fullWidth type="number" label="Enter Mobile Number" required />
                   </Grid>
                 </Grid>
               </Box>
+
               <Button variant='contained' sx={{ color: "#fff", backgroundColor: "#bb1f2a", py: 1.5, px: 4 }}>Save</Button>
             </Box>
           </Grid>

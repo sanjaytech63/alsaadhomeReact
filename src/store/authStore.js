@@ -12,63 +12,64 @@ const useAuthStore = create(
             loading: false,
 
             // Register User
-            registerUser: async (params) => {
-                set({ loading: true });
-                try {
-                    const response = await ApiService.registerUser(params);
-                    if (response.status) {
-                        showToast("success", 'Registered successfully');
-                    }
-                    set({ loading: false });
-                } catch (error) {
-                    showToast('error', 'Registration failed. Please try again.');
-                    console.error('Registration Error:', error);
-                    return false;
-                } finally {
-                    set({ loading: false });
-                }
-            },
+            // registerUser: async (params) => {
+            //     set({ loading: true });
+            //     try {
+            //         const response = await ApiService.registerUser(params);
+            //         if (response.status) {
+            //             showToast("success", 'Registered successfully');
+            //         }
+            //         set({ loading: false });
+            //     } catch (error) {
+            //         showToast('error', 'Registration failed. Please try again.');
+            //         console.error('Registration Error:', error);
+            //         return false;
+            //     } finally {
+            //         set({ loading: false });
+            //     }
+            // },
 
             // Login User
-            loginUser: async (params) => {
-                set({ loading: true });
-                try {
-                    const response = await ApiService.loginUser(params);
-                    if (response.status) {
-                        const { user, accessToken } = response.data.data;
-                        set({
-                            user,
-                            accessToken,
-                            isAuthenticated: true,
-                            loading: false,
-                        });
-                        showToast('success', 'Logged in successfully');
-                    } else {
-                        showToast('error', response.data.message);
-                    }
-                    set({ loading: false });
-                } catch (error) {
-                    showToast('error', 'Login failed. Please try again.');
-                } finally {
-                    set({ loading: false });
-                }
-            },
+            // loginUser: async (params) => {
+            //     set({ loading: true });
+            //     try {
+            //         const response = await ApiService.loginUser(params);
+            //         if (response.status) {
+            //             const { user, accessToken } = response.data.data;
+            //             set({
+            //                 user,
+            //                 accessToken,
+            //                 isAuthenticated: true,
+            //                 loading: false,
+            //             });
+            //             showToast('success', 'Logged in successfully');
+            //         } else {
+            //             showToast('error', response.data.message);
+            //         }
+            //         set({ loading: false });
+            //     } catch (error) {
+            //         showToast('error', 'Login failed. Please try again.');
+            //     } finally {
+            //         set({ loading: false });
+            //     }
+            // },
 
             // Logout User
-            logoutUser: async () => {
-                try {
-                    const response = await ApiService.logoutUser();
-                    if (response.status) {
-                        set({ user: null, accessToken: null, isAuthenticated: false });
-                        showToast('success', 'Logged out successfully');
-                    } else {
-                        showToast('error', 'Logout failed!');
-                    }
-                } catch (error) {
-                    showToast('error', 'Something went wrong during logout!');
-                    console.error('Logout error:', error);
-                }
-            },
+            // logoutUser: async () => {
+            //     try {
+            //         const response = await ApiService.logoutUser();
+            //         if (response.status) {
+            //             set({ user: null, accessToken: null, isAuthenticated: false });
+            //             showToast('success', 'Logged out successfully');
+            //         } else {
+            //             showToast('error', 'Logout failed!');
+            //         }
+            //     } catch (error) {
+            //         set({ user: null, accessToken: null, isAuthenticated: false });
+            //         showToast('success', 'Logged out successfully');
+            //         console.error('Logout error:', error);
+            //     }
+            // },
 
             checkAuth: () => {
                 const { accessToken } = get();

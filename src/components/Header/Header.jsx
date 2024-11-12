@@ -4,42 +4,12 @@ import Login from '../../auth/Login.jsx/Login';
 import Register from '../../auth/Register/Register.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useNavigate } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-import { TfiUser } from "react-icons/tfi";
-import { showToast } from '../../utils/helper.jsx';
-import useAuthStore from '../../store/authStore.js';
 
 const Header = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
   const [language, setLanguage] = useState('en');
   const [country, setCountry] = useState('United Arab Emirates');
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
-
-  const navigate = useNavigate();
-  const { user, isAuthenticated, logoutUser, loading } = useAuthStore();
-
-  const handleLogout = async () => {
-    if (isAuthenticated) {
-      try {
-        await logoutUser();
-        navigate('/');
-      } catch (error) {
-        if (error.response?.status === 401) {
-          console.error('Unauthorized request. It seems your session has expired.');
-        } else {
-          console.error('An error occurred while logging out:', error);
-        }
-      }
-    } else {
-      console.log('User is not authenticated.');
-    }
-  };
-
 
   const handleOpenLogin = () => setOpenLogin(true);
   const handleCloseLogin = () => setOpenLogin(false);
@@ -66,35 +36,6 @@ const Header = () => {
     },
   });
 
-  const loginUser = async (event) => {
-    event.preventDefault();
-    if (!formData.email || !formData.password) {
-      showToast("error", "All fields are required.");
-      return;
-    }
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailPattern.test(formData.email)) {
-      showToast("error", "Please enter a valid email address.");
-      return;
-    }
-    try {
-      await useAuthStore.getState().loginUser(formData)
-      handleCloseLogin();
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        showToast("error", 'Invalid email or password.');
-      } else {
-        showToast("error", 'User does not exist.');
-      }
-    }
-  };
-
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -153,7 +94,8 @@ const Header = () => {
 
             <div className={`col-3 ${language === 'ar' ? 'text-start' : 'text-end'}`}>
               <Button
-                onClick={isAuthenticated ? handleLogout : handleOpenLogin}
+                onClick={handleOpenLogin}
+                variant
                 sx={{
                   color: '#2b2f4c',
                   textTransform: "capitalize",
@@ -164,29 +106,12 @@ const Header = () => {
                   },
                 }}
               >
-                {isAuthenticated ? (
-                  <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0, sm: "6px" } }}>
-                    <Typography>
-                      <TfiUser size={20} />
-                    </Typography>
-                    <Typography sx={{ mt: "2px", fontSize: { sm: "14px", xs: "12px" }, display: { xs: "none", sm: "block" } }}>
-                      {user?.username}
-                    </Typography>
-                  </Box>
-                ) : (
-                  <Typography onClick={handleOpenLogin} sx={{ fontSize: { sm: "14px", xs: "12px" } }}>
-                    Login
-                  </Typography>
-                )}
+                Login
               </Button>
               <Login
                 open={openLogin}
                 handleOpenRegister={handleOpenRegister}
                 handleClose={handleCloseLogin}
-                loginUser={loginUser}
-                loading={loading}
-                handleChange={handleChange}
-                formData={formData}
               />
               <Register
                 open={openRegister}

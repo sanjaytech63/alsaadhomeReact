@@ -3,21 +3,23 @@ import { Box, Button, Grid, Modal, TextField, Typography, Checkbox, CircularProg
 import { FaFacebookF } from "react-icons/fa";
 import AppleIcon from '@mui/icons-material/Apple';
 import { Close } from '@mui/icons-material';
+import { GoogleLogin } from '@react-oauth/google';
 
 
-const Login = ({ handleClose, open, handleOpenRegister, loginUser, loading, handleChange, formData }) => {
+const Login = ({ handleClose, open, handleOpenRegister }) => {
 
-    const [language, setLanguage] = useState('+ 971');
-
-    // const handleLanguageChange = (event) => {
-    //     setLanguage(event.target.value);
-    // };
 
     const switchToRegister = () => {
         handleClose();
         handleOpenRegister();
     };
 
+    const responseMessage = (response) => {
+        console.log(response);
+    };
+    const errorMessage = (error) => {
+        console.log(error);
+    };
     return (
         <div>
             <Modal sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
@@ -80,14 +82,14 @@ const Login = ({ handleClose, open, handleOpenRegister, loginUser, loading, hand
                         </Grid> */}
                         <Grid item xs={12} sm={12}>
                             <Typography sx={{ fontSize: { sm: "18px", xs: "14px" }, mb: 2 }} variant="body2" color='#6c757d'> Email</Typography>
-                            <TextField type="email" name='email' value={formData?.email} onChange={handleChange} fullWidth label="Enter Email" required />
+                            <TextField type="email" name='email'  fullWidth label="Enter Email" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                                 <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#6c757d'> Password</Typography>
                                 <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#bb1f2a'> Login by Email</Typography>
                             </Box>
-                            <TextField type="password" name='password' value={formData?.password} onChange={handleChange} fullWidth label="Enter Password" required />
+                            <TextField type="password" name='password' fullWidth label="Enter Password" required />
                         </Grid>
                         <Grid item xs={12}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -100,21 +102,14 @@ const Login = ({ handleClose, open, handleOpenRegister, loginUser, loading, hand
                         </Grid>
                         <Grid item xs={12}>
                             <Button
-                                onClick={loginUser}
                                 fullWidth
                                 variant="contained"
                                 sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}
                             >
-                                {loading ? (
-                                    <>
-                                        <CircularProgress size={20} sx={{ color: "#fff", mr: 3 }} /> <span>Loading...</span>
-                                    </>
-                                ) : (
-                                    'Login'
-                                )}
+                                Login
                             </Button>
                         </Grid>
-
+                        <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
                         <Grid item xs={12}>
                             <div className='d-flex align-items-center justify-content-space-between gap-2'>
                                 <span style={{ backgroundColor: "#ddd", height: "1px", width: "100%", }}></span>
