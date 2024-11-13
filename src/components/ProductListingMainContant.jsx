@@ -125,7 +125,7 @@ const ProductListingMainContant = ({ productsCard }) => {
                             </Box>
 
                             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                <Rating fontSize=" 1.2rem" disabled name="no-value" value={null} />
+                                <Rating sx={{ fontSize: { xs: "1.1rem", sm: "1.5rem" } }}  disabled name="no-value" value={null} />
                                 <Typography variant="body2" sx={{ ml: { xs: 0, sm: 1 }, color: '#9a9696' }}>
                                     ({item.rating})
                                 </Typography>
