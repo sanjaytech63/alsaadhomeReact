@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Container, Box, Typography, Pagination, Breadcrumbs, IconButton, Modal, Backdrop, Fade, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import jsonData from "../../src/blogData.json";
+import { Grid, Container, Box, Typography, Chip, Pagination, Breadcrumbs, IconButton, Modal, Backdrop, Fade, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,79 +8,27 @@ import ProductListingMainContant from './ProductListingMainContant';
 import { MdOutlineFilterAlt } from "react-icons/md";
 import { BsGrid } from "react-icons/bs";
 import { TfiLayoutListThumb } from "react-icons/tfi";
+import blogDataJson from "../blogData.json";
+import ProductListingMainContant2 from './ProductListingMainContant2';
 
 const ProductListing = () => {
-    const [blogs, setBlogs] = useState(jsonData.blogPosts);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [gridTogal, setGridTogal] = useState(true);
+    const jsonData = blogDataJson.newArrivals;
+    const [tags, setTags] = useState(blogDataJson.tags);
+    const [selectedBrands, setSelectedBrands] = useState([]);
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
+    const tagsToggle = (tag) => {
+        setSelectedBrands(prev =>
+            prev.includes(tag) ? prev.filter(item => item !== tag) : [...prev, tag]
+        );
+    };
 
-    const productsCard = [
-        {
-            id: 1,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
-            price: "199 AED",
-            rating: 4,
-        },
-        {
-            id: 2,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-            price: "249 AED",
-            rating: 5,
-        },
-        {
-            id: 3,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
-            price: "199 AED",
-            rating: 4,
-        },
-        {
-            id: 4,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-            price: "249 AED",
-            rating: 5,
-        },
-        {
-            id: 5,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
-            price: "199 AED",
-            rating: 4,
-        },
-        {
-            id: 6,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-            price: "249 AED",
-            rating: 5,
-        },
-        {
-            id: 7,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
-            price: "199 AED",
-            rating: 4,
-        },
-        {
-            id: 8,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-            price: "249 AED",
-            rating: 5,
-        },
-        {
-            id: 9,
-            title: "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-            image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
-            price: "199 AED",
-            rating: 4,
-        },
-    ];
+    const BsGrid2 = (bool) => {
+        setGridTogal(bool);
+    }
+
     return (
         <>
             <div style={{ minHeight: "100vh" }}>
@@ -105,78 +52,6 @@ const ProductListing = () => {
                             Explore our luxurious collection of king-size comforters, designed to elevate your sleep experience. Choose from a variety of styles, including hotel-inspired comforters, elegant embroidery, classic plain designs, plush velvet, breathable cotton, and soft microfiber. Find the perfect king-size comforter to match your style and comfort needs.
                         </Typography>
                     </Box>
-
-                    {/* Modal toggle button for mobile */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 4 }}>
-                        <Box
-                            onClick={handleOpenModal}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                                py: "7px",
-                                px: 1.5,
-                                ml: '5px',
-                                backgroundColor: '#bb1f2a',
-                                borderRadius: '4px',
-                            }}
-                        >
-                            <MdOutlineFilterAlt color='#fff' />
-                        </Box>
-
-
-                        {/* Select Box */}
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
-                                <Box
-                                    sx={{
-                                        display: { xs: 'none', md: 'block' },
-                                        py: "7px",
-                                        px: 1.5,
-                                        ml: '5px',
-                                        backgroundColor: '#bb1f2a',
-                                        borderRadius: '4px',
-                                    }}
-                                >
-                                    <BsGrid color='#fff' />
-                                </Box>
-                                <Box
-                                    sx={{
-                                        display: { xs: 'none', md: 'block' },
-                                        py: "7px",
-                                        px: 1.5,
-                                        ml: '5px',
-                                        border: 'solid 1px #ddd',
-                                        borderRadius: '4px',
-                                    }}
-                                >
-                                    <TfiLayoutListThumb color='#292b2c' />
-                                </Box>
-                                <FormControl sx={{}} size="small" variant="outlined">
-                                    <Select
-                                        sx={{
-
-                                            '&:focus': { backgroundColor: 'transparent' },
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                        }}
-                                        id="sortOrder"
-                                        value="Showing"
-                                        MenuProps={{
-                                            PaperProps: {
-                                                sx: {
-                                                    outline: 'none',
-                                                },
-                                            },
-                                        }}
-                                    >
-                                        <MenuItem value="Showing">Showing</MenuItem>
-                                        <MenuItem value="Newest">Newest</MenuItem>
-                                        <MenuItem value="Oldest">Oldest</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Box>
-                        </Box>
-                    </Box>
-
                     {/* Modal component */}
                     <Modal
                         open={isModalOpen}
@@ -222,20 +97,132 @@ const ProductListing = () => {
                             <ProductListingSideBar />
                         </Grid>
                         <Grid item xs={12} md={9}>
-                            <Grid container spacing={4}>
-                                {productsCard.map((product) => (
-                                    <Grid item xs={12} sm={6} md={4} key={product.id}>
-                                        <ProductListingMainContant productsCard={product} />
-                                    </Grid>
-                                ))}
-                            </Grid>
+                            {/* Modal toggle button for mobile */}
+                            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 4 }}>
+                                <Box
+                                    onClick={handleOpenModal}
+                                    sx={{
+                                        display: { xs: 'block', md: 'none' },
+                                        py: "7px",
+                                        px: 1.5,
+                                        ml: '5px',
+                                        backgroundColor: '#bb1f2a',
+                                        borderRadius: '4px',
+                                    }}
+                                >
+                                    <MdOutlineFilterAlt color='#fff' />
+                                </Box>
+                                {/* Select Box */}
+                                <Box sx={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+                                        <Box
+                                            sx={{
+                                                display: { xs: 'none', md: 'block' },
+                                                py: "7px",
+                                                px: 1.5,
+                                                ml: '5px',
+                                                backgroundColor: gridTogal ? '#bb1f2a' : '#292b2c',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer',
+                                            }}
+                                            onClick={() => BsGrid2(true)}
+                                        >
+                                            <BsGrid color='#fff' />
+                                        </Box>
+                                        <Box
+                                            onClick={() => BsGrid2(false)}
+                                            sx={{
+                                                display: { xs: 'none', md: 'block' },
+                                                py: "7px",
+                                                px: 1.5,
+                                                ml: '5px',
+                                                backgroundColor: gridTogal ? '#292b2c' : '#bb1f2a',
+                                                border: 'solid 1px #ddd',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer',
+                                            }}
+                                        >
+                                            <TfiLayoutListThumb color='#fff' />
+                                        </Box>
+                                        <FormControl sx={{}} size="small" variant="outlined">
+                                            <Select
+                                                sx={{
+
+                                                    '&:focus': { backgroundColor: 'transparent' },
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                }}
+                                                id="sortOrder"
+                                                value="Showing"
+                                                MenuProps={{
+                                                    PaperProps: {
+                                                        sx: {
+                                                            outline: 'none',
+                                                        },
+                                                    },
+                                                }}
+                                            >
+                                                <MenuItem value="Showing">Showing</MenuItem>
+                                                <MenuItem value="Newest">Newest</MenuItem>
+                                                <MenuItem value="Oldest">Oldest</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Box sx={{ my: 1, fontSize: '1rem', fontWeight: 600, color: '#292b2c' }}>{jsonData.length}  Total Products </Box>
+                            <Box sx={{ display: 'flex', overflowX: 'scroll', gap: 1, mb: 3, }}>
+                                {tags.map((tag) => {
+                                    const isSelected = selectedBrands.includes(tag.id);
+                                    return <Chip
+                                        key={tag.id}
+                                        label={tag.label}
+                                        clickable
+                                        onClick={() => tagsToggle(tag.id)}
+                                        sx={{
+                                            backgroundColor: isSelected ? "#bb1f2a" : "#eee",
+                                            color: isSelected ? "#fff" : "#000",
+                                            borderRadius: "4px",
+                                            fontWeight: "600",
+                                            "& .MuiChip-icon": {
+                                                color: isSelected ? "#fff" : "#292b2c",
+                                            },
+                                            "&:hover": {
+                                                backgroundColor: isSelected ? "#bb1f2a" : "#ddd",
+                                            },
+                                        }}
+                                    />
+                                })}
+                            </Box>
+                            {gridTogal ? (
+                                <ProductListingMainContant productsCard={jsonData} />
+                            ) : (
+                                <ProductListingMainContant2 productsCard={jsonData} />
+                            )}
 
                         </Grid>
                     </Grid>
                     {/* Pagination */}
                     <Box sx={{ my: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <Pagination size='small' count={10} variant="outlined" shape="rounded" />
+                        <Pagination
+                            size="small"
+                            count={10}
+                            variant="outlined"
+                            shape="rounded"
+                            sx={{
+                                "& .MuiPaginationItem-root": {
+                                    "&.Mui-selected": {
+                                        backgroundColor: "#bb1f2a",
+                                        color: "#fff",
+                                        "&:hover": {
+                                            backgroundColor: "#a91c26",
+                                        },
+                                    },
+                                },
+                            }}
+                        />
                     </Box>
+
                 </Container>
             </div>
         </>

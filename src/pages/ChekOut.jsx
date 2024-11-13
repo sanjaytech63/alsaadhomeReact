@@ -36,7 +36,7 @@ const Checkout = () => {
     const finalTotal = total + shipping;
 
     return (
-        <Box sx={{ padding: isMobile ? 2 : 4 }}>
+        <Box sx={{ padding: isMobile ? 0 : 4 }}>
             <Container maxWidth="lg">
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} >
@@ -93,7 +93,7 @@ const Checkout = () => {
                             <TextField fullWidth label="Name" variant="outlined" sx={{ marginBottom: 2 }} />
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={3}>
+                                    <Grid item xs={4}>
                                         <FormControl fullWidth>
                                             <Select
                                                 fullWidth
@@ -104,14 +104,14 @@ const Checkout = () => {
                                                     border: '1px solid #ccc',
                                                     '.MuiOutlinedInput-notchedOutline': { border: 'none' },
                                                     ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                                                        padding: "13px 13px",
+                                                        padding: "13px 0px",
                                                         fontSize: "14px",
                                                         color: "#333",
                                                     }
                                                 }}
                                             >
                                                 <MenuItem value="Select Country Code" disabled hidden>
-                                                    Select Country Code
+                                                    Select Country
                                                 </MenuItem>
                                                 <MenuItem
                                                     sx={{
@@ -134,7 +134,7 @@ const Checkout = () => {
                                             </Select>
                                         </FormControl>
                                     </Grid>
-                                    <Grid item xs={9}>
+                                    <Grid item xs={8}>
                                         <TextField fullWidth type='number' label="Enter Mobile Number" required />
                                     </Grid>
                                 </Grid>
@@ -142,7 +142,7 @@ const Checkout = () => {
 
                             <Box sx={{ display: 'flex', mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={3}>
+                                    <Grid item xs={4}>
                                         <FormControl fullWidth>
                                             <Select fullWidth
                                                 defaultValue="Select Country Code"
@@ -152,14 +152,14 @@ const Checkout = () => {
                                                     border: '1px solid #ccc',
                                                     '.MuiOutlinedInput-notchedOutline': { border: 'none' },
                                                     ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                                                        padding: "13px 13px",
+                                                        padding: "13px 0px",
                                                         fontSize: "14px",
                                                         color: "#333",
                                                     }
                                                 }}
                                             >
                                                 <MenuItem value="Select Country Code" disabled hidden>
-                                                    Select Country Code
+                                                    Select Country
                                                 </MenuItem>
                                                 <MenuItem sx={{
                                                     fontSize: "14px",
@@ -176,7 +176,7 @@ const Checkout = () => {
                                             </Select>
                                         </FormControl>
                                     </Grid>
-                                    <Grid item xs={9}>
+                                    <Grid item xs={8}>
                                         <TextField fullWidth type="number" label="Whatsapp Mobile Number" required />
                                     </Grid>
                                 </Grid>
@@ -398,7 +398,7 @@ const Checkout = () => {
                                 label="Terms & Conditions"
                             />
                             <Grid item xs={12} sx={{ my: 2 }}>
-                                <Button fullWidth variant="contained" color="error">
+                                <Button fullWidth variant="contained" sx={{ backgroundColor: "#bb1f2a" }}>
                                     Place Order
                                 </Button>
                             </Grid>

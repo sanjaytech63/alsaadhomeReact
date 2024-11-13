@@ -45,7 +45,9 @@ body {
 	height: 20px !important;
 	border: #bb1f2a solid 2px !important;
 }
-
+.header_left_sec {
+	padding: 0px 0px !important;
+}
 .react-multi-carousel-dot--active button {
 	background-color: #fff !important;
 }
@@ -63,13 +65,6 @@ body {
 
 .react-multiple-carousel__arrow--left {
 	left: calc(1% + 2px) !important;
-}
-
-/* .header_left_sec {
-	padding: 3.5px 0px !important;
-} */
-.header_left_sec {
-	padding: 0px 0px !important;
 }
 
 @media screen and (max-width: 600px) {

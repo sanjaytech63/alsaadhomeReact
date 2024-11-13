@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Typography, Link, IconButton, Container } from '@mui/material';
+import { Box, Grid, Typography, Link, IconButton, Container, CssBaseline } from '@mui/material';
 import { FaFacebook, FaInstagram, FaSnapchat, FaTiktok, FaYoutube, FaPhone } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { CiLocationOn } from "react-icons/ci";
@@ -39,9 +39,10 @@ const Footer = () => {
         sx={{
           backgroundColor: '#212121',
           color: 'white',
-
+         
         }}
       >
+        
         <Container maxWidth="lg">
           <Grid
             container
@@ -202,9 +203,10 @@ const Footer = () => {
           </Grid>
         </Container>
         <Box
-          sx={{pb: { xs: 10, sm: 0},
-            pt: { xs: 2, sm: 0},
-            px: { xs:1, sm: 0},
+          sx={{
+            pb: { xs: 10, sm: 0 },
+            pt: { xs: 2, sm: 0 },
+            px: { xs: 1, sm: 0 },
             textAlign: 'center',
             marginTop: '20px',
             borderTop: '1px solid #444',

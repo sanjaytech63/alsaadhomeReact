@@ -80,8 +80,8 @@ const AccountDeatils = () => {
                   gap: 2,
                 }}
               >
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={2}>
+                <Grid container spacing={2} sx={{ flexDirection: { xs: 'column', sm: 'row' }, }}>
+                  <Grid item xs={12} sm={3}>
                     <FormControl fullWidth>
                       <Select
                         fullWidth
@@ -92,7 +92,7 @@ const AccountDeatils = () => {
                           border: '1px solid #ccc',
                           '.MuiOutlinedInput-notchedOutline': { border: 'none' },
                           ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                            padding: '13px',
+                            padding: '13px 0px',
                             fontSize: '14px',
                             color: '#333',
                           },
@@ -126,7 +126,7 @@ const AccountDeatils = () => {
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} sm={10}>
+                  <Grid item xs={12} sm={9}>
                     <TextField fullWidth type="number" label="Enter Mobile Number" required />
                   </Grid>
                 </Grid>

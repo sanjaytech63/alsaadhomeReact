@@ -18,7 +18,7 @@ const Login = ({ handleClose, open, handleOpenRegister }) => {
         console.log(response);
     };
     const errorMessage = (error) => {
-        console.log(error);
+        console.log("Google Login Error:", error);
     };
     return (
         <div>

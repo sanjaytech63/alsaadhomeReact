@@ -54,7 +54,7 @@ const ChangePassword = () => {
                             <Box>
                                 <TextField sx={{ my: 1.5 }} fullWidth label="Old Password" required />
                                 <TextField sx={{ my: 1.5 }} fullWidth label="New Password" required />
-                                <TextField sx={{ my: 1.5 }} fullWidth label="ConForm Password" required />
+                                <TextField sx={{ my: 1.5 }} fullWidth label="Confirm Password" required />
                                 <Button variant='contained' sx={{ color: "#fff", backgroundColor: "#bb1f2a", py: 1.5, px: 4 }}>Save</Button>
                             </Box>
                         </Box>

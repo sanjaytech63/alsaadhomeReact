@@ -47,7 +47,7 @@ const OderHistory = () => {
 
           {/* Main Content */}
           <Grid item sx={{ mb: { sm: 0, xs: 5 } }} xs={12} sm={9}>
-            <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1, height: "60vh" }}>
+            <Box sx={{ bgcolor: 'white', p: 3, borderRadius: 1, boxShadow: 1}}>
               <Typography
                 variant="h5"
                 sx={{ color: '#292b2c', textTransform: 'capitalize', fontWeight: 700, fontSize: { sm: '24px', xs: '16px' } }}
@@ -55,8 +55,8 @@ const OderHistory = () => {
                 Oder History
               </Typography>
               <hr />
-              <Box sx={{ width: { sm: "60%", xs: "100%" }, px: 2, borderRadius: 1, boxShadow: " 0 0 4px 0 #e9e9e9" }}>
-                <TableContainer sx={{}}>
+              <Box sx={{ width: { sm: "60%", xs: "100%" }, py: 2,my: 2 ,px: 2, borderRadius: 1, boxShadow: " 0 0 4px 0 #e9e9e9" }}>
+                <TableContainer sx={{}} >
                   <Table>
                     <TableBody>
                       <TableRow>

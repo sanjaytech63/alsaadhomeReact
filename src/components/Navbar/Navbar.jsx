@@ -125,12 +125,12 @@ const Navbar = () => {
                         </Toolbar>
 
                     </Container>
-                    <Container maxWidth="lg" alignItems="flex-start" sx={{ display: "flex", flexDirection: "column" }} >
+                    <Container maxWidth="xl" alignItems="flex-start" sx={{ display: "flex", flexDirection: "column" }} >
                         {isHovered && (
                             <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                                 sx={{
                                     position: 'absolute',
-                                    top: '46px',
+                                    top: '42px',
                                     // [theme.direction === 'rtl' ? 'left' :  'right']: '0',
                                     alignSelf: 'flex-end',
                                     width: { sm: '400px', xs: "289px" },

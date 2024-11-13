@@ -15,27 +15,36 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
         navigate(`/category/subcategory/productlisting`);
     };
 
-    // Custom Button Group for Navigation Arrows
     const CustomButtonGroup = ({ next, previous }) => (
-        <Box
-            sx={{
+        <>
+            <Box onClick={isRTL ? next : previous} sx={{
                 position: "absolute",
                 top: '50%',
-                left: '-70px',
-                right: '-70px',
+                left: '-50px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr'
-            }}
-        >
-            <IconButton onClick={isRTL ? next : previous} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
-                <MdOutlineArrowBackIos />
-            </IconButton>
-            <IconButton onClick={isRTL ? previous : next} sx={{ color: '#292b2c', height: '60px', width: '60px' }}>
-                <MdOutlineArrowForwardIos />
-            </IconButton>
-        </Box>
+                direction: isRTL ? 'rtl' : 'ltr',
+                color: '#292b2c',
+                cursor: 'pointer',
+            }}>
+                <MdOutlineArrowBackIos size={25} />
+            </Box>
+            <Box onClick={isRTL ? previous : next} sx={{
+                position: "absolute",
+                top: '50%',
+                right: '-50px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                transform: 'translateY(-50%)',
+                direction: isRTL ? 'rtl' : 'ltr',
+                color: '#292b2c',
+                cursor: 'pointer',
+            }}>
+                <MdOutlineArrowForwardIos size={25} />
+            </Box>
+        </>
+
     );
 
     return (

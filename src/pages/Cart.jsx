@@ -28,21 +28,21 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
 
     return (
         <Card sx={{ display: 'flex', mb: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
-            <Box sx={{ width: { xs: '40%', md: '30%' }, display: 'flex', alignItems: 'center' }}>
+            <Box sx={{  display: 'flex', alignItems: 'center' }}>
                 <Box
                     component="img"
                     src={image}
                     alt={title}
                     loading="lazy"
                     sx={{
-                        maxWidth: { sm: '188px', xs: '110px' },
+                        maxWidth: { sm: '250px', xs: '110px' },
                         height: '100%',
                         objectFit: 'cover'
                     }}
                 />
 
             </Box>
-            <Box sx={{ width: '70%', }}>
+            <Box sx={{  }}>
                 <CardContent>
                     <Typography sx={{
                         fontSize: { sm: '1.1rem', xs: '1rem' }, fontWeight: 600, textTransform: 'capitalize', display: '-webkit-box',
@@ -84,7 +84,7 @@ const CartPage = () => {
         },
         {
             image: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14544/thumb/tokyo-121725627128.jpg',
-            title: 'Tokyo BedSpread Bedding Set 4 PCS - Single Grey',
+            title: 'Lori Hotel Cotton Comforter Bedding Set 6 PCS - King Size',
             price: '99',
             pattern: 'https://via.placeholder.com/20',
             size: '180 X 240',

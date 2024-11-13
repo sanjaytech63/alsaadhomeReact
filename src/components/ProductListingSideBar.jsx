@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Box, Typography, Button, Chip, CardMedia, Paper, InputBase, Select, MenuItem, FormControl, InputLabel, colors, } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
-import { OptionGroup as BaseOptionGroup } from '@mui/base/OptionGroup';
 import jsonData from "../../src/blogData.json";
 import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
 
@@ -15,9 +14,18 @@ const ProductListingSideBar = () => {
     const [styles, setStyles] = useState(jsonData.styles);
     const [color, setColor] = useState(jsonData.colors);
     const [sortOrder, setSortOrder] = useState('');
+    const [showMore, setShowMore] = useState(false);
+    const tagsToShow = showMore ? tags : tags.slice(0, 4);
+
+    const sortOptions = {
+        price: { LTH: "Low to High", HTL: "High to Low" },
+        age: { new: "New First", old: "Old First" },
+        quantity: { MQ: "Most Quantity", LQ: "Less Quantity" }
+    };
 
     const handleChange = (event) => {
         setSortOrder(event.target.value);
+        console.log("Selected Sort Order:", event.target.value);
     };
 
     const [selectedBrands, setSelectedBrands] = useState([]);
@@ -64,7 +72,14 @@ const ProductListingSideBar = () => {
         );
     };
 
-
+    const handleReset = () => {
+        setSelectedBrands([]);
+        setSelectedSizes([]);
+        setSelectedThickness([]);
+        setSelectedMetrail([]);
+        setSelectedStyles([]);
+        setSelectedColor([]);
+    }
 
     return (
         <Box sx={{ width: "100%", mb: 3 }}>
@@ -82,12 +97,15 @@ const ProductListingSideBar = () => {
                     </Paper>
                 </Box>
                 <Box sx={{ width: "100%" }}>
-                    <Typography variant="h5" sx={{ my: 2, color: "#292b2c", fontWeight: "600", fontSize: "1.5rem", fontFamily: "Roboto, sans-serif" }}>
+                    <Typography
+                        variant="h5"
+                        sx={{ my: 2, color: "#292b2c", fontWeight: "600", fontSize: "1.5rem", fontFamily: "Roboto, sans-serif" }}
+                    >
                         Sort
                     </Typography>
                     <FormControl sx={{ width: "100%" }} fullWidth size="small" variant="outlined">
                         <InputLabel id="sort-order-label">Sort</InputLabel>
-                        <Select defaultValue='Sort'
+                        <Select
                             sx={{ padding: "3px" }}
                             labelId="sort-order-label"
                             id="sortOrder"
@@ -98,20 +116,27 @@ const ProductListingSideBar = () => {
                             <MenuItem value="">
                                 <em>Sort</em>
                             </MenuItem>
-                            <Box sx={{ ml: 2 }}>
-                                <BaseOptionGroup label="Price" value={'LTH'}>
-                                    <MenuItem value="LTH">Low to High</MenuItem>
-                                    <MenuItem value="HTL">High to Low</MenuItem>
-                                </BaseOptionGroup>
-                                <BaseOptionGroup label="Age">
-                                    <MenuItem value="new">New First</MenuItem>
-                                    <MenuItem value="old">Old First</MenuItem>
-                                </BaseOptionGroup>
-                                <BaseOptionGroup label="Quantity">
-                                    <MenuItem value="MQ">Most Quantity</MenuItem>
-                                    <MenuItem value="LQ">Less Quantity</MenuItem>
-                                </BaseOptionGroup>
-                            </Box>
+
+                            <MenuItem disabled>Price</MenuItem>
+                            {Object.entries(sortOptions.price).map(([key, label]) => (
+                                <MenuItem sx={{marginLeft:"30px"}} key={key} value={key}>
+                                    {label}
+                                </MenuItem>
+                            ))}
+
+                            <MenuItem disabled>Age</MenuItem>
+                            {Object.entries(sortOptions.age).map(([key, label]) => (
+                                <MenuItem  sx={{marginLeft:"30px"}} key={key} value={key}>
+                                    {label}
+                                </MenuItem>
+                            ))}
+
+                            <MenuItem disabled>Quantity</MenuItem>
+                            {Object.entries(sortOptions.quantity).map(([key, label]) => (
+                                <MenuItem  sx={{marginLeft:"30px"}} key={key} value={key}>
+                                    {label}
+                                </MenuItem>
+                            ))}
                         </Select>
                     </FormControl>
                 </Box>
@@ -129,14 +154,31 @@ const ProductListingSideBar = () => {
                     </div>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <Typography variant="h5" sx={{ my: 2, color: "#687188", fontWeight: "600", fontSize: "12px", fontFamily: "Roboto, sans-serif" }}>
+                    <Typography
+                        variant="h5"
+                        sx={{ my: 2, color: "#687188", fontWeight: 600, fontSize: "12px", fontFamily: "Roboto, sans-serif" }}
+                    >
                         Only selected
                     </Typography>
-                    <Switch defaultChecked />
-                    <Typography variant="h5" sx={{ my: 2, color: "#687188", fontWeight: "600", fontSize: "12px", fontFamily: "Roboto, sans-serif" }}>
+                    <Switch
+                        defaultChecked
+                        sx={{
+                            "& .MuiSwitch-switchBase.Mui-checked": {
+                                color: "#bb1f2a",
+                            },
+                            "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                                backgroundColor: "#bb1f2a",
+                            },
+                        }}
+                    />
+                    <Typography
+                        variant="h5"
+                        sx={{ my: 2, color: "#687188", fontWeight: 600, fontSize: "12px", fontFamily: "Roboto, sans-serif" }}
+                    >
                         Any of selected
                     </Typography>
                 </Box>
+
 
             </Box>
 
@@ -155,8 +197,8 @@ const ProductListingSideBar = () => {
                 </Typography>
 
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                    {tags.map((tag) => {
-                        let isSelected = selectedBrands.includes(tag.id)
+                    {tagsToShow.map((tag) => {
+                        const isSelected = selectedBrands.includes(tag.id);
                         return (
                             <Chip
                                 key={tag.id}
@@ -180,23 +222,26 @@ const ProductListingSideBar = () => {
                                     },
                                     "&:hover": {
                                         backgroundColor: isSelected ? "#bb1f2a" : "#ddd",
-                                    }
+                                    },
                                 }}
                             />
-                        )
+                        );
                     })}
                 </Box>
 
-                <Typography
-                    sx={{
-                        mt: 2,
-                        color: "#bb1f2a",
-                        fontWeight: "600",
-                        cursor: "pointer",
-                    }}
-                >
-                    Show More
-                </Typography>
+                {tags.length > 5 && (
+                    <Typography
+                        onClick={() => setShowMore(!showMore)}
+                        sx={{
+                            mt: 2,
+                            color: "#bb1f2a",
+                            fontWeight: "600",
+                            cursor: "pointer",
+                        }}
+                    >
+                        {showMore ? "Show Less" : "Show More"}
+                    </Typography>
+                )}
             </Box>
 
             <Box mt={4}>
@@ -436,7 +481,7 @@ const ProductListingSideBar = () => {
             </Box>
             <Box sx={{ display: "flex", gap: 2, mt: 4, alignItems: "center" }}>
                 <Button variant="contained" sx={{ backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Apply</Button>
-                <Button variant="contained" sx={{ backgroundColor: "#343a40", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Reset</Button>
+                <Button onClick={handleReset} variant="contained" sx={{ backgroundColor: "#343a40", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Reset</Button>
             </Box>
         </Box >
     );
