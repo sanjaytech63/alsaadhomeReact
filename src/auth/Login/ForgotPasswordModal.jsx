@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, Grid, Modal, TextField, Typography, Checkbox, FormControlLabel, FormControl, Select, MenuItem, } from '@mui/material';
+import { Box, Button, Grid, Modal, TextField, Typography,  FormControl, Select, MenuItem, } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
 const ForgotPasswordModal = ({ open, handleClose, handleOpenLogin }) => {

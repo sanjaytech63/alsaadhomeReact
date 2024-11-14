@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Container, Box, Typography, Chip, Pagination, Breadcrumbs, IconButton, Modal, Backdrop, Fade, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Grid, Container, Box, Typography, Chip, Pagination, Breadcrumbs, IconButton, Modal, Backdrop, Fade, FormControl, Select, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CloseIcon from '@mui/icons-material/Close';
@@ -15,7 +15,7 @@ const ProductListing = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [gridTogal, setGridTogal] = useState(true);
     const jsonData = blogDataJson.newArrivals;
-    const [tags, setTags] = useState(blogDataJson.tags);
+    const tags = blogDataJson.tags;
     const [selectedBrands, setSelectedBrands] = useState([]);
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);

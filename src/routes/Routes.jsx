@@ -17,7 +17,7 @@ const SubCategoryList = React.lazy(() => import('../components/SubCategoryList')
 const ProductListing = React.lazy(() => import('../components/ProductListing'));
 const BottomNav = React.lazy(() => import('../components/BottomNav/BottomNav'));
 const Cart = React.lazy(() => import('../pages/Cart'));
-const Login = React.lazy(() => import('../auth/Login.jsx/Login'));
+const Login = React.lazy(() => import('../auth/Login/Login'));
 const Checkout = React.lazy(() => import('../pages/ChekOut'));
 const ProductDetails = React.lazy(() => import('../components/ProductDetails'));
 const NotFoundPage = React.lazy(() => import('../components/NotPageFound'));
@@ -34,7 +34,7 @@ const AccountDeatils = React.lazy(() => import('../components/AccountDeatils'));
 const WishList = React.lazy(() => import('../components/WishList'));
 const ChangePassword = React.lazy(() => import('../components/ChangePassword'));
 const Logout = React.lazy(() => import('../components/Logout'));
-const PrivateRoute = React.lazy(() => import('../auth/PrivateRoute/PrivateRoute'));
+// const PrivateRoute = React.lazy(() => import('../auth/PrivateRoute/PrivateRoute'));
 const OderTable = React.lazy(() => import('../components/OrderTable'));
 const Register = React.lazy(() => import('../auth/Register/Register'));
 

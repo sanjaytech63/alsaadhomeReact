@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Box, useMediaQuery, useTheme, IconButton, Container, Typography } from "@mui/material";
+import { Box, useMediaQuery, useTheme, Container, Typography } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 

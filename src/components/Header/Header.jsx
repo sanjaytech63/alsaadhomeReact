@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Select, MenuItem, FormControl, Button, Container, Box, Typography, CircularProgress } from '@mui/material';
-import Login from '../../auth/Login.jsx/Login';
+import { Select, MenuItem, FormControl, Button, Container } from '@mui/material';
+import Login from '../../auth/Login/Login.jsx';
 import Register from '../../auth/Register/Register.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -44,17 +44,17 @@ const Header = () => {
         <Container>
           <div className="row align-items-center">
             <div className={`header_left_sec col-9 d-flex ${language === 'ar' ? 'justify-content-start' : 'justify-content-start'}`}>
-              <FormControl>
+              <FormControl > 
                 <Select
+                 inputProps={{MenuProps: {disableScrollLock: true}}}
                   value={language}
                   onChange={handleLanguageChange}
                   variant="outlined"
                   sx={{
-                    padding: '1px 4px',
                     border: 'none',
                     '.MuiOutlinedInput-notchedOutline': { border: 'none' },
                     ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                      padding: "3.5px 0px",
+                      padding: "13px 0px",
                       fontSize: "14px",
                       color: "#333",
                     },
@@ -72,10 +72,10 @@ const Header = () => {
                 <FormControl>
                   <Select
                     value={country}
+                    inputProps={{MenuProps: {disableScrollLock: true}}}
                     onChange={handleCountryChange}
                     variant="outlined"
                     sx={{
-                      padding: '1px 4px',
                       border: 'none',
                       ".MuiSelect-select": {
                         padding: "13px 0px",

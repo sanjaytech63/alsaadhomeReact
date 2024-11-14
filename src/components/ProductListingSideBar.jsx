@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Chip, CardMedia, Paper, InputBase, Select, MenuItem, FormControl, InputLabel, colors, } from '@mui/material';
+import { Box, Typography, Button, Chip, Paper, InputBase, Select, MenuItem, FormControl, InputLabel, } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
 import jsonData from "../../src/blogData.json";
@@ -7,12 +7,12 @@ import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
 
 
 const ProductListingSideBar = () => {
-    const [tags, setTags] = useState(jsonData.tags);
-    const [sizes, setSizes] = useState(jsonData.sizes);
-    const [thickness, setThickness] = useState(jsonData.thickness);
-    const [material, setMaterial] = useState(jsonData.material);
-    const [styles, setStyles] = useState(jsonData.styles);
-    const [color, setColor] = useState(jsonData.colors);
+    const tags = jsonData.tags;
+    const sizes = jsonData.sizes;
+    const thickness = jsonData.thickness;
+    const material = jsonData.material;
+    const styles = jsonData.styles;
+    const color = jsonData.colors;
     const [sortOrder, setSortOrder] = useState();
     const [showMore, setShowMore] = useState(false);
     const [price, setPrice] = useState({ min: "", max: "" });
