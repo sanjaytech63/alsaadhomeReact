@@ -77,12 +77,12 @@ const Header = () => {
                     sx={{
                       padding: '1px 4px',
                       border: 'none',
-                      '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-                      ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                        padding: "3.5px 0px",
+                      ".MuiSelect-select": {
+                        padding: "13px 0px",
                         fontSize: "14px",
                         color: "#333",
                       },
+                      '.MuiOutlinedInput-notchedOutline': { border: 'none' },
                     }}
                   >
                     <MenuItem value="Oman">Oman</MenuItem>
@@ -99,7 +99,7 @@ const Header = () => {
                 sx={{
                   color: '#2b2f4c',
                   textTransform: "capitalize",
-                  fontSize: { sm: "14px", xs: "12px" },
+                  fontSize: { sm: "14px", xs: "14px" },
                   ":hover": {
                     color: '#bb1f2a',
                     background: '#fff',
