@@ -13,8 +13,10 @@ const ProductListingSideBar = () => {
     const [material, setMaterial] = useState(jsonData.material);
     const [styles, setStyles] = useState(jsonData.styles);
     const [color, setColor] = useState(jsonData.colors);
-    const [sortOrder, setSortOrder] = useState('');
+    const [sortOrder, setSortOrder] = useState();
     const [showMore, setShowMore] = useState(false);
+    const [price, setPrice] = useState({ min: "", max: "" });
+    const [searchTerm, setSearchTerm] = useState("");
     const tagsToShow = showMore ? tags : tags.slice(0, 4);
 
     const sortOptions = {
@@ -23,11 +25,16 @@ const ProductListingSideBar = () => {
         quantity: { MQ: "Most Quantity", LQ: "Less Quantity" }
     };
 
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    }
     const handleChange = (event) => {
         setSortOrder(event.target.value);
         console.log("Selected Sort Order:", event.target.value);
     };
-
+    const handlePriceChange = (event) => {
+        setPrice({ ...price, [event.target.name]: event.target.value });
+    }
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [selectedThickness, setSelectedThickness] = useState([]);
@@ -79,6 +86,10 @@ const ProductListingSideBar = () => {
         setSelectedMetrail([]);
         setSelectedStyles([]);
         setSelectedColor([]);
+        setSortOrder('');
+        setPrice({ min: "", max: "" });
+        setShowMore(false);
+        setSearchTerm("");
     }
 
     return (
@@ -90,6 +101,8 @@ const ProductListingSideBar = () => {
                         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', }}
                     >
                         <InputBase
+                            value={searchTerm}
+                            onChange={handleSearch}
                             sx={{ ml: 1, flex: 1, padding: " 3px" }}
                             placeholder="Search..."
                             inputProps={{ 'aria-label': 'search...' }}
@@ -112,7 +125,7 @@ const ProductListingSideBar = () => {
                                     outline: 'none', // Remove focus outline
                                     boxShadow: 'none', // Remove any box shadow
                                 },
-                                
+
                             }}
                             labelId="sort-order-label"
                             id="sortOrder"
@@ -153,10 +166,10 @@ const ProductListingSideBar = () => {
                     </Typography>
                     <div class="row mobile-row">
                         <div class="form-in col-6 pr-0">
-                            <input style={{ padding: " 10px" }} class="form-control phone" placeholder="Min price" name="sale_low_price" min="0" type="number" id="sale_low_price" data-gtm-form-interact-field-id="4" />
+                            <input style={{ padding: " 10px" }} value={price.min} onChange={handlePriceChange} class="form-control phone" placeholder="Min price" name="min" min="0" type="number" id="sale_low_price" data-gtm-form-interact-field-id="4" />
                         </div>
                         <div class="form-in col-6">
-                            <input style={{ padding: " 10px" }} class="form-control phone" placeholder="Max price" name="sale_high_price" min="0" type="number" id="sale_high_price" />
+                            <input style={{ padding: " 10px" }} value={price.max} onChange={handlePriceChange} class="form-control phone" placeholder="Max price" name="max" min="0" type="number" id="sale_high_price" />
                         </div>
                     </div>
                 </Box>
@@ -486,7 +499,7 @@ const ProductListingSideBar = () => {
                     })}
                 </Box>
             </Box>
-            <Box sx={{ display: "flex", gap: 2, mt: 4, alignItems: "center" }}>
+            <Box sx={{ display: "flex", gap: 2, mt: 4, mb: 5, alignItems: "center" }}>
                 <Button variant="contained" sx={{ backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Apply</Button>
                 <Button onClick={handleReset} variant="contained" sx={{ backgroundColor: "#343a40", color: "#fff", borderRadius: "0px", padding: "13px 30px" }}>Reset</Button>
             </Box>
