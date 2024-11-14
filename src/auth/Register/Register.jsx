@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, Modal, TextField, Typography, Select, MenuItem, FormControl, Checkbox, } from '@mui/material';
 import { Close } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 const Register = ({ handleClose, open, handleOpenLogin }) => {
-    const [language, setLanguage] = useState('+ 971');
-    const handleLanguageChange = (event) => {
-        setLanguage(event.target.value);
+    const [countryCode, setCountryCode] = useState("+ 968");
+
+    const handleChange = (event) => {
+        setCountryCode(event.target.value);
     };
 
     const switchToLogin = () => {
@@ -12,6 +14,11 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
         handleOpenLogin();
     };
 
+    const navigate = useNavigate();
+
+    const navigateToTermsCondactions = () => {
+        navigate("/terms-of-use")
+    }
     return (
         <div style={{}}>
             <Modal sx={{ overflowY: "scroll" }}
@@ -22,12 +29,12 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
             >
                 <Box
                     sx={{
-                        width: { xs: '90%', sm: '80%', md: '60%', lg: '40%' },
+                        width: { xs: '95%', sm: '80%', md: '60%', lg: '40%' },
                         bgcolor: 'background.paper',
                         borderRadius: 2,
                         boxShadow: 24,
                         my: 2,
-                        px: 4,
+                        px: { xs: 2, sm: 4 },
                         py: 2,
                         mx: 'auto',
                         mt: '2%',
@@ -37,62 +44,85 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                         <Typography variant="h6" sx={{ fontSize: { sm: "20px", xs: "16px" }, fontWeight: 600 }} component="h2" gutterBottom>
                             Create an Account
                         </Typography>
-                        <Close sx={{ cursor: 'pointer', }} onClick={handleClose} />
+                        <Close sx={{ cursor: 'pointer', margin: "20px" }} onClick={handleClose} />
                     </Box>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "18px", xs: "14px" }, my: 2 }} variant="body2" color='#6c757d'> Your Name</Typography>
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, my: 2 }} variant="body2" color='#6c757d'> Your Name</Typography>
                             <TextField fullWidth label="Your Name" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#6c757d'> Mobile Number</Typography>
-                            <Box sx={{ display: 'flex', mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-                                <FormControl fullWidth>
-                                    <Select fullWidth
-                                        value={language}
-                                        onChange={handleLanguageChange}
-                                        variant="outlined"
-                                        sx={{
-                                            padding: '1px 4px',
-                                            border: '1px solid #ccc',
-                                            '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-                                            ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                                                padding: "13px 13px",
-                                                fontSize: "14px",
-                                                color: "#333",
-                                            }
-                                        }}
-                                    >
-                                        <MenuItem sx={{
-                                            fontSize: "14px",
-                                            color: "#333",
-                                        }} value="+ 971">+ 971</MenuItem>
-                                        <MenuItem sx={{
-                                            fontSize: "14px",
-                                            color: "#333",
-                                        }} value="+ 968">+ 968</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <TextField fullWidth label="Enter Mobile Number" required />
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} variant="body2" color='#6c757d'> Mobile Number</Typography>
+                            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={5} sm={4}>
+                                        <FormControl fullWidth>
+                                            <Select
+                                                value={countryCode}
+                                                onChange={handleChange}
+                                                variant="outlined"
+                                                sx={{
+                                                    padding: '2px 4px',
+                                                    border: '1px solid #ccc',
+                                                    '.MuiOutlinedInput-notchedOutline': { border: 'none' },
+                                                    ".MuiSelect-select": {
+                                                        padding: "13px 0px",
+                                                        fontSize: "14px",
+                                                        color: "#333",
+                                                    },
+                                                }}
+                                            >
+                                                <MenuItem value="Select Country Code" disabled hidden>
+                                                    Select Country
+                                                </MenuItem>
+                                                <MenuItem value="+ 971">
+                                                    <img
+                                                        src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
+                                                        alt="UAE"
+                                                        style={{ width: "23px", height: "23px", marginRight: "4px" }}
+                                                    />
+                                                    + 971
+                                                </MenuItem>
+                                                <MenuItem value="+ 968">
+                                                    <img
+                                                        src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
+                                                        alt="Oman"
+                                                        style={{ width: "23px", height: "23px", marginRight: "4px" }}
+                                                    />
+                                                    + 968
+                                                </MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={7} sm={8}>
+                                        <TextField fullWidth label="Mobile Number" required />
+                                    </Grid>
+                                </Grid>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "18px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'>Enter Your Email</Typography>
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'>Enter Your Email</Typography>
                             <TextField fullWidth label="Enter Your Email" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "18px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'> Password</Typography>
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'> Password</Typography>
                             <TextField fullWidth label="Password" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "18px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'> Confirm Password</Typography>
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'> Confirm Password</Typography>
                             <TextField fullWidth label="Confirm Password" required />
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography sx={{ fontSize: { sm: "18px", xs: "14px" }, display: 'flex', alignItems: 'center', }} variant="body2" color='#6c757d'>
-                                <Checkbox defaultChecked />
-                                <Typography sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="body2" color='#6c757d'> I agree to terms & Policy. </Typography>
-                            </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <Checkbox
+                                    sx={{
+                                        "&.Mui-checked": {
+                                            color: "#bb1f2a",
+                                        },
+                                    }}
+                                />
+                                <Typography onClick={navigateToTermsCondactions} sx={{ fontSize: { sm: "16px", xs: "14px" }, cursor: "pointer" }}> I agree to terms & Policy.</Typography>
+                            </Box>
                         </Grid>
                         <Grid item xs={12}>
                             <Button fullWidth variant="contained" sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}>

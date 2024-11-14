@@ -4,10 +4,18 @@ import { FaRegCreditCard } from "react-icons/fa6";
 import CloseIcon from '@mui/icons-material/Close';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import tamaraImg from "../../src/assets/tamara.svg"
+import { useNavigate } from 'react-router-dom';
 const Checkout = () => {
-    const isMobile = useMediaQuery('(max-width:600px)');
+    const [countryCode, setCountryCode] = useState("+ 968");
     const [open, setOpen] = useState(false);
+    const [checked, setChecked] = useState(false);
+    const handleChange = (event) => {
+        setCountryCode(event.target.value);
+    };
 
+    const handelChecked = (id) => {
+        setChecked(id);
+    }
     const handleOpen = () => {
         setOpen(true);
     };
@@ -19,24 +27,32 @@ const Checkout = () => {
     const orderData = [
         {
             id: 1,
-            name: "Al Saad Home Microgel Pillow - ( 50  X 75 ) cm - Super Soft x 1",
-            price: "349 AED",
-            imgSrc: "https://al-saad-home.mo.cloudinary.net/uploads/products/14682/thumb/micro-gel-pillow-11727870637.jpg"
+            imgSrc: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12126/thumb/flow-041727958393.jpg',
+            name: 'Luxury Bed Sheet Set - King Size',
+            price: 299.0,
         },
         {
             id: 2,
-            name: "Al Saad Home Microgel Pillow - ( 50  X 75 ) cm - Super Soft x 1",
-            price: "99 AED",
-            imgSrc: "https://al-saad-home.mo.cloudinary.net/uploads/products/14682/thumb/micro-gel-pillow-11727870637.jpg"
+            imgSrc: 'https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12126/thumb/flow-041727958393.jpg',
+            name: 'Luxury Bed Sheet Set - King Size',
+            price: 450.0,
         },
     ];
 
-    const total = 448.00;
-    const shipping = 10.00;
-    const finalTotal = total + shipping;
+
+    const total = 299.0;
+    const processing = 33.0;
+    const shipping = 0.00;
+    const finalTotal = total + processing + shipping;
+
+    const navigate = useNavigate();
+
+    const navigateToTermsCondactions = () => {
+        navigate("/terms-of-use")
+    }
 
     return (
-        <Box sx={{ padding: isMobile ? 0 : 4 }}>
+        <Box sx={{ my: 2, }}>
             <Container maxWidth="lg">
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} >
@@ -44,29 +60,40 @@ const Checkout = () => {
                             <LocalOfferIcon sx={{ color: "#bb1f2a" }} />
                             <Typography color='#687188' sx={{ fontSize: { sm: "18px", xs: "14px" } }} variant="h6">Do you have a coupon?</Typography>
                         </Box>
-                        <Box sx={{ border: '1px solid #e0e0e0', padding: 3 }}>
-                            <Grid container alignItems="stretch" gap={2}>
-                                <Grid item xs={7}>
+                        <Box
+                            sx={{
+                                border: { sm: '1px solid #e0e0e0', xs: 'none' },
+                                padding: { sm: 3, xs: 0 },
+                            }}
+                        >
+                            <Grid
+                                container
+                                alignItems="stretch"
+                                sx={{ gap: { sm: 2, xs: 0 } }}
+                            >
+                                <Grid item xs={6} sm={7}>
                                     <TextField
                                         fullWidth
-                                        label="Enter Coupon Code"
+                                        label="Enter Coupon"
                                         variant="outlined"
                                         sx={{
                                             height: '52px',
                                             '& .MuiOutlinedInput-root': {
                                                 height: '100%',
+                                                borderRadius: { sm: 0, xs: '8px 0 0 8px' },
                                             },
                                         }}
                                     />
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={6} sm={4}>
                                     <Button
                                         fullWidth
                                         variant="contained"
                                         sx={{
+                                            borderRadius: { sm: 0, xs: '0 8px 8px 0' },
                                             height: '52px',
                                             padding: 0,
-                                            backgroundColor: "#bb1f2a",
+                                            backgroundColor: '#bb1f2a',
                                         }}
                                     >
                                         Apply Coupon
@@ -75,14 +102,11 @@ const Checkout = () => {
                             </Grid>
                         </Box>
                     </Grid>
-
                     <Grid item xs={12}>
-                        <Box sx={{ textAlign: 'center' }}>
-                            <div className='row d-flex align-items-center justify-content-between my-4 px-2'>
-                                <span className='col-5' style={{ backgroundColor: "#d9d9d9", height: "4px" }}></span>
-                                <FaRegCreditCard size={30} className='col-2' color="#d9d9d9" />
-                                <span className='col-5' style={{ backgroundColor: "#d9d9d9", height: "4px" }}></span>
-                            </div>
+                        <Box sx={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', my: { xs: 2, sm: 4 } }}>
+                            <Box sx={{ flex: 1, height: '4px', backgroundColor: '#d9d9d9' }}></Box>
+                            <FaRegCreditCard size={30} color="#d9d9d9" style={{ margin: '0 16px' }} />
+                            <Box sx={{ flex: 1, height: '4px', backgroundColor: '#d9d9d9' }}></Box>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={5}>
@@ -91,96 +115,105 @@ const Checkout = () => {
                         </Typography>
                         <Box sx={{}}>
                             <TextField fullWidth label="Name" variant="outlined" sx={{ marginBottom: 2 }} />
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: { sm: 2, xs: 0 } }}>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={4}>
+                                    {/* Select Country Code */}
+                                    <Grid item xs={5} sm={4}>
                                         <FormControl fullWidth>
                                             <Select
-                                                fullWidth
+                                                value={countryCode}
+                                                onChange={handleChange}
                                                 variant="outlined"
-                                                defaultValue="Select Country Code"
                                                 sx={{
                                                     padding: '2px 4px',
                                                     border: '1px solid #ccc',
                                                     '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-                                                    ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
+                                                    ".MuiSelect-select": {
                                                         padding: "13px 0px",
                                                         fontSize: "14px",
                                                         color: "#333",
-                                                    }
+                                                    },
                                                 }}
                                             >
                                                 <MenuItem value="Select Country Code" disabled hidden>
                                                     Select Country
                                                 </MenuItem>
-                                                <MenuItem
-                                                    sx={{
-                                                        fontSize: "14px",
-                                                        color: "#333",
-                                                    }}
-                                                    value="+ 971"
-                                                >
-                                                    <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
+                                                <MenuItem value="+ 971">
+                                                    <img
+                                                        src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
+                                                        alt="UAE"
+                                                        style={{ width: "23px", height: "23px", marginRight: "4px" }}
+                                                    />
+                                                    + 971
                                                 </MenuItem>
-                                                <MenuItem
-                                                    sx={{
-                                                        fontSize: "14px",
-                                                        color: "#333",
-                                                    }}
-                                                    value="+ 968"
-                                                >
-                                                    <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
+                                                <MenuItem value="+ 968">
+                                                    <img
+                                                        src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
+                                                        alt="Oman"
+                                                        style={{ width: "23px", height: "23px", marginRight: "4px" }}
+                                                    />
+                                                    + 968
                                                 </MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Grid>
-                                    <Grid item xs={8}>
-                                        <TextField fullWidth type='number' label="Enter Mobile Number" required />
+
+                                    {/* Mobile Number Input */}
+                                    <Grid item xs={7} sm={8}>
+                                        <TextField fullWidth type="number" label="Mobile Number" required />
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2, alignItems: 'center', gap: { sm: 2, xs: 0 } }}>
+                                <Grid container spacing={2}>
+                                    {/* Select Country Code */}
+                                    <Grid item xs={5} sm={4}>
+                                        <FormControl fullWidth>
+                                            <Select
+                                                value={countryCode}
+                                                onChange={handleChange}
+                                                variant="outlined"
+                                                sx={{
+                                                    padding: '2px 4px',
+                                                    border: '1px solid #ccc',
+                                                    '.MuiOutlinedInput-notchedOutline': { border: 'none' },
+                                                    ".MuiSelect-select": {
+                                                        padding: "13px 0px",
+                                                        fontSize: "14px",
+                                                        color: "#333",
+                                                    },
+                                                }}
+                                            >
+                                                <MenuItem value="Select Country Code" disabled hidden>
+                                                    Select Country
+                                                </MenuItem>
+                                                <MenuItem value="+ 971">
+                                                    <img
+                                                        src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
+                                                        alt="UAE"
+                                                        style={{ width: "23px", height: "23px", marginRight: "4px" }}
+                                                    />
+                                                    + 971
+                                                </MenuItem>
+                                                <MenuItem value="+ 968">
+                                                    <img
+                                                        src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
+                                                        alt="Oman"
+                                                        style={{ width: "23px", height: "23px", marginRight: "4px" }}
+                                                    />
+                                                    + 968
+                                                </MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+
+                                    {/* Mobile Number Input */}
+                                    <Grid item xs={7} sm={8}>
+                                        <TextField fullWidth type="number" label="Whatsapp Number" required />
                                     </Grid>
                                 </Grid>
                             </Box>
 
-                            <Box sx={{ display: 'flex', mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={4}>
-                                        <FormControl fullWidth>
-                                            <Select fullWidth
-                                                defaultValue="Select Country Code"
-                                                variant="outlined"
-                                                sx={{
-                                                    padding: '2px 4px',
-                                                    border: '1px solid #ccc',
-                                                    '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-                                                    ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input": {
-                                                        padding: "13px 0px",
-                                                        fontSize: "14px",
-                                                        color: "#333",
-                                                    }
-                                                }}
-                                            >
-                                                <MenuItem value="Select Country Code" disabled hidden>
-                                                    Select Country
-                                                </MenuItem>
-                                                <MenuItem sx={{
-                                                    fontSize: "14px",
-                                                    color: "#333",
-                                                }} value="+ 971">
-                                                    <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 971
-                                                </MenuItem>
-                                                <MenuItem sx={{
-                                                    fontSize: "14px",
-                                                    color: "#333",
-                                                }} value="+ 968">
-                                                    <img style={{ width: "23px", height: "23px", marginRight: "4px" }} src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png" alt="img" />  + 968
-                                                </MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={8}>
-                                        <TextField fullWidth type="number" label="Whatsapp Mobile Number" required />
-                                    </Grid>
-                                </Grid>
-                            </Box>
                             <TextField fullWidth label="Email" variant="outlined" sx={{ my: 2 }} />
 
                             <Button onClick={handleOpen} fullWidth variant="contained" sx={{ marginBottom: 2, backgroundColor: "#bb1f2a" }}>
@@ -247,93 +280,102 @@ const Checkout = () => {
                                 Your Orders
                             </Typography>
                             <hr />
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    my: 1,
-                                    flexDirection: { xs: 'column', sm: 'row' }
-                                }}
-                            >
-                                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                                    <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600" }}>Photo</Typography> -
-                                    <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600" }}>Product</Typography> -
-                                    <Typography sx={{ color: "#292b2c", fontSize: "15px", fontWeight: "600" }}>Total</Typography>
-                                </Box>
-                            </Box>
+                            <Grid container sx={{ alignItems: 'center', padding: 1, }}>
+                                {/* Photo Header */}
+                                <Grid item xs={3} sm={2}>
+                                    <Typography
+                                        sx={{
+                                            color: "#292b2c",
+                                            fontSize: "15px",
+                                            fontWeight: "600",
+                                        }}
+                                    >
+                                        Photo
+                                    </Typography>
+                                </Grid>
+                                {/* Product Header */}
+                                <Grid item xs={6} sm={8}>
+                                    <Typography
+                                        sx={{
+                                            color: "#292b2c",
+                                            fontSize: "15px",
+                                            fontWeight: "600",
+
+                                        }}
+                                    >
+                                        Product
+                                    </Typography>
+                                </Grid>
+                                {/* Total Header */}
+                                <Grid item xs={3} sm={2} sx={{ textAlign: 'right' }}>
+                                    <Typography
+                                        sx={{
+                                            color: "#292b2c",
+                                            fontSize: "15px",
+                                            fontWeight: "600"
+                                        }}
+                                    >
+                                        Total
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                             <hr />
                             {orderData.map((product) => (
-                                <Box
+                                <Grid
                                     key={product.id}
-                                    display="flex"
-                                    justifyContent="space-between"
-                                    alignItems="center"
+                                    container
+                                    spacing={2}
                                     sx={{
-                                        marginBottom: 1,
-                                        flexDirection: { xs: 'column', sm: 'row' },
-                                        textAlign: { xs: 'center', sm: 'left' }
+                                        alignItems: 'center',
+                                        marginBottom: 2,
+                                        textAlign: { xs: 'center', sm: 'left' },
                                     }}
                                 >
-                                    <img
-                                        style={{ width: "50px", height: "50px", objectFit: "cover" }}
-                                        src={product.imgSrc}
-                                        loading="lazy"
-                                        alt="product"
-                                    />
-                                    <Typography>{product.name}</Typography>
-                                    <Typography>{product.price}</Typography>
-                                </Box>
+                                    {/* Product Image */}
+                                    <Grid item xs={3} sm={2}>
+                                        <img
+                                            src={product.imgSrc}
+                                            alt="product"
+                                            style={{
+                                                width: '50px',
+                                                height: '50px',
+                                                objectFit: 'cover',
+                                            }}
+                                            loading="lazy"
+                                        />
+                                    </Grid>
+                                    {/* Product Name */}
+                                    <Grid item xs={6} sm={8}>
+                                        <Typography sx={{ ":hover": { color: "#bb1f2a" }, fontSize: { xs: '14px', sm: '16px' }, }}>
+                                            {product.name}
+                                        </Typography>
+                                    </Grid>
+                                    {/* Product Price */}
+                                    <Grid item xs={3} sm={2} sx={{ textAlign: 'right' }}>
+                                        <Typography sx={{ fontSize: { xs: '14px', sm: '16px' }, }}>
+                                            {product.price.toFixed(2)} AED
+                                        </Typography>
+                                    </Grid>
+                                </Grid>
                             ))}
 
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    my: 2,
-                                    flexDirection: { xs: 'column', sm: 'row' }
-                                }}
-                            >
-                                <Typography>Sub Total:</Typography>
-                                <Typography>{total} AED</Typography>
+
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
+                                <Typography>Sub Total</Typography>
+                                <Typography>{total.toFixed(2)} AED</Typography>
                             </Box>
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    my: 2,
-                                    flexDirection: { xs: 'column', sm: 'row' }
-                                }}
-                            >
-                                <Typography>Flat Shipping Rate:</Typography>
-                                <Typography>{shipping} AED</Typography>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
+                                <Typography>Flat Shipping Rate</Typography>
+                                <Typography>{shipping.toFixed(2)} AED</Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
+                                <Typography>Cod Processing Fee</Typography>
+                                <Typography>{processing.toFixed(2)} AED</Typography>
                             </Box>
                             <hr />
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    my: 2,
-                                    flexDirection: { xs: 'column', sm: 'row' }
-                                }}
-                            >
-                                <Typography
-                                    sx={{ color: "#292b2c", fontSize: { xs: "18px", md: "22px" }, fontWeight: "700" }}
-                                    variant="h6"
-                                    gutterBottom
-                                >
-                                    Final Total:
-                                </Typography>
-                                <Typography
-                                    sx={{ color: "#292b2c", fontSize: { xs: "18px", md: "22px" }, fontWeight: "700" }}
-                                    variant="h6"
-                                    gutterBottom
-                                >
-                                    {finalTotal} AED
-                                </Typography>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
+                                <Typography sx={{ fontWeight: 700 }}>Final Total</Typography>
+                                <Typography sx={{ fontWeight: 700 }}>{finalTotal.toFixed(2)} AED</Typography>
                             </Box>
                         </Box>
 
@@ -368,7 +410,17 @@ const Checkout = () => {
                                     my: 2
                                 }}
                             >
-                                <FormControlLabel value="male" control={<Radio />} label="" />
+                                <Typography onClick={(id) => handelChecked(id)} sx={{
+                                    width: '20px',
+                                    height: '20px',
+                                    mr: 2,
+                                    border: checked ? '2px solid #bb1f2a' : 'none',
+                                    background: checked ? '#fff' : '#e1e8ee',
+                                    borderRadius: '50%',
+                                    boxShadow: '0 0.08rem 0 rgba(20, 28, 35, 0.25) inset',
+                                    transition: 'background 0.3s ease',
+                                    cursor: 'pointer',
+                                }} />
                                 <Box
                                     sx={{
                                         padding: 2,
@@ -393,10 +445,16 @@ const Checkout = () => {
                                     <img src={tamaraImg} loading="lazy" alt="tamaraImg" />
                                 </Box>
                             </Box>
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Terms & Conditions"
-                            />
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <Checkbox
+                                    sx={{
+                                        "&.Mui-checked": {
+                                            color: "#bb1f2a",
+                                        },
+                                    }}
+                                />
+                                <Typography onClick={navigateToTermsCondactions} sx={{ fontSize: { sm: "16px", xs: "14px" }, cursor: "pointer" }}> Terms & Conditions</Typography>
+                            </Box>
                             <Grid item xs={12} sx={{ my: 2 }}>
                                 <Button fullWidth variant="contained" sx={{ backgroundColor: "#bb1f2a" }}>
                                     Place Order

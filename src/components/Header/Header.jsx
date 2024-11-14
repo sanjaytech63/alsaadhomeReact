@@ -40,7 +40,7 @@ const Header = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div style={{ borderBottom: "1px solid #ccc" }} className="w-100 py-2">
+      <div style={{ borderBottom: "1px solid #ccc" }} className="w-100 ">
         <Container>
           <div className="row align-items-center">
             <div className={`header_left_sec col-9 d-flex ${language === 'ar' ? 'justify-content-start' : 'justify-content-start'}`}>
@@ -111,6 +111,7 @@ const Header = () => {
               <Login
                 open={openLogin}
                 handleOpenRegister={handleOpenRegister}
+                handleOpenLogin={handleOpenLogin}
                 handleClose={handleCloseLogin}
               />
               <Register

@@ -58,7 +58,7 @@ const BlogCard = () => {
                     <Grid container spacing={3} justifyContent="center">
                         {blogsData.map((blog) => (
                             <Grid item xs={12} sm={6} md={4} key={blog.id}>
-                                <Card onClick={() => navigate(`/blog/${blog.title}`)} key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer" }}>
+                                <Card onClick={() => navigate(`/blog/${blog.title}`)} key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)"  }}>
                                     <Box position="relative">
                                         <CardMedia
                                             sx={{

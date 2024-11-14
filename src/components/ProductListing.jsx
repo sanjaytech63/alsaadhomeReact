@@ -118,8 +118,8 @@ const ProductListing = () => {
                                         <Box
                                             sx={{
                                                 display: { xs: 'none', md: 'block' },
-                                                py: "7px",
-                                                px: 1.5,
+                                                py: "13px",
+                                                px: "15px",
                                                 ml: '5px',
                                                 backgroundColor: gridTogal ? '#bb1f2a' : '#292b2c',
                                                 borderRadius: '4px',
@@ -133,8 +133,8 @@ const ProductListing = () => {
                                             onClick={() => BsGrid2(false)}
                                             sx={{
                                                 display: { xs: 'none', md: 'block' },
-                                                py: "7px",
-                                                px: 1.5,
+                                                py: "13px",
+                                                px: "15px",
                                                 ml: '5px',
                                                 backgroundColor: gridTogal ? '#292b2c' : '#bb1f2a',
                                                 border: 'solid 1px #ddd',

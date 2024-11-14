@@ -1,43 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { Box, Button, Grid, Modal, TextField, Typography, Checkbox, FormControlLabel, FormControl, Select, MenuItem, } from '@mui/material';
-import { FaFacebookF } from "react-icons/fa";
-import AppleIcon from '@mui/icons-material/Apple';
 import { Close } from '@mui/icons-material';
-import ForgotPasswordModal from './ForgotPasswordModal';
 
-const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
+const ForgotPasswordModal = ({ open, handleClose, handleOpenLogin }) => {
+    const [switchToLogin, setSwitchToLogin] = useState(false);
     const [countryCode, setCountryCode] = useState("+ 968");
-    const [loginByEmail, setLoginByEmail] = useState(false);
-    const [openForgotPassword, setOpenForgotPassword] = useState(false);
+
     const handleChange = (event) => {
         setCountryCode(event.target.value);
     };
-
     const handelLoginByEmail = () => {
-        setLoginByEmail(!loginByEmail);
+        setSwitchToLogin(!switchToLogin);
     }
+
     const switchToRegister = () => {
-        handleClose();
-        handleOpenRegister();
+        handleOpenLogin();
     };
 
-    const handleForgotPasswordOpen = () => {
-        handleClose()
-        setOpenForgotPassword(true)
-    }
-    const handleForgotPasswordClose = () => setOpenForgotPassword(false);
-
     return (
-        <div>
-            <Modal sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
+        <>
+            <Modal
+                sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                aria-labelledby="forgot-password-title"
+                aria-describedby="forgot-password-description"
             >
                 <Box
                     sx={{
-                        width: { xs: '95%', sm: '50%', md: '50%', lg: '40%' },
+                        width: { xs: '95%', sm: '50%', lg: '40%' },
                         my: 2,
                         bgcolor: 'background.paper',
                         borderRadius: 2,
@@ -48,17 +39,17 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
                         mt: '4%',
                     }}
                 >
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', }}>
-                        <Typography variant="h6" sx={{ fontSize: { sm: "20px", xs: "16px" }, fontWeight: 600 }} component="h2" gutterBottom>
-                            Login
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography variant="h6" sx={{ fontSize: { sm: "20px", xs: "16px" }, fontWeight: 600 }}>
+                            Forgot Password
                         </Typography>
-                        <Close sx={{ cursor: 'pointer', margin: "20px" }} onClick={handleClose} />
+                        <Close onClick={handleClose} sx={{ cursor: 'pointer', margin: "20px" }} />
                     </Box>
                     <Grid container spacing={3}>
                         {
-                            loginByEmail ? (<Grid item xs={12} sm={12}>
-                                <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, mb: 2 }} color='#6c757d'> Email</Typography>
-                                <TextField type="email" name='email' fullWidth label="Enter Email" required />
+                            switchToLogin ? (<Grid item xs={12} sm={12}>
+                                <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, mb: 2 }} color='#6c757d'> E-Mail</Typography>
+                                <TextField type="email" name='email' fullWidth label="E-Email" required />
                             </Grid>) : (
                                 <Grid item xs={12} sm={12}>
                                     <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} variant="body2" color='#6c757d'> Mobile Number</Typography>
@@ -111,25 +102,10 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
                                 </Grid>
                             )
                         }
-                        <Grid item xs={12} sm={12}>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                                <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} color='#6c757d'> Password</Typography>
-                                <Typography onClick={handelLoginByEmail} sx={{ fontSize: { sm: "16px", xs: "14px", cursor: "pointer" } }} color='#bb1f2a'> Login by Email</Typography>
-                            </Box>
-                            <TextField type="password" name='password' fullWidth label="Enter Password" required />
-                        </Grid>
                         <Grid item xs={12}>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                                <FormControlLabel
-                                    control={<Checkbox sx={{
-                                        "&.Mui-checked": {
-                                            color: "#bb1f2a",
-                                        },
-                                    }} />}
-                                    label="Remember me"
-                                />
-                                <Typography onClick={handleForgotPasswordOpen} sx={{ fontSize: { sm: "16px", xs: "14px", cursor: "pointer" } }} variant="body2" color='#6c757d'> Forgot Password</Typography>
-                            </Box>
+                            <Typography onClick={handelLoginByEmail} sx={{ fontSize: { sm: "16px", xs: "14px", textAlign: "right" }, cursor: "pointer" }} color='#bb1f2a'>
+                                Use another option
+                            </Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <Button
@@ -137,7 +113,7 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
                                 variant="contained"
                                 sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}
                             >
-                                Login
+                                Submit
                             </Button>
                         </Grid>
                         <Grid item xs={12}>
@@ -147,30 +123,17 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
                                 <span style={{ backgroundColor: "#ddd", height: "1px", width: "100%", }}></span>
                             </div>
                         </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 4 }}>
-                            <div style={{ width: "40px", height: "40px", display: "flex", justifyContent: "center", alignItems: "center", background: "#3b5998", borderRadius: "50%" }} >
-                                <FaFacebookF color='#fff' />
-                            </div>
-                            <div style={{ width: "40px", height: "40px", display: "flex", justifyContent: "center", alignItems: "center", background: "#fff", borderRadius: "50%", boxShadow: "0 0 10px rgb(0 0 0 / 20%)" }} >
-                                <img src="https://al-saad-home.mo.cloudinary.net/assets/front/images/google-logo.png" loading='lazy' alt="google-login" />
-                            </div>
-                            <div style={{ width: "40px", height: "40px", display: "flex", justifyContent: "center", alignItems: "center", background: "#000", borderRadius: "50%" }} >
-                                <AppleIcon sx={{ fontSize: "30px", color: "#fff" }} />
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", my: 1 }}>
-                            <Typography variant="body2" color='#6c757d'> Don't have an account?
-                                <span onClick={switchToRegister} style={{ cursor: 'pointer', color: '#bb1f2a', fontWeight: 'bold' }}> Sign up now</span>
+
+                        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
+                            <Typography variant="body2" color='#6c757d'>Already have an account?
+                                <span onClick={switchToRegister} style={{ cursor: 'pointer', color: '#bb1f2a', fontWeight: 'bold' }}> Log in</span>
                             </Typography>
                         </Grid>
                     </Grid>
                 </Box>
             </Modal>
-            <ForgotPasswordModal handleCloseLogin={handleClose} open={openForgotPassword} handleClose={handleForgotPasswordClose} handleOpenLogin={handleOpenLogin}/>
-        </div >
-    );
+        </>
+    )
 }
 
-export default Login;
-
-
+export default ForgotPasswordModal

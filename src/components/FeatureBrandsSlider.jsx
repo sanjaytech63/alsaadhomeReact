@@ -119,8 +119,6 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                                             width: matchesSM ? "70px" : "97px",
                                             height: matchesSM ? "70px" : "97px",
                                             objectFit: "cover",
-                                            border: { xs: "none", sm: "3px solid #cfe9f6" },
-                                            "&:hover": { border: { xs: "none", sm: "3px solid #bb1f2a" } }
                                         }}
                                     />
                                 </Box>

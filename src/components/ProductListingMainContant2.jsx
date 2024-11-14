@@ -25,7 +25,7 @@ const ProductListingMainContant2 = ({ productsCard }) => {
         <>
             {productsCard && productsCard.map((item) => (
                 <Grid key={item.id} mb={4} >
-                    <Card
+                    <Card  onClick={handleNavigate}
                         sx={{
                             borderRadius: '8px',
                             cursor: 'pointer',
@@ -38,7 +38,7 @@ const ProductListingMainContant2 = ({ productsCard }) => {
                     >
                         <Box>
                             <CardMedia
-                                onClick={handleNavigate}
+                               
                                 sx={{
                                     maxWidth: { sm: '275.37px', xs: '175px' },
                                     minHeight: "100%",

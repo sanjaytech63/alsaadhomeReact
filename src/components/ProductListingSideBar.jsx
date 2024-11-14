@@ -106,7 +106,14 @@ const ProductListingSideBar = () => {
                     <FormControl sx={{ width: "100%" }} fullWidth size="small" variant="outlined">
                         <InputLabel id="sort-order-label">Sort</InputLabel>
                         <Select
-                            sx={{ padding: "3px" }}
+                            sx={{
+                                padding: "3px",
+                                '&:focus-visible': {
+                                    outline: 'none', // Remove focus outline
+                                    boxShadow: 'none', // Remove any box shadow
+                                },
+                                
+                            }}
                             labelId="sort-order-label"
                             id="sortOrder"
                             value={sortOrder}
@@ -119,21 +126,21 @@ const ProductListingSideBar = () => {
 
                             <MenuItem disabled>Price</MenuItem>
                             {Object.entries(sortOptions.price).map(([key, label]) => (
-                                <MenuItem sx={{marginLeft:"30px"}} key={key} value={key}>
+                                <MenuItem sx={{ marginLeft: "30px" }} key={key} value={key}>
                                     {label}
                                 </MenuItem>
                             ))}
 
                             <MenuItem disabled>Age</MenuItem>
                             {Object.entries(sortOptions.age).map(([key, label]) => (
-                                <MenuItem  sx={{marginLeft:"30px"}} key={key} value={key}>
+                                <MenuItem sx={{ marginLeft: "30px" }} key={key} value={key}>
                                     {label}
                                 </MenuItem>
                             ))}
 
                             <MenuItem disabled>Quantity</MenuItem>
                             {Object.entries(sortOptions.quantity).map(([key, label]) => (
-                                <MenuItem  sx={{marginLeft:"30px"}} key={key} value={key}>
+                                <MenuItem sx={{ marginLeft: "30px" }} key={key} value={key}>
                                     {label}
                                 </MenuItem>
                             ))}

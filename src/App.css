@@ -45,9 +45,20 @@ body {
 	height: 20px !important;
 	border: #bb1f2a solid 2px !important;
 }
+
+@media screen and (max-width: 600px) {
+	.react-multi-carousel-dot button {
+		background-color: #bb1f2a !important;
+		width: 10px !important;
+		height: 10px !important;
+		border: #bb1f2a solid 2px !important;
+	}
+}
+
 .header_left_sec {
 	padding: 0px 0px !important;
 }
+
 .react-multi-carousel-dot--active button {
 	background-color: #fff !important;
 }
@@ -102,16 +113,33 @@ body {
 
 
 @keyframes pulse {
-    0% {
-        transform: scale(0.5);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.2);
-        opacity: 0.7;
-    }
-    100% {
-        transform: scale(0.5);
-        opacity: 1;
-    }
+	0% {
+		transform: scale(0.5);
+		opacity: 1;
+	}
+
+	50% {
+		transform: scale(1.2);
+		opacity: 0.7;
+	}
+
+	100% {
+		transform: scale(0.5);
+		opacity: 1;
+	}
+}
+
+
+/* #86b7fe */
+.MuiOutlinedInput-root {
+	height: 52px !important;
+}
+
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+	border-color: #86b7fe !important;
+}
+
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+	border-color: #86b7fe !important;
+	border-width: 1px !important;
 }

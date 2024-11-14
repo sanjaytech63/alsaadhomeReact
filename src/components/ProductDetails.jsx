@@ -218,20 +218,20 @@ const ProductDetails = () => {
                         <Box sx={{}}>
                             {products.map((product) => (
                                 <Box key={product.id}>
-                                    <Typography variant="h5" sx={{ fontSize: { sm: "1.5rem", xs: "1rem", fontWeight: 600 } }}>
+                                    <Typography variant="h6" sx={{ fontSize: { sm: "1.4rem", xs: "1rem", fontWeight: 600 } }}>
                                         {product.title}
                                     </Typography>
                                     {/* Price & Rating */}
                                     <Box sx={{ display: { sm: "flex", xs: "block" } }} alignItems="center" justifyContent="space-between" mt={2}>
                                         <Box>
                                             <Box display="flex" alignItems="center">
-                                                <Typography sx={{ fontSize: { sm: "1.5rem", xs: "1rem" }, fontWeight: "500", color: "#bb1f2a" }} >
+                                                <Typography sx={{ fontSize: { sm: "1.2rem", xs: "1rem" }, fontWeight: "500", color: "#bb1f2a" }} >
                                                     {product.price} AED
                                                 </Typography>
-                                                <Typography sx={{ fontSize: { sm: "1.5rem", xs: "1rem" }, fontWeight: "500", color: "green", textDecoration: 'line-through', mx: 2 }}>
+                                                <Typography sx={{ fontSize: { sm: "1.2rem", xs: "1rem" }, fontWeight: "500", color: "green", textDecoration: 'line-through', mx: 2 }}>
                                                     {product.oldPrice} AED
                                                 </Typography>
-                                                <Typography sx={{ fontSize: { sm: "1.5rem", xs: "1rem" }, fontWeight: "500", color: "green", }}>
+                                                <Typography sx={{ fontSize: { sm: "1.2rem", xs: "1rem" }, fontWeight: "500", color: "green", }}>
                                                     {product.discount}
                                                 </Typography>
                                             </Box>
