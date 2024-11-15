@@ -65,7 +65,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div style={{ borderBottom: "1px solid #eee",backgroundColor:"blue" }} className="w-100 py-1">
+            <div style={{ borderBottom: "1px solid #eee", }} className="w-100 py-1">
                 <AppBar sx={{
                     minHeight: "65px",
                     position: isScrolled ? "fixed" : "sticky",
