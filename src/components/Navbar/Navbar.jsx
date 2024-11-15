@@ -65,7 +65,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div style={{ borderBottom: "1px solid #eee", }} className="w-100 py-1">
+            <div style={{ borderBottom: "1px solid #eee",backgroundColor:"blue" }} className="w-100 py-1">
                 <AppBar sx={{
                     minHeight: "65px",
                     position: isScrolled ? "fixed" : "sticky",
@@ -197,7 +197,7 @@ const Navbar = () => {
                         <List>
                             {navList.map((item, index) => (
                                 <ListItem button key={index}>
-                                    <NavLink 
+                                    <NavLink onClick={() => toggleDrawer(false)}
                                         className={({ isActive }) =>
                                             isActive ? "active" : "inactive"
                                         }
@@ -205,7 +205,7 @@ const Navbar = () => {
                                         style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins", textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
                                         key={index}
                                     >
-                                       <span onClick={() => toggleDrawer(false)}> {item.name}</span>
+                                        {item.name}
                                     </NavLink>
                                 </ListItem>
                             ))}
