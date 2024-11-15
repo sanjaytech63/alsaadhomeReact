@@ -19,7 +19,7 @@ const ForgotPasswordModal = ({ open, handleClose, handleOpenLogin }) => {
 
     return (
         <>
-            <Modal
+            <Modal  disableScrollLock
                 sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
                 open={open}
                 onClose={handleClose}

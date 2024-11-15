@@ -21,7 +21,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
     }
     return (
         <div style={{}}>
-            <Modal sx={{ overflowY: "scroll" }}
+            <Modal  disableScrollLock sx={{ overflowY: "scroll" }}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"

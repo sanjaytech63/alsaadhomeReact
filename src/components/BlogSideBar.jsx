@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Typography, Divider, List, ListItem, ListItemText, Chip, CardMedia, Paper, InputBase, IconButton } from '@mui/material';
 import jsonData from "../../src/blogData.json";
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 const BlogSideBar = () => {
-    const [recentPosts, setRecentPosts] = useState(jsonData.recentPosts);
-    const [archive, setArchive] = useState(jsonData.archive);
-    const [tags, setTags] = useState(jsonData.tags);
+    const recentPosts = jsonData.recentPosts;
+    const archive = jsonData.archive;
+    const tags = jsonData.tags;
 
 
     return (

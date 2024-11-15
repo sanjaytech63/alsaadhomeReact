@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Box, Link, useMediaQuery, useTheme, IconButton, Typography, Container } from "@mui/material";
+import { Box, Link, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
@@ -9,38 +9,34 @@ const TopSlider = ({ topSlider }) => {
     const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
     const isRTL = theme.direction === 'rtl';
 
-    const navigate = useNavigate();
-    const handleNavigate = () => {
-        navigate(`/category`);
-    };
+    const nevigate = useNavigate();
+
 
     const CustomButtonGroup = ({ next, previous }) => (
         <>
             <Box onClick={isRTL ? next : previous} sx={{
                 position: "absolute",
                 top: '40%',
-                left: '-50px',
+                left: '-45px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
                 direction: isRTL ? 'rtl' : 'ltr',
-                color: '#292b2c',
                 cursor: 'pointer',
             }}>
-                <MdOutlineArrowBackIos size={25} />
+                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
             </Box>
             <Box onClick={isRTL ? previous : next} sx={{
                 position: "absolute",
                 top: '40%',
-                right: '-50px',
+                right: '-45px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
                 direction: isRTL ? 'rtl' : 'ltr',
-                color: '#292b2c',
                 cursor: 'pointer',
             }}>
-                <MdOutlineArrowForwardIos size={25} />
+                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
             </Box>
         </>
 
@@ -67,12 +63,12 @@ const TopSlider = ({ topSlider }) => {
                         slidesToSlide={3}
                         swipeable
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
-                        rtl={isRTL} // Enable RTL for carousel
+                        rtl={isRTL}
 
                     >
                         {topSlider.length > 0 && topSlider.map((item, index) => (
                             <Link
-                                onClick={() => handleNavigate(item.slug)}
+                                onClick={() => nevigate(`/category/${item.text.trim()}`)}
                                 key={index}
                                 component="a"
                                 draggable={false}

@@ -40,13 +40,13 @@ const Header = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div style={{ borderBottom: "1px solid #ccc" }} className="w-100 ">
+      <div style={{ borderBottom: "1px solid #eee" }} className="w-100 ">
         <Container>
           <div className="row align-items-center">
             <div className={`header_left_sec col-9 d-flex ${language === 'ar' ? 'justify-content-start' : 'justify-content-start'}`}>
-              <FormControl > 
+              <FormControl>
                 <Select
-                 inputProps={{MenuProps: {disableScrollLock: true}}}
+                  inputProps={{ MenuProps: { disableScrollLock: true } }}
                   value={language}
                   onChange={handleLanguageChange}
                   variant="outlined"
@@ -60,19 +60,30 @@ const Header = () => {
                     },
                   }}
                 >
-                  <MenuItem sx={{ alignItems: "center", fontSize: "14px", }} value="en">
-                    <img style={{ maxWidth: "20px", height: "16px", marginRight: "10px" }} src="https://al-saad-home.mo.cloudinary.net/assets/front/images/english.svg" alt="flag-icon" /> EN
+                  <MenuItem sx={{ alignItems: "center", fontSize: "14px" }} value="en">
+                    <img
+                      style={{ maxWidth: "20px", height: "16px", marginRight: "10px" }}
+                      src="https://al-saad-home.mo.cloudinary.net/assets/front/images/english.svg"
+                      alt="flag-icon"
+                    />
+                    EN
                   </MenuItem>
-                  <MenuItem sx={{ alignItems: "center", fontSize: "14px", }} value="ar">
-                    <img style={{ maxWidth: "20px", height: "14px", marginRight: "10px" }} src="https://al-saad-home.mo.cloudinary.net/assets/front/images/united-arab-emirates.png" alt="flag-icon" /> AR
+                  <MenuItem sx={{ alignItems: "center", fontSize: "14px" }} value="ar">
+                    <img
+                      style={{ maxWidth: "20px", height: "14px", marginRight: "10px" }}
+                      src="https://al-saad-home.mo.cloudinary.net/assets/front/images/united-arab-emirates.png"
+                      alt="flag-icon"
+                    />
+                    AR
                   </MenuItem>
                 </Select>
               </FormControl>
+
               <div>
                 <FormControl>
                   <Select
                     value={country}
-                    inputProps={{MenuProps: {disableScrollLock: true}}}
+                    inputProps={{ MenuProps: { disableScrollLock: true } }}
                     onChange={handleCountryChange}
                     variant="outlined"
                     sx={{

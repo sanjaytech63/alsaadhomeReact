@@ -66,7 +66,7 @@ const AddReviewModal = ({ open, setOpen }) => {
 
     return (
         <div>
-            <Modal sx={{ width: '100%', maxHeight: '90vh', overflowY: 'auto' }} open={open} onClose={() => setOpen(false)}>
+            <Modal  disableScrollLock sx={{ width: '100%', maxHeight: '90vh', overflowY: 'auto'  }} open={open} onClose={() => setOpen(false)}>
                 <Box
                     sx={{
                         position: 'absolute',
@@ -168,7 +168,7 @@ const AddReviewModal = ({ open, setOpen }) => {
                                                     <IconButton sx={{ cursor: 'pointer',padding:"4px" ,backgroundColor: "#eee", borderRadius: "50%", position: "absolute", top: "-13px", right: "-10px", }} onClick={() =>handleCloge(image)}>
                                                         <CloseIcon sx={{ color: "#292b2c", fontSize: "15px" }} />
                                                     </IconButton>
-                                                    <img key={index} src={image} alt="Selected Image" style={{ width: "50px", height: "50px", objectFit: "cover", }} />
+                                                    <img key={index} src={image} alt="Selected" style={{ width: "50px", height: "50px", objectFit: "cover", }} />
                                                 </Box>
                                             ))
                                         ) : (<Box>

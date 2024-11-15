@@ -19,32 +19,29 @@ const RecentlyViewed = ({ productsCard }) => {
         <>
             <Box onClick={isRTL ? next : previous} sx={{
                 position: "absolute",
-                top: '50%',
-                left: '-50px',
+                top: '48%',
+                left: '-45px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
                 direction: isRTL ? 'rtl' : 'ltr',
-                color: '#292b2c',
                 cursor: 'pointer',
             }}>
-                <MdOutlineArrowBackIos size={25} />
+                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
             </Box>
             <Box onClick={isRTL ? previous : next} sx={{
                 position: "absolute",
-                top: '50%',
-                right: '-50px',
+                top: '48%',
+                right: '-45px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
                 direction: isRTL ? 'rtl' : 'ltr',
-                color: '#292b2c',
                 cursor: 'pointer',
             }}>
-                <MdOutlineArrowForwardIos size={25} />
+                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
             </Box>
         </>
-
     );
 
     return (
@@ -108,7 +105,7 @@ const RecentlyViewed = ({ productsCard }) => {
                                 <Box position="relative">
                                     <Chip
                                         label="New"
-                                        sx={{ position: 'absolute', top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
+                                        sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                     />
                                     <CardMedia onClick={handleNavigate}
                                         sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}

@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Box, Link, useMediaQuery, useTheme, IconButton, Typography, Container } from "@mui/material";
+import { Box, Link, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
@@ -19,29 +19,27 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
         <>
             <Box onClick={isRTL ? next : previous} sx={{
                 position: "absolute",
-                top: '50%',
-                left: '-50px',
+                top: '46%',
+                left: '-45px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
                 direction: isRTL ? 'rtl' : 'ltr',
-                color: '#292b2c',
                 cursor: 'pointer',
             }}>
-                <MdOutlineArrowBackIos size={25} />
+                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
             </Box>
             <Box onClick={isRTL ? previous : next} sx={{
                 position: "absolute",
-                top: '50%',
-                right: '-50px',
+                top: '46%',
+                right: '-45px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
                 direction: isRTL ? 'rtl' : 'ltr',
-                color: '#292b2c',
                 cursor: 'pointer',
             }}>
-                <MdOutlineArrowForwardIos size={25} />
+                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
             </Box>
         </>
 

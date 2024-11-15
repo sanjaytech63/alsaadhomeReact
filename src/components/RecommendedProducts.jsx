@@ -18,36 +18,36 @@ const RecommendedProducts = ({ productsCard }) => {
 
     const CustomButtonGroup = ({ next, previous }) => (
         <>
-            <Box onClick={isRTL ? next : previous} sx={{
+            <Box className="arrow-box" onClick={isRTL ? next : previous} sx={{
                 position: "absolute",
-                top: '50%',
-                left: '-50px',
+                top: '48%',
+                left: '-45px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
                 direction: isRTL ? 'rtl' : 'ltr',
-                color: '#292b2c',
                 cursor: 'pointer',
             }}>
-                <MdOutlineArrowBackIos size={25} />
+                <Box className="arrow-hover">
+                    <MdOutlineArrowBackIos fontSize={"20px"} />
+                </Box>
             </Box>
-            <Box onClick={isRTL ? previous : next} sx={{
+            <Box className="arrow-box" onClick={isRTL ? previous : next} sx={{
                 position: "absolute",
-                top: '50%',
-                right: '-50px',
+                top: '48%',
+                right: '-45px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 transform: 'translateY(-50%)',
                 direction: isRTL ? 'rtl' : 'ltr',
-                color: '#292b2c',
                 cursor: 'pointer',
             }}>
-                <MdOutlineArrowForwardIos size={25} />
+                <Box className="arrow-hover">
+                    <MdOutlineArrowForwardIos fontSize={"20px"} />
+                </Box>
             </Box>
         </>
-
     );
-
     return (
         <div className="w-100 ">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
@@ -73,7 +73,7 @@ const RecommendedProducts = ({ productsCard }) => {
                 <hr className="mx-2" />
                 <Box sx={{ width: "100%", position: "relative", mt: 2 }}>
                     <Carousel
-                          rtl={isRTL}
+                        rtl={isRTL}
                         additionalTransfrom={0}
                         autoPlaySpeed={3000}
                         renderButtonGroupOutside
@@ -105,11 +105,11 @@ const RecommendedProducts = ({ productsCard }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card  key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" } }}>
+                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" } }}>
                                 <Box position="relative">
                                     <Chip
                                         label="New"
-                                        sx={{ position: 'absolute', top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
+                                        sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                     />
                                     <CardMedia onClick={handleNavigate}
                                         sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}
@@ -138,7 +138,7 @@ const RecommendedProducts = ({ productsCard }) => {
                                                 color: "#bb1f2a",
                                             }
                                         }}
-                                      
+
                                     >
                                         {item.title}
                                     </Typography>
@@ -164,8 +164,8 @@ const RecommendedProducts = ({ productsCard }) => {
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                    <Rating  disabled sx={{fontSize: { xs: "1.1rem", sm: "1.5rem"} }} name="no-value" value={null} />
-                                        <Typography variant="body2" sx={{ ml: 1,color:"#9a9696" }}>
+                                        <Rating disabled sx={{ fontSize: { xs: "1.1rem", sm: "1.5rem" } }} name="no-value" value={null} />
+                                        <Typography variant="body2" sx={{ ml: 1, color: "#9a9696" }}>
                                             ({item.rating})
                                         </Typography>
                                     </Box>

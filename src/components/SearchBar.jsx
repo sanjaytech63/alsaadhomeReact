@@ -29,7 +29,7 @@ const SearchBar = ({ setSearchOpen, openSearch }) => {
 
     return (
         <div>
-            <Dialog
+            <Dialog disableScrollLock
                 open={openSearch}
                 onClose={handleClose}
                 fullWidth

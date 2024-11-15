@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Typography, Box, IconButton, Rating, Skeleton } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Box, IconButton, Rating } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useNavigate } from 'react-router-dom';

@@ -1,8 +1,6 @@
-import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
-import BoltIcon from '@mui/icons-material/Bolt';
 import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
-import { Box, Link, useMediaQuery, useTheme, IconButton, Grid, Dialog, Typography, Container } from "@mui/material";
+import { Box, useMediaQuery, useTheme, IconButton, Dialog, Typography, } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';

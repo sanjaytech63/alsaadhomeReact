@@ -221,80 +221,73 @@
   "newArrivals": [
     {
       "id": 1,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+      "title": "Carington Kids Bedding Set 4 PCS - Blue",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/carington-031723280021.jpg",
       "price": "199 AED",
       "rating": 4
     },
     {
       "id": 2,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "title": "Daren Grey Comforter Set 5 PCS - Charcoal",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/daren-gy-561723279953.jpg",
       "price": "249 AED",
       "rating": 5
     },
     {
       "id": 3,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-      "price": "179 AED",
+      "title": "Crown Velvet Comforter 6 PCS - Gold",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/crown-3471723278798.jpg",
+      "price": "299 AED",
       "rating": 3
     },
     {
       "id": 4,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-      "price": "179 AED",
+      "title": "Petroleum Blue Bedding Set 4 PCS",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/48-petroleum-21718881949.jpg",
+      "price": "329 AED",
       "rating": 4
     },
     {
       "id": 5,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "title": "Elegant Red Comforter 3 PCS - Maroon",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/red21706781536.jpg",
       "price": "179 AED",
       "rating": 4
     },
     {
       "id": 6,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-      "price": "179 AED",
-      "rating": 4
+      "title": "Verona Quilted Bedding Set 5 PCS - Cream",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/verona-q-0011723282223.jpg",
+      "price": "259 AED",
+      "rating": 5
     },
     {
       "id": 7,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-      "price": "179 AED",
+      "title": "Classic Cotton Comforter 4 PCS - White",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/21706781596.jpg",
+      "price": "319 AED",
       "rating": 4
     },
     {
       "id": 8,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-      "price": "179 AED",
+      "title": "High Crest Mattress Topper - Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/high-crest-cotton-mattress-topper-11685197057.jpeg",
+      "price": "199 AED",
       "rating": 4
     },
     {
       "id": 9,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-      "price": "179 AED",
+      "title": "Luxury Floral Bedding Set - Multicolor",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/29/thumb/shutterstock_18449552951729412423.jpg",
+      "price": "279 AED",
       "rating": 4
     },
     {
       "id": 10,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-      "price": "179 AED",
-      "rating": 4
-    },
-    {
-      "id": 11,
-      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
-      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
-      "price": "179 AED",
-      "rating": 4
+      "title": "Minimalist Grey Bedding Set - 4 PCS",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/24-21706780940.jpg",
+      "price": "349 AED",
+      "rating": 5
     }
   ],
   "bannerSliderData": [

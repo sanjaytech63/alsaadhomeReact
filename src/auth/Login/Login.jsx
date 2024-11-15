@@ -34,6 +34,7 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
+                disableScrollLock
             >
                 <Box
                     sx={{
@@ -166,7 +167,7 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
                     </Grid>
                 </Box>
             </Modal>
-            <ForgotPasswordModal handleCloseLogin={handleClose} open={openForgotPassword} handleClose={handleForgotPasswordClose} handleOpenLogin={handleOpenLogin}/>
+            <ForgotPasswordModal handleCloseLogin={handleClose} open={openForgotPassword} handleClose={handleForgotPasswordClose} handleOpenLogin={handleOpenLogin} />
         </div >
     );
 }

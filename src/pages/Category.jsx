@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,10 +6,8 @@ import catJsonData from "../../src/blogData.json"
 const Category = () => {
 
     const nevigate = useNavigate()
-    const [category, setCategory] = useState(catJsonData.categories)
-    const handleNevigate = () => {
-       
-    }
+    const category = catJsonData.categories;
+   
 
     return (
         <Box sx={{ minHeight: "100vh" }}>
@@ -39,7 +37,7 @@ const Category = () => {
                         {category.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
                                 <Box
-                                    onClick={() =>  nevigate(`/category/${cat.title.trim()}`)}
+                                    onClick={() => nevigate(`/category/${cat.title.trim()}`)}
                                     sx={{
                                         position: 'relative',
                                         boxShadow: 3,

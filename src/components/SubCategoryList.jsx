@@ -18,11 +18,8 @@ const SubCategoryList = () => {
 
     const nevigate = useNavigate();
 
-    const handleNavigate = () => {
-        nevigate(`/category/subcategory/productlisting`)
-    }
+    let { subcategory } = useParams();
 
-    let {subcategory} = useParams()
     return (
         <Box sx={{ minHeight: "100vh" }}>
             {/* Header Section */}
@@ -44,7 +41,7 @@ const SubCategoryList = () => {
             {/* Category list */}
             <Box sx={{ my: 4 }}>
                 <Container>
-                    <Typography variant="body1" sx={{ lineHeight: "28px", color: "#687188",fontSize: { xs: "12px", sm: "16px" }, }}>
+                    <Typography variant="body1" sx={{ lineHeight: "28px", color: "#687188", fontSize: { xs: "12px", sm: "16px" }, }}>
                         Shop from the largest collection of bedding, featuring comforter set , duvet, and bedspreads in UAE , KSA & Oman ✅ king comforter , single, and queen sizes ✅ Choose from cotton, microfiber, and other materials for a perfect comforter and a better night's sleep
                     </Typography>
                 </Container>
@@ -56,12 +53,12 @@ const SubCategoryList = () => {
                             <Grid item xs={12} sm={4} key={cat.id}>
                                 <Box
                                     onClick={() => {
-                                        if(subcategory){
+                                        if (subcategory) {
                                             nevigate(`/category/${subcategory.trim()}/${cat.title.trim()}`)
                                         } else {
                                             nevigate(`/category/${'subcategory'}/${cat.title.trim()}`)
                                         }
-                                    }  }
+                                    }}
                                     sx={{
                                         position: 'relative',
                                         boxShadow: 3,
@@ -81,7 +78,7 @@ const SubCategoryList = () => {
                                         }}
                                         src={cat.src}
                                         alt="category-image"
-                                         loading="lazy"
+                                        loading="lazy"
                                     />
                                     {/* Text on image */}
                                     <Box

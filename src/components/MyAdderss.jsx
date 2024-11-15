@@ -63,7 +63,7 @@ const MyAddress = () => {
                   MyAdderss
                 </Typography>
                 <Button onClick={handleOpen} variant="contained" sx={{ backgroundColor: "#bb1f2a", color: "#fff" }}>Add Address</Button>
-                <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+                <Dialog disableScrollLock open={open} onClose={handleClose} fullWidth maxWidth="md">
                   <DialogTitle>
                     <TextField label="Enter a location" variant="outlined" sx={{ width: '90%', marginBottom: 2 }} />
                     <IconButton

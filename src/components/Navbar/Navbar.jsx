@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, Badge, Divider, Button, Typography, useTheme } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, Badge, Divider, Button, Typography } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -23,7 +23,6 @@ const Navbar = () => {
 
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
-    const theme = useTheme();
     const navList = [
         { name: "Home", slug: "" },
         { name: "Category", slug: "category" },
@@ -66,7 +65,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div style={{ borderBottom: "1px solid #ccc", }} className="w-100 py-1">
+            <div style={{ borderBottom: "1px solid #eee", }} className="w-100 py-1">
                 <AppBar sx={{
                     minHeight: "65px",
                     position: isScrolled ? "fixed" : "sticky",
@@ -118,9 +117,6 @@ const Navbar = () => {
                                 >
                                     <IoMenuOutline size={28} />
                                 </Box>
-
-
-
                             </Box>
                         </Toolbar>
 

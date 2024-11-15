@@ -1,9 +1,9 @@
-import { Box, Typography, Container, Breadcrumbs, Card, CardContent, Grid, IconButton, Button } from '@mui/material';
+import { Box, Typography, Container, Breadcrumbs, Card, CardContent, Grid, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import React, { useState } from 'react';
 import { FaShoppingCart } from "react-icons/fa";
-import { Add, Remove, Delete } from '@mui/icons-material';
+import { Add, Remove} from '@mui/icons-material';
 import SearchBar from '../components/SearchBar';
 import { RiDeleteBin5Line } from "react-icons/ri";
 

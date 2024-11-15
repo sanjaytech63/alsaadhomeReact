@@ -1,15 +1,12 @@
 import React from 'react';
-import { Box, Breadcrumbs, Container, Typography, Grid, TableContainer, Table, TableBody, TableRow, TableCell, Button } from '@mui/material';
+import { Box, Breadcrumbs, Container, Typography, Grid } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import OrderDetails from './OrderDetails';
-const OderTable = () => {
-    const [tabValue, setTabValue] = React.useState(0);
 
-    const handleTabChange = (event, newValue) => {
-      setTabValue(newValue);
-    };
+const OderTable = () => {
+
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
@@ -47,8 +44,8 @@ const OderTable = () => {
           </Grid>
 
           {/* Main Content */}
-          <Grid item sx={{ mb: { sm: "50px", xs: 5,} }} xs={12} sm={9}>
-            <OrderDetails/>
+          <Grid item sx={{ mb: { sm: "50px", xs: 5, } }} xs={12} sm={9}>
+            <OrderDetails />
           </Grid>
         </Grid>
       </Container>

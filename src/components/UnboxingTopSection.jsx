@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Grid, Typography, Container, Dialog, IconButton } from '@mui/material';
+import { Box, Grid, Typography, Dialog, IconButton } from '@mui/material';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 const videoList = [
