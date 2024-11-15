@@ -197,7 +197,7 @@ const Navbar = () => {
                         <List>
                             {navList.map((item, index) => (
                                 <ListItem button key={index}>
-                                    <NavLink onClick={() => toggleDrawer(false)}
+                                    <NavLink 
                                         className={({ isActive }) =>
                                             isActive ? "active" : "inactive"
                                         }
@@ -205,7 +205,7 @@ const Navbar = () => {
                                         style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins", textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
                                         key={index}
                                     >
-                                        {item.name}
+                                       <span onClick={() => toggleDrawer(false)}> {item.name}</span>
                                     </NavLink>
                                 </ListItem>
                             ))}

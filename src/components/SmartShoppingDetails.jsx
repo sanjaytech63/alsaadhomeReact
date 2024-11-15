@@ -113,9 +113,9 @@ const SmartShoppingDetails = () => {
     }
 
     const tags = [
-        { id: 1, label: 'Duvet Cover', position: { top: 120, left: 60 } },
-        { id: 2, label: 'Bedspread', position: { top: 20, right: 100 } },
-        { id: 3, label: 'Throw', position: { top: 200, right: 110 } },
+        { id: 1, label: 'Duvet Cover', position: { top: 110, left: 30 } },
+        { id: 2, label: 'Bedspread', position: { top: 20, right: 120 } },
+        { id: 3, label: 'Throw', position: { top: { sm: 200, xs: 90 }, right: { sm: 110, xs: 50 } } },
     ];
 
     const styles = {
@@ -164,7 +164,6 @@ const SmartShoppingDetails = () => {
             justifyContent: 'center',
             alignItems: 'center',
             display: 'flex',
-            // animation: 'pulse 0.4s infinite ease-in-out',
         },
         circle2: {
             width: 10,
@@ -173,7 +172,6 @@ const SmartShoppingDetails = () => {
             borderWidth: 2,
             backgroundColor: 'rgb(230 221 221 / 67%)',
             display: 'flex',
-            // animation: 'pulse 0.5s infinite ease-in-out',
         },
     };
     return (
@@ -182,7 +180,7 @@ const SmartShoppingDetails = () => {
                 <Container>
                     <Box sx={{ display: { xs: "block", sm: "flex" }, justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
-                            Product Detail
+                            Comforter Set
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                             <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
@@ -211,7 +209,7 @@ const SmartShoppingDetails = () => {
                                                     <Box sx={styles.circle2} />
                                                 </Box>
                                             </Box>
-                                            <Box sx={{ flexDirection: 'column', position: 'absolute', top: 35, left: 30, display: 'flex' }}>
+                                            <Box sx={{ flexDirection: 'column', position: 'absolute', top: 35, left: 20, display: 'flex' }}>
                                                 <Box sx={{ height: 17, width: 2, backgroundColor: '#000', alignSelf: 'flex-end', color: '#000' }} />
                                                 <Box sx={{ height: 2, width: 40, backgroundColor: '#000', color: '#000' }} />
                                             </Box>
