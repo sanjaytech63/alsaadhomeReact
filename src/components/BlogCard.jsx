@@ -45,7 +45,7 @@ const BlogCard = () => {
 
 
     return (
-        <div className="w-100 my-5">
+        <div className="w-100 sm:my-5 my-3">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
                 <Box sx={{ px: { xs: 2, sm: "0px" } }}>
                     <Typography variant="h4" sx={{ fontWeight: 600, fontSize: { sm: "24px", xs: "16px" }, mb: 2, textAlign: { sm: "center", xs: "left" } }}>

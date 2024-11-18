@@ -2,7 +2,7 @@ import React from 'react'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { Box, Breadcrumbs, Container, Typography, Grid } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import RecommendedProducts from './RecommendedProducts';
 
 const SmartShoppingLivingRoom = () => {
@@ -47,6 +47,9 @@ const SmartShoppingLivingRoom = () => {
     const handleNavigate = () => {
         nevigate(`/smart-shopping/details/222`)
     }
+
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter(Boolean);
     return (
         <div>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -55,10 +58,34 @@ const SmartShoppingLivingRoom = () => {
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Living Room
                         </Typography>
-                        <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px", }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category/subcategory">Living Room</Link>
+                        <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                            <Link className='breadcrumbs-hover'
+                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                                to="/"
+                            >
+                                Home
+                            </Link>
+                            {pathnames.map((segment, index) => {
+                                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                                const isLast = index === pathnames.length - 1;
+
+                                return isLast ? (
+                                    <span
+                                        key={index}
+                                        style={{ color: '#6c757d', textTransform: "capitalize" }}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </span>
+                                ) : (
+                                    <Link className='breadcrumbs-hover'
+                                        key={index}
+                                        style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
+                                        to={path}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </Link>
+                                );
+                            })}
                         </Breadcrumbs>
                     </Box>
 

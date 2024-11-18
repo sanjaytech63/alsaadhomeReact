@@ -120,7 +120,7 @@ const Checkout = () => {
                                     {/* Select Country Code */}
                                     <Grid item xs={5} sm={4}>
                                         <FormControl fullWidth>
-                                            <Select
+                                            <Select disableScrollLock
                                                 value={countryCode}
                                                 onChange={handleChange}
                                                 variant="outlined"
@@ -169,7 +169,7 @@ const Checkout = () => {
                                     {/* Select Country Code */}
                                     <Grid item xs={5} sm={4}>
                                         <FormControl fullWidth>
-                                            <Select
+                                            <Select disableScrollLock
                                                 value={countryCode}
                                                 onChange={handleChange}
                                                 variant="outlined"

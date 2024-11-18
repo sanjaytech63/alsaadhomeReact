@@ -1,10 +1,13 @@
 import React from 'react';
 import { Box, Breadcrumbs, Container, Typography, Grid, TextField, FormControl, Select, MenuItem, Button } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Dashboard from './Dashboard';
 
 const AccountDeatils = () => {
+
+  const location = useLocation();
+  const pathnames = location.pathname.split('/').filter(Boolean);
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
@@ -17,17 +20,34 @@ const AccountDeatils = () => {
             >
               Account Deatils
             </Typography>
-            <Breadcrumbs
-              sx={{ fontSize: '14px', cursor: 'pointer' }}
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              <Link style={{ color: '#292b2c', textDecoration: 'none' }} to="/">
+            <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+              <Link className='breadcrumbs-hover'
+                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                to="/"
+              >
                 Home
               </Link>
-              <Link style={{ color: '#292b2c', textDecoration: 'none' }} to="/my-account">
-                Account Deatils
-              </Link>
+              {pathnames.map((segment, index) => {
+                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                const isLast = index === pathnames.length - 1;
+
+                return isLast ? (
+                  <span
+                    key={index}
+                    style={{ color: '#6c757d', textTransform: "capitalize" }}
+                  >
+                    {decodeURIComponent(segment)}
+                  </span>
+                ) : (
+                  <Link className='breadcrumbs-hover'
+                    key={index}
+                    style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
+                    to={path}
+                  >
+                    {decodeURIComponent(segment)}
+                  </Link>
+                );
+              })}
             </Breadcrumbs>
           </Box>
         </Container>
@@ -83,7 +103,7 @@ const AccountDeatils = () => {
                 <Grid container spacing={2} sx={{ flexDirection: { xs: 'column', sm: 'row' }, }}>
                   <Grid item xs={12} sm={3}>
                     <FormControl fullWidth>
-                      <Select
+                      <Select disableScrollLock
                         fullWidth
                         variant="outlined"
                         defaultValue="Select Country Code"
@@ -131,7 +151,6 @@ const AccountDeatils = () => {
                   </Grid>
                 </Grid>
               </Box>
-
               <Button variant='contained' sx={{ color: "#fff", backgroundColor: "#bb1f2a", py: 1.5, px: 4 }}>Save</Button>
             </Box>
           </Grid>

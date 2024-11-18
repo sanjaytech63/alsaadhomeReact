@@ -1,7 +1,7 @@
 import React from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link } from 'react-router-dom';
+import { Link ,useLocation} from 'react-router-dom';
 import UnboxingTopSection from '../components/UnboxingTopSection';
 import UnboxingBottomSection from '../components/UnboxingBottomSection';
 
@@ -11,6 +11,8 @@ const Unboxing = () => {
         { id: 1, src: "https://al-saad-home.mo.cloudinary.net/uploads/unboxing_challenge/landing_screens/banner-eng1720873550.png" },
     ];
 
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter(Boolean);
     return (
         <Box sx={{ minHeight: "100vh" }}>
             {/* Header Section */}
@@ -21,9 +23,34 @@ const Unboxing = () => {
                             Unboxing Challenge
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Unboxing Challenge</Link>
-                        </Breadcrumbs>
+              <Link className='breadcrumbs-hover'
+                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                to="/"
+              >
+                Home
+              </Link>
+              {pathnames.map((segment, index) => {
+                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                const isLast = index === pathnames.length - 1;
+
+                return isLast ? (
+                  <span
+                    key={index}
+                    style={{ color: '#6c757d', textTransform: "capitalize" }}
+                  >
+                    {decodeURIComponent(segment)}
+                  </span>
+                ) : (
+                  <Link className='breadcrumbs-hover'
+                    key={index}
+                    style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
+                    to={path}
+                  >
+                    {decodeURIComponent(segment)}
+                  </Link>
+                );
+              })}
+            </Breadcrumbs>
                     </Box>
                 </Container>
             </Box>

@@ -118,12 +118,12 @@ const ProductListingSideBar = () => {
                     </Typography>
                     <FormControl sx={{ width: "100%" }} fullWidth size="small" variant="outlined">
                         <InputLabel id="sort-order-label">Sort</InputLabel>
-                        <Select
+                        <Select inputProps={{ MenuProps: { disableScrollLock: true } }}
                             sx={{
                                 padding: "3px",
                                 '&:focus-visible': {
-                                    outline: 'none', // Remove focus outline
-                                    boxShadow: 'none', // Remove any box shadow
+                                    outline: 'none',
+                                    boxShadow: 'none',
                                 },
 
                             }}

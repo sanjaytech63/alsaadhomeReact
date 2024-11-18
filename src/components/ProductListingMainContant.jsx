@@ -18,12 +18,19 @@ const ProductListingMainContant = ({ productsCard }) => {
     const handleNavigate = () => {
         navigate(`/prodect/123`);
     };
-
+    const handleAddToCart = (e) => {
+        e.stopPropagation();
+        alert('Added to cart!')
+    }
+    const handleAddToWishlist = (e) => {
+        e.stopPropagation();
+        alert('Added to wishlist!')
+    }
     return (
-        <Grid   container spacing={2}>
+        <Grid container spacing={2}>
             {productsCard && productsCard.map((item) => (
                 <Grid key={item.id} item xs={6} sm={4} md={4}>
-                    <Card  onClick={handleNavigate}
+                    <Card onClick={handleNavigate}
                         sx={{
                             borderTopLeftRadius: '8px',
                             borderTopRightRadius: '8px',
@@ -36,7 +43,7 @@ const ProductListingMainContant = ({ productsCard }) => {
                     >
                         <Box>
                             <CardMedia
-                               
+
                                 sx={{
                                     minHeight: { sm: '276.37px', xs: '175px' },
                                     maxHeight: { sm: '400px', xs: '175px' },
@@ -100,22 +107,22 @@ const ProductListingMainContant = ({ productsCard }) => {
                                 >
                                     <IconButton
                                         sx={{
-                                            p: { xs: '4px', sm: '8px' },
+                                            p: { xs: '6px', sm: '8px' },
                                             boxShadow: 2,
                                             ':hover': { backgroundColor: '#bb1f2a', color: '#fff' }
                                         }}
-                                        onClick={() => alert('Added to cart!')}
+                                        onClick={handleAddToCart}
                                         aria-label="add to cart"
                                     >
                                         <AddShoppingCart sx={{ fontSize: '1rem' }} />
                                     </IconButton>
                                     <IconButton
                                         sx={{
-                                            p: { xs: '4px', sm: '8px' },
+                                            p: { xs: '6px', sm: '8px' },
                                             boxShadow: 2,
                                             ':hover': { backgroundColor: '#bb1f2a', color: '#fff' }
                                         }}
-                                        onClick={() => alert('Added to wishlist!')}
+                                        onClick={handleAddToWishlist}
                                         aria-label="add to wishlist"
                                     >
                                         <FavoriteBorder sx={{ fontSize: '1rem' }} />
@@ -124,7 +131,7 @@ const ProductListingMainContant = ({ productsCard }) => {
                             </Box>
 
                             <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                <Rating sx={{ fontSize: { xs: "1.1rem", sm: "1.5rem" } }}  disabled name="no-value" value={null} />
+                                <Rating sx={{ fontSize: { xs: "1.2rem", sm: "1.5rem" } }} disabled name="no-value" value={null} />
                                 <Typography variant="body2" sx={{ ml: { xs: 0, sm: 1 }, color: '#9a9696' }}>
                                     ({item.rating})
                                 </Typography>

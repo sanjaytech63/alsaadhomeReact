@@ -8,6 +8,7 @@ import { FaFacebookF } from "react-icons/fa";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Carousel from "react-multi-carousel";
+import { useLocation } from 'react-router-dom';
 
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
@@ -174,6 +175,9 @@ const SmartShoppingDetails = () => {
             display: 'flex',
         },
     };
+
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter(x => x);
     return (
         <div style={{ minHeight: "100vh" }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -183,8 +187,33 @@ const SmartShoppingDetails = () => {
                             Comforter Set
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
+                            <Link className='breadcrumbs-hover'
+                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                                to="/"
+                            >
+                                Home
+                            </Link>
+                            {pathnames.map((segment, index) => {
+                                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                                const isLast = index === pathnames.length - 1;
+
+                                return isLast ? (
+                                    <span
+                                        key={index}
+                                        style={{ color: '#6c757d', textTransform: "capitalize" }}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </span>
+                                ) : (
+                                    <Link className='breadcrumbs-hover'
+                                        key={index}
+                                        style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
+                                        to={path}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </Link>
+                                );
+                            })}
                         </Breadcrumbs>
                     </Box>
                 </Container>
@@ -371,21 +400,17 @@ const SmartShoppingDetails = () => {
 
                                     {/* Quantity and Add to Cart */}
                                     <Box sx={{ display: { xs: 'block', sm: 'flex' }, }} alignItems="center" gap={2} mt={2}>
-                                        <Box display="flex" alignItems="center">
-                                            <IconButton onClick={dicrementChange} size="small">
-                                                <Remove />
-                                            </IconButton>
-                                            <Typography sx={{ border: "1px solid lightgray", }} px={2}>{count}</Typography>
-                                            <IconButton onClick={incrementChange} size="small">
-                                                <Add />
-                                            </IconButton>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: "5px" }}>
+                                            <Typography onClick={dicrementChange} sx={{ backgroundColor: "#eee", mr: 1, cursor: "pointer" }}><Remove /></Typography>
+                                            <Typography sx={{ border: "solid 1px #ddd", px: 2 }} variant="body1">{count}</Typography>
+                                            <Typography onClick={incrementChange} sx={{ backgroundColor: "#eee", ml: 1, cursor: "pointer" }}><Add /></Typography>
                                         </Box>
 
-                                        <Box sx={{ pt: { xs: 2, sm: 0 } }}>
+                                        <Box sx={{ pt: { xs: 2, sm: 0 }, gap: 2, display: 'flex', alignItems: 'center' }}>
                                             <Button variant="contained" sx={{ backgroundColor: '#bb1f2a', color: '#fff', }} startIcon={<MdOutlineShoppingCart />}>
                                                 Add to Cart
                                             </Button>
-                                            <IconButton color="#bb1f2a">
+                                            <IconButton aria-label="add to favorites" sx={{ ":hover": { color: "#bb1f2a" }, borderRadius: "50%", backgroundColor: "#eee" }}  >
                                                 <FavoriteBorderIcon />
                                             </IconButton>
                                         </Box>

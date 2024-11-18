@@ -20,11 +20,20 @@ const ProductListingMainContant2 = ({ productsCard }) => {
         navigate(`/prodect/123`);
     };
 
+    const handleAddToCart = (e) => {
+        e.stopPropagation();
+        alert('Added to cart!')
+    }
+    const handleAddToWishlist = (e) => {
+        e.stopPropagation();
+        alert('Added to wishlist!')
+    }
+
     return (
         <>
             {productsCard && productsCard.map((item) => (
                 <Grid key={item.id} mb={4} >
-                    <Card  onClick={handleNavigate}
+                    <Card onClick={handleNavigate}
                         sx={{
                             borderRadius: '8px',
                             cursor: 'pointer',
@@ -37,7 +46,7 @@ const ProductListingMainContant2 = ({ productsCard }) => {
                     >
                         <Box>
                             <CardMedia
-                               
+
                                 sx={{
                                     maxWidth: { sm: '275.37px', xs: '175px' },
                                     minHeight: "100%",
@@ -86,21 +95,21 @@ const ProductListingMainContant2 = ({ productsCard }) => {
                             <Box sx={{ display: 'flex', mt: 8, alignItems: 'center', gap: 2 }}>
                                 <Button
                                     sx={{
-                                        px: 3,
+                                        p: { xs: '6px', sm: '8px' },
                                         boxShadow: 2,
                                         backgroundColor: '#bb1f2a', color: '#fff',
                                     }}
-                                    onClick={() => alert('Added to cart!')}
+                                    onClick={handleAddToCart}
                                 >
                                     <AddShoppingCart sx={{ fontSize: '1rem', mr: 1 }} /> Add To Cart
                                 </Button>
                                 <IconButton
                                     sx={{
-                                        p: { xs: '4px', sm: '8px' },
+                                        p: { xs: '6px', sm: '8px' },
                                         boxShadow: 2,
                                         ':hover': { backgroundColor: '#bb1f2a', color: '#fff' },
                                     }}
-                                    onClick={() => alert('Added to wishlist!')}
+                                    onClick={handleAddToWishlist}
                                     aria-label="add to wishlist"
                                 >
                                     <FavoriteBorder sx={{ fontSize: '1rem' }} />

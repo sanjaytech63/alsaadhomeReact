@@ -1,14 +1,15 @@
 import React from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import catJsonData from "../../src/blogData.json"
 const Category = () => {
 
     const nevigate = useNavigate()
     const category = catJsonData.categories;
-   
 
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter(Boolean);
     return (
         <Box sx={{ minHeight: "100vh" }}>
             {/* Header Section */}
@@ -19,8 +20,33 @@ const Category = () => {
                             Category
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
+                            <Link className='breadcrumbs-hover'
+                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                                to="/"
+                            >
+                                Home
+                            </Link>
+                            {pathnames.map((segment, index) => {
+                                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                                const isLast = index === pathnames.length - 1;
+
+                                return isLast ? (
+                                    <span
+                                        key={index}
+                                        style={{ color: '#6c757d', textTransform: "capitalize" }}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </span>
+                                ) : (
+                                    <Link className='breadcrumbs-hover'
+                                        key={index}
+                                        style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize", }}
+                                        to={path}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </Link>
+                                );
+                            })}
                         </Breadcrumbs>
                     </Box>
                 </Container>

@@ -54,7 +54,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
 
 
     return (
-        <div className="w-100 my-5">
+        <div className="w-100 sm:my-5 my-1">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
                 {/* Header Section */}
                 <Box sx={{

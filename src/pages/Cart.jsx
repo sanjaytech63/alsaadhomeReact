@@ -1,9 +1,9 @@
 import { Box, Typography, Container, Breadcrumbs, Card, CardContent, Grid, Button } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import React, { useState } from 'react';
 import { FaShoppingCart } from "react-icons/fa";
-import { Add, Remove} from '@mui/icons-material';
+import { Add, Remove } from '@mui/icons-material';
 import SearchBar from '../components/SearchBar';
 import { RiDeleteBin5Line } from "react-icons/ri";
 
@@ -28,7 +28,7 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
 
     return (
         <Card sx={{ display: 'flex', mb: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
-            <Box sx={{  display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box
                     component="img"
                     src={image}
@@ -42,7 +42,7 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
                 />
 
             </Box>
-            <Box sx={{  }}>
+            <Box sx={{}}>
                 <CardContent>
                     <Typography sx={{
                         fontSize: { sm: '1.1rem', xs: '1rem' }, fontWeight: 600, textTransform: 'capitalize', display: '-webkit-box',
@@ -92,6 +92,8 @@ const CartPage = () => {
 
     ];
 
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter(Boolean);
     return (
         <>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -101,8 +103,33 @@ const CartPage = () => {
                             Shopping Cart
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Shopping Cart</Link>
+                            <Link className='breadcrumbs-hover'
+                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                                to="/"
+                            >
+                                Home
+                            </Link>
+                            {pathnames.map((segment, index) => {
+                                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                                const isLast = index === pathnames.length - 1;
+
+                                return isLast ? (
+                                    <span
+                                        key={index}
+                                        style={{ color: '#6c757d', textTransform: "capitalize" }}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </span>
+                                ) : (
+                                    <Link className='breadcrumbs-hover'
+                                        key={index}
+                                        style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize", }}
+                                        to={path}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </Link>
+                                );
+                            })}
                         </Breadcrumbs>
                     </Box>
                     <SearchBar />

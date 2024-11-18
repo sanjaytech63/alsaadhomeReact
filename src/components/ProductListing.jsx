@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Container, Box, Typography, Chip, Pagination, Breadcrumbs, IconButton, Modal, Backdrop, Fade, FormControl, Select, MenuItem } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CloseIcon from '@mui/icons-material/Close';
 import ProductListingSideBar from './ProductListingSideBar';
@@ -29,6 +29,9 @@ const ProductListing = () => {
         setGridTogal(bool);
     }
 
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter(Boolean);
+    console.log(pathnames);
     return (
         <>
             <div style={{ minHeight: "100vh" }}>
@@ -39,9 +42,33 @@ const ProductListing = () => {
                                 Product List & Search
                             </Typography>
                             <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                                <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
-                                <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
-                                <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category/subcategory">Product List & Search</Link>
+                                <Link className='breadcrumbs-hover'
+                                    style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                                    to="/"
+                                >
+                                    Home
+                                </Link>
+                                {pathnames.map((segment, index) => {
+                                    const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                                    const isLast = index === pathnames.length - 1;
+
+                                    return isLast ? (
+                                        <span
+                                            key={index}
+                                            style={{ color: '#6c757d', textTransform: "capitalize" }}
+                                        >
+                                            {decodeURIComponent(segment)}
+                                        </span>
+                                    ) : (
+                                        <Link className='breadcrumbs-hover'
+                                            key={index}
+                                            style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
+                                            to={path}
+                                        >
+                                            {decodeURIComponent(segment)}
+                                        </Link>
+                                    );
+                                })}
                             </Breadcrumbs>
                         </Box>
                     </Container>
@@ -146,7 +173,7 @@ const ProductListing = () => {
                                             <TfiLayoutListThumb color='#fff' />
                                         </Box>
                                         <FormControl sx={{}} size="small" variant="outlined">
-                                            <Select
+                                            <Select inputProps={{ MenuProps: { disableScrollLock: true } }}
                                                 sx={{
 
                                                     '&:focus': { backgroundColor: 'transparent' },
@@ -172,7 +199,7 @@ const ProductListing = () => {
                                 </Box>
                             </Box>
                             <Box sx={{ my: 1, fontSize: '1rem', fontWeight: 600, color: '#292b2c' }}>{jsonData.length}  Total Products </Box>
-                            <Box sx={{ display: 'flex', overflowX: 'scroll', gap: 1, mb: 3, }}>
+                            <Box sx={{ display: 'flex', overflowX: 'auto', gap: 1, mb: 3, pb: 1 }}>
                                 {tags.map((tag) => {
                                     const isSelected = selectedBrands.includes(tag.id);
                                     return <Chip

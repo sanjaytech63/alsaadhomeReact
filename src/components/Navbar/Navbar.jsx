@@ -13,12 +13,12 @@ const Navbar = () => {
     const [isHovered, setIsHovered] = useState(false);
 
     const data = [
-        { id: 1, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Luxury Faux Cashmere Digital Carpet", price: 249, },
-        { id: 2, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
-        { id: 4, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
-        { id: 5, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
-        { id: 6, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS", price: 249, },
+        { id: 1, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
+        { id: 2, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
+        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
+        { id: 4, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
+        { id: 5, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
+        { id: 6, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
     ]
 
     const handleMouseEnter = () => setIsHovered(true);
@@ -126,7 +126,7 @@ const Navbar = () => {
                             <Box onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                                 sx={{
                                     position: 'absolute',
-                                    top: '42px',
+                                    top: { sm: '42px', xs: "70px" },
                                     // [theme.direction === 'rtl' ? 'left' :  'right']: '0',
                                     alignSelf: 'flex-end',
                                     width: { sm: '400px', xs: "289px" },
@@ -138,18 +138,18 @@ const Navbar = () => {
                             >
                                 <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#292b2c' }}>Your Cart</Typography>
                                 <Divider />
-                                <List sx={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                <Box sx={{ maxHeight: '250px', overflowY: 'auto', px: 2 }}>
                                     {data.map((item) => (
                                         <Box
                                             key={item.id}
                                             sx={{ display: 'flex', gap: 3, my: 1, justifyContent: 'space-between', alignItems: 'center' }}
                                         >
-                                            <img style={{ width: '50px', height: '50px' }} src={item.img} alt="cart-img" />
+                                            <img style={{ width: '50px', height: '50px', objectFit: "cover" }} src={item.img} alt="cart-img" />
                                             <Typography
                                                 sx={{
                                                     fontSize: '14px',
                                                     WebkitBoxOrient: 'vertical',
-                                                    WebkitLineClamp: 1,
+                                                    WebkitLineClamp: 3,
                                                     display: '-webkit-box',
                                                     overflow: 'hidden',
 
@@ -165,7 +165,7 @@ const Navbar = () => {
                                             <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#292b2c', display: 'flex', alignItems: 'center', gap: "4px" }}><span>AED</span> <span>{item.price}</span></Typography>
                                         </Box>
                                     ))}
-                                </List>
+                                </Box>
                                 <Box display="flex" justifyContent="space-between" mt={2}>
                                     <Button onClick={() => {
                                         navigateToCart();
@@ -182,36 +182,43 @@ const Navbar = () => {
                     </Container>
                 </AppBar>
 
-                <Drawer anchor="left" sx={{ width: { xs: '100%', md: '40%' }, padding: "0px !important" }} open={open} onClose={() => toggleDrawer(false)} PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}>
-                    <Box
-                        sx={{ width: { xs: '100%', md: '40%' }, paddingTop: '0px', }}
-                        role="presentation"
-                        onClick={() => toggleDrawer(false)}
-                        onKeyDown={() => toggleDrawer(false)}
-                    >
-                        <Box sx={{ textAlign: 'right', }}>
+                <Drawer
+                    anchor="left"
+                    sx={{ width: { xs: '100%', md: '40%' }, padding: "0px !important" }}
+                    open={open}
+                    onClose={() => toggleDrawer(false)}
+                    PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}
+                >
+                    <Box sx={{ width: { xs: '100%', md: '40%' }, paddingTop: '0px' }} role="presentation">
+                        <Box sx={{ textAlign: 'right' }}>
                             <IconButton onClick={() => toggleDrawer(false)}>
                                 <IoCloseOutline color='#292b2c' size={28} />
                             </IconButton>
                         </Box>
-                        <List>
-                            {navList.map((item, index) => (
-                                <ListItem button key={index}>
-                                    <NavLink onClick={() => toggleDrawer(false)}
-                                        className={({ isActive }) =>
-                                            isActive ? "active" : "inactive"
-                                        }
-                                        to={`/${item.slug}`}
-                                        style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins", textDecoration: 'none', fontSize: '14px', textTransform: "uppercase", }}
-                                        key={index}
-                                    >
-                                        {item.name}
-                                    </NavLink>
-                                </ListItem>
-                            ))}
-                        </List>
+                        {navList.map((item, index) => (
+                            <ListItem button key={index}>
+                                <NavLink
+                                    to={`/${item.slug}`}
+                                    className={({ isActive }) => (isActive ? "active" : "inactive")}
+                                    style={{
+                                        margin: '0 15px',
+                                        fontWeight: '500',
+                                        fontFamily: "Poppins",
+                                        textDecoration: 'none',
+                                        fontSize: '14px',
+                                        textTransform: "uppercase",
+                                    }}
+                                    onClick={() => {
+                                        toggleDrawer(false);
+                                    }}
+                                >
+                                    {item.name}
+                                </NavLink>
+                            </ListItem>
+                        ))}
                     </Box>
                 </Drawer>
+
             </div >
         </>
     );

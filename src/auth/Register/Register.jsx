@@ -21,7 +21,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
     }
     return (
         <div style={{}}>
-            <Modal  disableScrollLock sx={{ overflowY: "scroll" }}
+           <Modal disableScrollLock sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -48,12 +48,12 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                     </Box>
                     <Grid container spacing={3}>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, my: 2 }} variant="body2" color='#6c757d'> Your Name</Typography>
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" },  }} variant="body2" color='#6c757d'> Your Name</Typography>
                             <TextField fullWidth label="Your Name" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} variant="body2" color='#6c757d'> Mobile Number</Typography>
-                            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+                            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={5} sm={4}>
                                         <FormControl fullWidth>
@@ -101,15 +101,15 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'>Enter Your Email</Typography>
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} variant="body2" color='#6c757d'>Enter Your Email</Typography>
                             <TextField fullWidth label="Enter Your Email" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'> Password</Typography>
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} variant="body2" color='#6c757d'> Password</Typography>
                             <TextField fullWidth label="Password" required />
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, my: 1 }} variant="body2" color='#6c757d'> Confirm Password</Typography>
+                            <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} variant="body2" color='#6c757d'> Confirm Password</Typography>
                             <TextField fullWidth label="Confirm Password" required />
                         </Grid>
                         <Grid item xs={12}>
@@ -129,7 +129,7 @@ const Register = ({ handleClose, open, handleOpenLogin }) => {
                                 Register
                             </Button>
                         </Grid>
-                        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center", my: 1 }}>
+                        <Grid item xs={12} sx={{ display: "flex", justifyContent: "center", alignItems: "center",  }}>
                             <Typography variant="body2" color='#6c757d'> Already have an account?
                                 <span onClick={switchToLogin} style={{ cursor: 'pointer', color: '#bb1f2a', fontWeight: 'bold' }}> Log in</span>
                             </Typography>

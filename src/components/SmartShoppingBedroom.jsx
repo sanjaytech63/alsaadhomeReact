@@ -2,7 +2,7 @@ import React from 'react'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import RecommendedProducts from './RecommendedProducts'
 import { Box, Breadcrumbs, Container, Typography, Grid } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const SmartShoppingBedroom = () => {
     const recommendedProducts = [
@@ -40,13 +40,16 @@ const SmartShoppingBedroom = () => {
     const catList = [
         { id: 1, src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538211.jpeg", title: "Comforter Set" },
         { id: 2, src: "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538232.jpeg", title: "Duvet Cover Set" },
-        
+
     ];
     const nevigate = useNavigate();
 
     const handleNavigate = () => {
         nevigate(`/smart-shopping/details/222`)
     }
+
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter(Boolean);
     return (
         <div>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -55,18 +58,42 @@ const SmartShoppingBedroom = () => {
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Bedroom
                         </Typography>
-                        <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px", }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/">Home</Link>
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category">Category</Link>
-                            <Link style={{ color: '#292b2c', textDecoration: "none" }} to="/category/subcategory">Bedroom</Link>
+                        <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+                            <Link className='breadcrumbs-hover'
+                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                                to="/"
+                            >
+                                Home
+                            </Link>
+                            {pathnames.map((segment, index) => {
+                                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                                const isLast = index === pathnames.length - 1;
+
+                                return isLast ? (
+                                    <span
+                                        key={index}
+                                        style={{ color: '#6c757d', textTransform: "capitalize" }}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </span>
+                                ) : (
+                                    <Link className='breadcrumbs-hover'
+                                        key={index}
+                                        style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
+                                        to={path}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </Link>
+                                );
+                            })}
                         </Breadcrumbs>
                     </Box>
-                 
+
                 </Container>
             </Box>
 
             <Container>
-                <Typography variant="h5" sx={{mt:2 ,color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
+                <Typography variant="h5" sx={{ mt: 2, color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                     King Size
                 </Typography>
                 <hr />

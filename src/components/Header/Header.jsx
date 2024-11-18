@@ -50,6 +50,7 @@ const Header = () => {
                   value={language}
                   onChange={handleLanguageChange}
                   variant="outlined"
+                  defaultValue="en"
                   sx={{
                     border: 'none',
                     '.MuiOutlinedInput-notchedOutline': { border: 'none' },
@@ -124,6 +125,7 @@ const Header = () => {
                 handleOpenRegister={handleOpenRegister}
                 handleOpenLogin={handleOpenLogin}
                 handleClose={handleCloseLogin}
+                handleCloseRegister={handleCloseRegister}
               />
               <Register
                 open={openRegister}

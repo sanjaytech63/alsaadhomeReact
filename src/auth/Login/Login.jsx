@@ -5,7 +5,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import { Close } from '@mui/icons-material';
 import ForgotPasswordModal from './ForgotPasswordModal';
 
-const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
+const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin,handleCloseRegister }) => {
     const [countryCode, setCountryCode] = useState("+ 968");
     const [loginByEmail, setLoginByEmail] = useState(false);
     const [openForgotPassword, setOpenForgotPassword] = useState(false);
@@ -24,17 +24,18 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
     const handleForgotPasswordOpen = () => {
         handleClose()
         setOpenForgotPassword(true)
+        handleCloseRegister()
     }
     const handleForgotPasswordClose = () => setOpenForgotPassword(false);
 
     return (
         <div>
-            <Modal sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
+            <Modal disableScrollLock sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-                disableScrollLock
+              
             >
                 <Box
                     sx={{
@@ -58,12 +59,12 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
                     <Grid container spacing={3}>
                         {
                             loginByEmail ? (<Grid item xs={12} sm={12}>
-                                <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, mb: 2 }} color='#6c757d'> Email</Typography>
+                                <Typography sx={{ fontSize: { sm: "16px", xs: "14px" },}} color='#6c757d'> Email</Typography>
                                 <TextField type="email" name='email' fullWidth label="Enter Email" required />
                             </Grid>) : (
                                 <Grid item xs={12} sm={12}>
                                     <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} variant="body2" color='#6c757d'> Mobile Number</Typography>
-                                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, mt: 2, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+                                    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
                                         <Grid container spacing={2}>
                                             <Grid item xs={5} sm={4}>
                                                 <FormControl fullWidth>
@@ -113,7 +114,7 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin }) => {
                             )
                         }
                         <Grid item xs={12} sm={12}>
-                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                                 <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} color='#6c757d'> Password</Typography>
                                 <Typography onClick={handelLoginByEmail} sx={{ fontSize: { sm: "16px", xs: "14px", cursor: "pointer" } }} color='#bb1f2a'> Login by Email</Typography>
                             </Box>

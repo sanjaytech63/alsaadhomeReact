@@ -9,7 +9,7 @@ const BannerSection = ({ bannerSection }) => {
         nevigate(`/category/subcategory/productlisting`)
     };
     return (
-        <Container sx={{ my: 5, px: 2 }}>
+        <Container sx={{ my: { xs: 1, sm: 4 }, px: 2 }}>
             <Grid
                 container
                 alignItems="center"

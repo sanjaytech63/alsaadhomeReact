@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Breadcrumbs, Container, Typography, Grid, Card,  CardMedia, CardContent, Button } from '@mui/material';
+import { Box, Breadcrumbs, Container, Typography, Grid, Card, CardMedia, CardContent, Button } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 const WishList = () => {
@@ -16,6 +16,10 @@ const WishList = () => {
     image: "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
   }
   ]
+
+
+  const location = useLocation();
+  const pathnames = location.pathname.split('/').filter(Boolean);
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
@@ -28,17 +32,34 @@ const WishList = () => {
             >
               WishList
             </Typography>
-            <Breadcrumbs
-              sx={{ fontSize: '14px', cursor: 'pointer' }}
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              <Link style={{ color: '#292b2c', textDecoration: 'none' }} to="/">
+            <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+              <Link className='breadcrumbs-hover'
+                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                to="/"
+              >
                 Home
               </Link>
-              <Link style={{ color: '#292b2c', textDecoration: 'none' }} to="/my-account">
-                WishList
-              </Link>
+              {pathnames.map((segment, index) => {
+                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                const isLast = index === pathnames.length - 1;
+
+                return isLast ? (
+                  <span
+                    key={index}
+                    style={{ color: '#6c757d', textTransform: "capitalize" }}
+                  >
+                    {decodeURIComponent(segment)}
+                  </span>
+                ) : (
+                  <Link className='breadcrumbs-hover'
+                    key={index}
+                    style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
+                    to={path}
+                  >
+                    {decodeURIComponent(segment)}
+                  </Link>
+                );
+              })}
             </Breadcrumbs>
           </Box>
         </Container>
