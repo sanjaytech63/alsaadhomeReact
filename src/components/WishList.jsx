@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Breadcrumbs, Container, Typography, Grid, Card, CardMedia, CardContent, Button } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 const WishList = () => {
@@ -20,6 +20,11 @@ const WishList = () => {
 
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter(Boolean);
+  const navigate = useNavigate();
+
+  const navigateToCart = () => {
+    navigate("/cart");
+  }
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
@@ -76,7 +81,7 @@ const WishList = () => {
           {/* Main Content */}
           <Grid item sx={{ mb: { sm: 0, xs: 5 }, display: "flex", alignItems: "center", }} xs={12} sm={9}>
             {data && data.map((item) => (
-              <Card key={item.id} sx={{ borderTopLeftRadius: '8px', mx: { sm: "10px", xs: "5px" }, width: "233.33px", borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }}>
+              <Card onClick={navigateToCart} key={item.id} sx={{ borderTopLeftRadius: '8px', mx: { sm: "10px", xs: "5px" }, width: "233.33px", borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }}>
                 <Box position="relative">
                   <Typography sx={{ borderRadius: "5px", p: "5px", position: 'absolute', top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#eee" }}>
                     <RiDeleteBin5Line size={20} />

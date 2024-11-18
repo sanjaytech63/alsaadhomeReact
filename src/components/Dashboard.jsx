@@ -22,7 +22,7 @@ const Dashboard = ({ selectItem }) => {
 
     const handleNavigation = (item) => {
         navigate(item.path);
-        setOpen(false); // Close modal on navigation
+        setOpen(false); 
     };
 
     const handleToggleModal = () => setOpen(!open);
