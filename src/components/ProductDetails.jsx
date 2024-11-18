@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Card, CardContent, CardActions, Breadcrumbs, Rating, Avatar, IconButton, Table, TableBody, TableRow, TableCell, CardMedia } from '@mui/material';
+import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Card, CardContent, useTheme, Breadcrumbs, Rating, Avatar, IconButton, Table, TableBody, TableRow, TableCell, CardMedia, useMediaQuery } from '@mui/material';
 import tamaraImg from "../../src/assets/tamara.svg";
 import { Add, Remove } from '@mui/icons-material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -12,6 +12,8 @@ import RecommendedProducts from './RecommendedProducts'
 import ReactImageMagnify from 'react-image-magnify';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { useLocation } from 'react-router-dom';
+import { MdOutlineArrowBackIos } from "react-icons/md";
+import { MdOutlineArrowForwardIos } from "react-icons/md";
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
     price: 149,
@@ -187,7 +189,9 @@ const ProductDetails = () => {
     const [selectedImage, setSelectedImage] = useState(product.images[0].src);
     const [count, setCount] = useState(1);
     const [isSlected, setIsSelected] = useState(false);
-
+    const theme = useTheme();
+    const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
+    const isRTL = theme.direction === 'rtl';
     const incrementChange = () => {
         if (count !== 8) {
             setCount(count + 1);
@@ -199,24 +203,34 @@ const ProductDetails = () => {
             setCount(count - 1);
         }
     }
-    const responsive = {
-        superLarge: {
-            breakpoint: { max: 4000, min: 1600 },
-            items: 1,
-        },
-        large: {
-            breakpoint: { max: 1600, min: 1024 },
-            items: 1,
-        },
-        medium: {
-            breakpoint: { max: 1024, min: 768 },
-            items: 1,
-        },
-        small: {
-            breakpoint: { max: 768, min: 0 },
-            items: 1,
-        },
-    };
+    const CustomButtonGroup = ({ next, previous }) => (
+        <>
+            <Box onClick={isRTL ? next : previous} sx={{
+                position: "absolute",
+                top: '48%',
+                left: '0px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                transform: 'translateY(-50%)',
+                direction: isRTL ? 'rtl' : 'ltr',
+                cursor: 'pointer',
+            }}>
+                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
+            </Box>
+            <Box onClick={isRTL ? previous : next} sx={{
+                position: "absolute",
+                top: '48%',
+                right: '0px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                transform: 'translateY(-50%)',
+                direction: isRTL ? 'rtl' : 'ltr',
+                cursor: 'pointer',
+            }}>
+                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
+            </Box>
+        </>
+    );
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(x => x);
     return (
@@ -361,104 +375,135 @@ const ProductDetails = () => {
                                         Full Set / Package
                                     </Typography>
                                 </Box>
-                                <Box sx={{ boxShadow: "0 0 7px rgb(0 0 0 / 10%)", borderRadius: '8px', overflow: 'hidden' }}>
+                                <Box sx={{ boxShadow: "0 0 7px rgb(0 0 0 / 10%)", borderRadius: '8px', overflow: 'hidden', position: 'relative', }}>
                                     <Carousel
-                                        responsive={responsive}
-                                        infinite={true}
-                                        autoPlay={false}
+                                        rtl={isRTL}
+                                        additionalTransfrom={0}
                                         autoPlaySpeed={3000}
+                                        renderButtonGroupOutside
                                         arrows={false}
+                                        draggable
+                                        infinite={true}
+                                        responsive={{
+                                            desktop: {
+                                                breakpoint: { max: 3000, min: 1024 },
+                                                items: 1,
+                                            },
+                                            laptop: {
+                                                breakpoint: { max: 1024, min: 768 },
+                                                items: 1,
+                                            },
+                                            tablet: {
+                                                breakpoint: { max: 768, min: 464 },
+                                                items: 1,
+                                            },
+                                            mobile: {
+                                                breakpoint: { max: 464, min: 0 },
+                                                items: 1,
+                                            },
+                                        }}
+
+                                        showDots={false}
+                                        slidesToSlide={3}
+                                        swipeable
+                                        customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                                     >
                                         {productsCard.map((product) => (
-                                            <Card
-                                                sx={{
-                                                    width: '100%',
-                                                    display: 'flex',
-                                                    justifyContent: 'space-around',
-                                                    alignItems: 'center',
-                                                    padding: { xs: '8px', sm: '12px' },
-                                                    flexDirection: { xs: 'column', sm: 'row' },
-                                                }}
-                                            >
-                                                {/* Product Image */}
-                                                <CardMedia
-                                                    component="img"
+                                            <Box sx={{ px: 2 }}>
+                                                <Card
                                                     sx={{
-                                                        width: { xs: '120px', sm: '150px' },
-                                                        height: { xs: '120px', sm: '150px' },
-                                                        objectFit: 'cover',
-                                                        borderRadius: '8px',
-                                                        mr: { sm: 2 },
-                                                    }}
-                                                    image={product.imgSrc}
-                                                    alt={product.title}
-                                                />
-
-                                                {/* Product Details */}
-                                                <CardContent
-                                                    sx={{
+                                                        width: '100%',
+                                                        boxShadow: "none",
                                                         display: 'flex',
-                                                        flexDirection: 'column',
-                                                        alignItems: { xs: 'center', sm: 'flex-start' },
-                                                        textAlign: { xs: 'center', sm: 'left' },
-                                                        flexGrow: 1,
-                                                        p: { xs: 1, sm: 2 },
+                                                        justifyContent: 'space-around',
+                                                        alignItems: 'center',
+                                                        padding: { xs: '8px', sm: '12px' },
+                                                        flexDirection: { xs: 'column', sm: 'row' },
                                                     }}
                                                 >
-                                                    <Typography
-                                                        variant="h6"
+                                                    {/* Product Image */}
+                                                    <CardMedia
+                                                        component="img"
                                                         sx={{
-                                                            textTransform: 'capitalize',
-                                                            mt: 1,
-                                                            fontWeight: 600,
-                                                            fontSize: { sm: '16px', xs: '14px' },
-                                                            "&:hover": { color: "#bb1f2a" },
-                                                            cursor: "pointer"
+                                                            width: { xs: '120px', sm: '150px' },
+                                                            height: { xs: '120px', sm: '150px' },
+                                                            objectFit: 'cover',
+                                                            borderRadius: '8px',
+                                                            mr: { sm: 2 },
+                                                        }}
+                                                        image={product.imgSrc}
+                                                        alt={product.title}
+                                                    />
+
+                                                    {/* Product Details */}
+                                                    <CardContent
+                                                        sx={{
+                                                            display: 'flex',
+                                                            flexDirection: 'column',
+                                                            alignItems: { xs: 'center', sm: 'flex-start' },
+                                                            textAlign: { xs: 'center', sm: 'left' },
+                                                            flexGrow: 1,
+                                                            p: { xs: 1, sm: 2 },
                                                         }}
                                                     >
-                                                        {product.title}
-                                                    </Typography>
-                                                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                                                        {product.offerTitle}
-                                                    </Typography>
+                                                        <Typography
+                                                            variant="h6"
+                                                            sx={{
+                                                                textTransform: 'capitalize',
+                                                                mt: 1,
+                                                                fontWeight: 600,
+                                                                fontSize: { sm: '16px', xs: '14px' },
+                                                                "&:hover": { color: "#bb1f2a" },
+                                                                cursor: "pointer"
+                                                            }}
+                                                        >
+                                                            {product.title}
+                                                        </Typography>
+                                                        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                                                            {product.offerTitle}
+                                                        </Typography>
 
-                                                    {product.discount && (
-                                                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                                                            <Typography sx={{ fontWeight: 600, color: '#bb1f2a', fontSize: { xs: '14px', sm: '16px' } }} >
-                                                                {product.originalPrice} AED
-                                                            </Typography>
-                                                            <Typography sx={{ color: 'green' }} >
-                                                                ({product.discount}% off)
-                                                            </Typography>
-                                                        </Box>
-                                                    )}
-                                                    <Typography
-                                                        variant="body2"
-                                                        color="text.secondary"
-                                                        sx={{
-                                                            textTransform: 'capitalize',
-                                                            mt: 1,
-                                                            textDecoration: 'line-through',
-                                                        }}
-                                                    >
-                                                        {product.price} AED
-                                                    </Typography>
-                                                </CardContent>
+                                                        {product.discount && (
+                                                            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                                                                <Typography sx={{ fontWeight: 600, color: '#bb1f2a', fontSize: { xs: '14px', sm: '16px' } }} >
+                                                                    {product.originalPrice} AED
+                                                                </Typography>
+                                                                <Typography sx={{ color: 'green' }} >
+                                                                    ({product.discount}% off)
+                                                                </Typography>
+                                                            </Box>
+                                                        )}
+                                                        <Typography
+                                                            variant="body2"
+                                                            color="text.secondary"
+                                                            sx={{
+                                                                textTransform: 'capitalize',
+                                                                mt: 1,
+                                                                textDecoration: 'line-through',
+                                                            }}
+                                                        >
+                                                            {product.price} AED
+                                                        </Typography>
+                                                    </CardContent>
 
-                                                {/* Add to Cart Button */}
-                                                <Button
-                                                    variant="contained"
-                                                    sx={{
-                                                        width: { xs: '50%', sm: '130px' },
-                                                        fontSize: '14px',
-                                                        height: '40px',
-                                                        backgroundColor: '#bb1f2a',
-                                                        mb: { xs: 2, sm: 0 },
-                                                    }}
-                                                >
-                                                    Add to cart
-                                                </Button>
-                                            </Card>
+                                                    {/* Add to Cart Button */}
+                                                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                        <Button
+                                                            variant="contained"
+                                                            sx={{
+                                                                width: { xs: '100%', sm: '130px' },
+                                                                fontSize: '14px',
+                                                                height: '40px',
+                                                                backgroundColor: '#bb1f2a',
+                                                                mb: { xs: 2, sm: 0 },
+                                                                mt: { xs: 0, sm: 15 },
+                                                            }}
+                                                        >
+                                                            Add to cart
+                                                        </Button>
+                                                    </Box>
+                                                </Card>
+                                            </Box>
                                         ))}
                                     </Carousel>
                                 </Box>
