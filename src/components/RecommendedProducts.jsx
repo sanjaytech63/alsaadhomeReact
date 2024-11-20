@@ -105,7 +105,7 @@ const RecommendedProducts = ({ productsCard }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 2, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" } }}>
+                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 1, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" },pb: 3  }}>
                                 <Box position="relative">
                                     <Chip
                                         label="New"
@@ -164,7 +164,7 @@ const RecommendedProducts = ({ productsCard }) => {
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                        <Rating disabled sx={{ fontSize: { xs: "1.1rem", sm: "1.5rem" } }} name="no-value" value={null} />
+                                        <Rating disabled sx={{ fontSize: { xs: "1.3rem", sm: "1.5rem" } }} name="no-value" value={null} />
                                         <Typography variant="body2" sx={{ ml: 1, color: "#9a9696" }}>
                                             ({item.rating})
                                         </Typography>

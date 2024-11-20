@@ -13,7 +13,7 @@ const OderTable = () => {
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
-      <Box sx={{ bgcolor: '#f7f8fb', py: "30px" }}>
+      <Box sx={{ bgcolor: '#f7f8fb', py: {sm:"30px",xs:"15px"},  }}>
         <Container>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography
@@ -24,7 +24,7 @@ const OderTable = () => {
             </Typography>
             <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
               <Link className='breadcrumbs-hover'
-                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', }}
                 to="/"
               >
                 Home

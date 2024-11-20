@@ -13,8 +13,6 @@ import BlogCard from '../components/BlogCard';
 import blogDataJson from "../blogData.json";
 const Home = () => {
     const jsonData = blogDataJson;
-
-    
     return (
         <>
             <div className='min-h-screen w-100'>

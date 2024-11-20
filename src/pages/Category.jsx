@@ -15,13 +15,13 @@ const Category = () => {
             {/* Header Section */}
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: {sm:"30px",xs:"15px"},  fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Category
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                             <Link className='breadcrumbs-hover'
-                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
+                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', }}
                                 to="/"
                             >
                                 Home

@@ -13,7 +13,7 @@ const ProductListingSideBar = () => {
     const material = jsonData.material;
     const styles = jsonData.styles;
     const color = jsonData.colors;
-    const [sortOrder, setSortOrder] = useState();
+    const [sortOrder, setSortOrder] = useState([]);
     const [showMore, setShowMore] = useState(false);
     const [price, setPrice] = useState({ min: "", max: "" });
     const [searchTerm, setSearchTerm] = useState("");

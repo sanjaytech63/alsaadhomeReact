@@ -78,7 +78,7 @@ const BlogCard = () => {
                                         />
                                     </Box>
                                     <CardContent>
-                                        <Typography variant="h6" sx={{ color: "#292b2c", fontWeight: 600, fontSize: { xs: "15px", sm: "1rem" }, fontFamily: "Roboto, sans-serif" }} component="div">
+                                        <Typography variant="h6" sx={{ color: "#292b2c", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, fontFamily: "Roboto, sans-serif",":hover":{color: "#bb1f2a"} }} component="div">
                                             {blog.title}
                                         </Typography>
                                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
@@ -88,7 +88,7 @@ const BlogCard = () => {
                                                 <ChatBubbleOutlineIcon sx={{ fontSize: '16px', color: 'gray' }} />
                                             </IconButton>
                                         </Box>
-                                        <Typography sx={{ lineHeight: "28px", color: "#687188", fontSize: { xs: "12px", sm: "15px" }, }} variant="body2">
+                                        <Typography sx={{ lineHeight: "28px", color: "#687188", fontSize: { xs: "14px", sm: "16px" }, }} variant="body2">
                                             {blog.description}
                                         </Typography>
                                     </CardContent>

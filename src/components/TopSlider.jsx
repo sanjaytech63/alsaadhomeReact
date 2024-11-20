@@ -57,7 +57,7 @@ const TopSlider = ({ topSlider }) => {
                             desktop: { breakpoint: { max: 3000, min: 1024 }, items: 10 },
                             laptop: { breakpoint: { max: 1024, min: 768 }, items: 8 },
                             tablet: { breakpoint: { max: 768, min: 464 }, items: 6 },
-                            mobile: { breakpoint: { max: 464, min: 0 }, items: 4 },
+                            mobile: { breakpoint: { max: 464, min: 0 }, items: 4.5 },
                         }}
                         showDots={false}
                         slidesToSlide={3}
@@ -101,7 +101,7 @@ const TopSlider = ({ topSlider }) => {
                                             height: matchesSM ? "70px" : "97px",
                                             borderRadius: "5px",
                                             objectFit: "cover",
-                                            border: "3px solid #cfe9f6",
+                                            border: { xs: "2px solid #cfe9f6", sm: "3px solid #cfe9f6" },
                                             cursor: "pointer",
                                             "&:hover": { border: "3px solid #bb1f2a" }
                                         }}

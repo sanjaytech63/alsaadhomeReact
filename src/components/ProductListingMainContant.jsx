@@ -27,9 +27,9 @@ const ProductListingMainContant = ({ productsCard }) => {
         alert('Added to wishlist!')
     }
     return (
-        <Grid container spacing={2}>
+        <Grid container spacing={{ xs: 0, sm: 2, }}>
             {productsCard && productsCard.map((item) => (
-                <Grid key={item.id} item xs={6} sm={4} md={4}>
+                <Grid sx={{pb:2}} key={item.id} item xs={6} sm={4} md={4}>
                     <Card onClick={handleNavigate}
                         sx={{
                             borderTopLeftRadius: '8px',

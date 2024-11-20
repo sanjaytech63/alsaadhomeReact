@@ -221,70 +221,70 @@
   "newArrivals": [
     {
       "id": 1,
-      "title": "Carington Kids Bedding Set 4 PCS - Blue",
+      "title": "Carington Kids Bedding Set 4 PCS - Blue Kids Bedding Set 4 PCS",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/carington-031723280021.jpg",
       "price": "199 AED",
       "rating": 4
     },
     {
       "id": 2,
-      "title": "Daren Grey Comforter Set 5 PCS - Charcoal",
+      "title": "Daren Grey Comforter Set 5 PCS - Charcoal Kids Bedding Set 4 PCS",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/daren-gy-561723279953.jpg",
       "price": "249 AED",
       "rating": 5
     },
     {
       "id": 3,
-      "title": "Crown Velvet Comforter 6 PCS - Gold",
+      "title": "Crown Velvet Comforter 6 PCS - Gold Kids Bedding Set 4 PCS",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/crown-3471723278798.jpg",
       "price": "299 AED",
       "rating": 3
     },
     {
       "id": 4,
-      "title": "Petroleum Blue Bedding Set 4 PCS",
+      "title": "Petroleum Blue Bedding Set Kids Bedding Set 4 PCS 4 PCS",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/48-petroleum-21718881949.jpg",
       "price": "329 AED",
       "rating": 4
     },
     {
       "id": 5,
-      "title": "Elegant Red Comforter 3 PCS - Maroon",
+      "title": "Elegant Red Comforter Kids Bedding Set 4 PCS 3 PCS - Maroon",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/red21706781536.jpg",
       "price": "179 AED",
       "rating": 4
     },
     {
       "id": 6,
-      "title": "Verona Quilted Bedding Set 5 PCS - Cream",
+      "title": "Verona Quilted Kids Bedding Set 4 PCS Bedding Set 5 PCS - Cream",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/verona-q-0011723282223.jpg",
       "price": "259 AED",
       "rating": 5
     },
     {
       "id": 7,
-      "title": "Classic Cotton Comforter 4 PCS - White",
+      "title": "Classic Cotton Kids Bedding Set 4 PCS Comforter 4 PCS - White",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/21706781596.jpg",
       "price": "319 AED",
       "rating": 4
     },
     {
       "id": 8,
-      "title": "High Crest Mattress Topper - Beige",
+      "title": "High Crest Kids Bedding Set 4 PCS Mattress Topper - Beige",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/high-crest-cotton-mattress-topper-11685197057.jpeg",
       "price": "199 AED",
       "rating": 4
     },
     {
       "id": 9,
-      "title": "Luxury Floral Bedding Set - Multicolor",
+      "title": "Luxury Kids Bedding Set 4 PCS Floral Bedding Set - Multicolor",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/29/thumb/shutterstock_18449552951729412423.jpg",
       "price": "279 AED",
       "rating": 4
     },
     {
       "id": 10,
-      "title": "Minimalist Grey Bedding Set - 4 PCS",
+      "title": "Minimalist Kids Bedding Set 4 PCS Grey Bedding Set - 4 PCS",
       "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/24-21706780940.jpg",
       "price": "349 AED",
       "rating": 5
@@ -942,5 +942,40 @@
         "cursor": "pointer"
       }
     }
+  ],
+  "bundleProduct": [
+    {
+      "id": 1,
+      "name": "Olive Oil Soap",
+      "price": "85 AED",
+      "originalPrice": "120 AED",
+      "discount": "60% off",
+      "color": "green",
+      "quantity": 2,
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12108/thumb/dsc491017097060491718976097.jpg"
+    },
+    {
+      "id": 2,
+      "name": "TestVar07",
+      "price": "170 AED",
+      "originalPrice": "190 AED",
+      "discount": "11% off",
+      "color": "brown",
+      "size": "5XL",
+      "quantity": 90,
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12096/thumb/161722603193.jpg"
+    },
+    {
+      "id": 3,
+      "name": "TestVar8",
+      "price": "120 AED",
+      "originalPrice": "160 AED",
+      "discount": "25% off",
+      "color": "brown",
+      "size": "5XL",
+      "quantity": 73,
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12096/thumb/171722603194.jpg"
+    }
   ]
+  
 }

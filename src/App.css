@@ -178,3 +178,12 @@ body {
 .breadcrumbs-hover:hover{
 	color: #bb1f2a !important;
 }
+
+/* App.css */
+.MuiModal-root:focus {
+    outline: none !important;
+}
+
+.MuiModal-root *:focus {
+    outline: none !important;
+}
