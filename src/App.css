@@ -17,21 +17,13 @@ body {
 }
 
 .active {
-	color: #bb1f2a;
-}
+	color: #bb1f2a !important;
+  }
 
-.inactive {
-	color: #292b2c;
-}
-
-.inactive:hover {
-	color: #bb1f2a;
-}
-
-.active:hover {
-	color: #bb1f2a;
-}
-
+  .inactive {
+	color: #292b2c !important;
+  }
+  
 .blog-image {
 	transition: transform 0.3s ease-in-out;
 }
@@ -170,20 +162,29 @@ body {
 	height: 300px;
 	object-fit: cover;
 }
+
 /* 
 ::-webkit-scrollbar {dot
 	display: none;
 } */
 
-.breadcrumbs-hover:hover{
+.breadcrumbs-hover:hover {
 	color: #bb1f2a !important;
 }
 
 /* App.css */
 .MuiModal-root:focus {
-    outline: none !important;
+	outline: none !important;
 }
 
 .MuiModal-root *:focus {
-    outline: none !important;
+	outline: none !important;
+}
+
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+	padding-left: 0.5rem !important;
+	padding-right: 0.5rem !important;
+	padding-top: 0.5rem !important;
+	padding-bottom: 0.5rem !important;
 }

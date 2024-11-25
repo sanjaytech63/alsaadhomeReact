@@ -10,11 +10,6 @@ const DealsSlider = ({ DealsSlider }) => {
     const isRTL = theme.direction === 'rtl';
     const navigate = useNavigate();
 
-    // Handle Navigation to product listing
-    const handleNavigate = () => {
-        navigate(`/category/subcategory/productlisting`);
-    };
-
     const CustomButtonGroup = ({ next, previous }) => (
         <>
             <Box onClick={isRTL ? next : previous} sx={{
@@ -62,7 +57,7 @@ const DealsSlider = ({ DealsSlider }) => {
                     Deals for you
                 </Typography>
                 <hr className="mx-2" />
-                
+
                 {/* Carousel Component */}
                 <Box sx={{ width: "100%", position: "relative", my: 3 }}>
                     <Carousel
@@ -84,15 +79,15 @@ const DealsSlider = ({ DealsSlider }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                         rtl={isRTL} // Enable RTL for carousel
                     >
-                        {DealsSlider.length > 0 && [...DealsSlider, ...DealsSlider].map((item, index) => (
+                        {DealsSlider.length > 0 && [...DealsSlider, ...DealsSlider].map((item) => (
                             <Box
-                                key={index}
+                                key={item.id}
                                 component="img"
-                                onClick={handleNavigate}
+                                onClick={() => navigate(`/search?type=display-banner&id=${item.id}`)}
                                 draggable="false"
-                                src={item.src}
-                                alt="Deals Slider"
+                                src={item.image}
                                 loading="lazy"
+                                alt={item.banner_name}
                                 sx={{
                                     width: "100%",
                                     height: matchesSM ? "200px" : "220px",

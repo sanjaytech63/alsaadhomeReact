@@ -5,9 +5,6 @@ import { useNavigate } from 'react-router-dom';
 const BannerSection = ({ bannerSection }) => {
     const nevigate = useNavigate();
 
-    const handleNavigate = () => {
-        nevigate(`/category/subcategory/productlisting`)
-    };
     return (
         <Container sx={{ my: { xs: 1, sm: 4 }, px: 2 }}>
             <Grid
@@ -17,17 +14,17 @@ const BannerSection = ({ bannerSection }) => {
                 direction={{ xs: 'column', sm: 'row' }}
             >
                 {
-                    bannerSection && bannerSection.map((item, index) => (
+                    bannerSection && bannerSection.map((item) => (
                         <Grid item xs={12} sm={6}>
                             <Box
-                                key={index}
+                                key={item.id}
                                 sx={{
                                     overflow: 'hidden',
                                     transition: 'transform 0.3s ease',
                                     '&:hover': { transform: 'scale(1.05)' },
                                 }}
                             >
-                                <img onClick={handleNavigate}
+                                <img onClick={() => nevigate(`/search?type=display-banner&id=${item.id}`)}
                                     style={{
                                         width: '100%',
                                         height: '100%',
@@ -35,8 +32,8 @@ const BannerSection = ({ bannerSection }) => {
                                         cursor: 'pointer'
                                     }}
                                     loading="lazy"
-                                    src={item.src}
-                                    alt="saad"
+                                    src={item.image}
+                                    alt={item.banner_name}
                                 />
                             </Box>
                         </Grid>

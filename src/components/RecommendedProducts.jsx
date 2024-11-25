@@ -12,9 +12,6 @@ const RecommendedProducts = ({ productsCard }) => {
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const nevigate = useNavigate();
     const isRTL = theme.direction === 'rtl';
-    const handleNavigate = () => {
-        nevigate(`/prodect/123`)
-    };
 
     const CustomButtonGroup = ({ next, previous }) => (
         <>
@@ -105,14 +102,14 @@ const RecommendedProducts = ({ productsCard }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 1, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" },pb: 3  }}>
+                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 1, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }, pb: 3 }}>
                                 <Box position="relative">
                                     <Chip
                                         label="New"
                                         sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                     />
-                                    <CardMedia onClick={handleNavigate}
-                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}
+                                    <CardMedia onClick={() => nevigate(`/products/${item.title}/${item.product_variant_id}`)}
+                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
                                         component="img"
                                         image={item.image}
                                         alt={item.title}
@@ -130,7 +127,7 @@ const RecommendedProducts = ({ productsCard }) => {
                                             display: "-webkit-box",
                                             overflow: "hidden",
                                             WebkitBoxOrient: "vertical",
-                                            WebkitLineClamp: 2,
+                                            WebkitLineClamp: 1,
                                             wordBreak: "break-all",
                                             whiteSpace: "normal",
                                             textOverflow: "ellipsis",
@@ -144,7 +141,7 @@ const RecommendedProducts = ({ productsCard }) => {
                                     </Typography>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
                                         <Typography variant="body1" noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
-                                            {item.price}
+                                            {item.list_price} AED
                                         </Typography>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                                             <IconButton sx={{

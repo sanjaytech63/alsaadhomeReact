@@ -4,10 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Products = ({ products }) => {
     const nevigate = useNavigate();
-
-    const handleNavigate = () => {
-        nevigate(`/prodect/123`)
-    };
     return (
         <div className="my-4">
             <Container maxWidth="lg" sx={{ px: 2 }}>
@@ -25,13 +21,13 @@ const Products = ({ products }) => {
                                     },
                                 }}
                             >
-                                <Box component={"img"} onClick={handleNavigate}
+                                <Box component={"img"} onClick={() => nevigate(`/products/${product.varaint_id}`)}
                                     sx={{
                                         width: "100%",
                                         height: "150px",
                                         objectFit: "cover",
                                     }}
-                                    src={product.src}
+                                    src={product.image}
                                     alt="product-image"
                                     loading="lazy"
                                 />

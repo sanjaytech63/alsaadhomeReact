@@ -11,9 +11,6 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
 
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
-        navigate(`/category/subcategory/productlisting`);
-    };
 
     const CustomButtonGroup = ({ next, previous }) => (
         <>
@@ -82,12 +79,13 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                         rtl={isRTL} // Enable RTL for carousel
                     >
-                        {FeaturedBrands.length > 0 && FeaturedBrands.map((item, index) => (
+                        {FeaturedBrands.length > 0 && FeaturedBrands.map((item) => (
                             <Link
-                                key={index}
+                                key={item.id}
                                 component="a"
-                                to={`/${item.slug}`}
-                                onClick={() => handleNavigate(item.slug)}
+                                to={`/${item.name}`}
+                                onClick={() => navigate(`/brand/${encodeURIComponent(item.name)}`)}
+
                                 draggable={false}
                                 sx={{
                                     display: 'flex',
@@ -108,8 +106,8 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                                     <Box
                                         component="img"
                                         draggable="false"
-                                        src={item.src}
-                                        alt={item.slug}
+                                        src={item.image}
+                                        alt={item.name}
                                         loading="lazy"
                                         className={!matchesSM ? "rounded-circle" : "rounded-3"}
                                         sx={{

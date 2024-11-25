@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControl,  Dialog, DialogTitle, IconButton, DialogContent } from '@mui/material';
+import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControl, Dialog, DialogTitle, IconButton, DialogContent, CardMedia } from '@mui/material';
 import { FaRegCreditCard } from "react-icons/fa6";
 import CloseIcon from '@mui/icons-material/Close';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
@@ -120,7 +120,8 @@ const Checkout = () => {
                                     {/* Select Country Code */}
                                     <Grid item xs={5} sm={4}>
                                         <FormControl fullWidth>
-                                            <Select disableScrollLock
+                                            <Select disablePortal
+                                                MenuProps={{ disableScrollLock: true }}
                                                 value={countryCode}
                                                 onChange={handleChange}
                                                 variant="outlined"
@@ -169,19 +170,15 @@ const Checkout = () => {
                                     {/* Select Country Code */}
                                     <Grid item xs={5} sm={4}>
                                         <FormControl fullWidth>
-                                            <Select disableScrollLock
+                                            <Select
+                                                disablePortal
+                                                MenuProps={{ disableScrollLock: true }}
                                                 value={countryCode}
                                                 onChange={handleChange}
                                                 variant="outlined"
                                                 sx={{
-                                                    padding: '2px 4px',
                                                     border: '1px solid #ccc',
                                                     '.MuiOutlinedInput-notchedOutline': { border: 'none' },
-                                                    ".MuiSelect-select": {
-                                                        padding: "13px 0px",
-                                                        fontSize: "14px",
-                                                        color: "#333",
-                                                    },
                                                 }}
                                             >
                                                 <MenuItem value="Select Country Code" disabled hidden>
@@ -219,7 +216,8 @@ const Checkout = () => {
                             <Button onClick={handleOpen} fullWidth variant="contained" sx={{ marginBottom: 2, backgroundColor: "#bb1f2a" }}>
                                 Shipping Address
                             </Button>
-                            <Dialog disableScrollLock open={open} onClose={handleClose} fullWidth maxWidth="md">
+                            <Dialog disablePortal
+                                MenuProps={{ disableScrollLock: true }} open={open} onClose={handleClose} fullWidth maxWidth="md">
                                 <DialogTitle>
                                     <TextField label="Enter a location" variant="outlined" sx={{ width: '90%', marginBottom: 2 }} />
                                     <IconButton
@@ -244,11 +242,13 @@ const Checkout = () => {
                                     </Box>
                                 </DialogContent>
                             </Dialog>
-                            <Select fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
+                            <Select disablePortal
+                                MenuProps={{ disableScrollLock: true }} fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
                                 <MenuItem value="Select Country">Select City</MenuItem>
                                 <MenuItem value="uae">United Arab Emirates</MenuItem>
                             </Select>
-                            <Select fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
+                            <Select disablePortal
+                                MenuProps={{ disableScrollLock: true }} fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
                                 <MenuItem value="Select Country">Select Country</MenuItem>
                                 <MenuItem value="dubai">Dubai</MenuItem>
                             </Select>
@@ -402,7 +402,7 @@ const Checkout = () => {
                             <Box
                                 sx={{
                                     boxShadow: 2,
-                                    padding: 2,
+                                    padding: 1,
                                     display: 'flex',
                                     flexDirection: { xs: 'column', sm: 'row' },
                                     backgroundColor: "#fff",
@@ -414,6 +414,7 @@ const Checkout = () => {
                                     width: '20px',
                                     height: '20px',
                                     mr: 2,
+                                    my: 1,
                                     border: checked ? '2px solid #bb1f2a' : 'none',
                                     background: checked ? '#fff' : '#e1e8ee',
                                     borderRadius: '50%',
@@ -431,18 +432,18 @@ const Checkout = () => {
                                         justifyContent: 'space-between',
                                         alignItems: 'center',
                                         flexDirection: { xs: 'column', sm: 'row' },
-                                        textAlign: { xs: 'center', sm: 'left' }
+                                        textAlign: { xs: 'left', sm: 'left' }
                                     }}
                                 >
-                                    <Box>
-                                        <Typography sx={{ fontSize: "14px" }}>
+                                    <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
+                                        <Typography sx={{ fontSize: "14px", textAlign: { xs: 'left', sm: 'left' } }}>
                                             Or split in 3 payments of <strong>AED 53.00</strong> - No late fees,
                                         </Typography>
-                                        <Typography sx={{ fontSize: "14px" }}>
+                                        <Typography sx={{ fontSize: "14px", textAlign: { xs: 'left', sm: 'left' } }}>
                                             Sharia compliant! Tamara <strong><a href='https://www.tamara.com/' className='text-black'>Learn more</a></strong>
                                         </Typography>
                                     </Box>
-                                    <img src={tamaraImg} loading="lazy" alt="tamaraImg" />
+                                    <CardMedia component="img" src={tamaraImg} sx={{ display: "flex", justifyContent: "start", width: "100px", mt: {xs: 1, sm: 0}, objectFit: "contain" }} loading="lazy" alt="tamaraImg" />
                                 </Box>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

@@ -1,21 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import catJsonData from "../../src/blogData.json"
+import Loading from "../components/Loading";
+import { homeApi } from '../utils/services/homeServices';
+
 const Category = () => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const nevigate = useNavigate()
-    const category = catJsonData.categories;
-
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(Boolean);
+
+    const fetchCategory = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await homeApi.getCategory({});
+            setData(response.data);
+        } catch (err) {
+            setError("Failed to load data. Please try again.");
+            console.error("Error fetching data:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCategory();
+    }, []);
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
+    if (loading) {
+        return <Loading />;
+    }
+
     return (
         <Box sx={{ minHeight: "100vh" }}>
             {/* Header Section */}
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: {sm:"30px",xs:"15px"},  fontFamily: "Roboto" }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: { sm: "30px", xs: "15px" }, fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Category
                         </Typography>
@@ -60,10 +90,10 @@ const Category = () => {
             <Container>
                 <Box sx={{ my: 5 }}>
                     <Grid container spacing={2} sx={{ pb: 4 }}>
-                        {category.map((cat) => (
+                        {data && data.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
                                 <Box
-                                    onClick={() => nevigate(`/category/${cat.title.trim()}`)}
+                                    onClick={() => nevigate(`/category/${cat.slug}`)}
                                     sx={{
                                         position: 'relative',
                                         boxShadow: 3,
@@ -82,8 +112,8 @@ const Category = () => {
                                             objectFit: "cover",
                                         }}
                                         loading="lazy"
-                                        src={cat.src}
-                                        alt="category-image"
+                                        src={cat.image}
+                                        alt={cat.name}
                                     />
                                     {/* Text on image */}
                                     <Box
@@ -97,7 +127,7 @@ const Category = () => {
                                             py: 1,
                                         }}
                                     >
-                                        <Typography variant="h6">{cat.title}</Typography>
+                                        <Typography variant="h6">{cat.name}</Typography>
                                     </Box>
                                 </Box>
                             </Grid>

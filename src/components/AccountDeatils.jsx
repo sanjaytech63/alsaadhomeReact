@@ -103,7 +103,8 @@ const AccountDeatils = () => {
                 <Grid container spacing={2} sx={{ flexDirection: { xs: 'column', sm: 'row' }, }}>
                   <Grid item xs={12} sm={3}>
                     <FormControl fullWidth>
-                      <Select disableScrollLock
+                      <Select disablePortal
+                        MenuProps={{ disableScrollLock: true }}
                         fullWidth
                         variant="outlined"
                         defaultValue="Select Country Code"

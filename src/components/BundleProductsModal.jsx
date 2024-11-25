@@ -100,11 +100,15 @@ const BundleProductsModal = ({ bundleProduct, open, handleClose }) => {
                                                 <Button
                                                     variant="contained"
                                                     sx={{
+                                                        color: "#fff",
+                                                        width: "fit-content",
                                                         height: "fit-content",
                                                         background: "#bb1f2a",
                                                         textTransform: "capitalize",
                                                         textAlign: "right",
+                                                        padding: { xs: "2px 5px", sm: "5px 10px" },
                                                         mx: 2,
+                                                        mt: { xs: 0, sm: 15 },
                                                         mb: 1,
                                                     }}
                                                 >

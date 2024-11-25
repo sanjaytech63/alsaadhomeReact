@@ -15,14 +15,6 @@ const NewArrivalsSlider = ({ productsCard }) => {
     const isRTL = theme.direction === 'rtl';
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
-        navigate('/prodect/123')
-    };
-
-    const handleNavigateViewAll = () => {
-        navigate('/prodect/123')
-    };
-
     const CustomButtonGroup = ({ next, previous }) => (
         <>
             <Box onClick={isRTL ? next : previous} sx={{
@@ -71,7 +63,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                     }}>
                         New Arrivals
                     </Typography>
-                    <Typography variant="h6" onClick={handleNavigateViewAll} sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
+                    <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
                         <BoltIcon />
                         View All
                     </Typography>
@@ -106,8 +98,8 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                         label="New"
                                         sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                     />
-                                    <CardMedia onClick={handleNavigate}
-                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}
+                                    <CardMedia onClick={() => navigate(`/products/${item.title}/${item.product_variant_id}`)}
+                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
                                         component="img"
                                         image={item.image}
                                         alt={item.title}
@@ -125,7 +117,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                             display: "-webkit-box",
                                             overflow: "hidden",
                                             WebkitBoxOrient: "vertical",
-                                            WebkitLineClamp: 2,
+                                            WebkitLineClamp: 1,
                                             wordBreak: "break-all",
                                             whiteSpace: "normal",
                                             textOverflow: "ellipsis",
@@ -139,7 +131,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                     </Typography>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
                                         <Typography variant="body1" noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
-                                            {item.price}
+                                            {item.list_price} AED
                                         </Typography>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                                             <IconButton sx={{

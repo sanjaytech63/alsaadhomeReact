@@ -116,7 +116,7 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin,handleCl
                         <Grid item xs={12} sm={12}>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                                 <Typography sx={{ fontSize: { sm: "16px", xs: "14px" } }} color='#6c757d'> Password</Typography>
-                                <Typography onClick={handelLoginByEmail} sx={{ fontSize: { sm: "16px", xs: "14px", cursor: "pointer" } }} color='#bb1f2a'> Login by Email</Typography>
+                                <Typography onClick={handelLoginByEmail} sx={{ fontSize: { sm: "16px", xs: "14px", cursor: "pointer" } }} color='#bb1f2a'>{loginByEmail ? "Login by Mobile Number" : "Login by Email"} </Typography>
                             </Box>
                             <TextField type="password" name='password' fullWidth label="Enter Password" required />
                         </Grid>

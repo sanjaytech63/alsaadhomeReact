@@ -41,7 +41,7 @@ const BlogSideBar = () => {
                                 loading="lazy"
                             />
                             <ListItem key={post.id}>
-                                <ListItemText primary={post.title} secondary={post.date} />
+                                <ListItemText sx={{ ":hover": { color: "#bb1f2a" }, cursor: "pointer", fontSize: "14px", fowntweight: "600" }} primary={post.title} secondary={post.date} />
                             </ListItem>
                         </Box>
                     ))}
@@ -52,7 +52,7 @@ const BlogSideBar = () => {
                 <Typography variant="h6" gutterBottom>Archive</Typography>
                 <List sx={{ padding: "0px !important" }}>
                     {archive.map((month, index) => (
-                        <ListItem sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0px !important", my: 1 }} key={index}>
+                        <ListItem sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0px !important", my: 1, ":hover": { color: "#bb1f2a" }, cursor: "pointer" }} key={index}>
                             <span><KeyboardArrowRightIcon /></span> <ListItemText primary={month} />
                             <span>(1)</span>
                         </ListItem>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Chip, Paper, InputBase, Select, MenuItem, FormControl, InputLabel, } from '@mui/material';
+import { Box, Typography, Button, Chip, Paper, InputBase, Select, MenuItem, FormControl, InputLabel, Divider, IconButton, } from '@mui/material';
 import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
 import jsonData from "../../src/blogData.json";
 import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
-
+import SearchIcon from '@mui/icons-material/Search';
 
 const ProductListingSideBar = () => {
     const tags = jsonData.tags;
@@ -17,7 +17,7 @@ const ProductListingSideBar = () => {
     const [showMore, setShowMore] = useState(false);
     const [price, setPrice] = useState({ min: "", max: "" });
     const [searchTerm, setSearchTerm] = useState("");
-    const tagsToShow = showMore ? tags : tags.slice(0, 4);
+    const tagsToShow = showMore ? tags : tags.slice(0, 5);
 
     const sortOptions = {
         price: { LTH: "Low to High", HTL: "High to Low" },
@@ -101,14 +101,17 @@ const ProductListingSideBar = () => {
                         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', }}
                     >
                         <InputBase
-                            value={searchTerm}
-                            onChange={handleSearch}
-                            sx={{ ml: 1, flex: 1, padding: " 3px" }}
+                            sx={{ ml: 1, flex: 1 }}
                             placeholder="Search..."
                             inputProps={{ 'aria-label': 'search...' }}
                         />
+                        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
                     </Paper>
                 </Box>
+                <hr />
                 <Box sx={{ width: "100%" }}>
                     <Typography
                         variant="h5"

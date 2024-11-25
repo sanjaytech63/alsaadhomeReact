@@ -89,7 +89,7 @@
         {
             "id": 1,
             "name": "Sanjay",
-            "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/customers/logo-21721644637.jpg",
+            "image": "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg",
             "date": "21 Dec, 2023",
             "rating": 20,
             "reviewTitle": "Awesome product exactly",
@@ -99,7 +99,7 @@
         {
             "id": 2,
             "name": "beart",
-            "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/customers/logo-21721644637.jpg",
+            "image": "https://media.istockphoto.com/id/1311957094/photo/handsome-smiling-young-man-with-crossed-arms-portrait.jpg?s=612x612&w=0&k=20&c=zALF0xV8gL-W9IooXcbEE95aejQhYYkBslwjPMqlUxA=",
             "date": "11 Dec, 2023",
             "rating": 80,
             "reviewTitle": "Awesome product exactly",
@@ -109,7 +109,7 @@
         {
             "id": 3,
             "name": "Gaurav",
-            "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/assets/images/users/no-image.png",
+            "image": "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
             "date": "08 Dec, 2023",
             "rating": 100,
             "reviewTitle": "this is the best",
@@ -345,6 +345,44 @@
                 "If return conditions are met, the amount will be refunded as credit to the customer's e-wallet, which can be used within 6 months of the return date.",
                 "For health and safety reasons, pillows and towels cannot be exchanged or returned."
             ]
+        }
+    ],
+    "chekout": [
+        {
+            "id": 1,
+            "img": "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg",
+            "name": "Luxury Faux Cashmere Digital Carpet",
+            "price": 249
+        },
+        {
+            "id": 2,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/image-800x500-21701861226.jpg",
+            "name": "Belmond Comforter Bedding Set 6 PCS",
+            "price": 299
+        },
+        {
+            "id": 3,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/20501700129385.jpg",
+            "name": "Modern Geometric Area Rug",
+            "price": 199
+        },
+        {
+            "id": 4,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/grid-s16951282741700565808.jpg",
+            "name": "Velvet Touch Premium Carpet",
+            "price": 349
+        },
+        {
+            "id": 5,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/11-1116995368141700628903.jpg",
+            "name": "Elegant Floral Pattern Rug",
+            "price": 279
+        },
+        {
+            "id": 6,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/download-21704966257.jpeg",
+            "name": "Classic Persian Design Carpet",
+            "price": 399
         }
     ]
 }

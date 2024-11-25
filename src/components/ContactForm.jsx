@@ -1,9 +1,17 @@
-import React from 'react';
-import { Grid, TextField, Button, Box, Typography, Card, CardContent } from '@mui/material';
+import React, { useRef } from 'react';
+import { Grid, TextField, Button, Box, Typography, Card, CardContent, } from '@mui/material';
 import { Email, Phone } from '@mui/icons-material';
-
-
+import ReCAPTCHA from "react-google-recaptcha";
+import { showToast } from '../utils/helper';
 const ContactForm = ({ location }) => {
+    const recaptcha = useRef(null);
+
+    const handleRecaptcha = (e) => {
+        e.preventDefault();
+        if (!recaptcha.current.getValue()) {
+            showToast("error", 'Please Submit Captcha')
+        }
+    }
     return (
         <Box component="form">
             <Typography variant="h4" sx={{ my: 2, color: "#292b2c", fontWeight: "600", fontSize: "1.5rem", fontFamily: "Roboto, sans-serif" }}>
@@ -34,10 +42,14 @@ const ContactForm = ({ location }) => {
                                 <TextField fullWidth multiline rows={4} label="Message" required />
                             </Grid>
                             {/* reCAPTCHA (Placeholder) */}
-                            <Grid item xs={12}>
-                                <Box display="flex" alignSelf={"start"} mb={2}>
-                                    <Typography>reCAPTCHA goes here</Typography>
-                                </Box>
+                            <Grid item xs={12} sx={{ px: 2 }}>
+                                <form onSubmit={handleRecaptcha}>
+                                    <ReCAPTCHA style={{ width: "100%" }}
+                                        sitekey="6LfKpIYqAAAAAI_nzop_agYeyO6ef0IzEogfESd-"
+                                        ref={recaptcha}
+                                        o
+                                    />
+                                </form>
                             </Grid>
                             {/* Submit Button */}
                             <Grid item xs={12}>

@@ -3,7 +3,6 @@ import { ToastContainer } from 'react-toastify';
 import { Zoom, Fab } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState, useEffect } from 'react';
-import useAuthStore from './store/authStore';
 import router from './routes/Routes';
 import { RouterProvider } from 'react-router-dom';
 
@@ -22,10 +21,6 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-
-  useEffect(() => {
-    useAuthStore.getState().checkAuth();
-  }, []);
 
   return (
     <div>

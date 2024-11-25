@@ -14,7 +14,7 @@ const BlogDetails = () => {
         <Box sx={{ minHeight: "100vh", }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
-                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: {sm:"30px",xs:"15px"},  fontFamily: "Roboto" }}>
+                    <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: { sm: "30px", xs: "15px" }, fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Blog
                         </Typography>
@@ -52,10 +52,10 @@ const BlogDetails = () => {
             </Box>
             <Container maxWidth="lg" sx={{ py: 5 }}>
                 <Grid container spacing={4} sx={{ display: "flex", flexDirection: { xs: "column-reverse", sm: "row" } }}>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={3}>
                         <BlogSideBar />
                     </Grid>
-                    <Grid item xs={12} md={8}>
+                    <Grid item xs={12} md={9}>
                         {blogs.map((blog, index) => (
                             <BlogDetailsCard key={index} blog={blog} />
                         ))}

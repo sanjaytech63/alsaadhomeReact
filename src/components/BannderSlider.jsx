@@ -8,12 +8,10 @@ const BannerSlider = ({ BannderSliderData }) => {
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
     const navigate = useNavigate();
 
-    const handleNavigate = () => {
-        navigate(`/category/subcategory/productlisting`);
-    };
+
 
     return (
-        <Box sx={{ width: "100%",mb: { xs: 2, sm: 4},mt: { xs: 0, sm: 2} }}>
+        <Box sx={{ width: "100%", mb: { xs: 2, sm: 4 }, mt: { xs: 0, sm: 2 } }}>
             <Box sx={{ width: "100%" }}>
                 <Carousel
                     additionalTransfrom={0}
@@ -44,15 +42,15 @@ const BannerSlider = ({ BannderSliderData }) => {
                     slidesToSlide={1}
                     swipeable
                 >
-                    {BannderSliderData.length > 0 && BannderSliderData.map((item, index) => (
+                    {BannderSliderData.length > 0 && BannderSliderData.map((item) => (
                         <Box
                             component="img"
-                            key={index}
-                            onClick={handleNavigate}
+                            key={item.id}
+                            onClick={() => navigate(`/search?type=display-banner&id=${item.id}`)}
                             draggable="false"
-                            src={item.src}
+                            src={item.image}
                             loading="lazy"
-                            alt={`BannerSlide-${index}`}
+                            alt={`BannerSlide-${item.banner_name}`}
                             sx={{
                                 width: "100%",
                                 height: matchesSM ? "200px" : "600px",

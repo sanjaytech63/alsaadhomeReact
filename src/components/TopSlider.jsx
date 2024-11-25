@@ -4,6 +4,7 @@ import { Box, Link, useMediaQuery, useTheme, Typography, Container } from "@mui/
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
+
 const TopSlider = ({ topSlider }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
@@ -42,6 +43,8 @@ const TopSlider = ({ topSlider }) => {
 
     );
 
+
+
     return (
         <div className="w-100">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
@@ -66,10 +69,10 @@ const TopSlider = ({ topSlider }) => {
                         rtl={isRTL}
 
                     >
-                        {topSlider.length > 0 && topSlider.map((item, index) => (
+                        {topSlider.length > 0 && topSlider.map((item) => (
                             <Link
-                                onClick={() => nevigate(`/category/${item.text.trim()}`)}
-                                key={index}
+                            onClick={() => nevigate(`/category/${item.slug}`)}
+                                key={item.id}
                                 component="a"
                                 draggable={false}
                                 sx={{
@@ -92,8 +95,8 @@ const TopSlider = ({ topSlider }) => {
                                     <Box
                                         component="img"
                                         draggable="false"
-                                        src={item.src}
-                                        alt={item.slug}
+                                        src={item.image}
+                                        alt={item.name}
                                         loading="lazy"
                                         className={!matchesSM ? "rounded-circle" : "rounded-3"}
                                         sx={{
@@ -119,7 +122,7 @@ const TopSlider = ({ topSlider }) => {
                                             "&:hover": { color: "#bb1f2a" }
                                         }}
                                     >
-                                        {item.text}
+                                        {item.name}
                                     </Typography>
                                 </Box>
                             </Link>

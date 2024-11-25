@@ -1,42 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Drawer, List, ListItem, Box, Container, Badge, Divider, Button, Typography } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Drawer, ListItem, Box, Container, Badge, Divider, Button, Typography } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
-
+import chekoutJson from '../../product.json';
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [openSearch, setSearchOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-
-    const data = [
-        { id: 1, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
-        { id: 2, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
-        { id: 3, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
-        { id: 4, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
-        { id: 5, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
-        { id: 6, img: "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg", name: "Belmond Comforter Bedding Set 6 PCS Luxury Faux Cashmere Digital Carpet Luxury Faux Cashmere Digital Carpet", price: 249, },
-    ]
+    const data = chekoutJson.chekout
 
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
+
     const navList = [
-        { name: "Home", slug: "" },
-        { name: "Category", slug: "category" },
-        { name: "Smart Shopping", slug: "smart-shopping" },
-        { name: "Unboxing Challenge", slug: "unboxing-challenge" },
-        { name: "Blog", slug: "blog" },
-        { name: "Contact Us", slug: "contact-us" },
+        { name: "Home", slug: "/" },
+        { name: "Category", slug: "/category" },
+        { name: "Smart Shopping", slug: "/smart-shopping" },
+        { name: "Unboxing Challenge", slug: "/unboxing-challenge" },
+        { name: "Blog", slug: "/blog" },
+        { name: "Contact Us", slug: "/contact-us" },
     ];
 
     const handleClickOpen = () => {
         setSearchOpen(true);
-    };
-    const toggleDrawer = () => {
-        setOpen(!open);
     };
 
 
@@ -88,7 +78,7 @@ const Navbar = () => {
                                         className={({ isActive }) =>
                                             isActive ? "active" : "inactive"
                                         }
-                                        to={`/${item.slug}`}
+                                        to={`${item.slug}`}
                                         style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins, sans-serif", textDecoration: 'none', textTransform: "uppercase", fontSize: '14px', }}
                                         key={index}
                                     >
@@ -113,7 +103,7 @@ const Navbar = () => {
                                 <Box
                                     edge="end"
                                     sx={{ display: { xs: 'block', md: 'none' }, color: '#292b2c', ml: "10px" }}
-                                    onClick={() => toggleDrawer(true)}
+                                    onClick={() => setOpen(true)}
                                 >
                                     <IoMenuOutline size={28} />
                                 </Box>
@@ -129,7 +119,7 @@ const Navbar = () => {
                                     top: { sm: '42px', xs: "70px" },
                                     // [theme.direction === 'rtl' ? 'left' :  'right']: '0',
                                     alignSelf: 'flex-end',
-                                    width: { sm: '400px', xs: "289px" },
+                                    width: { sm: '400px', xs: "91%" },
                                     padding: '10px',
                                     backgroundColor: 'white',
                                     boxShadow: 3,
@@ -152,12 +142,15 @@ const Navbar = () => {
                                                     WebkitLineClamp: 3,
                                                     display: '-webkit-box',
                                                     overflow: 'hidden',
-
                                                     wordBreak: 'break-all',
                                                     whiteSpace: 'normal',
                                                     textOverflow: 'ellipsis',
                                                     color: '#292b2c',
                                                     fontWeight: '600',
+                                                    cursor: 'pointer',
+                                                    ":hover": {
+                                                        color: '#bb1f2a'
+                                                    }
                                                 }}
                                             >
                                                 {item.quantity}  {item.name}
@@ -186,20 +179,20 @@ const Navbar = () => {
                     anchor="left"
                     sx={{ width: { xs: '100%', md: '40%' }, padding: "0px !important" }}
                     open={open}
-                    onClose={() => toggleDrawer(false)}
                     PaperProps={{ sx: { width: { xs: '100%', md: '40%' } } }}
                 >
                     <Box sx={{ width: { xs: '100%', md: '40%' }, paddingTop: '0px' }} role="presentation">
                         <Box sx={{ textAlign: 'right' }}>
-                            <IconButton onClick={() => toggleDrawer(false)}>
+                            <IconButton onClick={() => setOpen(false)}>
                                 <IoCloseOutline color='#292b2c' size={28} />
                             </IconButton>
                         </Box>
                         {navList.map((item, index) => (
                             <ListItem button key={index}>
                                 <NavLink
-                                    to={`/${item.slug}`}
+                                    to={item.slug}
                                     className={({ isActive }) => (isActive ? "active" : "inactive")}
+                                    onClick={() => setOpen(false)}
                                     style={{
                                         margin: '0 15px',
                                         fontWeight: '500',
@@ -208,14 +201,12 @@ const Navbar = () => {
                                         fontSize: '14px',
                                         textTransform: "uppercase",
                                     }}
-                                    onClick={() => {
-                                        toggleDrawer(false);
-                                    }}
                                 >
                                     {item.name}
                                 </NavLink>
                             </ListItem>
                         ))}
+
                     </Box>
                 </Drawer>
 

@@ -40,7 +40,7 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import jsonData from "../../src/blogData.json";
 import BundleProductsModal from "./BundleProductsModal";
 import data from "../../src/product.json";
-
+import { showToast } from "../utils/helper";
 const ProductDetails = () => {
     const recommendedSliderData = data.recommendedSlider;
     const imageSlider = data.productDetailsImage;
@@ -54,10 +54,11 @@ const ProductDetails = () => {
     const handleClose = () => setOpen(false);
     const [selectedColor, setSelectedColor] = useState(imageSlider.src);
     const [selectedImage, setSelectedImage] = useState(imageSlider.src);
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(0);
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down("lg"));
     const isRTL = theme.direction === "rtl";
+    const [likes, setLikes] = useState([]);
     const incrementChange = () => {
         if (count !== 8) {
             setCount(count + 1);
@@ -106,13 +107,29 @@ const ProductDetails = () => {
 
     const navigate = useNavigate();
     const handleNavigate = () => {
-        navigate(`/prodect/1234`);
+        navigate(`/products/1234`);
     };
 
     const pathname = useLocation().pathname;
 
     const location = useLocation();
     const pathnames = location.pathname.split("/").filter((x) => x);
+    const handleLike = (id) => {
+        if (likes.includes(id)) {
+            setLikes((prevLikes) => prevLikes.filter((likeId) => likeId !== id));
+            showToast("error", "Dislike");
+            if (count !== 0) {
+                setCount(count - 1);
+            }
+        } else {
+            setLikes((prevLikes) => [...prevLikes, id]);
+            showToast("success", "Like Successfully 😍");
+            if (count !== 0) {
+                setCount(count + 1);
+            }
+        }
+    };
+
     return (
         <div style={{ minHeight: "100vh", margin: "0px", padding: "0px" }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -450,9 +467,13 @@ const ProductDetails = () => {
                                                         <Button
                                                             variant="contained"
                                                             sx={{
-                                                                fontSize: "14px",
-                                                                backgroundColor: "#bb1f2a",
-                                                                mb: { xs: 2, sm: 0 },
+                                                                color: "#fff",
+                                                                width: "fit-content",
+                                                                height: "fit-content",
+                                                                background: "#bb1f2a",
+                                                                textTransform: "capitalize",
+                                                                textAlign: "right",
+                                                                padding: { xs: "2px 5px", sm: "5px 10px" },
                                                             }}
                                                         >
                                                             Go to cart
@@ -893,7 +914,7 @@ const ProductDetails = () => {
                                             <Avatar
                                                 src={review.image}
                                                 alt={review.name}
-                                                sx={{ width: 40, height: 40, mr: 2 }}
+                                                sx={{ width: 40, height: 40, mr: 2, objectFit: "cover" }}
                                             />
                                             <Box sx={{ flexGrow: 1 }}>
                                                 <Typography
@@ -918,9 +939,16 @@ const ProductDetails = () => {
                                                         mt: 1,
                                                     }}
                                                 >
-                                                    <ThumbUpOffAltIcon sx={{ textAlign: "right" }} />
+                                                    <ThumbUpOffAltIcon
+                                                        onClick={() => handleLike(review.id)}
+                                                        sx={{
+                                                            textAlign: "right",
+                                                            cursor: "pointer",
+                                                            color: likes.includes(review.id) ? "blue" : "none",
+                                                        }}
+                                                    />
                                                     <Typography sx={{ textAlign: "right" }}>
-                                                        {review.likes}
+                                                        {likes.includes(review.id) ? count + 1 : count}
                                                     </Typography>
                                                 </Box>
                                             </Box>
