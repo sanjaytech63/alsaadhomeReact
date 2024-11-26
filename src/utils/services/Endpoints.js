@@ -1,8 +1,10 @@
 const API = {
   HOME: 'home',
-  FLASH_SALE: 'flash_sale',
+  // FLASH_SALE: 'flash_sale',
+  BLOG_HOME: "blog/home",
   PRODUCT_DETAILS: 'product_details',
   FILTER: 'filter',
+  SMART_SHOPPING: 'engagement/category',
   ADD_TO_CART: 'add_to_cart',
   CREATE_CART: 'create_cart',
   GET_CART: 'get_cart',

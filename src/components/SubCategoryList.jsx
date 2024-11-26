@@ -12,16 +12,14 @@ const SubCategoryList = () => {
     let { subcategory } = useParams();
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(x => x);
-    console.log(subcategory, "subcategory");
+
     const fetchCategory = async () => {
         setLoading(true);
         setError(null);
-
         try {
             const requestData = {
                 category_id: subcategory,
             };
-            console.log(requestData, "requestData");
             const response = await homeApi.getSubCategory(requestData);
             setData(response.data);
         } catch (err) {

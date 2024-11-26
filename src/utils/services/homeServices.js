@@ -19,11 +19,6 @@ export const homeApi = {
         return await axiosInstance.post(API.SUB_CATEGORY, data);
     },
 
-      // Method to fetch subcategory data
-      getFlashSale: async (data) => {
-        return await axiosInstance.post(API.FLASH_SALE, data);
-    },
-
     // Method to fetch product data
     getProduct: async (data, showLoader = true) => {
         return await axiosInstance.post(API.PRODUCTS, data, {
@@ -44,4 +39,5 @@ export const homeApi = {
             showLoader: showLoader,
         });
     },
+
 };

@@ -6,9 +6,11 @@ const FlashSale = ({ flashSale }) => {
     const [timers, setTimers] = useState([]);
 
     const calculateTimeLeft = (endDate) => {
-        const now = new Date().getTime();
+        const now = new Date();
+        // Convert the current time to Saudi time by adding 3 hours
+        const saudiTime = new Date(now.getTime() + (-2 * 45 * 60 * 1000));
         const end = new Date(endDate).getTime();
-        const distance = end - now;
+        const distance = end - saudiTime.getTime();
 
         if (distance > 0) {
             return {
@@ -31,20 +33,31 @@ const FlashSale = ({ flashSale }) => {
         return () => clearInterval(interval);
     }, [flashSale]);
 
+
     const navigate = useNavigate();
 
     return (
-        <Container maxWidth="lg" sx={{ mt: 5 }}>
+        <Container maxWidth="lg" sx={{}}>
             {/* Section Title */}
-            <Typography variant="h4" sx={{ fontWeight: 600, mb: 2 }}>
+            <Typography
+                variant="h5"
+                sx={{
+                    fontWeight: 600,
+                    mb: 2,
+                    textTransform: "capitalize",
+                    textAlign: "left",
+                    mx: 2,
+                    fontSize: { xs: "18px", sm: "24px" },
+                }}
+            >
                 Flash Sale
             </Typography>
             <hr />
             {/* Flash Sale Items */}
             <Grid container spacing={3}>
-                {flashSale.map((item, index) => (
+                {flashSale && flashSale.map((item, index) => (
                     <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <Box onClick={() => navigate(`/search?type=display-banner&id=${item.id}`)}
+                        <Box onClick={() => navigate(`/search?type=flash-sale&id=${item.id}`)}
                             sx={{
                                 position: "relative",
                                 overflow: "hidden",

@@ -52,11 +52,11 @@ const BlogCards = ({ blog, loading }) => {
                             <ChatBubbleOutlineIcon sx={{ fontSize: '16px', color: 'gray' }} />
                         </IconButton>
                     </Box>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                    {/* <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
                         <Typography variant="body2"> Price: {blog.price}</Typography>
                         <Typography variant="body2"> Discount: {blog.discountPercentage}</Typography>
-                    </Box>
-                    <Rating name="no-value" value={blog.rating} />
+                    </Box> */}
+                    {/* <Rating name="no-value" value={blog.rating} /> */}
                     <Typography sx={{
                         lineHeight: "28px", color: "#687188",
                         display: "-webkit-box",

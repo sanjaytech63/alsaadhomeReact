@@ -14,6 +14,7 @@ import BlogCard from '../components/BlogCard';
 import { homeApi } from '../utils/services/homeServices';
 import Loading from "../components/Loading";
 import FlashSale from '../components/FlashSale';
+import FlashSaleSlider from '../components/FlashSaleSlider';
 const Home = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -32,6 +33,8 @@ const Home = () => {
             setLoading(false);
         }
     };
+
+
 
     useEffect(() => {
         fetchData();
@@ -61,6 +64,12 @@ const Home = () => {
                         <Products products={data.grid_product} />
                         <BannerSection2 bannerSection={data.banner} />
                         <RecommendedProducts productsCard={data.recommended_product} />
+                        {
+                            data.flash_sale_products && data.flash_sale_products.map((item) => (
+                                <FlashSaleSlider key={item.id} item={item} />
+                            ))
+                        }
+
                         {/* <RecentlyViewed productsCard={data.recentlyViewedProducts} /> */}
                         <BlogCard />
                         <Newsletter />

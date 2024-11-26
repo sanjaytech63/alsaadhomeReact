@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
   headers: {
     'Accept': 'application/json',
     'Authorization': 'gUmwgu9OVfXE9LVCaAU8xw74CownYWQ0HIfFGvWw',
-    'lng': 'ar',
+    'lng': 'en',
     'currency': 'AED',
     'country-id': '2',
     'type': 'online',

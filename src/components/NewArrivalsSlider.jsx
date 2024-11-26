@@ -63,7 +63,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                     }}>
                         New Arrivals
                     </Typography>
-                    <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
+                    <Typography onClick={() => navigate(`/search?type=display-banner&id=${"new"}`)} variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
                         <BoltIcon />
                         View All
                     </Typography>
@@ -71,13 +71,14 @@ const NewArrivalsSlider = ({ productsCard }) => {
                 <hr className="mx-2" />
 
                 {/* Carousel Component */}
-                <Box sx={{ width: "100%", position: "relative", mt: 2 }}>
+                <Box sx={{ width: "100%", position: "relative", }}>
                     <Carousel
                         rtl={isRTL}
                         additionalTransfrom={0}
                         autoPlaySpeed={3000}
                         renderButtonGroupOutside
                         arrows={false}
+
                         draggable
                         infinite
                         responsive={{
@@ -92,21 +93,56 @@ const NewArrivalsSlider = ({ productsCard }) => {
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card key={item.id} sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px', borderBottomLeftRadius: "0px", borderBottomRightRadius: "0px", margin: { xs: 1, sm: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }, pb: 3 }}>
+                            <Card key={item.id}
+                                sx={{
+                                    // minHeight: "100%",
+                                    // overflow: "hidden",
+                                    borderTopLeftRadius: '8px',
+                                    borderTopRightRadius: '8px',
+                                    borderBottomLeftRadius: "0px",
+                                    borderBottomRightRadius: "0px",
+                                    boxShadow: "0 0 7px rgb(0 0 0 / 10%)",
+                                    cursor: "pointer",
+                                    margin: {
+                                        xs: 1, sm: "5px",
+                                    },
+
+                                }}>
                                 <Box position="relative">
-                                    <Chip
-                                        label="New"
-                                        sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
-                                    />
-                                    <CardMedia onClick={() => navigate(`/products/${item.title}/${item.product_variant_id}`)}
+                                    {
+                                      item.is_new === true && <Chip
+                                            label="New"
+                                            sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
+                                        />
+                                    }
+                                    <CardMedia onClick={() => navigate(`/products/${item.slug}`)}
                                         sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
                                         component="img"
                                         image={item.image}
                                         alt={item.title}
                                         loading="lazy"
                                     />
+                                    {
+                                        item.is_flash_sale ? (
+                                            <CardMedia
+                                                component="img"
+                                                image="https://staging-alsaadhome.s3.us-east-2.amazonaws.com/assets/front/images/flash-sale-en.png"
+                                                alt={item.title}
+                                                loading="lazy"
+                                                sx={{ position: 'absolute', height: "50px", width: "65px", bottom: 10, right: 20, objectFit: "cover" }}
+                                            />
+                                        ) : item.online_exclusive ? (
+                                            <CardMedia
+                                                component="img"
+                                                image="https://staging-alsaadhome.s3.us-east-2.amazonaws.com/assets/front/images/online-exclusive-en.jpeg"
+                                                alt={item.title}
+                                                loading="lazy"
+                                                sx={{ position: 'absolute', height: "50px", width: "auto", bottom: 5, right: 20, objectFit: "cover" }}
+                                            />
+                                        ) : null
+                                    }
                                 </Box>
-                                <CardContent sx={{ p: { xs: "8px", sm: "16px" } }}>
+                                <CardContent sx={{ p: { xs: "8px", sm: "16px", mb: 1 } }}>
                                     <Typography
                                         variant="h6"
                                         sx={{
@@ -117,7 +153,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                             display: "-webkit-box",
                                             overflow: "hidden",
                                             WebkitBoxOrient: "vertical",
-                                            WebkitLineClamp: 1,
+                                            WebkitLineClamp: 2,
                                             wordBreak: "break-all",
                                             whiteSpace: "normal",
                                             textOverflow: "ellipsis",
@@ -130,9 +166,24 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                         {item.title}
                                     </Typography>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-                                        <Typography variant="body1" noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
-                                            {item.list_price} AED
-                                        </Typography>
+                                        <Box sx={{ displayDirection: 'column', alignItems: 'center', gap: 1 }}>
+                                            {item.sale_price > 0 && item.sale_price !== item.list_price &&
+                                                <Typography noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
+                                                    {item.sale_price} AED
+                                                </Typography>
+                                            }
+
+                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                <Typography noWrap sx={{ fontWeight: item.sale_price > 0 && item.sale_price !== item.list_price ? "0" : "600", color: item.sale_price > 0 && item.sale_price !== item.list_price ? "gray" : "#bb1f2a", textDecoration: item.sale_price > 0 && item.sale_price !== item.list_price ? "line-through" : "none", fontSize: { xs: "14px", sm: "1rem" }, }}>
+                                                    {item.list_price} AED
+                                                </Typography>
+                                                {item.sale_price > 0 && item.sale_price !== item.list_price &&
+                                                    <Typography noWrap sx={{ color: "green", fontSize: { xs: "14px", sm: "1rem" }, }}>
+                                                        {item.discount_label}
+                                                    </Typography>
+                                                }
+                                            </Box>
+                                        </Box>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                                             <IconButton sx={{
                                                 p: { xs: "4px", sm: "8px" }, boxShadow: 2, ":hover": {

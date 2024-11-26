@@ -1,10 +1,11 @@
+import { Box } from '@mui/material';
 import React from 'react';
 import { RotatingLines } from 'react-loader-spinner';
 
 
 const Loading = () => {
   return (
-    <div style={{ height: "100vh", }} className="d-flex justify-content-center align-items-center">
+    <Box sx={{ height: "87vh", justifyContent: "center", display: "flex", alignItems: "center" }}>
       <p>
         <RotatingLines
           visible={true}
@@ -18,7 +19,7 @@ const Loading = () => {
           wrapperClass=""
         />
       </p>
-    </div>
+    </Box>
   );
 };
 

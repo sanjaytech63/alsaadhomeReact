@@ -1,4 +1,4 @@
-import { Box, Typography, TextField, Grid } from '@mui/material';
+import { Box, Typography, TextField, Grid, Button } from '@mui/material';
 import React from 'react';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import TextsmsIcon from '@mui/icons-material/Textsms';
@@ -117,6 +117,9 @@ const BlogDetailsCard = ({ blog }) => {
             <Typography sx={{ my: 4, color: "#292b2c", fontFamily: "Roboto", fontWeight: "600" }}>
                 (0) Comment
             </Typography >
+            <Typography sx={{ my: 4, color: "#292b2c", fontFamily: "Roboto", }}>
+                This is a comment
+            </Typography >
             <Box component="form" mb={5}>
                 <Typography sx={{ my: 4, color: "#292b2c", fontFamily: "Roboto", fontWeight: "600" }}>
                     Write a comment
@@ -132,6 +135,9 @@ const BlogDetailsCard = ({ blog }) => {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField fullWidth multiline rows={4} label="Message" required />
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Button sx={{ backgroundColor: "#bb1f2a", color: "#fff", py: 2, px: 4 }}>Submit</Button>
                             </Grid>
                         </Grid>
                     </Box>

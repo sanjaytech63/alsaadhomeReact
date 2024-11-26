@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Products = ({ products }) => {
     const nevigate = useNavigate();
     return (
-        <div className="my-4">
+        <div className="my-5">
             <Container maxWidth="lg" sx={{ px: 2 }}>
                 <Grid container spacing={2}>
                     {products && products.map((product, index) => (
