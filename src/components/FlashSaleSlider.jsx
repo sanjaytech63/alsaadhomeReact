@@ -83,8 +83,10 @@ const FlashSaleSlider = ({ item }) => {
                 <Box sx={{
                     px: { xs: 2, sm: "0px" },
                     my: 3,
+                    gap:1,
                     cursor: "pointer",
                     display: "flex",
+                    flexWrap: "wrap",
                     justifyContent: "space-between",
                     alignItems: "center"
                 }}>
@@ -108,25 +110,25 @@ const FlashSaleSlider = ({ item }) => {
                             <>
                                 <Typography
                                     variant="body2"
-                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: { sm: "8px", xs: "4px" }, py: 1 }}
                                 >
                                     {String(timers[item.id]?.days || 0).padStart(2, "0")} D
                                 </Typography>
                                 <Typography
                                     variant="body2"
-                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: { sm: "8px", xs: "4px" }, py: 1 }}
                                 >
                                     {String(timers[item.id]?.hours || 0).padStart(2, "0")} H
                                 </Typography>
                                 <Typography
                                     variant="body2"
-                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: { sm: "8px", xs: "4px" }, py: 1 }}
                                 >
                                     {String(timers[item.id]?.minutes || 0).padStart(2, "0")} M
                                 </Typography>
                                 <Typography
                                     variant="body2"
-                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: { sm: "8px", xs: "4px" }, py: 1 }}
                                 >
                                     {String(timers[item.id]?.seconds || 0).padStart(2, "0")} S
                                 </Typography>
