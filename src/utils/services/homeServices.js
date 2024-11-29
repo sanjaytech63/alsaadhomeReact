@@ -3,15 +3,15 @@ import API from './Endpoints';
 
 export const homeApi = {
     // Method to fetch home data
-    getHomeData: async (data, showLoader = true) => {
-        return await axiosInstance.post(API.HOME, data, {
+    getHomeData: async (showLoader = true) => {
+        return await axiosInstance.post(API.HOME, {
             showLoader: showLoader,
         });
     },
 
     // Method to fetch category data
-    getCategory: async (data) => {
-        return await axiosInstance.get(API.CATEGORY, data);
+    getCategory: async () => {
+        return await axiosInstance.get(API.CATEGORY);
     },
 
     // Method to fetch subcategory data

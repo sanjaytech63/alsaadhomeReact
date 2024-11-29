@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Box, Typography, Grid, Container, CardMedia } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const FlashSale = ({ flashSale }) => {
     const [timers, setTimers] = useState([]);
+    const navigate = useNavigate();
+
+    const saudiTimeOffset = -2 * 45 * 60 * 1000;
 
     const calculateTimeLeft = (endDate) => {
-        const now = new Date();
-        // Convert the current time to Saudi time by adding 3 hours
-        const saudiTime = new Date(now.getTime() + (-2 * 45 * 60 * 1000));
+        const saudiTime = new Date(new Date().getTime() + saudiTimeOffset);
         const end = new Date(endDate).getTime();
         const distance = end - saudiTime.getTime();
 
@@ -33,12 +34,15 @@ const FlashSale = ({ flashSale }) => {
         return () => clearInterval(interval);
     }, [flashSale]);
 
+    const memoizedTimers = useMemo(() => timers, [timers]);
 
-    const navigate = useNavigate();
+    const throttledNavigate = useCallback(
+        (id) => navigate(`/search?type=flash-sale&id=${id}`),
+        [navigate]
+    );
 
     return (
-        <Container maxWidth="lg" sx={{}}>
-            {/* Section Title */}
+        <Container maxWidth="lg">
             <Typography
                 variant="h5"
                 sx={{
@@ -55,71 +59,75 @@ const FlashSale = ({ flashSale }) => {
             <hr />
             {/* Flash Sale Items */}
             <Grid container spacing={3}>
-                {flashSale && flashSale.map((item, index) => (
-                    <Grid item xs={12} sm={6} md={4} key={item.id}>
-                        <Box onClick={() => navigate(`/search?type=flash-sale&id=${item.id}`)}
-                            sx={{
-                                position: "relative",
-                                overflow: "hidden",
-                                cursor: "pointer",
-                                boxShadow: 2,
-                            }}
-                        >
-                            {/* Image */}
-                            <CardMedia
-                                component="img"
-                                src={item.image}
-                                alt={item.banner_name}
-                                style={{
-                                    width: "100%",
-                                    height: "200px",
-                                    objectFit: "cover",
-                                }}
-                            />
-                            {/* Sale Timer */}
+                {flashSale &&
+                    flashSale.map((item, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={item.id}>
                             <Box
+                                onClick={() => throttledNavigate(item.id)}
                                 sx={{
-                                    position: "absolute",
-                                    bottom: 28,
-                                    width: "100%",
-                                    color: "#fff",
-                                    display: "flex",
-                                    gap: 1,
-                                    justifyContent: "center",
-                                    alignItems: "center",
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    cursor: "pointer",
+                                    boxShadow: 2,
                                 }}
                             >
-                                <Typography
-                                    variant="body2"
-                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                {/* Image */}
+                                <CardMedia
+                                    component="img"
+                                    src={item.image}
+                                    alt={item.banner_name}
+                                    loading="lazy"
+                                    style={{
+                                        width: "100%",
+                                        height: "200px",
+                                        objectFit: "cover",
+                                    }}
+                                />
+                                {/* Sale Timer */}
+                                <Box
+                                    sx={{
+                                        position: "absolute",
+                                        bottom: 28,
+                                        width: "100%",
+                                        color: "#fff",
+                                        display: "flex",
+                                        gap: 1,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
                                 >
-                                    {String(timers[index]?.days || 0).padStart(2, "0")} D
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
-                                >
-                                    {String(timers[index]?.hours || 0).padStart(2, "0")} H
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
-                                >
-                                    {String(timers[index]?.minutes || 0).padStart(2, "0")} M
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
-                                >
-                                    {String(timers[index]?.seconds || 0).padStart(2, "0")} S
-                                </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    >
+                                        {String(memoizedTimers[index]?.days || 0).padStart(2, "0")} D
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    >
+                                        {String(memoizedTimers[index]?.hours || 0).padStart(2, "0")} H
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    >
+                                        {String(memoizedTimers[index]?.minutes || 0).padStart(2, "0")} M
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    >
+                                        {String(memoizedTimers[index]?.seconds || 0).padStart(2, "0")} S
+                                    </Typography>
+                                </Box>
                             </Box>
-                        </Box>
-                    </Grid>
-                ))}
+                        </Grid>
+                    ))}
             </Grid>
         </Container>
     );
 };
 
-export default FlashSale;
+export default React.memo(FlashSale);
+

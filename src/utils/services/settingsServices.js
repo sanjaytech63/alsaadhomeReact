@@ -6,3 +6,8 @@ export const settingsApi = {
     return axiosInstance.get(API.GET_COUNTRY);
   },
 };
+
+
+
+
+

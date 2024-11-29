@@ -77,7 +77,7 @@ const DealsSlider = ({ DealsSlider }) => {
                         slidesToSlide={1}
                         swipeable
                         customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
-                        rtl={isRTL} // Enable RTL for carousel
+                        rtl={isRTL}
                     >
                         {DealsSlider.length > 0 && [...DealsSlider, ...DealsSlider].map((item) => (
                             <Box

@@ -28,7 +28,7 @@ const ProductListingMainContant = ({ productsCard }) => {
     }
     return (
         <Grid container spacing={{ xs: 0, sm: 2, }}>
-            {productsCard && productsCard.map((item) => (
+            {productsCard.products && productsCard.products.map((item) => (
                 <Grid sx={{pb:2}} key={item.id} item xs={6} sm={4} md={4}>
                     <Card onClick={handleNavigate}
                         sx={{

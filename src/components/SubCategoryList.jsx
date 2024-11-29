@@ -42,8 +42,6 @@ const SubCategoryList = () => {
         return <Loading />;
     }
 
-    console.log(data);
-
     return (
         <Box sx={{ minHeight: "100vh" }}>
             {/* Header Section */}

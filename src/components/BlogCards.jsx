@@ -2,7 +2,7 @@ import { Card, CardContent, CardMedia, Typography, Box, IconButton, Rating } fro
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useNavigate } from 'react-router-dom';
-import BlogShimmer from './BlogShimmer';
+import BlogShimmer from '../components/ShimerEffect/BlogShimer';
 
 const BlogCards = ({ blog, loading }) => {
     const navigate = useNavigate();

@@ -10,12 +10,15 @@ import Login from "../../auth/Login/Login.jsx";
 import Register from "../../auth/Register/Register.jsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useCountryStore } from "../../store/useCountryStore.js";
+import Loading from "../Loading.jsx";
 
 const Header = () => {
   const [language, setLanguage] = useState("en");
   const [country, setCountry] = useState("United Arab Emirates");
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
+  const { countries, loading, fetchCountries } = useCountryStore();
 
   const handleOpenLogin = () => setOpenLogin(true);
   const handleCloseLogin = () => setOpenLogin(false);
@@ -24,10 +27,6 @@ const Header = () => {
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
-  };
-
-  const handleCountryChange = (event) => {
-    setCountry(event.target.value);
   };
 
   useEffect(() => {
@@ -42,6 +41,12 @@ const Header = () => {
         language === "ar" ? "Tajawal, sans-serif" : "Roboto, sans-serif",
     },
   });
+
+  useEffect(() => {
+    fetchCountries();
+  }, [fetchCountries]);
+
+ 
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,74 +69,57 @@ const Header = () => {
                   defaultValue="en"
                   sx={{
                     border: "none",
+                    textOverflow: "inherit",
+                    overflow: 'hidden',
+                    overflow: 'hidden',
+                    width: '50px',
                     ".MuiOutlinedInput-notchedOutline": { border: "none" },
-                    ".css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input":
-                    {
-                      padding: "13px 0px",
-                      fontSize: "14px",
-                      color: "#333",
-                    },
+                    ".MuiSelect-select": { padding: "10px 0", fontSize: "14px" },
                   }}
                 >
-                  <MenuItem
-                    sx={{ alignItems: "center", fontSize: "14px" }}
-                    value="en"
-                  >
-                    <img
-                      style={{
-                        maxWidth: "20px",
-                        height: "16px",
-                        marginRight: "10px",
-                      }}
-                      src="https://al-saad-home.mo.cloudinary.net/assets/front/images/english.svg"
-                      alt="flag-icon"
-                    />
+                  <MenuItem sx={{ fontSize: "14px" }} value="en">
                     EN
                   </MenuItem>
-                  <MenuItem
-                    sx={{ alignItems: "center", fontSize: "14px" }}
-                    value="ar"
-                  >
-                    <img
-                      style={{
-                        maxWidth: "20px",
-                        height: "14px",
-                        marginRight: "10px",
-                      }}
-                      src="https://al-saad-home.mo.cloudinary.net/assets/front/images/united-arab-emirates.png"
-                      alt="flag-icon"
-                    />
+                  <MenuItem sx={{ fontSize: "14px" }} value="ar">
                     AR
                   </MenuItem>
                 </Select>
               </FormControl>
-
-              <div>
-                <FormControl>
-                  <Select
-                    value={country}
-                    inputProps={{ MenuProps: { disableScrollLock: true } }}
-                    onChange={handleCountryChange}
-                    variant="outlined"
-                    sx={{
-                      border: "none",
-                      ".MuiSelect-select": {
-                        padding: "13px 0px",
+              {/* Country Dropdown */}
+              <FormControl>
+                <Select
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  displayEmpty
+                  sx={{
+                    border: "none",
+                    textOverflow: "inherit",
+                    overflow: "hidden",
+                    width: "auto",
+                    minWidth: "170px",
+                   
+                    ".MuiOutlinedInput-notchedOutline": { border: "none" },
+                    ".MuiSelect-select": { padding: "10px 0", fontSize: "14px" },
+                  }}
+                >
+                  {countries.map((c) => (
+                    <MenuItem value={c.country_name}
+                      key={c.id}
+                      sx={{
                         fontSize: "14px",
-                        color: "#333",
-                      },
-                      ".MuiOutlinedInput-notchedOutline": { border: "none" },
-                    }}
-                  >
-                    <MenuItem value="Oman">Oman</MenuItem>
-                    <MenuItem value="United Arab Emirates">
-                      United Arab
+                        ":hover": {
+                          backgroundColor: "#bb1f2a",
+                          color: "#fff",
+                        },
+                      }}
+                    >
+                      {c.country_name}
                     </MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
-            </div>
+                  ))}
+                </Select>
+              </FormControl>
 
+            </div>
             <div
               className={`col-3 ${language === "ar" ? "text-start" : "text-end"
                 }`}

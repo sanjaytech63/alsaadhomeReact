@@ -18,12 +18,12 @@ body {
 
 .active {
 	color: #bb1f2a !important;
-  }
+}
 
-  .inactive {
+.inactive {
 	color: #292b2c !important;
-  }
-  
+}
+
 .blog-image {
 	transition: transform 0.3s ease-in-out;
 }
@@ -187,4 +187,9 @@ body {
 	padding-right: 0.5rem !important;
 	padding-top: 0.5rem !important;
 	padding-bottom: 0.5rem !important;
+}
+
+.css-p6giep-MuiButtonBase-root-MuiMenuItem-root.Mui-selected:hover {
+	background-color: #bb1f2a !important;
+	color: #fff !important;
 }

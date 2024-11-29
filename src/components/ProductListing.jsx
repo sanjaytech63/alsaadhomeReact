@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Grid, Container, Box, Typography, Chip, Pagination, Breadcrumbs, IconButton, Modal, Backdrop, Fade, FormControl, Select, MenuItem } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -10,8 +10,15 @@ import { BsGrid } from "react-icons/bs";
 import { TfiLayoutListThumb } from "react-icons/tfi";
 import blogDataJson from "../blogData.json";
 import ProductListingMainContant2 from './ProductListingMainContant2';
+import { homeApi } from '../utils/services/homeServices';
+import Loading from './Loading';
 
 const ProductListing = () => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [gridTogal, setGridTogal] = useState(true);
     const jsonData = blogDataJson.newArrivals;
@@ -31,7 +38,52 @@ const ProductListing = () => {
 
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(Boolean);
-    console.log(pathnames);
+
+    const fetchData = useCallback(async (page = currentPage) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const categoryId = 1 || "";
+            let requestBody = {
+                sale_high_price: "",
+                type: "category",
+                category_id: categoryId,
+                filter_type: "OR",
+                page: page,
+                sale_low_price: "",
+                limit: 30
+            }
+            const response = await homeApi.getProduct(requestBody);
+            setData(response.data);
+            const totalProducts = parseInt(response.data.total_products) || response.data.total_products;
+            const pages = totalProducts ? Math.ceil(totalProducts / 30) : 1;
+            console.log("wonder", pages, response.data)
+            setTotalPages(pages);
+        } catch (err) {
+            setError("Failed to load data. Please try again.");
+            console.error("Error fetching data:", err);
+        } finally {
+            setLoading(false);
+        }
+    }, [currentPage]);
+
+    useEffect(() => {
+        fetchData();
+    }, [totalPages, currentPage, fetchData]);
+
+    if (loading) {
+        return <Loading />;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
+
     return (
         <>
             <div style={{ minHeight: "100vh" }}>
@@ -198,9 +250,9 @@ const ProductListing = () => {
                                     </Box>
                                 </Box>
                             </Box>
-                            <Box sx={{ my: 1, fontSize: '1rem', fontWeight: 600, color: '#292b2c' }}>{jsonData.length}  Total Products </Box>
+                            <Box sx={{ my: 1, fontSize: '1rem', fontWeight: 600, color: '#292b2c' }}>{data?.total_products}  Total Products </Box>
                             <Box sx={{ display: 'flex', overflowX: 'auto', gap: 1, mb: 3, pb: 1 }}>
-                                {tags.map((tag) => {
+                                {data?.main_category.map((tag) => {
                                     const isSelected = selectedBrands.includes(tag.id);
                                     return <Chip
                                         key={tag.id}
@@ -223,9 +275,9 @@ const ProductListing = () => {
                                 })}
                             </Box>
                             {gridTogal ? (
-                                <ProductListingMainContant productsCard={jsonData} />
+                                <ProductListingMainContant productsCard={data} />
                             ) : (
-                                <ProductListingMainContant2 productsCard={jsonData} />
+                                <ProductListingMainContant2 productsCard={data} />
                             )}
 
                         </Grid>
@@ -233,10 +285,12 @@ const ProductListing = () => {
                     {/* Pagination */}
                     <Box sx={{ my: 4, display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <Pagination
-                            size="small"
-                            count={10}
-                            variant="outlined"
+                            count={totalPages}
+                            page={currentPage}
+                            onChange={handlePageChange}
                             shape="rounded"
+                            size="small"
+                            variant="outlined"
                             sx={{
                                 "& .MuiPaginationItem-root": {
                                     "&.Mui-selected": {

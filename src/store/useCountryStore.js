@@ -1,9 +1,10 @@
-// src/store/useStore.js
 import { create } from 'zustand';
-import { settingsApi } from '../../services/settingsServices';
+import { settingsApi } from '../utils/services/settingsServices';
+
 
 export const useCountryStore = create((set) => ({
     countries: [],
+    selectedCountry: 'United Arab Emirates',
     loading: false,
     error: null,
 
@@ -20,4 +21,5 @@ export const useCountryStore = create((set) => ({
             set({ error: 'Failed to fetch data', loading: false });
         }
     },
+    setSelectedCountry: (country) => set({ selectedCountry: country }),
 }));

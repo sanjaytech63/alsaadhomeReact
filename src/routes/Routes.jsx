@@ -73,8 +73,8 @@ const router = createBrowserRouter([
       { path: "/terms-of-use", element: <TermsConditions /> },
       { path: "/privacy-policy", element: <PrivacyPolice /> },
       { path: "/blog/:id", element: <BlogDetails /> },
-      { path: "/smart-shopping/category/:category", element: <SmartShoppingBedroom /> },
-      { path: "/smart-shopping/category/:category", element: <SmartShoppingLivingRoom /> },
+      { path: "/smart-shopping/:category/:id", element: <SmartShoppingBedroom /> },
+      { path: "/smart-shopping/category/:id", element: <SmartShoppingLivingRoom /> },
       { path: "/logout", element: <Logout /> },
       { path: "*", element: <NotFoundPage /> }
     ]

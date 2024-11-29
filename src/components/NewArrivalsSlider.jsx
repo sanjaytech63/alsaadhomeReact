@@ -110,7 +110,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                 }}>
                                 <Box position="relative">
                                     {
-                                      item.is_new === true && <Chip
+                                        item.is_new === true && <Chip
                                             label="New"
                                             sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                         />

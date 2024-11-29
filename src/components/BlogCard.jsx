@@ -9,12 +9,11 @@ import {
     IconButton,
     Container
 } from '@mui/material';
-import Loading from "../components/Loading";
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useNavigate } from 'react-router-dom';
 import { blogApi } from '../utils/services/blogServices';
-import BlogShimmer from './BlogShimmer';
+import BlogShimmer from '../components/ShimerEffect/BlogShimer';
 
 const BlogCard = () => {
     const [blog, setBlog] = useState(null);
@@ -45,7 +44,9 @@ const BlogCard = () => {
     }
 
     if (loading) {
-        return <BlogShimmer />;
+        return <Container>
+            <BlogShimmer />
+        </Container>;
     }
 
     return (
@@ -62,7 +63,7 @@ const BlogCard = () => {
                     <Grid container spacing={3} justifyContent="center">
                         {blog && blog.map((blog) => (
                             <Grid item xs={12} sm={6} md={4} key={blog.id}>
-                                <Card onClick={() => navigate(`/blog/${blog.slug}`)} key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)",height:"100%",overflow:"hidden" }}>
+                                <Card onClick={() => navigate(`/blog/${blog.slug}`)} key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)", height: "100%", overflow: "hidden" }}>
                                     <Box position="relative">
                                         <CardMedia
                                             sx={{

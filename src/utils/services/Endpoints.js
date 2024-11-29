@@ -2,6 +2,7 @@ const API = {
   HOME: 'home',
   // FLASH_SALE: 'flash_sale',
   BLOG_HOME: "blog/home",
+  SEARCH: 'search',
   PRODUCT_DETAILS: 'product_details',
   FILTER: 'filter',
   SMART_SHOPPING: 'engagement/category',
