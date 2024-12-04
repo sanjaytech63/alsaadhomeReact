@@ -3,10 +3,10 @@ import API from "./Endpoints";
 
 
 export const searchApi = {
-    getSearchData: async (keywords, per_page, page, showLoader = true) => {
-        return await axiosInstance.post(API.SEARCH, {
+    getSearchData: async (title, showLoader = true) => {
+        return await axiosInstance.post(API.PRODUCTS, {
             showLoader: showLoader,
-            keywords, per_page, page
+            title
         });
     },
 }

@@ -6,6 +6,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
 import chekoutJson from '../../product.json';
+import { Close } from '@mui/icons-material';
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [openSearch, setSearchOpen] = useState(false);
@@ -135,27 +136,30 @@ const Navbar = () => {
                                             sx={{ display: 'flex', gap: 3, my: 1, justifyContent: 'space-between', alignItems: 'center' }}
                                         >
                                             <img style={{ width: '50px', height: '50px', objectFit: "cover" }} src={item.img} alt="cart-img" />
-                                            <Typography
-                                                sx={{
-                                                    fontSize: '14px',
-                                                    WebkitBoxOrient: 'vertical',
-                                                    WebkitLineClamp: 3,
-                                                    display: '-webkit-box',
-                                                    overflow: 'hidden',
-                                                    wordBreak: 'break-all',
-                                                    whiteSpace: 'normal',
-                                                    textOverflow: 'ellipsis',
-                                                    color: '#292b2c',
-                                                    fontWeight: '600',
-                                                    cursor: 'pointer',
-                                                    ":hover": {
-                                                        color: '#bb1f2a'
-                                                    }
-                                                }}
-                                            >
-                                                {item.quantity}  {item.name}
-                                            </Typography>
-                                            <Typography sx={{ fontSize: '14px', fontWeight: '600', color: '#292b2c', display: 'flex', alignItems: 'center', gap: "4px" }}><span>AED</span> <span>{item.price}</span></Typography>
+                                            <Box>
+                                                <Typography
+                                                    sx={{
+                                                        fontSize: '14px',
+                                                        WebkitBoxOrient: 'vertical',
+                                                        WebkitLineClamp: 3,
+                                                        display: '-webkit-box',
+                                                        overflow: 'hidden',
+                                                        wordBreak: 'break-all',
+                                                        whiteSpace: 'normal',
+                                                        textOverflow: 'ellipsis',
+                                                        color: '#292b2c',
+                                                        fontWeight: '500',
+                                                        cursor: 'pointer',
+                                                        ":hover": {
+                                                            color: '#bb1f2a'
+                                                        }
+                                                    }}
+                                                >
+                                                    {item.quantity}  {item.name}
+                                                </Typography>
+                                                <Typography sx={{ fontSize: '14px', fontWeight: '500', color: '#292b2c', display: 'flex', alignItems: 'center', gap: "4px" }}><span>AED</span> <span>{item.price}</span></Typography>
+                                            </Box>
+                                            <Close sx={{ cursor: 'pointer', margin: "20px", fontWeight: '500', color: '#292b2c', display: 'flex', alignItems: 'center', justifyContent: "flex-end" }} />
                                         </Box>
                                     ))}
                                 </Box>

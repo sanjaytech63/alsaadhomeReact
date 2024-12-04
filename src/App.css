@@ -193,3 +193,8 @@ body {
 	background-color: #bb1f2a !important;
 	color: #fff !important;
 }
+
+
+li.react-multi-carousel-item {
+	margin-bottom: 10px !important;
+}

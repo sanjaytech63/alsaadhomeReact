@@ -609,169 +609,196 @@
   ],
   "material": [
     {
-      "text": "Microfiber"
+      "id": 1,
+      "label": "Microfiber"
     },
     {
-      "text": "Velvet"
+      "id": 2,
+      "label": "Velvet"
     },
     {
-      "text": "Cotton"
+      "id": 3,
+      "label": "Cotton"
     },
     {
-      "text": "Modal"
+      "id": 4,
+      "label": "Modal"
     },
     {
-      "text": "Linen"
+      "id": 5,
+      "label": "Linen"
     },
     {
-      "text": "Cotton Blend"
+      "id": 6,
+      "label": "Cotton Blend"
     }
   ],
   "colors": [
     {
-      "name": "Red",
-      "hex": "#FF0000"
+      "id": 1,
+      "lable": "#FF0000"
     },
     {
-      "name": "Green",
-      "hex": "#00FF00"
+      "id": 2,
+      "lable": "#00FF00"
     },
     {
-      "name": "Blue",
-      "hex": "#0000FF"
+      "id": 3,
+      "lable": "#0000FF"
     },
     {
-      "name": "Yellow",
-      "hex": "#FFFF00"
+      "id": 4,
+      "lable": "#FFFF00"
     },
     {
-      "name": "Cyan",
-      "hex": "#00FFFF"
+      "id": 5,
+      "lable": "#00FFFF"
     },
     {
-      "name": "Magenta",
-      "hex": "#FF00FF"
+      "id": 6,
+      "lable": "#FF00FF"
     },
     {
-      "name": "Orange",
-      "hex": "#FFA500"
+      "id": 7,
+      "lable": "#FFA500"
     },
     {
-      "name": "Purple",
-      "hex": "#800080"
+      "id": 8,
+      "lable": "#800080"
     },
     {
-      "name": "Lime",
-      "hex": "#00FF00"
+      "id": 9,
+      "lable": "#00FF00"
     },
     {
-      "name": "Pink",
-      "hex": "#FFC0CB"
+      "id": 10,
+      "lable": "#FFC0CB"
     },
     {
-      "name": "Brown",
-      "hex": "#A52A2A"
+      "id": 11,
+      "lable": "#A52A2A"
     },
     {
-      "name": "Gray",
-      "hex": "#808080"
+      "id": 12,
+      "lable": "#808080"
     },
     {
-      "name": "Black",
-      "hex": "#000000"
+      "id": 13,
+      "lable": "#000000"
     },
     {
-      "name": "White",
-      "hex": "#FFFFFF"
+      "id": 14,
+      "lable": "#FFFFFF"
     },
     {
-      "name": "Silver",
-      "hex": "#C0C0C0"
+      "id": 15,
+      "lable": "#C0C0C0"
     },
     {
-      "name": "Gold",
-      "hex": "#FFD700"
+      "id": 16,
+      "lable": "#FFD700"
     },
     {
-      "name": "Beige",
-      "hex": "#F5F5DC"
+      "id": 17,
+      "lable": "#F5F5DC"
     },
     {
-      "name": "Olive",
-      "hex": "#808000"
+      "id": 18,
+      "lable": "#808000"
     },
     {
-      "name": "Teal",
-      "hex": "#008080"
+      "id": 19,
+      "lable": "#008080"
     },
     {
-      "name": "Navy",
-      "hex": "#000080"
+      "id": 20,
+      "lable": "#000080"
     }
   ],
   "styles": [
     {
-      "name": "Plain"
+      "id": 1,
+      "label": "Plain"
     },
     {
-      "name": "Stripe"
+      "id": 2,
+      "label": "Stripe"
     },
     {
-      "name": "Modern"
+      "id": 3,
+      "label": "Modern"
     },
     {
-      "name": "Floral"
+      "id": 4,
+      "label": "Floral"
     },
     {
-      "name": "Tropical"
+      "id": 5,
+      "label": "Tropical"
     },
     {
-      "name": "Jacquard"
+      "id": 6,
+      "label": "Jacquard"
     },
     {
-      "name": "Casual"
+      "id": 7,
+      "label": "Casual"
     },
     {
-      "name": "Embroidered"
+      "id": 8,
+      "label": "Embroidered"
     },
     {
-      "name": "Dotted"
+      "id": 9,
+      "label": "Dotted"
     },
     {
-      "name": "Lace"
+      "id": 10,
+      "label": "Lace"
     },
     {
-      "name": "Double Face"
+      "id": 11,
+      "label": "Double Face"
     },
     {
-      "name": "Geometric"
+      "id": 12,
+      "label": "Geometric"
     },
     {
-      "name": "Classic"
+      "id": 13,
+      "label": "Classic"
     },
     {
-      "name": "Damask"
+      "id": 14,
+      "label": "Damask"
     },
     {
-      "name": "Bohemian"
+      "id": 15,
+      "label": "Bohemian"
     },
     {
-      "name": "Botanical"
+      "id": 16,
+      "label": "Botanical"
     },
     {
-      "name": "Embossed"
+      "id": 17,
+      "label": "Embossed"
     },
     {
-      "name": "Quilted"
+      "id": 18,
+      "label": "Quilted"
     },
     {
-      "name": "Crepe"
+      "id": 19,
+      "label": "Crepe"
     },
     {
-      "name": "Wedding"
+      "id": 20,
+      "label": "Wedding"
     },
     {
-      "name": "Ruffled"
+      "id": 21,
+      "label": "Ruffled"
     }
   ],
   "categories": [
@@ -977,5 +1004,4 @@
       "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12096/thumb/171722603194.jpg"
     }
   ]
-  
 }

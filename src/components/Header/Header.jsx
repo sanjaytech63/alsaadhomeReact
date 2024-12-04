@@ -11,14 +11,13 @@ import Register from "../../auth/Register/Register.jsx";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useCountryStore } from "../../store/useCountryStore.js";
-import Loading from "../Loading.jsx";
 
 const Header = () => {
   const [language, setLanguage] = useState("en");
   const [country, setCountry] = useState("United Arab Emirates");
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
-  const { countries, loading, fetchCountries } = useCountryStore();
+  const { countries,  fetchCountries } = useCountryStore();
 
   const handleOpenLogin = () => setOpenLogin(true);
   const handleCloseLogin = () => setOpenLogin(false);
@@ -46,7 +45,7 @@ const Header = () => {
     fetchCountries();
   }, [fetchCountries]);
 
- 
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -62,7 +61,8 @@ const Header = () => {
             >
               <FormControl>
                 <Select
-                  inputProps={{ MenuProps: { disableScrollLock: true } }}
+                  disablePortal
+                  MenuProps={{ disableScrollLock: true }}
                   value={language}
                   onChange={handleLanguageChange}
                   variant="outlined"
@@ -70,7 +70,6 @@ const Header = () => {
                   sx={{
                     border: "none",
                     textOverflow: "inherit",
-                    overflow: 'hidden',
                     overflow: 'hidden',
                     width: '50px',
                     ".MuiOutlinedInput-notchedOutline": { border: "none" },
@@ -88,6 +87,8 @@ const Header = () => {
               {/* Country Dropdown */}
               <FormControl>
                 <Select
+                  disablePortal
+                  MenuProps={{ disableScrollLock: true }}
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   displayEmpty
@@ -97,7 +98,7 @@ const Header = () => {
                     overflow: "hidden",
                     width: "auto",
                     minWidth: "170px",
-                   
+
                     ".MuiOutlinedInput-notchedOutline": { border: "none" },
                     ".MuiSelect-select": { padding: "10px 0", fontSize: "14px" },
                   }}

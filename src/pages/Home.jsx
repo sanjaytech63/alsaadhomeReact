@@ -1,6 +1,18 @@
-import React, { useEffect, useState, useCallback, Suspense } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { homeApi } from "../utils/services/homeServices";
 import Loading from "../components/Loading";
+import TopSlider from "../components/TopSlider";
+import BannderSlider from "../components/BannderSlider";
+import FeatureBrandsSlider from "../components/FeatureBrandsSlider";
+import DealsSlider from "../components/DealsSlider";
+import FlashSale from "../components/FlashSale";
+import FlashSaleSlider from "../components/FlashSaleSlider";
+import BannerSection from "../components/BannerSection";
+import NewArrivalsSlider from "../components/NewArrivalsSlider";
+import Products from "../components/Products";
+import RecommendedProducts from "../components/RecommendedProducts";
+import BlogCard from "../components/BlogCard";
+import Newsletter from "../components/Newsletter";
 import TopSliderShimmer from "../components/ShimerEffect/TopSliderShimer";
 import BannerSliderShimmer from "../components/ShimerEffect/BannerSliderShimmer";
 import DealsSliderShimmer from "../components/ShimerEffect/DealsSliderShimmer";
@@ -10,18 +22,6 @@ import NewArrivalsShimmer from "../components/ShimerEffect/NewArrivalsShimmer";
 import ProductShimmer from "../components/ShimerEffect/ProductShimmer";
 import BlogShimer from "../components/ShimerEffect/BlogShimer";
 import NewsletterShimmer from "../components/ShimerEffect/NewsletterShimmer";
-const TopSlider = React.lazy(() => import("../components/TopSlider"));
-const BannderSlider = React.lazy(() => import("../components/BannderSlider"));
-const FeatureBrandsSlider = React.lazy(() => import("../components/FeatureBrandsSlider"));
-const DealsSlider = React.lazy(() => import("../components/DealsSlider"));
-const FlashSale = React.lazy(() => import("../components/FlashSale"));
-const FlashSaleSlider = React.lazy(() => import("../components/FlashSaleSlider"));
-const BannerSection = React.lazy(() => import("../components/BannerSection"));
-const NewArrivalsSlider = React.lazy(() => import("../components/NewArrivalsSlider"));
-const Products = React.lazy(() => import("../components/Products"));
-const RecommendedProducts = React.lazy(() => import("../components/RecommendedProducts"));
-const BlogCard = React.lazy(() => import("../components/BlogCard"));
-const Newsletter = React.lazy(() => import("../components/Newsletter"));
 
 const Home = () => {
     const [data, setData] = useState(null);
@@ -58,45 +58,23 @@ const Home = () => {
         <div className="min-h-screen w-full">
             {data ? (
                 <>
-                    <Suspense fallback={<TopSliderShimmer />}>
-                        <TopSlider topSlider={data.category} />
-                    </Suspense>
-                    <Suspense fallback={<BannerSliderShimmer />}>
-                        <BannderSlider BannderSliderData={data.slider} />
-                    </Suspense>
-                    <Suspense fallback={<TopSliderShimmer />}>
-                        <FeatureBrandsSlider FeaturedBrands={data.featured_brands} />
-                    </Suspense>
-                    <Suspense fallback={<DealsSliderShimmer />}>
-                        <DealsSlider DealsSlider={data.display_banners} />
-                    </Suspense>
-                    <Suspense fallback={<FlashSaleShimmer />}>
-                        <FlashSale flashSale={data.flash_sale} />
-                    </Suspense>
-                    <Suspense fallback={<BannerSectionShimer />}>
-                        <BannerSection bannerSection={data.banner} />
-                    </Suspense>
-                    <Suspense fallback={<NewArrivalsShimmer />}>
-                        <NewArrivalsSlider productsCard={data.new_product} />
-                    </Suspense>
-                    <Suspense fallback={<ProductShimmer />}>
-                        <Products products={data.grid_product} />
-                    </Suspense>
-                    <Suspense fallback={<NewArrivalsShimmer />}>
+                    {data.category ? <TopSlider topSlider={data.category} /> : <TopSliderShimmer />}
+                    {data.slider ? <BannderSlider BannderSliderData={data.slider} /> : <BannerSliderShimmer />}
+                    {data.featured_brands ? <FeatureBrandsSlider FeaturedBrands={data.featured_brands} /> : <TopSliderShimmer />}
+                    {data.display_banners ? <DealsSlider DealsSlider={data.display_banners} /> : <DealsSliderShimmer />}
+                    {data.flash_sale ? <FlashSale flashSale={data.flash_sale} /> : <FlashSaleShimmer />}
+                    {data.banner ? <BannerSection bannerSection={data.banner} /> : <BannerSectionShimer />}
+                    {data.new_product ? <NewArrivalsSlider productsCard={data.new_product} /> : <NewArrivalsShimmer />}
+                    {data.grid_product ? <Products products={data.grid_product} /> : <ProductShimmer />}
+                    {data.recommended_product ? (
                         <RecommendedProducts productsCard={data.recommended_product} />
-                    </Suspense>
+                    ) : (
+                        <NewArrivalsShimmer />
+                    )}
                     {data.flash_sale_products &&
-                        data.flash_sale_products.map((item) => (
-                            <Suspense key={item.id} fallback={<NewArrivalsShimmer />}>
-                                <FlashSaleSlider item={item} />
-                            </Suspense>
-                        ))}
-                    <Suspense fallback={<BlogShimer />}>
-                        <BlogCard />
-                    </Suspense>
-                    <Suspense fallback={<NewsletterShimmer />}>
-                        <Newsletter />
-                    </Suspense>
+                        data.flash_sale_products.map((item) => <FlashSaleSlider key={item.id} item={item} />)}
+                    <BlogCard />
+                    <Newsletter />
                 </>
             ) : (
                 <p>No data available.</p>

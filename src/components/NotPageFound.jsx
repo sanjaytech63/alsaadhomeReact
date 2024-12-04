@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { keyframes } from '@mui/system';
 
 const NotFoundPage = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  
+
   const bounce = keyframes`
     0%, 20%, 50%, 80%, 100% {
       transform: translateY(0);
@@ -34,9 +34,8 @@ const NotFoundPage = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      minHeight="100vh"
+      minHeight="70vh"
       bgcolor="#fff"
-      p={2}
       textAlign="center"
     >
       <Typography
@@ -44,7 +43,7 @@ const NotFoundPage = () => {
         sx={{
           fontSize: { xs: '4rem', sm: '6rem' },
           fontWeight: 'bold',
-          color: '#1976d2',
+          color: '#ba1f2a',
           animation: `${bounce} 2s ease infinite`,
         }}
       >
@@ -64,11 +63,12 @@ const NotFoundPage = () => {
 
       <Button
         variant="contained"
-        color="primary"
         size="large"
-        onClick={() => navigate('/')} 
+        onClick={() => navigate('/')}
         sx={{
           textTransform: 'none',
+          backgroundColor: '#ba1f2a',
+          coror: "#fff",
           fontSize: '1rem',
           padding: '0.8rem 1.5rem',
           animation: `${fadeIn} 1.5s ease`,
