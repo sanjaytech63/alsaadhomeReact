@@ -45,10 +45,12 @@ body {
 		width: 10px !important;
 		height: 10px !important;
 		border: #bb1f2a solid 2px !important;
-
+		bottom: 10px !important;
 	}
 }
-
+.react-multi-carousel-dot-list{
+	bottom: 10px !important;
+}
 .react-multi-carousel-dot--active button {
 	background-color: #fff !important;
 	border: #bb1f2a solid 2px !important;
@@ -197,4 +199,8 @@ body {
 
 li.react-multi-carousel-item {
 	margin-bottom: 10px !important;
+}
+
+.link-none {
+	text-decoration: none !important;
 }

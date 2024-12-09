@@ -1,9 +1,9 @@
 import { Box, Container, Grid } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Products = ({ products }) => {
-    const nevigate = useNavigate();
+  
     return (
         <div className="my-5">
             <Container maxWidth="lg" sx={{ px: 2 }}>
@@ -21,16 +21,18 @@ const Products = ({ products }) => {
                                     },
                                 }}
                             >
-                                <Box component={"img"} onClick={() => nevigate(`/products/${product.varaint_id}`)}
-                                    sx={{
-                                        width: "100%",
-                                        height: "150px",
-                                        objectFit: "cover",
-                                    }}
-                                    src={product.image}
-                                    alt="product-image"
-                                    loading="lazy"
-                                />
+                                <Link className="link-none" to={`/products/${product.varaint_id}`}>
+                                    <Box component={"img"}
+                                        sx={{
+                                            width: "100%",
+                                            height: "150px",
+                                            objectFit: "cover",
+                                        }}
+                                        src={product.image}
+                                        alt="product-image"
+                                        loading="lazy"
+                                    />
+                                </Link>
                             </Box>
                         </Grid>
                     ))}

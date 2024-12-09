@@ -1,7 +1,7 @@
 import { Box, Fade, Modal, IconButton, Backdrop } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import ProductListingSideBar from "../../components/ProductListingSideBar";
-export const ModalFilter = ({ isModalOpen, handleCloseModal, handleOpenModal }) => {
+export const ModalFilter = ({ isModalOpen, handleCloseModal }) => {
     return (
         <Modal open={isModalOpen} onClose={handleCloseModal} closeAfterTransition BackdropComponent={Backdrop}>
             <Fade in={isModalOpen}>

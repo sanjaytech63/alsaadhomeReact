@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Loading from "../components/Loading";
 import { homeApi } from '../utils/services/homeServices';
 const SubCategoryList = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const nevigate = useNavigate();
     let { subcategory } = useParams();
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(x => x);
@@ -21,7 +20,9 @@ const SubCategoryList = () => {
                 category_id: subcategory,
             };
             const response = await homeApi.getSubCategory(requestData);
-            setData(response.data);
+            if (response && response.status === 200) {
+                setData(response.data);
+            }
         } catch (err) {
             setError("Failed to load data. Please try again.");
             console.error("Error fetching data:", err);
@@ -32,7 +33,7 @@ const SubCategoryList = () => {
 
     useEffect(() => {
         fetchCategory();
-    }, [subcategory]);
+    }, []);
 
     if (error) {
         return <p>{error}</p>;
@@ -95,50 +96,55 @@ const SubCategoryList = () => {
             <Container>
                 <Box sx={{ my: 5 }}>
                     <Grid container spacing={2} sx={{ pb: 4 }}>
-                        {data && data?.map((cat) => (
-                            <Grid item xs={12} sm={4} key={cat.id}>
-                                <Box
-                                    onClick={() => {
-                                        if (subcategory) {
-                                            nevigate(`/category/${subcategory}/${cat.slug}`)
-                                        }
+                        {data && data?.map((item) => (
+                            <Grid item xs={12} sm={4} key={item.id}>
+                                <Link className="link-none"
+                                    state={{
+                                        id: item.id,
+                                        type: 'category'
                                     }}
-                                    sx={{
-                                        position: 'relative',
-                                        boxShadow: 3,
-                                        bgcolor: 'rgba(0, 0, 0, 0.6)',
-                                        borderRadius: 2,
-                                        cursor: 'pointer',
-                                        overflow: 'hidden',
-                                        transition: 'transform 0.3s ease',
-                                        '&:hover': { opacity: 0.8, },
-                                    }}
+
+                                    to={`/category/${subcategory}/${item.slug}`}
+                                    key={item.id}
                                 >
-                                    <img
-                                        style={{
-                                            width: "100%",
-                                            height: "200px",
-                                            objectFit: "cover",
-                                        }}
-                                        src={cat.image}
-                                        alt={cat.name}
-                                        loading="lazy"
-                                    />
-                                    {/* Text on image */}
                                     <Box
                                         sx={{
-                                            position: 'absolute',
-                                            top: "35%",
-                                            width: '100%',
-                                            color: '#fff',
-                                            textAlign: 'center',
-                                            fontSize: "16px",
-                                            py: 1,
+                                            position: 'relative',
+                                            boxShadow: 3,
+                                            bgcolor: 'rgba(0, 0, 0, 0.6)',
+                                            borderRadius: 2,
+                                            cursor: 'pointer',
+                                            overflow: 'hidden',
+                                            transition: 'transform 0.3s ease',
+                                            '&:hover': { opacity: 0.8, },
                                         }}
                                     >
-                                        <Typography variant="h6">{cat.name}</Typography>
+                                        <img
+                                            style={{
+                                                width: "100%",
+                                                height: "200px",
+                                                objectFit: "cover",
+                                            }}
+                                            src={item.image}
+                                            alt={item.name}
+                                            loading="lazy"
+                                        />
+                                        {/* Text on image */}
+                                        <Box
+                                            sx={{
+                                                position: 'absolute',
+                                                top: "35%",
+                                                width: '100%',
+                                                color: '#fff',
+                                                textAlign: 'center',
+                                                fontSize: "16px",
+                                                py: 1,
+                                            }}
+                                        >
+                                            <Typography variant="h6">{item.name}</Typography>
+                                        </Box>
                                     </Box>
-                                </Box>
+                                </Link>
                             </Grid>
                         ))}
                     </Grid>
@@ -149,6 +155,3 @@ const SubCategoryList = () => {
 }
 
 export default SubCategoryList;
-
-
-

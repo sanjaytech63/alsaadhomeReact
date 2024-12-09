@@ -1,14 +1,11 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const BannerSlider = ({ BannderSliderData }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
-    const navigate = useNavigate();
-
-
 
     return (
         <Box sx={{ width: "100%", mb: { xs: 2, sm: 4 }, mt: { xs: 0, sm: 2 } }}>
@@ -43,21 +40,28 @@ const BannerSlider = ({ BannderSliderData }) => {
                     swipeable
                 >
                     {BannderSliderData.length > 0 && BannderSliderData.map((item) => (
-                        <Box
-                            component="img"
+                        <Link className="link-none"
                             key={item.id}
-                            onClick={() => navigate(`/search?type=display-banner&id=${item.id}`)}
-                            draggable="false"
-                            src={item.image}
-                            loading="lazy"
-                            alt={`BannerSlide-${item.banner_name}`}
-                            sx={{
-                                width: "100%",
-                                height: matchesSM ? "200px" : "600px",
-                                objectFit: "cover",
-                                cursor: "pointer",
+                            to={`/search?type=display-banner&id=${item.id}`}
+                            state={{
+                                id: item.id,
+                                type: 'display_banners'
                             }}
-                        />
+                        >
+                            <Box
+                                component="img"
+                                draggable="false"
+                                src={item.image}
+                                loading="lazy"
+                                alt={`BannerSlide-${item.banner_name}`}
+                                sx={{
+                                    width: "100%",
+                                    height: matchesSM ? "200px" : "600px",
+                                    objectFit: "cover",
+                                    cursor: "pointer",
+                                }}
+                            />
+                        </Link>
                     ))}
                 </Carousel>
             </Box>

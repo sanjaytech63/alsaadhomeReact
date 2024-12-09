@@ -5,12 +5,11 @@ import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const RecommendedProducts = ({ productsCard }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
-    const nevigate = useNavigate();
     const isRTL = theme.direction === 'rtl';
 
     const CustomButtonGroup = ({ next, previous }) => (
@@ -62,10 +61,12 @@ const RecommendedProducts = ({ productsCard }) => {
                             sm: "24px",
                         },
                     }}>Recommended Products</Typography>
-                    <Typography onClick={() => nevigate(`/search?type=display-banner&id=${"recommended"}`)} variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", textAlign: "right" }}>
-                        <BoltIcon />
-                        View All
-                    </Typography>
+                    <Link to={`/search?type=display-banner&id=${"recommended"}`} className='link-none'>
+                        <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", textAlign: "right" }}>
+                            <BoltIcon />
+                            View All
+                        </Typography>
+                    </Link>
                 </Box>
                 <hr />
                 <Box sx={{ width: "100%", position: "relative", mt: 2 }}>
@@ -124,13 +125,15 @@ const RecommendedProducts = ({ productsCard }) => {
                                             sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                         />
                                     }
-                                    <CardMedia onClick={() => nevigate(`/products/${item.slug}`)}
-                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
-                                        component="img"
-                                        image={item.image}
-                                        alt={item.title}
-                                        loading="lazy"
-                                    />
+                                    <Link to={`/products/${item.slug}`} className='link-none'>
+                                        <CardMedia
+                                            sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
+                                            component="img"
+                                            image={item.image}
+                                            alt={item.title}
+                                            loading="lazy"
+                                        />
+                                    </Link>
                                 </Box>
                                 <CardContent sx={{ p: { xs: "8px", sm: "16px" } }}>
                                     <Typography
@@ -217,7 +220,3 @@ const RecommendedProducts = ({ productsCard }) => {
 };
 
 export default RecommendedProducts;
-
-
-
-

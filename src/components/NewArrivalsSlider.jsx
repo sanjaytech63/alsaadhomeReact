@@ -5,15 +5,14 @@ import {
     Card, Chip, CardMedia, CardContent, Rating
 } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
-import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
+import { FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const NewArrivalsSlider = ({ productsCard }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-    const navigate = useNavigate();
 
     const CustomButtonGroup = ({ next, previous }) => (
         <>
@@ -63,10 +62,12 @@ const NewArrivalsSlider = ({ productsCard }) => {
                     }}>
                         New Arrivals
                     </Typography>
-                    <Typography onClick={() => navigate(`/search?type=display-banner&id=${"new"}`)} variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
-                        <BoltIcon />
-                        View All
-                    </Typography>
+                    <Link to={`/search?type=display-banner&id=${"new"}`} className='link-none' >
+                        <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
+                            <BoltIcon />
+                            View All
+                        </Typography>
+                    </Link>
                 </Box>
                 <hr className="mx-2" />
 
@@ -114,13 +115,15 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                             sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                         />
                                     }
-                                    <CardMedia onClick={() => navigate(`/products/${item.slug}`)}
-                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
-                                        component="img"
-                                        image={item.image}
-                                        alt={item.title}
-                                        loading="lazy"
-                                    />
+                                    <Link to={`/products/${item.slug}`} className='link-none'>
+                                        <CardMedia
+                                            sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
+                                            component="img"
+                                            image={item.image}
+                                            alt={item.title}
+                                            loading="lazy"
+                                        />
+                                    </Link>
                                     {
                                         item.is_flash_sale ? (
                                             <CardMedia

@@ -1,17 +1,14 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Box, Link, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
+import { Box, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const TopSlider = ({ topSlider }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
     const isRTL = theme.direction === 'rtl';
-
-    const nevigate = useNavigate();
-
 
     const CustomButtonGroup = ({ next, previous }) => (
         <>
@@ -70,10 +67,15 @@ const TopSlider = ({ topSlider }) => {
 
                     >
                         {topSlider.length > 0 && topSlider.map((item) => (
-                            <Link
-                            onClick={() => nevigate(`/category/${item.slug}`)}
+                            <Link className="link-none"
+                                to={{
+                                    pathname: `/category/${item.slug}`,
+                                    state: {
+                                        id: item.id,
+                                        type: 'category'
+                                    }
+                                }}
                                 key={item.id}
-                                component="a"
                                 draggable={false}
                                 sx={{
                                     display: 'flex',

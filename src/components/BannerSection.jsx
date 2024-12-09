@@ -1,9 +1,8 @@
 import { Box, Container, Grid } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const BannerSection = ({ bannerSection }) => {
-    const nevigate = useNavigate();
 
     return (
         <Container sx={{ my: { xs: 1, sm: 4 }, px: 2 }}>
@@ -24,17 +23,24 @@ const BannerSection = ({ bannerSection }) => {
                                     '&:hover': { transform: 'scale(1.05)' },
                                 }}
                             >
-                                <img onClick={() => nevigate(`/search?type=display-banner&id=${item.id}`)}
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover',
-                                        cursor: 'pointer'
-                                    }}
-                                    loading="lazy"
-                                    src={item.image}
-                                    alt={item.banner_name}
-                                />
+                                <Link state={{
+                                    id: item.id,
+                                    type: 'display_banners'
+                                }}
+                                   className="link-none"
+                                    to={`/search?type=display-banner&id=${item.id}`} >
+                                    <img
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            cursor: 'pointer'
+                                        }}
+                                        loading="lazy"
+                                        src={item.image}
+                                        alt={item.banner_name}
+                                    />
+                                </Link>
                             </Box>
                         </Grid>
                     ))}

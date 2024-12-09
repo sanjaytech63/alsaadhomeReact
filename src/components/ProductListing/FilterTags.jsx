@@ -1,9 +1,9 @@
 import { Box, Chip } from "@mui/material";
 
-export const FilterTags = ({ catList, selectedCatlist, onTagToggle }) => {
+export const FilterTags = ({ main_category, selectedCatlist, onTagToggle }) => {
     return (
         <Box sx={{ display: 'flex', overflowX: 'auto', gap: 1, mb: 3, pb: 1 }}>
-            {catList.map(tag => (
+            {main_category.map(tag => (
                 <Chip
                     key={tag.id}
                     label={tag.title}

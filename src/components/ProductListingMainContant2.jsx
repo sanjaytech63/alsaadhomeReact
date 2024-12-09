@@ -31,7 +31,7 @@ const ProductListingMainContant2 = ({ productsCard }) => {
 
     return (
         <>
-            {productsCard && productsCard?.map((item) => (
+            {productsCard.products && productsCard?.products.map((item) => (
                 <Grid key={item.id} mb={4} >
                     <Card onClick={handleNavigate}
                         sx={{

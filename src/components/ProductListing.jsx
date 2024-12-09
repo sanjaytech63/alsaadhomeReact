@@ -1,20 +1,17 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FilterTags } from "./ProductListing/FilterTags";
-import { ModalFilter } from "./ProductListing/ModalFilter";
 import { ProdictListingHeader } from "./ProductListing/ProdictListingHeader";
 import { ProductGridToggle } from "./ProductListing/ProductGridToggle";
 import { ProductListingContent } from "./ProductListing/ProductListingContent";
 import Loading from "../components/Loading";
 import { homeApi } from "../utils/services/homeServices";
-import { Box, Container, FormControl, Grid, MenuItem, Select, Typography } from "@mui/material";
+import { Box, Container, FormControl, Grid, MenuItem, Select, Typography, Fade, Modal, IconButton, Backdrop } from "@mui/material";
 import { PaginationComponent } from "./ProductListing/PaginationComponent";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, } from "react-router-dom";
 import ProductListingSideBar from "../components/ProductListingSideBar";
 import { MdOutlineFilterAlt } from "react-icons/md";
-import jsonData from "../../src/blogData.json";
-
+import CloseIcon from '@mui/icons-material/Close';
 const ProductListing = () => {
-    const catList = jsonData.categories;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [gridTogal, setGridTogal] = useState(true);
     const [selectedCatlist, setSelectedCatlist] = useState([]);
@@ -28,17 +25,21 @@ const ProductListing = () => {
     const handleCloseModal = () => setIsModalOpen(false);
     const [price, setPrice] = useState({ min: "", max: "" });
     const [sortOrder, setSortOrder] = useState([]);
-    const tags = jsonData.tags;
     const [showMore, setShowMore] = useState(false);
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [selectedColor, setSelectedColor] = useState([]);
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [otherSelectedAttributes, setOtherSelectedAttributes] = useState([])
-    const { id } = useParams()
+    const location = useLocation();
+    const { id, type } = location.state || {};
     const [filterData, setFilterData] = useState([]);
     const [filterBrands, setFilterBrands] = useState([]);
     const [filterSizes, setFilterSizes] = useState([]);
     const [filterColors, setFilterColors] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [newest, setNewest] = useState("new");
+    const [ids, setIds] = useState("");
+    const [types, setTypes] = useState("");
 
     const toggleSelect = (id, selectAttribute) => {
         selectAttribute(prevSelected => {
@@ -53,6 +54,7 @@ const ProductListing = () => {
         );
     };
 
+
     const sortOptions = {
         price: { LTH: "Low to High", HTL: "High to Low" },
         age: { new: "New First", old: "Old First" },
@@ -62,6 +64,7 @@ const ProductListing = () => {
     const handleChangeSort = (event) => {
         setSortOrder(event.target.value);
     };
+
 
     const handlePriceChange = (event) => {
         setPrice({ ...price, [event.target.name]: event.target.value });
@@ -73,20 +76,20 @@ const ProductListing = () => {
         );
     };
 
-    const applyFilters = () => {
-        console.log('Applying filters:', {
-            category_id: id,
-            sale_high_price: parseInt(price.max || "0", 10),
-            sale_low_price: parseInt(price.min || "0", 10),
-            filter_type: selectedCatlist.length > 0 ? "OR" : "AND",
-            size_id: selectedSizes,
-            color_id: selectedColor,
-            brand_id: selectedBrands,
-            attributes_value_id: otherSelectedAttributes,
-        });
-
+    const handleSearch = (term) => {
+        setSearchTerm(term);
     };
-
+    const handleNewest = (event, id, type) => {
+        setIds(id);
+        setTypes(type);
+        setNewest(event.target.value);
+        fetchData();
+    };
+    const applyFilters = (e) => {
+        e.preventDefault();
+        fetchData(1);
+        handleCloseModal();
+    };
 
     const handleReset = () => {
         setSelectedBrands([]);
@@ -95,12 +98,14 @@ const ProductListing = () => {
         setSortOrder('');
         setPrice({ min: "", max: "" });
         setShowMore(false);
+        setOtherSelectedAttributes([])
         setTotalPages(1);
+        setCurrentPage(1);
+        setNewest([]);
+        setSearchTerm('');
     }
 
-
-
-    const fetchData = useCallback(async (page = currentPage) => {
+    const fetchData = async (page = currentPage) => {
         setLoading(true);
         setError(null);
         try {
@@ -108,20 +113,23 @@ const ProductListing = () => {
                 category_id: id,
                 sale_high_price: parseInt(price.max || "0", 10) > 0 ? parseInt(price.max || "0", 10) : "",
                 sale_low_price: parseInt(price.min || "0", 10) > 0 ? parseInt(price.min || "0", 10) : "",
-                type: "display_banner",
                 filter_type: selectedCatlist.length > 0 ? "OR" : "AND",
                 id: id || "",
+                type: type || "",
                 sort_by: sortOrder,
                 page: page,
+                key: newest,
+                title: newest === "new" ? "new_first" : "old_first",
+                title: searchTerm,
                 size_id: selectedSizes,
                 color_id: selectedColor,
                 brand_id: selectedBrands,
                 attributes_value_id: otherSelectedAttributes,
             };
-            console.log(requestBody, "requestBody")
+
             const response = await homeApi.getProduct(requestBody);
             if (response && response.status === 200) {
-                setData(response.data);
+                setData(response.data || []);
                 const totalProducts = parseInt(response.data.total_products, 10) || 0;
                 const productsPerPage = 40;
                 const pages = totalProducts ? Math.ceil(totalProducts / productsPerPage) : 1;
@@ -134,11 +142,11 @@ const ProductListing = () => {
         } finally {
             setLoading(false);
         }
-    }, [currentPage]);
+    };
 
     useEffect(() => {
         fetchData();
-    }, [currentPage, fetchData]);
+    }, [currentPage]);
 
     useEffect(() => {
         getFilter()
@@ -150,7 +158,7 @@ const ProductListing = () => {
 
     function getFilterParams() {
         let req = {
-            "type": 'display_banner',
+            "type": type || "",
             "id": id || "",
         }
         return req
@@ -194,13 +202,46 @@ const ProductListing = () => {
         return <p>{error}</p>;
     }
 
-    console.log(id, "id")
-
     return (
         <>
             <ProdictListingHeader pathnames={pathnames} />
             <Container maxWidth="lg" sx={{ py: 5 }}>
-                <ModalFilter isModalOpen={isModalOpen} handleOpenModal={handleOpenModal} handleCloseModal={handleCloseModal} />
+                <Modal open={isModalOpen} onClose={handleCloseModal} closeAfterTransition BackdropComponent={Backdrop}>
+                    <Fade in={isModalOpen}>
+                        <Box sx={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', bgcolor: 'background.paper', boxShadow: 24, px: 2, py: 1, outline: 0, borderRadius: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+                            <IconButton onClick={handleCloseModal} sx={{ alignSelf: 'flex-end', mb: 2 }}>
+                                <CloseIcon />
+                            </IconButton>
+                            <ProductListingSideBar
+                                sortOptions={sortOptions}
+                                price={price}
+                                handlePriceChange={handlePriceChange}
+                                handleChangeSort={handleChangeSort}
+                                sortOrder={sortOrder}
+                                selectedBrands={selectedBrands}
+                                toggleBrand={(id) => toggleSelect(id, setSelectedBrands)}
+                                tagsToShow={showMore ? filterBrands : filterBrands?.slice(0, 5)}
+                                showMore={showMore}
+                                setShowMore={setShowMore}
+                                setSelectedBrands={setSelectedBrands}
+                                tags={filterBrands}
+                                sizes={filterSizes}
+                                selectedSizes={selectedSizes}
+                                toggleSize={(id) => toggleSelect(id, setSelectedSizes)}
+                                otherAttributes={filterData}
+                                toggleOtherAttributes={(id) => toggleSelect(id, setOtherSelectedAttributes)}
+                                otherSelectedAttributes={otherSelectedAttributes}
+                                color={filterColors}
+                                selectedColor={selectedColor}
+                                toggleColor={(id) => toggleSelect(id, setSelectedColor)}
+                                handleSearch={handleSearch}
+                                searchTerm={searchTerm}
+                                handleReset={handleReset}
+                                applyFilters={applyFilters}
+                            />
+                        </Box>
+                    </Fade>
+                </Modal>
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'block' } }}>
                         <ProductListingSideBar
@@ -225,6 +266,8 @@ const ProductListing = () => {
                             color={filterColors}
                             selectedColor={selectedColor}
                             toggleColor={(id) => toggleSelect(id, setSelectedColor)}
+                            handleSearch={handleSearch}
+                            searchTerm={searchTerm}
                             handleReset={handleReset}
                             applyFilters={applyFilters}
                         />
@@ -247,51 +290,42 @@ const ProductListing = () => {
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 2 }}>
                                 <ProductGridToggle gridTogal={gridTogal} onToggle={setGridTogal} />
-                                <FormControl sx={{}} size="small" variant="outlined">
-                                    <Select inputProps={{ MenuProps: { disableScrollLock: true } }}
+                                <FormControl size="small" variant="outlined">
+                                    <Select
+                                        onChange={handleNewest}
+                                        value={newest}
+                                        inputProps={{ MenuProps: { disableScrollLock: true } }}
                                         sx={{
                                             '&:focus': { backgroundColor: 'transparent' },
                                             display: 'flex',
                                             alignItems: 'center',
                                         }}
                                         id="sortOrder"
-                                        value="Showing"
                                         MenuProps={{
                                             PaperProps: {
-                                                sx: {
-                                                    outline: 'none',
-                                                },
+                                                sx: { outline: 'none' },
                                             },
                                         }}
                                     >
-                                        <MenuItem value="Showing">Showing</MenuItem>
-                                        <MenuItem value="Newest">Newest</MenuItem>
-                                        <MenuItem value="Oldest">Oldest</MenuItem>
+                                        <MenuItem value="new">Newest</MenuItem>
+                                        <MenuItem value="old">Oldest</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Box>
                         </Box>
-                        <Typography sx={{ fontWeight: 'bold', mt: 2, mb: 2 }}>{data?.length}  Total Products</Typography>
-                        <FilterTags catList={catList} selectedCatlist={selectedCatlist} onTagToggle={ToggleCatList} />
+                        <Typography sx={{ fontWeight: 'bold', mt: 2, mb: 2 }}>{data?.total_products}  Total Products</Typography>
+                        <FilterTags main_category={data?.main_category} selectedCatlist={selectedCatlist} onTagToggle={ToggleCatList} />
                         <ProductListingContent gridTogal={gridTogal} data={data} />
                     </Grid>
                 </Grid>
-                <PaginationComponent totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+                {
+                    totalPages > 1 &&
+                    <PaginationComponent totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+                }
+
             </Container>
         </>
     );
 };
 
 export default ProductListing;
-
-
-
-// const categoryId = 1 || "";
-//             let requestBody = {
-//                 sale_high_price: "",
-//                 type: "category",
-//                 category_id: categoryId,
-//                 filter_type: "OR",
-//                 page: page,
-//                 sale_low_price: "",
-//             }

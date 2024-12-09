@@ -2,13 +2,12 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, Container, Typography } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const DealsSlider = ({ DealsSlider }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-    const navigate = useNavigate();
 
     const CustomButtonGroup = ({ next, previous }) => (
         <>
@@ -80,22 +79,27 @@ const DealsSlider = ({ DealsSlider }) => {
                         rtl={isRTL}
                     >
                         {DealsSlider.length > 0 && [...DealsSlider, ...DealsSlider].map((item) => (
-                            <Box
+                            <Link
+                                className="link-none"
+                                state={{ id: item.id, type: "display_banners" }}
                                 key={item.id}
-                                component="img"
-                                onClick={() => navigate(`/search?type=display-banner&id=${item.id}`)}
-                                draggable="false"
-                                src={item.image}
-                                loading="lazy"
-                                alt={item.banner_name}
-                                sx={{
-                                    width: "100%",
-                                    height: matchesSM ? "200px" : "220px",
-                                    objectFit: "cover",
-                                    padding: '0px 10px',
-                                    cursor: "pointer",
-                                }}
-                            />
+                                to={`/search?type=display-banner&id=${item.id}`}
+                            >
+                                <Box
+                                    component="img"
+                                    draggable="false"
+                                    src={item.image}
+                                    loading="lazy"
+                                    alt={item.banner_name}
+                                    sx={{
+                                        width: "100%",
+                                        height: matchesSM ? "200px" : "220px",
+                                        objectFit: "cover",
+                                        padding: '0px 10px',
+                                        cursor: "pointer",
+                                    }}
+                                />
+                            </Link>
                         ))}
                     </Carousel>
                 </Box>

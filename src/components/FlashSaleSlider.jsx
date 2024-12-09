@@ -5,9 +5,9 @@ import {
     Card, Chip, CardMedia, CardContent, Rating
 } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
-import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
+import { FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const FlashSaleSlider = ({ item }) => {
     const theme = useTheme();
@@ -188,13 +188,15 @@ const FlashSaleSlider = ({ item }) => {
                                             sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                         />
                                     }
-                                    <CardMedia onClick={() => navigate(`/products/${item.slug}`)}
+                                    <Link to={`/products/${item.slug}`}>
+                                    <CardMedia 
                                         sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
                                         component="img"
                                         image={item.image}
                                         alt={item.title}
                                         loading="lazy"
                                     />
+                                    </Link>
                                     {
                                         item.is_flash_sale ? (
                                             <CardMedia
@@ -276,9 +278,9 @@ const FlashSaleSlider = ({ item }) => {
                                                 p: { xs: "4px", sm: "8px" }, boxShadow: 2, ":hover": {
                                                     backgroundColor: "#bb1f2a", color: "#fff",
                                                     transition: "fill 0.3s ease",
-                                                },color: "#292b2c"
+                                                }, color: "#292b2c"
                                             }} onClick={() => alert('Added to wishlist!')} aria-label="add to wishlist">
-                                                <FavoriteBorder sx={{ fontSize: "1rem",  }} />
+                                                <FavoriteBorder sx={{ fontSize: "1rem", }} />
                                             </IconButton>
                                         </Box>
                                     </Box>

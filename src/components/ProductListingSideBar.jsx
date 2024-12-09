@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 import SearchInput from './SideBarComponents/SearchInput';
 import SortSelect from './SideBarComponents/SortSelect';
@@ -31,14 +31,13 @@ const ProductListingSideBar = ({
     toggleOtherAttributes,
     otherSelectedAttributes,
     handleReset,
-    applyFilters
+    applyFilters,
+    searchTerm,
+    handleSearch,
+
 }) => {
 
-    const [searchTerm, setSearchTerm] = useState("");
 
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
-    }
 
     return (
         <Box sx={{ width: "100%", mb: 3 }}>

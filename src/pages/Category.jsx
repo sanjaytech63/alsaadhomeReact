@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, } from 'react-router-dom';
 import Loading from "../components/Loading";
 import { homeApi } from '../utils/services/homeServices';
 
@@ -9,11 +9,8 @@ const Category = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    const nevigate = useNavigate()
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(Boolean);
-    const { id } = useParams();
     const fetchCategory = async () => {
         setLoading(true);
         setError(null);
@@ -92,44 +89,45 @@ const Category = () => {
                     <Grid container spacing={2} sx={{ pb: 4 }}>
                         {data && data.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
-                                <Box
-                                    onClick={() => nevigate(`/category/${cat.slug}`)}
-                                    sx={{
-                                        position: 'relative',
-                                        boxShadow: 3,
-                                        bgcolor: 'rgba(0, 0, 0, 0.6)',
-                                        borderRadius: 2,
-                                        cursor: 'pointer',
-                                        overflow: 'hidden',
-                                        transition: 'transform 0.3s ease',
-                                        '&:hover': { opacity: 0.8, },
-                                    }}
-                                >
-                                    <img
-                                        style={{
-                                            width: "100%",
-                                            height: "200px",
-                                            objectFit: "cover",
-                                        }}
-                                        loading="lazy"
-                                        src={cat.image}
-                                        alt={cat.name}
-                                    />
-                                    {/* Text on image */}
+                                <Link to={`/category/${cat.slug}`}>
                                     <Box
                                         sx={{
-                                            position: 'absolute',
-                                            top: "35%",
-                                            width: '100%',
-                                            color: '#fff',
-                                            textAlign: 'center',
-                                            fontSize: "16px",
-                                            py: 1,
+                                            position: 'relative',
+                                            boxShadow: 3,
+                                            bgcolor: 'rgba(0, 0, 0, 0.6)',
+                                            borderRadius: 2,
+                                            cursor: 'pointer',
+                                            overflow: 'hidden',
+                                            transition: 'transform 0.3s ease',
+                                            '&:hover': { opacity: 0.8, },
                                         }}
                                     >
-                                        <Typography variant="h6">{cat.name}</Typography>
+                                        <img
+                                            style={{
+                                                width: "100%",
+                                                height: "200px",
+                                                objectFit: "cover",
+                                            }}
+                                            loading="lazy"
+                                            src={cat.image}
+                                            alt={cat.name}
+                                        />
+                                        {/* Text on image */}
+                                        <Box
+                                            sx={{
+                                                position: 'absolute',
+                                                top: "35%",
+                                                width: '100%',
+                                                color: '#fff',
+                                                textAlign: 'center',
+                                                fontSize: "16px",
+                                                py: 1,
+                                            }}
+                                        >
+                                            <Typography variant="h6">{cat.name}</Typography>
+                                        </Box>
                                     </Box>
-                                </Box>
+                                </Link>
                             </Grid>
                         ))}
                     </Grid>

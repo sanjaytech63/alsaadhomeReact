@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Box, Typography, Grid, Container, CardMedia } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const FlashSale = ({ flashSale }) => {
     const [timers, setTimers] = useState([]);
@@ -36,11 +36,6 @@ const FlashSale = ({ flashSale }) => {
 
     const memoizedTimers = useMemo(() => timers, [timers]);
 
-    const throttledNavigate = useCallback(
-        (id) => navigate(`/search?type=flash-sale&id=${id}`),
-        [navigate]
-    );
-
     return (
         <Container maxWidth="lg">
             <Typography
@@ -62,66 +57,70 @@ const FlashSale = ({ flashSale }) => {
                 {flashSale &&
                     flashSale.map((item, index) => (
                         <Grid item xs={12} sm={6} md={4} key={item.id}>
-                            <Box
-                                onClick={() => throttledNavigate(item.id)}
-                                sx={{
-                                    position: "relative",
-                                    overflow: "hidden",
-                                    cursor: "pointer",
-                                    boxShadow: 2,
-                                }}
-                            >
-                                {/* Image */}
-                                <CardMedia
-                                    component="img"
-                                    src={item.image}
-                                    alt={item.banner_name}
-                                    loading="lazy"
-                                    style={{
-                                        width: "100%",
-                                        height: "200px",
-                                        objectFit: "cover",
-                                    }}
-                                />
-                                {/* Sale Timer */}
+                            <Link state={{
+                                id: item.id,
+                                type: 'flash_sale'
+                            }} to={`/search?type=flash-sale&id=${item.id}`} className="link-none">
                                 <Box
                                     sx={{
-                                        position: "absolute",
-                                        bottom: 28,
-                                        width: "100%",
-                                        color: "#fff",
-                                        display: "flex",
-                                        gap: 1,
-                                        justifyContent: "center",
-                                        alignItems: "center",
+                                        position: "relative",
+                                        overflow: "hidden",
+                                        cursor: "pointer",
+                                        boxShadow: 2,
                                     }}
                                 >
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                    {/* Image */}
+                                    <CardMedia
+                                        component="img"
+                                        src={item.image}
+                                        alt={item.banner_name}
+                                        loading="lazy"
+                                        style={{
+                                            width: "100%",
+                                            height: "200px",
+                                            objectFit: "cover",
+                                        }}
+                                    />
+                                    {/* Sale Timer */}
+                                    <Box
+                                        sx={{
+                                            position: "absolute",
+                                            bottom: 28,
+                                            width: "100%",
+                                            color: "#fff",
+                                            display: "flex",
+                                            gap: 1,
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                        }}
                                     >
-                                        {String(memoizedTimers[index]?.days || 0).padStart(2, "0")} D
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
-                                    >
-                                        {String(memoizedTimers[index]?.hours || 0).padStart(2, "0")} H
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
-                                    >
-                                        {String(memoizedTimers[index]?.minutes || 0).padStart(2, "0")} M
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
-                                    >
-                                        {String(memoizedTimers[index]?.seconds || 0).padStart(2, "0")} S
-                                    </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                        >
+                                            {String(memoizedTimers[index]?.days || 0).padStart(2, "0")} D
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                        >
+                                            {String(memoizedTimers[index]?.hours || 0).padStart(2, "0")} H
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                        >
+                                            {String(memoizedTimers[index]?.minutes || 0).padStart(2, "0")} M
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{ fontWeight: 600, backgroundColor: "#bb1f2a", px: 1, py: 1 }}
+                                        >
+                                            {String(memoizedTimers[index]?.seconds || 0).padStart(2, "0")} S
+                                        </Typography>
+                                    </Box>
                                 </Box>
-                            </Box>
+                            </Link>
                         </Grid>
                     ))}
             </Grid>

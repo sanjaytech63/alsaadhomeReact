@@ -1,16 +1,13 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
-import { Box, Link, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
+import { Box, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const FeatureBrandsSlider = ({ FeaturedBrands }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-
-    const navigate = useNavigate();
-
 
     const CustomButtonGroup = ({ next, previous }) => (
         <>
@@ -80,12 +77,13 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                         rtl={isRTL} // Enable RTL for carousel
                     >
                         {FeaturedBrands.length > 0 && FeaturedBrands.map((item) => (
-                            <Link
+                            <Link className="link-none"
+                                state={{
+                                    id: item.id,
+                                    type: 'brand'
+                                }}
+                                to={`/brand/${encodeURIComponent(item.name)}`}
                                 key={item.id}
-                                component="a"
-                                to={`/${item.name}`}
-                                onClick={() => navigate(`/brand/${encodeURIComponent(item.name)}`)}
-
                                 draggable={false}
                                 sx={{
                                     display: 'flex',
