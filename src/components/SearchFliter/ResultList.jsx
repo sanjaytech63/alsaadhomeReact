@@ -8,7 +8,7 @@ import {
   Grid,
   Container
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ResultList = ({ data, handleClose }) => {
 
@@ -42,7 +42,6 @@ const ResultList = ({ data, handleClose }) => {
         sx={{
           overflow: 'auto',
           height: '100%',
-          flex: 1
         }}
       >
         {data.map((item) => (
@@ -56,78 +55,83 @@ const ResultList = ({ data, handleClose }) => {
               pb: 2,
             }}
           >
-            <Card
-              onClick={() => {
-                navigate(`/products/${item.slug}`);
-                handleClose();
-              }}
-              sx={{
-                height: "100%",
-                overflow: "hidden",
-                borderTopLeftRadius: '8px',
-                borderTopRightRadius: '8px',
-                borderBottomLeftRadius: '0px',
-                padding: '0px !impotant',
-                borderBottomRightRadius: '0px',
-                boxShadow: '0 0 7px rgb(0 0 0 / 10%)',
-                cursor: 'pointer',
-              }}
-            >
-              <Box position="relative">
-                <CardMedia
-                  component="img"
-                  image={item.image}
-                  alt={item.title}
-                  loading="lazy"
-                  sx={{
-                    minHeight: { sm: '276px', xs: '150px' },
-                    maxHeight: { sm: '276px', xs: '150px' },
-                    objectFit: 'cover',
-                  }}
-                />
-              </Box>
-              <CardContent
+            <Link state={{
+              product_id: item.product_id,
+              variant_id: item.product_variant_id
+            }} className="link-none"
+              to={`/products/${item.slug}`} >
+              <Card
+                onClick={() => {
+                  handleClose();
+                }}
                 sx={{
-                  p: { xs: "8px", sm: "16px", },
-                  mb: 1,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
+                  height: "100%",
+                  overflow: "hidden",
+                  borderTopLeftRadius: '8px',
+                  borderTopRightRadius: '8px',
+                  borderBottomLeftRadius: '0px',
+                  padding: '0px !impotant',
+                  borderBottomRightRadius: '0px',
+                  boxShadow: '0 0 7px rgb(0 0 0 / 10%)',
+                  cursor: 'pointer',
                 }}
               >
-                <Typography
-                  variant="h6"
+                <Box position="relative">
+                  <CardMedia
+                    component="img"
+                    image={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    sx={{
+                      minHeight: { sm: '276px', xs: '150px' },
+                      maxHeight: { sm: '276px', xs: '150px' },
+                      objectFit: 'cover',
+                    }}
+                  />
+                </Box>
+                <CardContent
                   sx={{
-                    color: '#292b2c',
-                    fontWeight: 600,
-                    fontSize: { xs: '14px', sm: '1rem' },
-                    display: '-webkit-box',
-                    overflow: 'hidden',
-                    WebkitBoxOrient: 'vertical',
-                    WebkitLineClamp: 2,
-                    wordBreak: 'break-word',
-                    whiteSpace: 'normal',
-                    textOverflow: 'ellipsis',
-                    ':hover': {
+                    p: { xs: "8px", sm: "16px", },
+                    mb: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: '#292b2c',
+                      fontWeight: 600,
+                      fontSize: { xs: '14px', sm: '1rem' },
+                      display: '-webkit-box',
+                      overflow: 'hidden',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 2,
+                      wordBreak: 'break-word',
+                      whiteSpace: 'normal',
+                      textOverflow: 'ellipsis',
+                      ':hover': {
+                        color: '#bb1f2a',
+                      },
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    sx={{
                       color: '#bb1f2a',
-                    },
-                  }}
-                >
-                  {item.title}
-                </Typography>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: '#bb1f2a',
-                    fontWeight: 600,
-                    fontSize: { xs: '14px', sm: '1rem' },
-                    mt: 1,
-                  }}
-                >
-                  {item.list_price} AED
-                </Typography>
-              </CardContent>
-            </Card>
+                      fontWeight: 600,
+                      fontSize: { xs: '14px', sm: '1rem' },
+                      mt: 1,
+                    }}
+                  >
+                    {item.list_price} AED
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Link>
           </Grid>
         ))}
       </Grid>

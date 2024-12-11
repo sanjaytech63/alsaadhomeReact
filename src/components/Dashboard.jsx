@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     Box, List, ListItem, ListItemIcon, ListItemText, Dialog, DialogContent, IconButton, useMediaQuery
 } from '@mui/material';
@@ -15,15 +15,9 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { useTheme } from '@mui/material/styles';
 
 const Dashboard = ({ selectItem }) => {
-    const navigate = useNavigate();
     const theme = useTheme();
     const isXs = useMediaQuery(theme.breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
-
-    const handleNavigation = (item) => {
-        navigate(item.path);
-        setOpen(false); 
-    };
 
     const handleToggleModal = () => setOpen(!open);
 
@@ -45,7 +39,7 @@ const Dashboard = ({ selectItem }) => {
                 </IconButton>
             )}
 
-            <Dialog sx={{}} fullScreen={isXs} open={open} onClose={handleToggleModal}>
+            <Dialog fullScreen={isXs} open={open} onClose={handleToggleModal}>
                 <DialogContent
                     sx={{
                         position: 'relative',
@@ -69,16 +63,15 @@ const Dashboard = ({ selectItem }) => {
                                 component={Link}
                                 to={item.path}
                                 key={item.id}
-                                onClick={() => handleNavigation(item)}
                                 sx={{
                                     bgcolor: selectItem === item.id ? '#bb1f2a' : '#fff',
                                     color: selectItem === item.id ? '#fff' : '#2b2f4c',
                                     ":hover": {
                                         bgcolor: selectItem === item.id ? '#bb1f2a' : '#f5f5f5',
                                     },
-
                                     marginBottom: '8px',
                                 }}
+                                onClick={handleToggleModal} 
                             >
                                 <ListItemIcon sx={{ color: selectItem === item.id ? '#fff' : '#2b2f4c' }}>
                                     {item.icon}
@@ -107,7 +100,6 @@ const Dashboard = ({ selectItem }) => {
                                 component={Link}
                                 to={item.path}
                                 key={item.id}
-                                onClick={() => handleNavigation(item)}
                                 sx={{
                                     bgcolor: selectItem === item.id ? '#bb1f2a' : '#fff',
                                     color: selectItem === item.id ? '#fff' : '#2b2f4c',

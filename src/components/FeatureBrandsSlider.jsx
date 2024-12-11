@@ -1,43 +1,13 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { Link } from "react-router-dom";
+import CustomButtonGroup from "./CustomButtonGroup";
 
 const FeatureBrandsSlider = ({ FeaturedBrands }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-
-    const CustomButtonGroup = ({ next, previous }) => (
-        <>
-            <Box onClick={isRTL ? next : previous} sx={{
-                position: "absolute",
-                top: '46%',
-                left: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
-            </Box>
-            <Box onClick={isRTL ? previous : next} sx={{
-                position: "absolute",
-                top: '46%',
-                right: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
-            </Box>
-        </>
-
-    );
 
     return (
         <div className="w-100">
@@ -73,7 +43,7 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
+                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="46%" /> : null}
                         rtl={isRTL} // Enable RTL for carousel
                     >
                         {FeaturedBrands.length > 0 && FeaturedBrands.map((item) => (

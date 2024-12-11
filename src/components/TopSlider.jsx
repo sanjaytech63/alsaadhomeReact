@@ -3,43 +3,13 @@ import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { Link } from "react-router-dom";
+import CustomButtonGroup from "./CustomButtonGroup";
 
 
 const TopSlider = ({ topSlider }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('md'));
     const isRTL = theme.direction === 'rtl';
-
-    const CustomButtonGroup = ({ next, previous }) => (
-        <>
-            <Box onClick={isRTL ? next : previous} sx={{
-                position: "absolute",
-                top: '40%',
-                left: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
-            </Box>
-            <Box onClick={isRTL ? previous : next} sx={{
-                position: "absolute",
-                top: '40%',
-                right: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
-            </Box>
-        </>
-
-    );
-
 
 
     return (
@@ -62,9 +32,8 @@ const TopSlider = ({ topSlider }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
+                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="40%" /> : null}
                         rtl={isRTL}
-
                     >
                         {topSlider.length > 0 && topSlider.map((item) => (
                             <Link className="link-none"

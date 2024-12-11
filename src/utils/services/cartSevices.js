@@ -1,4 +1,4 @@
-import useUserStore from '../DataManager/store/user';
+import useUserStore from '../../store/user';
 import axiosInstance from './Client';
 import API from './Endpoints';
 

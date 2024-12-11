@@ -1,48 +1,25 @@
-import React from 'react';
-import { Box, Grid, Typography, Link, IconButton, Container} from '@mui/material';
-import { FaFacebook, FaInstagram, FaSnapchat, FaTiktok, FaYoutube, FaPhone } from "react-icons/fa";
-import { IoMdMail } from "react-icons/io";
-import { CiLocationOn } from "react-icons/ci";
-import { useNavigate } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Box, Grid, Typography, IconButton, Container } from '@mui/material';
+import { Link } from 'react-router-dom';
+
+const FaFacebook = lazy(() => import("react-icons/fa").then((mod) => ({ default: mod.FaFacebook })));
+const FaInstagram = lazy(() => import("react-icons/fa").then((mod) => ({ default: mod.FaInstagram })));
+const FaSnapchat = lazy(() => import("react-icons/fa").then((mod) => ({ default: mod.FaSnapchat })));
+const FaTiktok = lazy(() => import("react-icons/fa").then((mod) => ({ default: mod.FaTiktok })));
+const FaYoutube = lazy(() => import("react-icons/fa").then((mod) => ({ default: mod.FaYoutube })));
+const FaPhone = lazy(() => import("react-icons/fa").then((mod) => ({ default: mod.FaPhone })));
+const IoMdMail = lazy(() => import("react-icons/io").then((mod) => ({ default: mod.IoMdMail })));
+const CiLocationOn = lazy(() => import("react-icons/ci").then((mod) => ({ default: mod.CiLocationOn })));
 
 const Footer = () => {
-
-  const nevigate = useNavigate();
-
-  const handleNevigateTerms = () => {
-    nevigate('/terms-of-use');
-  }
-  const handleNevigatePrivacy = () => {
-    nevigate('/privacy-policy');
-  }
-  const handleNevigateCategory = () => {
-    nevigate('/category');
-  }
-
-  const handleNevigateContactUs = () => {
-    nevigate('/contact-us');
-  }
-  const handleNevigateMyAccount = () => {
-    nevigate('/my-account');
-  }
-
-  const handleNevigateOderHistory = () => {
-    nevigate('/order-history');
-  }
-  const handleNevigateWishlist = () => {
-    nevigate('/wishlist');
-  }
+  const linkStyle = {
+    color: "white",
+    ":hover": { cursor: "pointer", color: "#bb1f2a" },
+  };
 
   return (
-    <>
-      <Box
-        sx={{
-          backgroundColor: '#212121',
-          color: 'white',
-         
-        }}
-      >
-        
+    <footer>
+      <Box sx={{ backgroundColor: '#212121', color: 'white', }}>
         <Container maxWidth="lg">
           <Grid
             container
@@ -50,158 +27,123 @@ const Footer = () => {
             justifyContent="space-between"
             direction={{ xs: 'column', sm: 'row', my: { xs: 0, sm: 5 } }}
           >
+            {/* Logo and Tagline */}
             <Grid item xs={12} md={3}>
               <Box sx={{ textAlign: { xs: 'left', md: 'left' } }}>
                 <img
                   src="https://al-saad-home.mo.cloudinary.net/assets/front/images/logo-footer.png"
                   alt="Al Saad Home Logo"
                   loading="lazy"
-                  style={{ maxWidth: '150px', marginBottom: '20px', color: "white" }}
+                  style={{ maxWidth: '200px', marginBottom: '20px', color: 'white' }}
                 />
-                <Typography fontSize={14} >Your dreams start here</Typography>
+                <Typography fontSize={14}>Your dreams start here</Typography>
               </Box>
             </Grid>
+
+            {/* Links Section */}
             <Grid item xs={12} md={3}>
               <Typography variant="h6" gutterBottom>
                 My Account
               </Typography>
-              <Box sx={{
-                lineHeight: 2.5,
-              }}>
-                <Link onClick={handleNevigateMyAccount} sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }} underline="none" fontSize={12} color="inherit" display="block">
-                  My Account
-                </Link>
-                <Link onClick={handleNevigateOderHistory} sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }} underline="none" color="inherit" fontSize={12} display="block">
-                  Orders History
-                </Link>
-                <Link onClick={handleNevigateWishlist} sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }} underline="none" fontSize={12} color="inherit" display="block">
-                  Wishlist
-                </Link>
-                <Link onClick={handleNevigatePrivacy} sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }} underline="none" fontSize={12} color="inherit" display="block">
-                  Privacy
-                </Link>
-                <Link onClick={handleNevigateTerms} sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }} underline="none" fontSize={12} color="inherit" display="block">
-                  Terms & Conditions
-                </Link>
-                <Link onClick={handleNevigateCategory} sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }} underline="none" fontSize={12} color="inherit" display="block">
-                  Category
-                </Link>
+              <Box sx={{ lineHeight: 2.5 }}>
+                {[
+                  { to: '/my-account', label: 'My Account' },
+                  { to: '/order-history', label: 'Orders History' },
+                  { to: '/wishlist', label: 'Wishlist' },
+                  { to: '/privacy-policy', label: 'Privacy' },
+                  { to: '/terms-of-use', label: 'Terms & Conditions' },
+                  { to: '/category', label: 'Category' },
+                ].map((link) => (
+                  <Link
+                    className='link-none'
+                    key={link.to}
+                    to={link.to}
+                  >
+                    <Typography
+                      sx={linkStyle}
+                      fontSize={14}
+                      ml={1}
+                      mt={1.5}
+                    >
+                      {link.label}
+                    </Typography>
+                  </Link>
+                ))}
               </Box>
             </Grid>
+
+            {/* Contact Info Section */}
             <Grid item xs={12} md={3}>
               <Typography variant="h6" gutterBottom>
                 Find Our Branches
               </Typography>
               <Box display="flex" alignItems="center" mb={1}>
-                <CiLocationOn />
-                <Typography onClick={handleNevigateContactUs} sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }} variant="body1" fontSize={14} ml={1}>
-                  UAE - Sharjah - Industrial Area 18
-                </Typography>
+                <Suspense fallback={<span>📍</span>}>
+                  <CiLocationOn />
+                </Suspense>
+                <Link
+                  className='link-none'
+                  to="/contact-us"
+                >
+                  <Typography
+                    sx={linkStyle}
+                    fontSize={14}
+                    ml={1}
+                  >
+                    UAE - Sharjah - Industrial Area 18
+                  </Typography>
+                </Link>
               </Box>
               <Box display="flex" alignItems="center" mb={1}>
-                <IoMdMail />
-                <Typography sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }} variant="body1" fontSize={14} ml={1}>
+                <Suspense fallback={<span>📧</span>}>
+                  <IoMdMail />
+                </Suspense>
+                <Typography
+                  sx={linkStyle}
+                  fontSize={14}
+                  ml={1}
+                >
                   contact@alsaadhome.com
                 </Typography>
               </Box>
               <Box display="flex" alignItems="center">
-                <FaPhone />
-                <Typography variant="body1" fontSize={14} ml={1}>
+                <Suspense fallback={<span>📞</span>}>
+                  <FaPhone />
+                </Suspense>
+                <Typography fontSize={14} ml={1}>
                   600 575 525
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} md={3} >
+
+            {/* Social Media Section */}
+            <Grid item xs={12} md={3}>
               <Typography variant="h6" gutterBottom>
                 Social Media
               </Typography>
-              <Box
-                sx={{ display: 'flex', }}
-              >
-                <IconButton sx={{
-                  color: 'white', ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }}>
-                  <FaTiktok size={20} />
-                </IconButton>
-                <IconButton sx={{
-                  color: 'white', ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }}>
-                  <FaFacebook size={20} />
-                </IconButton>
-                <IconButton sx={{
-                  color: 'white', ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }}>
-                  <FaInstagram size={20} />
-                </IconButton>
-                <IconButton sx={{
-                  color: 'white', ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }}>
-                  <FaSnapchat size={20} />
-                </IconButton>
-                <IconButton sx={{
-                  color: 'white', ":hover": {
-                    cursor: "pointer",
-                    color: "#bb1f2a"
-                  }
-                }}>
-                  <FaYoutube size={20} />
-                </IconButton>
+              <Box sx={{ display: 'flex' }}>
+                {[
+                  { icon: FaTiktok, label: 'TikTok' },
+                  { icon: FaFacebook, label: 'Facebook' },
+                  { icon: FaInstagram, label: 'Instagram' },
+                  { icon: FaSnapchat, label: 'Snapchat' },
+                  { icon: FaYoutube, label: 'YouTube' },
+                ].map(({ icon: Icon, label }, index) => (
+                  <Suspense fallback={<span key={index}>🎥</span>} key={label}>
+                    <IconButton
+                      sx={{ color: 'white', ...linkStyle }}
+                      aria-label={label}
+                    >
+                      <Icon size={20} />
+                    </IconButton>
+                  </Suspense>
+                ))}
               </Box>
             </Grid>
           </Grid>
         </Container>
+
+        {/* Footer Bottom */}
         <Box
           sx={{
             pb: { xs: 10, sm: 0 },
@@ -212,12 +154,12 @@ const Footer = () => {
             borderTop: '1px solid #444',
           }}
         >
-          <Typography sx={{ py: { xs: 0, sm: 2 }, fontSize: "14px" }} variant="body2">
+          <Typography sx={{ py: { xs: 0, sm: 2 }, fontSize: '14px' }} variant="body2">
             © 2020-2024 All Rights Reserved by <strong>AL SAAD FURNITURE EST</strong>
           </Typography>
         </Box>
       </Box>
-    </>
+    </footer>
   );
 };
 

@@ -54,7 +54,7 @@ const ProductListingSideBar = ({
                 )}
 
                 {sizes && sizes.length > 0 && (
-                    <FilterSection label="Size" items={sizes} selectedItems={selectedSizes} toggleItem={toggleSize} />
+                    <FilterSection label="Size" items={sizes} selectedItems={selectedSizes} toggleItem={toggleSize} sizes={sizes} showMore={showMore} setShowMore={setShowMore} />
                 )}
 
                 {color && color.length > 0 && (

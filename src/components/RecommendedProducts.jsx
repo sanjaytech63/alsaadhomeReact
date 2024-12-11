@@ -1,49 +1,17 @@
-import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
+import { FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import React from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
-import { MdOutlineArrowBackIos } from "react-icons/md";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { Link } from 'react-router-dom';
-
-const RecommendedProducts = ({ productsCard }) => {
+import { Link, useSearchParams } from 'react-router-dom';
+import CustomButtonGroup from './CustomButtonGroup';
+const RecommendedProducts = ({ productsCard, title }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
+    const path = useSearchParams();
+    console.log(path);
 
-    const CustomButtonGroup = ({ next, previous }) => (
-        <>
-            <Box className="arrow-box" onClick={isRTL ? next : previous} sx={{
-                position: "absolute",
-                top: '48%',
-                left: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <Box className="arrow-hover">
-                    <MdOutlineArrowBackIos fontSize={"20px"} />
-                </Box>
-            </Box>
-            <Box className="arrow-box" onClick={isRTL ? previous : next} sx={{
-                position: "absolute",
-                top: '48%',
-                right: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <Box className="arrow-hover">
-                    <MdOutlineArrowForwardIos fontSize={"20px"} />
-                </Box>
-            </Box>
-        </>
-    );
     return (
         <div className="w-100 ">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
@@ -60,8 +28,8 @@ const RecommendedProducts = ({ productsCard }) => {
                             xs: "18px",
                             sm: "24px",
                         },
-                    }}>Recommended Products</Typography>
-                    <Link to={`/search?type=display-banner&id=${"recommended"}`} className='link-none'>
+                    }}>{title}</Typography>
+                    <Link to={`/search?type=display-banner&id=${"recommended_product"}`} className='link-none'>
                         <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", textAlign: "right" }}>
                             <BoltIcon />
                             View All
@@ -100,10 +68,10 @@ const RecommendedProducts = ({ productsCard }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
+                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="48%" left="-45px" /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card key={item.id}
+                            <Card key={item.product_id}
                                 sx={{
                                     height: "100%",
                                     overflow: "hidden",
@@ -125,7 +93,7 @@ const RecommendedProducts = ({ productsCard }) => {
                                             sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
                                         />
                                     }
-                                    <Link to={`/products/${item.slug}`} className='link-none'>
+                                    <Link state={{ product_id: item.product_id, variant_id: item.product_variant_id }} to={`/products/${item.slug}`} className='link-none'>
                                         <CardMedia
                                             sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
                                             component="img"
@@ -159,8 +127,8 @@ const RecommendedProducts = ({ productsCard }) => {
                                     >
                                         {item.title}
                                     </Typography>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-                                        <Box sx={{ displayDirection: 'column', alignItems: 'center', gap: 1 }}>
+                                    <Box sx={{ display: 'flex',flexWrap: "wrap", justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+                                        <Box sx={{ displayDirection: 'column', alignItems: 'center', gap: 1,mt:1 }}>
                                             {item.sale_price > 0 && item.sale_price !== item.list_price &&
                                                 <Typography noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
                                                     {item.sale_price} AED
@@ -178,7 +146,7 @@ const RecommendedProducts = ({ productsCard }) => {
                                                 }
                                             </Box>
                                         </Box>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                        <Box sx={{ display: 'flex',  alignItems: 'center', gap: 1,mt:1 }}>
                                             <IconButton sx={{
                                                 p: { xs: "4px", sm: "8px" }, boxShadow: 2,
                                                 ":hover": {

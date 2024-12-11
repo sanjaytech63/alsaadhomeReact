@@ -1,43 +1,13 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, Container, Typography } from "@mui/material";
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { Link } from "react-router-dom";
-
+import CustomButtonGroup from "./CustomButtonGroup";
 const DealsSlider = ({ DealsSlider }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-
-    const CustomButtonGroup = ({ next, previous }) => (
-        <>
-            <Box onClick={isRTL ? next : previous} sx={{
-                position: "absolute",
-                top: '48%',
-                left: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
-            </Box>
-            <Box onClick={isRTL ? previous : next} sx={{
-                position: "absolute",
-                top: '48%',
-                right: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
-            </Box>
-        </>
-    );
-
+   
     return (
         <div className="w-100 my-4">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
@@ -75,7 +45,7 @@ const DealsSlider = ({ DealsSlider }) => {
                         showDots={false}
                         slidesToSlide={1}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
+                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="45%" /> : null}
                         rtl={isRTL}
                     >
                         {DealsSlider.length > 0 && [...DealsSlider, ...DealsSlider].map((item) => (

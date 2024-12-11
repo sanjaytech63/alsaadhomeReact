@@ -24,7 +24,6 @@ function App() {
 
   return (
     <div>
-
       <RouterProvider router={router} />
       <Zoom in={showScroll}>
         <Fab

@@ -20,20 +20,27 @@ import FlashSaleShimmer from "../components/ShimerEffect/FlashSaleShimmer";
 import BannerSectionShimer from "../components/ShimerEffect/BannerSectionShimer";
 import NewArrivalsShimmer from "../components/ShimerEffect/NewArrivalsShimmer";
 import ProductShimmer from "../components/ShimerEffect/ProductShimmer";
-import BlogShimer from "../components/ShimerEffect/BlogShimer";
-import NewsletterShimmer from "../components/ShimerEffect/NewsletterShimmer";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const location = useLocation();
+    // const { id, type } = location.state || {};
+    const { product_id, variant_id } = location.state || {};
     const fetchData = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await homeApi.getHomeData({});
-            setData(response.data);
+            const requestBody = {
+                "product_id": product_id,
+                "product_variant_id": variant_id,
+            };
+            const response = await homeApi.getHomeData(requestBody);
+            if (response && response.status === 200) {
+                setData(response.data);
+            }
         } catch (err) {
             setError("Failed to load data. Please try again.");
             console.error("Error fetching data:", err);
@@ -44,7 +51,7 @@ const Home = () => {
 
     useEffect(() => {
         fetchData();
-    }, [fetchData]);
+    }, []);
 
     if (loading) {
         return <Loading />;
@@ -55,7 +62,7 @@ const Home = () => {
     }
 
     return (
-        <div className="min-h-screen w-full">
+        <div className="min-vh-100 w-full">
             {data ? (
                 <>
                     {data.category ? <TopSlider topSlider={data.category} /> : <TopSliderShimmer />}
@@ -67,7 +74,7 @@ const Home = () => {
                     {data.new_product ? <NewArrivalsSlider productsCard={data.new_product} /> : <NewArrivalsShimmer />}
                     {data.grid_product ? <Products products={data.grid_product} /> : <ProductShimmer />}
                     {data.recommended_product ? (
-                        <RecommendedProducts productsCard={data.recommended_product} />
+                        <RecommendedProducts title="Recommended Products" productsCard={data.recommended_product} />
                     ) : (
                         <NewArrivalsShimmer />
                     )}

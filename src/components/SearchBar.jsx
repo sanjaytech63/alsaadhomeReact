@@ -22,7 +22,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const SearchBar = ({ setSearchOpen, openSearch }) => {
-
     const { searchData, loading, error, setSearchData, setLoading, setError } = useSearchStore();
     const [searchText, setSearchText] = useState('');
     const debouncedSearchText = useDebounce(searchText, 300);
@@ -32,7 +31,6 @@ const SearchBar = ({ setSearchOpen, openSearch }) => {
         setError(null);
         try {
             const response = await searchApi.getSearchData(debouncedSearchText);
-            console.log('Response:', response.data);
             setSearchData(response.data);
         } catch (err) {
             console.error('Error:', err);
@@ -48,14 +46,11 @@ const SearchBar = ({ setSearchOpen, openSearch }) => {
         }
     }, [debouncedSearchText, fetchData]);
 
-
-
     const handleClose = () => {
         setSearchText('');
         setSearchData([]);
         setSearchOpen(false);
     };
-
 
     const handleChange = (e) => {
         setSearchText(e.target.value);
@@ -88,7 +83,7 @@ const SearchBar = ({ setSearchOpen, openSearch }) => {
                             onClick={handleClose}
                             sx={{
                                 position: "absolute",
-                                top: { xs: 25, sm: 45 },
+                                top: { xs: 2, sm: 45 },
                                 right: { xs: 1, sm: "2%" },
                             }}
                         >

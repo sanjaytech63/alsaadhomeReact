@@ -4,45 +4,14 @@ import {
     Box, useMediaQuery, useTheme, IconButton, Typography, Container,
     Card, Chip, CardMedia, CardContent, Rating
 } from "@mui/material";
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import { FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import { Link } from 'react-router-dom';
-
+import CustomButtonGroup from './CustomButtonGroup';
 const NewArrivalsSlider = ({ productsCard }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-
-    const CustomButtonGroup = ({ next, previous }) => (
-        <>
-            <Box onClick={isRTL ? next : previous} sx={{
-                position: "absolute",
-                top: '48%',
-                left: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
-            </Box>
-            <Box onClick={isRTL ? previous : next} sx={{
-                position: "absolute",
-                top: '48%',
-                right: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
-            </Box>
-        </>
-    );
-
 
     return (
         <div className="w-100 sm:my-5 my-1">
@@ -90,7 +59,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
+                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="48%" left="-45px" /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
                             <Card key={item.id}
@@ -167,8 +136,8 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                     >
                                         {item.title}
                                     </Typography>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-                                        <Box sx={{ displayDirection: 'column', alignItems: 'center', gap: 1 }}>
+                                    <Box sx={{ display: 'flex', flexWrap: "wrap", justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+                                        <Box sx={{ displayDirection: 'column', alignItems: 'center', gap: 1, mt: 1 }}>
                                             {item.sale_price > 0 && item.sale_price !== item.list_price &&
                                                 <Typography noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
                                                     {item.sale_price} AED
@@ -186,7 +155,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                                                 }
                                             </Box>
                                         </Box>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
                                             <IconButton sx={{
                                                 p: { xs: "4px", sm: "8px" }, boxShadow: 2,
                                                 ":hover": {

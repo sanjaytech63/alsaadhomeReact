@@ -87,7 +87,7 @@ const Navbar = () => {
                                     </NavLink>
                                 ))}
                             </Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', }}>
                                 <IoSearchOutline className='search_icon' onClick={handleClickOpen} color='#292b2c' size={20} />
                                 <SearchBar setSearchOpen={setSearchOpen} openSearch={openSearch} />
                                 {/* <Link to="/cart"> */}

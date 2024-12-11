@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Button, Grid, Modal, TextField, Typography,  FormControl, Select, MenuItem, } from '@mui/material';
+import { Box, Button, Grid, Modal, TextField, Typography, FormControl, Select, MenuItem, } from '@mui/material';
 import { Close } from '@mui/icons-material';
 
 const ForgotPasswordModal = ({ open, handleClose, handleOpenLogin }) => {
@@ -19,7 +19,7 @@ const ForgotPasswordModal = ({ open, handleClose, handleOpenLogin }) => {
 
     return (
         <>
-            <Modal  disableScrollLock
+            <Modal disableScrollLock
                 sx={{ overflowY: "auto", maxHeight: '100vh', pb: "50px" }}
                 open={open}
                 onClose={handleClose}

@@ -20,6 +20,7 @@ const ProductListing = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+     const location = useLocation();
     const pathnames = useLocation().pathname.split('/').filter(Boolean);
     const handleOpenModal = () => setIsModalOpen(true);
     const handleCloseModal = () => setIsModalOpen(false);
@@ -30,7 +31,6 @@ const ProductListing = () => {
     const [selectedColor, setSelectedColor] = useState([]);
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [otherSelectedAttributes, setOtherSelectedAttributes] = useState([])
-    const location = useLocation();
     const { id, type } = location.state || {};
     const [filterData, setFilterData] = useState([]);
     const [filterBrands, setFilterBrands] = useState([]);
@@ -38,8 +38,8 @@ const ProductListing = () => {
     const [filterColors, setFilterColors] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [newest, setNewest] = useState("new");
-    const [ids, setIds] = useState("");
-    const [types, setTypes] = useState("");
+   
+    const { product_id, variant_id } = location.state || {};
 
     const toggleSelect = (id, selectAttribute) => {
         selectAttribute(prevSelected => {
@@ -80,8 +80,6 @@ const ProductListing = () => {
         setSearchTerm(term);
     };
     const handleNewest = (event, id, type) => {
-        setIds(id);
-        setTypes(type);
         setNewest(event.target.value);
         fetchData();
     };
@@ -115,6 +113,8 @@ const ProductListing = () => {
                 sale_low_price: parseInt(price.min || "0", 10) > 0 ? parseInt(price.min || "0", 10) : "",
                 filter_type: selectedCatlist.length > 0 ? "OR" : "AND",
                 id: id || "",
+                "product_id": product_id,
+                "product_variant_id": variant_id,
                 type: type || "",
                 sort_by: sortOrder,
                 page: page,

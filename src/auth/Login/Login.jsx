@@ -5,7 +5,7 @@ import AppleIcon from '@mui/icons-material/Apple';
 import { Close } from '@mui/icons-material';
 import ForgotPasswordModal from './ForgotPasswordModal';
 
-const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin,handleCloseRegister }) => {
+const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin, handleCloseRegister }) => {
     const [countryCode, setCountryCode] = useState("+ 968");
     const [loginByEmail, setLoginByEmail] = useState(false);
     const [openForgotPassword, setOpenForgotPassword] = useState(false);
@@ -35,7 +35,7 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin,handleCl
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-              
+
             >
                 <Box
                     sx={{
@@ -59,7 +59,7 @@ const Login = ({ handleClose, open, handleOpenRegister, handleOpenLogin,handleCl
                     <Grid container spacing={3}>
                         {
                             loginByEmail ? (<Grid item xs={12} sm={12}>
-                                <Typography sx={{ fontSize: { sm: "16px", xs: "14px" },}} color='#6c757d'> Email</Typography>
+                                <Typography sx={{ fontSize: { sm: "16px", xs: "14px" }, }} color='#6c757d'> Email</Typography>
                                 <TextField type="email" name='email' fullWidth label="Enter Email" required />
                             </Grid>) : (
                                 <Grid item xs={12} sm={12}>
