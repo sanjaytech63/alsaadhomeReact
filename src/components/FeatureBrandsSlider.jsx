@@ -43,8 +43,8 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="46%" /> : null}
-                        rtl={isRTL} // Enable RTL for carousel
+                        customButtonGroup={FeaturedBrands.length > 10 && !matchesSM ? (<CustomButtonGroup top="46%" />) : null}
+                        rtl={isRTL} 
                     >
                         {FeaturedBrands.length > 0 && FeaturedBrands.map((item) => (
                             <Link className="link-none"

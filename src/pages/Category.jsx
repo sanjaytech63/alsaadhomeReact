@@ -89,7 +89,7 @@ const Category = () => {
                     <Grid container spacing={2} sx={{ pb: 4 }}>
                         {data && data.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
-                                <Link to={`/category/${cat.slug}`}>
+                                <Link state={{id: cat.id,type: "category"}} to={`/category/${cat.slug}`}>
                                     <Box
                                         sx={{
                                             position: 'relative',

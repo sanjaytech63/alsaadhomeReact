@@ -196,6 +196,7 @@ const SmartShopping = () => {
                             </Box>
                         ))}
                     </Box> */}
+
             </Container>
         </Box>
     );

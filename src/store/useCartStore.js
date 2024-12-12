@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { cardApi } from '../utils/services/cartSevices'; 
+import { cardApi } from '../utils/services/cartSevices';
 import { showToast } from "../utils/helper";
 
 const useCartStore = create((set, get) => ({
@@ -12,31 +12,68 @@ const useCartStore = create((set, get) => ({
   setCartIds: (ids) => set({ cartIds: ids }),
   setLoading: (loading) => set({ isLoading: loading }),
 
+  // Function to create a new cart
+  creteToCart: async () => {
+    const { setCartIds, setLoading } = get();
+    const params = {
+      customer_id: "11194",
+      sessionID: "abc4561241",
+      cart_type: "worker",
+    };
+
+    try {
+      setLoading(true);
+      const res = await cardApi.creteCart(params);
+      if (res && res.status === 200) {
+        const cartId = res.data.cart_id;
+        localStorage.setItem("cart_id", cartId);
+        showToast("success", "Cart created successfully");
+        return cartId;
+      }
+    } catch (e) {
+      showToast("warning", e.response?.data?.message || "An error occurred", "danger");
+    } finally {
+      setLoading(false);
+    }
+    return null;
+  },
+
+
   addToCart: async (id) => {
     const { cartIds, setCartIds, setLoading } = get();
+    let cartId = localStorage.getItem("cart_id");
+
+    if (!cartId) {
+      cartId = await get().creteToCart();
+      if (!cartId) {
+        return;
+      }
+    }
+
     const params = {
-      customer_id: '',
-      cart_id: localStorage.getItem('cart_id'), 
+      customer_id: "11194",
+      cart_id: cartId,
       product_variant_id: id,
-      qty: '1',
-      type: 'online',
-      branch_id: '',
+      qty: "1",
+      type: "online",
+      branch_id: "",
     };
 
     try {
       setLoading(true);
       const res = await cardApi.addToCart(params);
       if (res && res.status === 200) {
-        showToast("success", res.message, 'success');
+        showToast("success", "Added to cart successfully");
         setCartIds([...cartIds, id.toString()]);
         set({ item_count: res.item_count });
       }
     } catch (e) {
-      showToast("warning", e.response?.data?.message || 'An error occurred', 'danger');
+      showToast("warning", e.response?.data?.message || "An error occurred", "danger");
     } finally {
       setLoading(false);
     }
   },
+
 
   fetchCartProductIds: async () => {
     const { setCartIds } = get();
@@ -120,7 +157,7 @@ const useCartStore = create((set, get) => ({
   },
 
   deleteCartItem: async (branchIndex, itemIndex, cart_item_id, id) => {
-    const params = { cart_id: localStorage.getItem('cart_id'), cart_item_id };
+    const params = { cart_id: localStorage.getItem('cart_id'), cart_item_id : "158" };
     const { cartIds, setCartIds, cartItems, setCartItems } = get();
     try {
       const response = await cardApi.removeCartItem(params);

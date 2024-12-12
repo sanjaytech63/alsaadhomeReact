@@ -7,7 +7,7 @@ const DealsSlider = ({ DealsSlider }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-   
+
     return (
         <div className="w-100 my-4">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
@@ -45,7 +45,7 @@ const DealsSlider = ({ DealsSlider }) => {
                         showDots={false}
                         slidesToSlide={1}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="45%" /> : null}
+                        customButtonGroup={DealsSlider.length > 4 && !matchesSM ? (<CustomButtonGroup top="45%" />) : null}
                         rtl={isRTL}
                     >
                         {DealsSlider.length > 0 && [...DealsSlider, ...DealsSlider].map((item) => (

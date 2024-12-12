@@ -10,6 +10,7 @@ const SubCategoryList = () => {
     const [error, setError] = useState(null);
     let { subcategory } = useParams();
     const location = useLocation();
+    const { type, id } = location.state || {};
     const pathnames = location.pathname.split('/').filter(x => x);
 
     const fetchCategory = async () => {
@@ -18,6 +19,8 @@ const SubCategoryList = () => {
         try {
             const requestData = {
                 category_id: subcategory,
+                id: id || "",
+                type: type || "",
             };
             const response = await homeApi.getSubCategory(requestData);
             if (response && response.status === 200) {

@@ -21,21 +21,28 @@ import BannerSectionShimer from "../components/ShimerEffect/BannerSectionShimer"
 import NewArrivalsShimmer from "../components/ShimerEffect/NewArrivalsShimmer";
 import ProductShimmer from "../components/ShimerEffect/ProductShimmer";
 import { useLocation } from "react-router-dom";
+import useCartStore from "../store/useCartStore";
+// import RecentlyViewed from "../components/RecentlyViewed";
 
 const Home = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const location = useLocation();
-    // const { id, type } = location.state || {};
     const { product_id, variant_id } = location.state || {};
+    const {fetchCartProductIds} = useCartStore()
+
+    useEffect(() => {
+        fetchCartProductIds()
+    }, [])
+    
     const fetchData = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
             const requestBody = {
-                "product_id": product_id,
-                "product_variant_id": variant_id,
+                product_id: product_id,
+                product_variant_id: variant_id,
             };
             const response = await homeApi.getHomeData(requestBody);
             if (response && response.status === 200) {
@@ -47,11 +54,12 @@ const Home = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
-
+    }, [product_id, variant_id]);
+    
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
+    
 
     if (loading) {
         return <Loading />;
@@ -80,6 +88,7 @@ const Home = () => {
                     )}
                     {data.flash_sale_products &&
                         data.flash_sale_products.map((item) => <FlashSaleSlider key={item.id} item={item} />)}
+                    {/* <RecentlyViewed title="Recently Viewed" productsCard={data.recommended_product} /> */}
                     <BlogCard />
                     <Newsletter />
                 </>

@@ -32,7 +32,7 @@ const TopSlider = ({ topSlider }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="40%" /> : null}
+                        customButtonGroup={topSlider.length > 10 && !matchesSM ? (<CustomButtonGroup top="40%" />) : null}
                         rtl={isRTL}
                     >
                         {topSlider.length > 0 && topSlider.map((item) => (

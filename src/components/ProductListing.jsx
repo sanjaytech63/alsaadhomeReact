@@ -31,7 +31,6 @@ const ProductListing = () => {
     const [selectedColor, setSelectedColor] = useState([]);
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [otherSelectedAttributes, setOtherSelectedAttributes] = useState([])
-    const { id, type } = location.state || {};
     const [filterData, setFilterData] = useState([]);
     const [filterBrands, setFilterBrands] = useState([]);
     const [filterSizes, setFilterSizes] = useState([]);
@@ -39,7 +38,7 @@ const ProductListing = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [newest, setNewest] = useState("new");
    
-    const { product_id, variant_id } = location.state || {};
+    const { product_id, variant_id,id, type } = location.state || {};
 
     const toggleSelect = (id, selectAttribute) => {
         selectAttribute(prevSelected => {
@@ -108,7 +107,7 @@ const ProductListing = () => {
         setError(null);
         try {
             const requestBody = {
-                category_id: id,
+                // category_id: id,
                 sale_high_price: parseInt(price.max || "0", 10) > 0 ? parseInt(price.max || "0", 10) : "",
                 sale_low_price: parseInt(price.min || "0", 10) > 0 ? parseInt(price.min || "0", 10) : "",
                 filter_type: selectedCatlist.length > 0 ? "OR" : "AND",

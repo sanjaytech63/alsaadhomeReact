@@ -6,13 +6,12 @@ import {
 } from "@mui/material";
 import { FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CustomButtonGroup from './CustomButtonGroup';
 const FlashSaleSlider = ({ item }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-    const navigate = useNavigate();
     const [timers, setTimers] = useState([]);
 
     const calculateTimeLeft = (endDate) => {
@@ -104,10 +103,12 @@ const FlashSaleSlider = ({ item }) => {
                         )}
 
                     </Box>
-                    <Typography onClick={() => navigate(`/search?type=flash-sale&id=${item.id}`)} variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
-                        <BoltIcon />
-                        View All
-                    </Typography>
+                    <Link state={{ id: item.id, type: 'flash_sale' }} to={`/search?type=flash-sale&id=${item.id}`} className='link-none' >
+                        <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
+                            <BoltIcon />
+                            View All
+                        </Typography>
+                    </Link>
                 </Box>
                 <hr className="mx-2" />
 
@@ -131,7 +132,11 @@ const FlashSaleSlider = ({ item }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={item && item.length > 4 ? true : false && !matchesSM ? <CustomButtonGroup top="48%" left="-45px" /> : null}
+                        customButtonGroup={
+                            item.items?.length > 4 && !matchesSM ? (
+                                <CustomButtonGroup top="48%" left="-45px" />
+                            ) : null
+                        }
                     >
                         {item.items && item.items.map((item) => (
                             <Card key={item.id}

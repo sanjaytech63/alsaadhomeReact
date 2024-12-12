@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Products = ({ products }) => {
-  
+
     return (
         <div className="my-5">
             <Container maxWidth="lg" sx={{ px: 2 }}>
@@ -21,7 +21,7 @@ const Products = ({ products }) => {
                                     },
                                 }}
                             >
-                                <Link className="link-none" to={`/products/${product.varaint_id}`}>
+                                <Link state={{ product_id: product.product_id, variant_id: product.variant_id }} className="link-none" to={`/products/${product.product_slug}`}>
                                     <Box component={"img"}
                                         sx={{
                                             width: "100%",

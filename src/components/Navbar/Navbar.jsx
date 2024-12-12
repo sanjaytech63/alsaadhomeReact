@@ -7,12 +7,15 @@ import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
 import chekoutJson from '../../product.json';
 import { Close } from '@mui/icons-material';
+import useCartStore from '../../store/useCartStore';
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [openSearch, setSearchOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const data = chekoutJson.chekout
+
+    const { item_count } = useCartStore();
 
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
@@ -82,7 +85,7 @@ const Navbar = () => {
                                         to={`${item.slug}`}
                                         style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins, sans-serif", textDecoration: 'none', textTransform: "uppercase", fontSize: '14px', }}
                                         key={index}
-                                    >
+                                     >
                                         {item.name}
                                     </NavLink>
                                 ))}
@@ -93,7 +96,7 @@ const Navbar = () => {
                                 {/* <Link to="/cart"> */}
                                 <Typography onMouseEnter={handleMouseEnter}
                                     onMouseLeave={handleMouseLeave} color="inherit">
-                                    <Badge badgeContent={data.length} color="error">
+                                    <Badge badgeContent={item_count || 0} color="error">
                                         <div
                                             style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} >
                                             <BsCart3 cursor={"pointer"} className='cart_icon' color='#292b2c' size={20} />

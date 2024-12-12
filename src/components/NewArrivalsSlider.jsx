@@ -31,7 +31,7 @@ const NewArrivalsSlider = ({ productsCard }) => {
                     }}>
                         New Arrivals
                     </Typography>
-                    <Link to={`/search?type=display-banner&id=${"new"}`} className='link-none' >
+                    <Link state={{ type: 'display_banners' }} to={`/search?type=display-banner&id=${"new"}`} className='link-none' >
                         <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", cursor: "pointer" }}>
                             <BoltIcon />
                             View All
@@ -59,7 +59,11 @@ const NewArrivalsSlider = ({ productsCard }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="48%" left="-45px" /> : null}
+                        customButtonGroup={
+                            productsCard?.length > 4 && !matchesSM ? (
+                                <CustomButtonGroup top="48%" left="-45px" />
+                            ) : null
+                        }
                     >
                         {productsCard && productsCard.map((item) => (
                             <Card key={item.id}

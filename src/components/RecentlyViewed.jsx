@@ -1,48 +1,14 @@
-import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
+import { FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import React from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
-import { MdOutlineArrowBackIos } from "react-icons/md";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
-
-const RecentlyViewed = ({ productsCard }) => {
+import { Link } from 'react-router-dom';
+import CustomButtonGroup from './CustomButtonGroup';
+const RecentlyViewed = ({ productsCard, title }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
-    const nevigate = useNavigate();
     const isRTL = theme.direction === 'rtl';
-    const handleNavigate = () => {
-        nevigate(`/prodect/123`)
-    }
-    const CustomButtonGroup = ({ next, previous }) => (
-        <>
-            <Box onClick={isRTL ? next : previous} sx={{
-                position: "absolute",
-                top: '48%',
-                left: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
-            </Box>
-            <Box onClick={isRTL ? previous : next} sx={{
-                position: "absolute",
-                top: '48%',
-                right: '-45px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                transform: 'translateY(-50%)',
-                direction: isRTL ? 'rtl' : 'ltr',
-                cursor: 'pointer',
-            }}>
-                <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
-            </Box>
-        </>
-    );
 
     return (
         <div className="w-100 ">
@@ -60,13 +26,15 @@ const RecentlyViewed = ({ productsCard }) => {
                             xs: "18px",
                             sm: "24px",
                         },
-                    }}>Recently Viewed</Typography>
-                    <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", textAlign: "right" }}>
-                        <BoltIcon />
-                        View All
-                    </Typography>
+                    }}>{title}</Typography>
+                    <Link state={{ type: 'display_banners' }} to={`/search?type=display-banner&id=${"recommended_product"}`} className='link-none'>
+                        <Typography variant="h6" sx={{ color: "#bb1f2a", mt: 1, fontSize: "1rem", textAlign: "right" }}>
+                            <BoltIcon />
+                            View All
+                        </Typography>
+                    </Link>
                 </Box>
-                <hr className="mx-2" />
+                <hr />
                 <Box sx={{ width: "100%", position: "relative", mt: 2 }}>
                     <Carousel
                         rtl={isRTL}
@@ -98,10 +66,10 @@ const RecentlyViewed = ({ productsCard }) => {
                         showDots={false}
                         slidesToSlide={3}
                         swipeable
-                        customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
+                        customButtonGroup={!matchesSM ? <CustomButtonGroup top="48%" left="-45px" /> : null}
                     >
                         {productsCard && productsCard.map((item) => (
-                            <Card key={item.id}
+                            <Card key={item.product_id}
                                 sx={{
                                     height: "100%",
                                     overflow: "hidden",
@@ -117,25 +85,30 @@ const RecentlyViewed = ({ productsCard }) => {
                                 }}
                             >
                                 <Box position="relative">
-                                    <Chip
-                                        label="New"
-                                        sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
-                                    />
-                                    <CardMedia onClick={handleNavigate}
-                                        sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "400px", xs: "175px" }, objectFit: "cover" }}
-                                        component="img"
-                                        image={item.image}
-                                        alt={item.title}
-                                        loading="lazy"
-                                    />
+                                    {
+                                        item.is_new === true && <Chip
+                                            label="New"
+                                            sx={{ position: 'absolute', height: "24px", width: "50px", top: 10, right: 10, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "0px" }}
+                                        />
+                                    }
+                                    <Link state={{ product_id: item.product_id, variant_id: item.product_variant_id }} to={`/products/${item.slug}`} className='link-none'>
+                                        <CardMedia
+                                            sx={{ minHeight: { sm: "276.37px", xs: "175px" }, maxHeight: { sm: "276.37px", xs: "175px" }, objectFit: "cover" }}
+                                            component="img"
+                                            image={item.image}
+                                            alt={item.title}
+                                            loading="lazy"
+                                        />
+                                    </Link>
                                 </Box>
                                 <CardContent sx={{ p: { xs: "8px", sm: "16px" } }}>
                                     <Typography
                                         variant="h6"
                                         sx={{
-                                            color: "#292b2c",
-                                            fontWeight: 600,
-                                            fontSize: { xs: "15px", sm: "1rem" },
+                                            fontSize: "1rem",
+                                            color: "292b2c",
+                                            fontWeight: 500,
+                                            lineHeight: "1.2",
                                             alignSelf: "flex-start",
                                             display: "-webkit-box",
                                             overflow: "hidden",
@@ -152,11 +125,26 @@ const RecentlyViewed = ({ productsCard }) => {
                                     >
                                         {item.title}
                                     </Typography>
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-                                        <Typography variant="body1" noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
-                                            {item.price}
-                                        </Typography>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    <Box sx={{ display: 'flex',flexWrap: "wrap", justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+                                        <Box sx={{ displayDirection: 'column', alignItems: 'center', gap: 1,mt:1 }}>
+                                            {item.sale_price > 0 && item.sale_price !== item.list_price &&
+                                                <Typography noWrap sx={{ color: "#bb1f2a", fontWeight: 600, fontSize: { xs: "14px", sm: "1rem" }, }}>
+                                                    {item.sale_price} AED
+                                                </Typography>
+                                            }
+
+                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                <Typography noWrap sx={{ fontWeight: item.sale_price > 0 && item.sale_price !== item.list_price ? "0" : "600", color: item.sale_price > 0 && item.sale_price !== item.list_price ? "gray" : "#bb1f2a", textDecoration: item.sale_price > 0 && item.sale_price !== item.list_price ? "line-through" : "none", fontSize: { xs: "14px", sm: "1rem" }, }}>
+                                                    {item.list_price} AED
+                                                </Typography>
+                                                {item.sale_price > 0 && item.sale_price !== item.list_price &&
+                                                    <Typography noWrap sx={{ color: "green", fontSize: { xs: "14px", sm: "1rem" }, }}>
+                                                        {item.discount_label}
+                                                    </Typography>
+                                                }
+                                            </Box>
+                                        </Box>
+                                        <Box sx={{ display: 'flex',  alignItems: 'center', gap: 1,mt:1 }}>
                                             <IconButton sx={{
                                                 p: { xs: "4px", sm: "8px" }, boxShadow: 2,
                                                 ":hover": {
@@ -182,9 +170,9 @@ const RecentlyViewed = ({ productsCard }) => {
                                         </Box>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                                        <Rating disabled sx={{ fontSize: { xs: "1.3rem", sm: "1.5rem" } }} name="no-value" value={null} />
+                                        <Rating disabled sx={{ fontSize: { xs: "1.3rem", sm: "1.5rem" } }} name="no-value" value={0} />
                                         <Typography variant="body2" sx={{ ml: 1, color: "#9a9696" }}>
-                                            ({item.rating})
+                                            (0)
                                         </Typography>
                                     </Box>
                                 </CardContent>
@@ -198,7 +186,3 @@ const RecentlyViewed = ({ productsCard }) => {
 };
 
 export default RecentlyViewed;
-
-
-
-
