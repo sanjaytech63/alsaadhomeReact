@@ -157,7 +157,7 @@ const useCartStore = create((set, get) => ({
   },
 
   deleteCartItem: async (branchIndex, itemIndex, cart_item_id, id) => {
-    const params = { cart_id: localStorage.getItem('cart_id'), cart_item_id : "158" };
+    const params = { cart_id: localStorage.getItem('cart_id'), cart_item_id: "156" };
     const { cartIds, setCartIds, cartItems, setCartItems } = get();
     try {
       const response = await cardApi.removeCartItem(params);
