@@ -1,0 +1,1007 @@
+{
+  "topSlider": [
+    {
+      "id": 1,
+      "text": "Bedding",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395825.jpeg"
+    },
+    {
+      "id": 2,
+      "text": "Carpets",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395848.jpeg"
+    },
+    {
+      "id": 3,
+      "text": "Lighting ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395866.jpeg"
+    },
+    {
+      "id": 4,
+      "text": " Furniture",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395781.jpeg"
+    },
+    {
+      "id": 5,
+      "text": " Bedding",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395630.jpeg"
+    },
+    {
+      "id": 6,
+      "text": "Curtains ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395757.jpeg"
+    },
+    {
+      "id": 7,
+      "text": " Tableware",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395701.jpeg"
+    },
+    {
+      "id": 8,
+      "text": "Kitchen Essentials ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395803.jpeg"
+    },
+    {
+      "id": 9,
+      "text": "Gardening Supplies ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395885.jpeg"
+    },
+    {
+      "id": 10,
+      "text": "Toys ",
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1618395948.jpeg"
+    }
+  ],
+  "featureBrands": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617183227.jpeg"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171371.jpeg"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171561.jpeg"
+    },
+    {
+      "id": 4,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171499.jpeg"
+    },
+    {
+      "id": 5,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171787.jpeg"
+    },
+    {
+      "id": 6,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171344.jpeg"
+    },
+    {
+      "id": 7,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171822.jpeg"
+    },
+    {
+      "id": 8,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171714.jpeg"
+    },
+    {
+      "id": 9,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171499.jpeg"
+    },
+    {
+      "id": 10,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171787.jpeg"
+    },
+    {
+      "id": 11,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171344.jpeg"
+    },
+    {
+      "id": 12,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171822.jpeg"
+    },
+    {
+      "id": 13,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/brands/1617171371.jpeg"
+    }
+  ],
+  "dealsSlider": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/mattress1719324716.png"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/duvet-cover1723016133.jpg"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/beds1721910782.jpg"
+    },
+    {
+      "id": 4,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/bathroom-accessories-21719326201.png"
+    },
+    {
+      "id": 5,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/silk1719324454.png"
+    },
+    {
+      "id": 6,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/hospitality1719324486.png"
+    }
+  ],
+  "bannerSection1": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/whatsapp-image-2024-09-23-at-14-39-28-e30168a61727088375.jpg"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/mattress-banner-11719125300.jpg"
+    }
+  ],
+  "bannerSection2": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/towel-banner1712324714.jpg"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/kitchen1719326296.png"
+    }
+  ],
+  "recommendedProducts": [
+    {
+      "id": 1,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+      "price": "199 AED",
+      "rating": 4
+    },
+    {
+      "id": 2,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "179 AED",
+      "rating": 3
+    },
+    {
+      "id": 4,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "179 AED",
+      "rating": 4
+    }
+  ],
+  "recentlyViewedProducts": [
+    {
+      "id": 1,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+      "price": "199 AED",
+      "rating": 4
+    },
+    {
+      "id": 2,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 4,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 5,
+      "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+      "price": "249 AED",
+      "rating": 5
+    }
+  ],
+  "newArrivals": [
+    {
+      "id": 1,
+      "title": "Carington Kids Bedding Set 4 PCS - Blue Kids Bedding Set 4 PCS",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/carington-031723280021.jpg",
+      "price": "199 AED",
+      "rating": 4
+    },
+    {
+      "id": 2,
+      "title": "Daren Grey Comforter Set 5 PCS - Charcoal Kids Bedding Set 4 PCS",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/daren-gy-561723279953.jpg",
+      "price": "249 AED",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "title": "Crown Velvet Comforter 6 PCS - Gold Kids Bedding Set 4 PCS",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/crown-3471723278798.jpg",
+      "price": "299 AED",
+      "rating": 3
+    },
+    {
+      "id": 4,
+      "title": "Petroleum Blue Bedding Set Kids Bedding Set 4 PCS 4 PCS",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/48-petroleum-21718881949.jpg",
+      "price": "329 AED",
+      "rating": 4
+    },
+    {
+      "id": 5,
+      "title": "Elegant Red Comforter Kids Bedding Set 4 PCS 3 PCS - Maroon",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/red21706781536.jpg",
+      "price": "179 AED",
+      "rating": 4
+    },
+    {
+      "id": 6,
+      "title": "Verona Quilted Kids Bedding Set 4 PCS Bedding Set 5 PCS - Cream",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/verona-q-0011723282223.jpg",
+      "price": "259 AED",
+      "rating": 5
+    },
+    {
+      "id": 7,
+      "title": "Classic Cotton Kids Bedding Set 4 PCS Comforter 4 PCS - White",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/21706781596.jpg",
+      "price": "319 AED",
+      "rating": 4
+    },
+    {
+      "id": 8,
+      "title": "High Crest Kids Bedding Set 4 PCS Mattress Topper - Beige",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/high-crest-cotton-mattress-topper-11685197057.jpeg",
+      "price": "199 AED",
+      "rating": 4
+    },
+    {
+      "id": 9,
+      "title": "Luxury Kids Bedding Set 4 PCS Floral Bedding Set - Multicolor",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/29/thumb/shutterstock_18449552951729412423.jpg",
+      "price": "279 AED",
+      "rating": 4
+    },
+    {
+      "id": 10,
+      "title": "Minimalist Kids Bedding Set 4 PCS Grey Bedding Set - 4 PCS",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/grid/24-21706780940.jpg",
+      "price": "349 AED",
+      "rating": 5
+    }
+  ],
+  "bannerSliderData": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/beding-11719324280.png"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/bathroom-11719324354.png"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/pillow1719324400.png"
+    }
+  ],
+  "imageData": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/carington-031723280021.jpg"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/daren-gy-561723279953.jpg"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/crown-3471723278798.jpg"
+    },
+    {
+      "id": 4,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/belinda-amw-27485-beige1718881732.jpg"
+    },
+    {
+      "id": 5,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/geometry-awm-27391-taupe1723280280.jpg"
+    },
+    {
+      "id": 6,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/24-21706780940.jpg"
+    },
+    {
+      "id": 7,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/48-petroleum-21718881949.jpg"
+    },
+    {
+      "id": 8,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/red21706781536.jpg"
+    },
+    {
+      "id": 9,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/verona-q-0011723282223.jpg"
+    },
+    {
+      "id": 10,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/21706781596.jpg"
+    },
+    {
+      "id": 11,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/high-crest-cotton-mattress-topper-11685197057.jpeg"
+    },
+    {
+      "id": 12,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/spring-breeze-31685195479.jpg"
+    },
+    {
+      "id": 13,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/winter-flower-31685195506.jpg"
+    },
+    {
+      "id": 14,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/jameel-11685195593.jpg"
+    },
+    {
+      "id": 15,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/grid/japanese-cherry-blossom-11685195620.jpg"
+    },
+    {
+      "id": 16,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/towel-banner1712324714.jpg"
+    },
+    {
+      "id": 17,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/percentage_amount_banners/kitchen1719326296.png"
+    },
+    {
+      "id": 18,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/29/thumb/shutterstock_18449552951729412423.jpg"
+    }
+  ],
+  "blogPosts": [
+    {
+      "id": 1,
+      "title": "How Does Carpet Change the Atmosphere of Your Home?",
+      "description": "Coordinating Carpets with your room decor can change the feel...",
+      "date": "Sep 29, 2024",
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/3/n-a-.jpg"
+    },
+    {
+      "id": 2,
+      "title": "The Ultimate Guide to King Size Bed Dimensions",
+      "description": "Understanding the size and dimensions of a king bed...",
+      "date": "Sep 25, 2024",
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/11/%D8%B4%D8%B1%D8%A7%D8%A1%20%D8%AF%D9%88%D8%B4%D9%83%20%D8%A7%D9%84%D8%B3%D8%B1%D9%8A%D8%B11660731862.jpg"
+    },
+    {
+      "id": 1,
+      "title": "How Does Carpet Change the Atmosphere of Your Home?",
+      "description": "Coordinating Carpets with your room decor can change the feel...",
+      "date": "Sep 29, 2024",
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/10/shutterstock_1303256605%20copy1660495845.jpg"
+    },
+    {
+      "id": 2,
+      "title": "The Ultimate Guide to King Size Bed Dimensions",
+      "description": "Understanding the size and dimensions of a king bed...",
+      "date": "Sep 25, 2024",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/27/_704fe71c-5cb1-4b8d-8af4-72c3d4aa64fc1725968230.jpg"
+    },
+    {
+      "id": 1,
+      "title": "How Does Carpet Change the Atmosphere of Your Home?",
+      "description": "Coordinating Carpets with your room decor can change the feel...",
+      "date": "Sep 29, 2024",
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/7/thumbnaildd-.jpg"
+    },
+    {
+      "id": 2,
+      "title": "The Ultimate Guide to King Size Bed Dimensions",
+      "description": "Understanding the size and dimensions of a king bed...",
+      "date": "Sep 25, 2024",
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/5/untitled-2ddf-.jpg"
+    },
+    {
+      "id": 1,
+      "title": "How Does Carpet Change the Atmosphere of Your Home?",
+      "description": "Coordinating Carpets with your room decor can change the feel...",
+      "date": "Sep 29, 2024",
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/6/blog-thumbnail-mattress-.jpg"
+    },
+    {
+      "id": 2,
+      "title": "The Ultimate Guide to King Size Bed Dimensions",
+      "description": "Understanding the size and dimensions of a king bed...",
+      "date": "Sep 25, 2024",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/27/_704fe71c-5cb1-4b8d-8af4-72c3d4aa64fc1725968230.jpg"
+    },
+    {
+      "id": 1,
+      "title": "How Does Carpet Change the Atmosphere of Your Home?",
+      "description": "Coordinating Carpets with your room decor can change the feel...",
+      "date": "Sep 29, 2024",
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/4/blog-thumbnail-.jpg"
+    },
+    {
+      "id": 2,
+      "title": "The Ultimate Guide to King Size Bed Dimensions",
+      "description": "Understanding the size and dimensions of a king bed...",
+      "date": "Sep 25, 2024",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/27/_704fe71c-5cb1-4b8d-8af4-72c3d4aa64fc1725968230.jpg"
+    },
+    {
+      "id": 1,
+      "title": "How Does Carpet Change the Atmosphere of Your Home?",
+      "description": "Coordinating Carpets with your room decor can change the feel...",
+      "date": "Sep 29, 2024",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/28/SaveClip.App_403859766_863853121897730_2383937890439857369_n1727595627.jpg"
+    },
+    {
+      "id": 2,
+      "title": "The Ultimate Guide to King Size Bed Dimensions",
+      "description": "Understanding the size and dimensions of a king bed...",
+      "date": "Sep 25, 2024",
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/3/n-a-.jpg"
+    }
+  ],
+  "recentPosts": [
+    {
+      "id": 1,
+      "title": "How Does Carpet Change...",
+      "date": "Sep 29, 2024",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/28/SaveClip.App_403859766_863853121897730_2383937890439857369_n1727595627.jpg"
+    },
+    {
+      "id": 1,
+      "title": "How Does Carpet Change...",
+      "date": "Sep 29, 2024",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/27/_704fe71c-5cb1-4b8d-8af4-72c3d4aa64fc1725968230.jpg"
+    },
+    {
+      "id": 1,
+      "title": "How Does Carpet Change...",
+      "date": "Sep 29, 2024",
+      "image": "https://al-saad-home.mo.cloudinary.net/uploads/blogs/26/Folded%20Matress%20-31725948186.jpg"
+    }
+  ],
+  "archive": [
+    "April 2024",
+    "March 2024",
+    "February 2024"
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "label": "Innovation"
+    },
+    {
+      "id": 2,
+      "label": "Decoration ideas"
+    },
+    {
+      "id": 3,
+      "label": "Warm and cozy"
+    },
+    {
+      "id": 4,
+      "label": "Innovation"
+    },
+    {
+      "id": 5,
+      "label": "Decoration ideas"
+    },
+    {
+      "id": 6,
+      "label": "Warm and cozy"
+    },
+    {
+      "id": 7,
+      "label": "Innovation"
+    },
+    {
+      "id": 8,
+      "label": "Decoration ideas"
+    },
+    {
+      "id": 9,
+      "label": "Warm and cozy"
+    },
+    {
+      "id": 10,
+      "label": "Innovation"
+    },
+    {
+      "id": 11,
+      "label": "Decoration ideas"
+    },
+    {
+      "id": 12,
+      "label": "Warm and cozy"
+    },
+    {
+      "id": 13,
+      "label": "Innovation"
+    },
+    {
+      "id": 14,
+      "label": "Decoration ideas"
+    },
+    {
+      "id": 15,
+      "label": "Warm and cozy"
+    },
+    {
+      "id": 16,
+      "label": "Innovation"
+    },
+    {
+      "id": 17,
+      "label": "Decoration ideas"
+    },
+    {
+      "id": 18,
+      "label": "Warm and cozy"
+    }
+  ],
+  "sizes": [
+    {
+      "id": 1,
+      "label": "240 X 260"
+    },
+    {
+      "id": 2,
+      "label": "230 X 250"
+    },
+    {
+      "id": 3,
+      "label": "230 X 260"
+    },
+    {
+      "id": 4,
+      "label": "260 X 250"
+    },
+    {
+      "id": 5,
+      "label": "King"
+    },
+    {
+      "id": 6,
+      "label": "250 X 270"
+    },
+    {
+      "id": 7,
+      "label": "Super King"
+    }
+  ],
+  "thickness": [
+    {
+      "id": 1,
+      "label": "Fluffy"
+    },
+    {
+      "id": 2,
+      "label": "Medium"
+    },
+    {
+      "id": 3,
+      "label": "Heavy"
+    }
+  ],
+  "material": [
+    {
+      "id": 1,
+      "label": "Microfiber"
+    },
+    {
+      "id": 2,
+      "label": "Velvet"
+    },
+    {
+      "id": 3,
+      "label": "Cotton"
+    },
+    {
+      "id": 4,
+      "label": "Modal"
+    },
+    {
+      "id": 5,
+      "label": "Linen"
+    },
+    {
+      "id": 6,
+      "label": "Cotton Blend"
+    }
+  ],
+  "colors": [
+    {
+      "id": 1,
+      "lable": "#FF0000"
+    },
+    {
+      "id": 2,
+      "lable": "#00FF00"
+    },
+    {
+      "id": 3,
+      "lable": "#0000FF"
+    },
+    {
+      "id": 4,
+      "lable": "#FFFF00"
+    },
+    {
+      "id": 5,
+      "lable": "#00FFFF"
+    },
+    {
+      "id": 6,
+      "lable": "#FF00FF"
+    },
+    {
+      "id": 7,
+      "lable": "#FFA500"
+    },
+    {
+      "id": 8,
+      "lable": "#800080"
+    },
+    {
+      "id": 9,
+      "lable": "#00FF00"
+    },
+    {
+      "id": 10,
+      "lable": "#FFC0CB"
+    },
+    {
+      "id": 11,
+      "lable": "#A52A2A"
+    },
+    {
+      "id": 12,
+      "lable": "#808080"
+    },
+    {
+      "id": 13,
+      "lable": "#000000"
+    },
+    {
+      "id": 14,
+      "lable": "#FFFFFF"
+    },
+    {
+      "id": 15,
+      "lable": "#C0C0C0"
+    },
+    {
+      "id": 16,
+      "lable": "#FFD700"
+    },
+    {
+      "id": 17,
+      "lable": "#F5F5DC"
+    },
+    {
+      "id": 18,
+      "lable": "#808000"
+    },
+    {
+      "id": 19,
+      "lable": "#008080"
+    },
+    {
+      "id": 20,
+      "lable": "#000080"
+    }
+  ],
+  "styles": [
+    {
+      "id": 1,
+      "label": "Plain"
+    },
+    {
+      "id": 2,
+      "label": "Stripe"
+    },
+    {
+      "id": 3,
+      "label": "Modern"
+    },
+    {
+      "id": 4,
+      "label": "Floral"
+    },
+    {
+      "id": 5,
+      "label": "Tropical"
+    },
+    {
+      "id": 6,
+      "label": "Jacquard"
+    },
+    {
+      "id": 7,
+      "label": "Casual"
+    },
+    {
+      "id": 8,
+      "label": "Embroidered"
+    },
+    {
+      "id": 9,
+      "label": "Dotted"
+    },
+    {
+      "id": 10,
+      "label": "Lace"
+    },
+    {
+      "id": 11,
+      "label": "Double Face"
+    },
+    {
+      "id": 12,
+      "label": "Geometric"
+    },
+    {
+      "id": 13,
+      "label": "Classic"
+    },
+    {
+      "id": 14,
+      "label": "Damask"
+    },
+    {
+      "id": 15,
+      "label": "Bohemian"
+    },
+    {
+      "id": 16,
+      "label": "Botanical"
+    },
+    {
+      "id": 17,
+      "label": "Embossed"
+    },
+    {
+      "id": 18,
+      "label": "Quilted"
+    },
+    {
+      "id": 19,
+      "label": "Crepe"
+    },
+    {
+      "id": 20,
+      "label": "Wedding"
+    },
+    {
+      "id": 21,
+      "label": "Ruffled"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538211.jpeg",
+      "title": "Comforter Set"
+    },
+    {
+      "id": 2,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538232.jpeg",
+      "title": "Duvet Cover Set"
+    },
+    {
+      "id": 3,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538251.jpeg",
+      "title": "BedSpread"
+    },
+    {
+      "id": 4,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538269.jpeg",
+      "title": "Bed Sheet"
+    },
+    {
+      "id": 5,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538289.jpeg",
+      "title": "Pillows"
+    },
+    {
+      "id": 6,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538309.jpeg",
+      "title": "Blanket  Throw"
+    },
+    {
+      "id": 7,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538325.jpeg",
+      "title": "Beds  Mattress"
+    },
+    {
+      "id": 8,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538343.jpeg",
+      "title": "Carpets"
+    },
+    {
+      "id": 9,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538361.jpeg",
+      "title": "Perfumes  Air fresheners  Cosmatics"
+    },
+    {
+      "id": 10,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538382.jpeg",
+      "title": "Bathroom"
+    },
+    {
+      "id": 11,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538412.jpeg",
+      "title": "Hotel Line"
+    },
+    {
+      "id": 12,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1617538433.jpeg",
+      "title": "Home Accessories"
+    },
+    {
+      "id": 13,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/1641630789.jpg",
+      "title": "Kitchen"
+    },
+    {
+      "id": 14,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/pajamas1664611544.jpg",
+      "title": "Pajamas  Lingerie"
+    },
+    {
+      "id": 15,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/600x400-11698665684.jpg",
+      "title": "Bags"
+    },
+    {
+      "id": 16,
+      "src": "https://al-saad-home.mo.cloudinary.net/uploads/categories/600x400-baby-category1715260633.jpg",
+      "title": "Baby"
+    }
+  ],
+  "blogDetails": [
+    {
+      "title": "9 Tips to know before buying your (bed mattress)",
+      "dates": "Sep 25, 2024",
+      "comments": "0 Comment",
+      "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/blogs/11/%D8%B4%D8%B1%D8%A7%D8%A1%20%D8%AF%D9%88%D8%B4%D9%83%20%D8%A7%D9%84%D8%B3%D8%B1%D9%8A%D8%B11660731862.jpg",
+      "subtitle": "9 Tips to Know Before Buying Your Bed Mattress",
+      "introduction": "The most important product in the bedroom is the bed mattress, because it is the basis of your comfort in sleep, so we advise you to be careful and do not rush when buying a mattress.",
+      "tips": [
+        {
+          "text": "1. Do not be fooled by the general appearance of the mattress, the important aspect is its quality, as you spend a third of your life sleeping, so make sure you choose a bed mattress suitable for you, the subject is relative and varies from person to person."
+        },
+        {
+          "text": "2. Avoid a soft, non-hard bed mattress if the weight of individuals is high or heavy."
+        },
+        {
+          "text": "3. There is no perfect mattress for everyone, every person has different desires, sleeping positions, and health."
+        },
+        {
+          "text": "4. If your mattress is too hard and you don't want to replace it, we recommend that you buy the hotel layer, as it adds comfort to your bed."
+        },
+        {
+          "text": "5. The mattress should support every part of your body. For example, a mattress that is too hard does not correspond to the normal curvature of the spine and causes back pain. A soft mattress does not provide enough support for the back, causing slackness of the vertebrae, as the shoulder does not remain at one level with the rest of the body. Generally, there is no certain standard for the degree of rigidity; experimenting before buying is the best solution. Medium-hard mattresses are the most suitable for most people."
+        },
+        {
+          "text": "6. Find the right size for your needs. If you feel constrained by a narrow bed, then you need a more spacious double bed. The king size may be large for one person, but it's great if you like extra space."
+        },
+        {
+          "text": "7. If you are sharing a bed, you need to look for something that meets both you and your partner's needs. This can be difficult, especially considering that the right support varies from one individual to another. It depends on height, weight, build, and how you feel more comfortable sleeping. Going to the store together makes it simpler to come to a mutually agreeable conclusion."
+        },
+        {
+          "text": "8. Focus on comfort. The most important thing to consider is your comfort level. Even if you buy the most expensive mattress, you will not get the best sleep experience in your life if you are not comfortable with it. What you are looking for in a mattress boils down to several other factors, such as size, hardness, and the type of material used in the mattress."
+        },
+        {
+          "text": "9. Did you know that even the best mattress, if placed on a sagging bed base, will also sag? You don’t want to spend time and money buying the perfect mattress only to have it perform poorly because of a poor bed base. The type of base you have will play a big role in determining the feel and functionality of your mattress."
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "name": "Cannon Duvet Cover Set Without Filling 3 PCS - Baby Pink",
+      "imageUrl": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/3013/thumb/cov-little-star-pink-12-1-.jpg",
+      "color": {
+        "name": "Baby Pink",
+        "hexCode": "#ECC3CB"
+      },
+      "size": "110 x 140",
+      "model": "Ca-Q.Cover-3 Pcs-Little Star-Pink",
+      "quantity": 1,
+      "price": {
+        "currency": "AED",
+        "amount": 149
+      },
+      "rating": {
+        "label": "Give Rating and Review",
+        "icon": "StarBorderOutlinedIcon",
+        "hoverColor": "#bb1f2a",
+        "defaultColor": "#222425",
+        "cursor": "pointer"
+      }
+    },
+    {
+      "id": 1,
+      "name": "Cannon Duvet Cover Set Without Filling 3 PCS - Baby Pink",
+      "imageUrl": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/3013/thumb/cov-little-star-pink-12-1-.jpg",
+      "color": {
+        "name": "Baby Pink",
+        "hexCode": "#ECC3CB"
+      },
+      "size": "110 x 140",
+      "model": "Ca-Q.Cover-3 Pcs-Little Star-Pink",
+      "quantity": 1,
+      "price": {
+        "currency": "AED",
+        "amount": 149
+      },
+      "rating": {
+        "label": "Give Rating and Review",
+        "icon": "StarBorderOutlinedIcon",
+        "hoverColor": "#bb1f2a",
+        "defaultColor": "#222425",
+        "cursor": "pointer"
+      }
+    }
+  ],
+  "bundleProduct": [
+    {
+      "id": 1,
+      "name": "Olive Oil Soap",
+      "price": "85 AED",
+      "originalPrice": "120 AED",
+      "discount": "60% off",
+      "color": "green",
+      "quantity": 2,
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12108/thumb/dsc491017097060491718976097.jpg"
+    },
+    {
+      "id": 2,
+      "name": "TestVar07",
+      "price": "170 AED",
+      "originalPrice": "190 AED",
+      "discount": "11% off",
+      "color": "brown",
+      "size": "5XL",
+      "quantity": 90,
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12096/thumb/161722603193.jpg"
+    },
+    {
+      "id": 3,
+      "name": "TestVar8",
+      "price": "120 AED",
+      "originalPrice": "160 AED",
+      "discount": "25% off",
+      "color": "brown",
+      "size": "5XL",
+      "quantity": 73,
+      "image": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12096/thumb/171722603194.jpg"
+    }
+  ]
+}

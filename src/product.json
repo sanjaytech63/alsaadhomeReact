@@ -1,0 +1,388 @@
+{
+    "recommendedSlider": [
+        {
+            "id": 1,
+            "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-161728223117.jpg",
+            "price": "199 AED",
+            "rating": 4
+        },
+        {
+            "id": 2,
+            "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+            "price": "249 AED",
+            "rating": 5
+        },
+        {
+            "id": 3,
+            "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+            "price": "179 AED",
+            "rating": 3
+        },
+        {
+            "id": 4,
+            "title": "Jack Velvet Kids Comforter Bedding Set 4 PCS - L.Beige",
+            "image": "https://al-saad-home.mo.cloudinary.net/uploads/products/14702/thumb/jack-111728223115.jpg",
+            "price": "179 AED",
+            "rating": 4
+        }
+    ],
+    "productDetailsImage": [
+        {
+            "src": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/11666/thumb/jasmine-0021682584449.jpg",
+            "alt": "Pillow Image 1"
+        },
+        {
+            "src": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/unboxing_challenge/screenshot-2024-07-09-1556281720521386.png",
+            "alt": "Pillow Image 2"
+        },
+        {
+            "src": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/unboxing_challenge/screenshot-2024-07-09-1557311720521388.png",
+            "alt": "Pillow Image 3"
+        },
+        {
+            "src": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/unboxing_challenge/screenshot-2024-07-09-1602121720521388.png",
+            "alt": "Pillow Image 1"
+        },
+        {
+            "src": "https://img.youtube.com/vi/AXfoLRi_Efg/maxresdefault.jpg",
+            "alt": "Pillow Image 2"
+        },
+        {
+            "src": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/engagement_categories/sub-catgory1709813964.jpg",
+            "alt": "Pillow Image 3"
+        },
+        {
+            "src": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/engagement_categories/cat-engagement17138531841714302011.jpg",
+            "alt": "Pillow Image 1"
+        },
+        {
+            "src": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/engagement_categories/sub-catgory17098124981714491386.jpg",
+            "alt": "Pillow Image 2"
+        }
+    ],
+    "bundleCard": [
+        {
+            "id": 1,
+            "title": "bundle -091",
+            "imgSrc": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12046/thumb/0217029769341703158835.jpg",
+            "offerTitle": "5432563225",
+            "price": 50,
+            "originalPrice": 60,
+            "discount": 5,
+            "link": "https://staging.alsaadhome.com/en/aed/products/bundle-091-22305"
+        },
+        {
+            "id": 2,
+            "title": "bundle -091",
+            "imgSrc": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/7692/thumb/lemon-soap-11654607508.jpg",
+            "offerTitle": "7654345654",
+            "price": 50,
+            "originalPrice": 60,
+            "discount": 5,
+            "link": "https://staging.alsaadhome.com/en/aed/products/bundle-091-22305"
+        }
+    ],
+    "review": [
+        {
+            "id": 1,
+            "name": "Sanjay",
+            "image": "https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg",
+            "date": "21 Dec, 2023",
+            "rating": 20,
+            "reviewTitle": "Awesome product exactly",
+            "reviewBody": "This Product is Awesome",
+            "likes": 0
+        },
+        {
+            "id": 2,
+            "name": "beart",
+            "image": "https://media.istockphoto.com/id/1311957094/photo/handsome-smiling-young-man-with-crossed-arms-portrait.jpg?s=612x612&w=0&k=20&c=zALF0xV8gL-W9IooXcbEE95aejQhYYkBslwjPMqlUxA=",
+            "date": "11 Dec, 2023",
+            "rating": 80,
+            "reviewTitle": "Awesome product exactly",
+            "reviewBody": "Test",
+            "likes": 0
+        },
+        {
+            "id": 3,
+            "name": "Gaurav",
+            "image": "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
+            "date": "08 Dec, 2023",
+            "rating": 100,
+            "reviewTitle": "this is the best",
+            "reviewBody": "Best Product",
+            "likes": 0
+        }
+    ],
+    "productInfo": [
+        {
+            "model": "Arm-Q.Cover-3 Pcs-Luri 12",
+            "brand": {
+                "name": "Armada",
+                "link": "https://www.alsaadhome.com/en/aed/brand/armada"
+            },
+            "tags": [
+                {
+                    "label": "Luri",
+                    "link": "#"
+                },
+                {
+                    "label": "Duvet Cover Bedding Set",
+                    "link": "#"
+                },
+                {
+                    "label": "طقم تلبسية",
+                    "link": "#"
+                },
+                {
+                    "label": "لوري",
+                    "link": "#"
+                }
+            ],
+            "features": [
+                "It is made with strength and durability to maintain its color stability and graphics stability with long use.",
+                "Super soft, comfortable, improves your sleep level and makes you sleep better.",
+                "Elastic sheet made of the best materials, strong and durable, designed to easily surround and protect the mattress."
+            ],
+            "productDetails": {
+                "comforter": "1 PC Comforter (160 × 220) cm (Without filling)",
+                "fittedSheet": "1 PC Fitted sheet (120 × 200) + 25 cm",
+                "pillowShams": "1 PC Pillow Shams (50 x 70) cm + 5",
+                "color": "Multi Color",
+                "material": "Microfiber"
+            },
+            "shareLinks": {
+                "facebook": "https://www.facebook.com/sharer/sharer.php?u=https://alsaadhome.page.link/kEUf7VJ578Q1xWyU7&display=popup",
+                "whatsapp": "https://api.whatsapp.com/send?text=https://alsaadhome.page.link/kEUf7VJ578Q1xWyU7"
+            }
+        }
+    ],
+    "product": [
+        {
+            "id": 1,
+            "title": "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
+            "price": 49,
+            "oldPrice": 99,
+            "discount": "51% Off",
+            "vatIncluded": true,
+            "ratings": 0,
+            "colorOptions": [
+                "https://al-saad-home.mo.cloudinary.net/uploads/products/14718/luri-121728653637.jpg",
+                "https://al-saad-home.mo.cloudinary.net/uploads/pattern/luri-081728651944.jpg",
+                "https://al-saad-home.mo.cloudinary.net/uploads/pattern/luri-091728651944.jpg",
+                "https://al-saad-home.mo.cloudinary.net/uploads/pattern/luri-101728651944.jpg",
+                "https://al-saad-home.mo.cloudinary.net/uploads/pattern/luri-121728651944.jpg"
+            ],
+            "size": "160 X 220",
+            "availability": 12,
+            "deliveryText": "Check your area to see if we deliver this product on same day or tomorrow.",
+            "paymentText": "Or split in 3 payments of AED 16.33 - No late fees, Sharia compliant!"
+        }
+    ],
+    "privecyPolicy": [
+        {
+            "introduction": {
+                "statement": "We respect your privacy and secure your online safety seriously.",
+                "purpose": "Provide best products, efficient customer service, and fast updates."
+            },
+            "informationCollectionAndUsage": {
+                "goals": [
+                    "Help you sign in without re-entering information.",
+                    "Help you find products, services quickly.",
+                    "Create relevant content for you.",
+                    "Alert you to new products, services."
+                ],
+                "registrationAndOrdering": {
+                    "purpose": "For billing purposes, order fulfillment, communication, and internal marketing.",
+                    "collectedInfo": [
+                        "name",
+                        "address",
+                        "gender",
+                        "shipping and billing address",
+                        "phone number",
+                        "email"
+                    ]
+                },
+                "emailAddresses": {
+                    "purposes": [
+                        "Receive promotional notices",
+                        "Sign up for newsletters",
+                        "Participate in contests"
+                    ]
+                },
+                "cookiesAndTechnology": {
+                    "cookies": {
+                        "description": "Small pieces of information stored as text files by your browser.",
+                        "purpose": "Enable shopping features, track browsing, etc."
+                    },
+                    "webBeacons": {
+                        "description": "Assist in delivering cookies and tracking site usage.",
+                        "purpose": "Help determine if web pages have been viewed."
+                    },
+                    "thirdPartyAdvertising": {
+                        "purpose": "Tailor site content and serve ads."
+                    }
+                },
+                "logFiles": {
+                    "collectedInfo": [
+                        "IP address",
+                        "Internet service provider",
+                        "date/time stamps"
+                    ]
+                },
+                "agePolicy": {
+                    "policy": "We do not collect personal information from children under age 13.",
+                    "recommendation": "Users under 13 should rely on a parent or guardian."
+                },
+                "productReviews": {
+                    "visibleInfo": "Geographic location of reviewer",
+                    "disclosure": "Do not disclose personal information in reviews."
+                }
+            },
+            "informationUseAndDisclosure": {
+                "internalUse": "Process orders, improve site content and layout, internal marketing.",
+                "communications": "Send order-related and service-related communications.",
+                "externalUse": {
+                    "disclosureToThirdParties": [
+                        "Service providers for order delivery",
+                        "Required disclosure by law",
+                        "Fraud prevention"
+                    ]
+                }
+            },
+            "dataSecurity": {
+                "measures": [
+                    "SSL encryption",
+                    "Restricted access to personal information",
+                    "Third-party physical security for computer hardware"
+                ],
+                "disclaimer": "No system is 100% secure, online or offline."
+            },
+            "purposesOfUse": [
+                "Personalize experience",
+                "Improve website and customer service",
+                "Process transactions",
+                "Send periodic emails"
+            ],
+            "userRights": {
+                "optOut": {
+                    "promotionalEmails": "Option to unsubscribe from emails",
+                    "cookies": "Control cookie usage via browser settings"
+                },
+                "dataRequests": {
+                    "accessOrDelete": "Request data access, correction, or deletion via online form or email."
+                }
+            },
+            "modifications": {
+                "policyUpdates": "We may update this policy from time to time."
+            }
+        }
+    ],
+    "tremsConditions": [
+        {
+            "title": "Who Are We",
+            "content": [
+                "Al-Saad Home Company is a company established under the laws of the United Arab Emirates. It manages the website and the Al-Saad Home application for smartphones, enabling users to browse the company's products and request purchases. Al-Saad Home reserves the right to delete, add, or amend any content in the application and website for any reason without referring users, and the company will make every effort to provide the information as accurately as possible.",
+                "All terms and conditions of banking transactions, refunds, or disputes apply under the laws of the United Arab Emirates."
+            ]
+        },
+        {
+            "title": "Terms and Conditions",
+            "content": [
+                "This page contains the policy and terms of use of the Al-Saad Home application, and users will be notified in the event of an update or any amendment. The website and application policies and terms and conditions may be changed or updated from time to time to meet requirements and standards. Customers are encouraged to frequently visit these sections for updates regarding website changes."
+            ]
+        },
+        {
+            "title": "Privacy Policy",
+            "content": [
+                "In order to buy any product, the site or application will require your registration and entering your information or registering as a guest without creating an account. This requires entering your information such as contact number, name, address, and credit card. Once you complete the purchase, this means your agreement to the terms and conditions of the website and the smartphone application.",
+                "If the purchase is made from your account or as a guest, you are responsible for the accuracy of the information provided and the purchase process.",
+                "You are responsible for maintaining the confidentiality of your account and password and preserving the information recorded with us when using your personal computer, electronic device, or smartphone.",
+                "Users' data will be used only for the purposes of providing our services, delivering our goods, and informing them of our marketing offers.",
+                "The customer may not use the application if they are a minor (less than 18 years old).",
+                "All credit/debit card details and personally identifiable information will NOT be stored, sold, shared, rented, or leased to any third parties."
+            ]
+        },
+        {
+            "title": "Payment and Purchase",
+            "content": [
+                "Al-Saad Home provides multiple payment methods: cash on delivery, bank transfer, or electronic payment and installment.",
+                "The application and website do not keep any bank data related to the customer at all. The saved data relates only to the name, contact number, address, and email.",
+                "If an amount above the amount requested for the purchase was transferred by mistake, Al-Saad Home will refund the excess amount within 14 days after investigating the purchase process.",
+                "Once the purchase order is completed by the user, the user must pay all required amounts, including the price of the requested products, VAT, and shipping (if applicable)."
+            ]
+        },
+        {
+            "title": "Products and Merchandise",
+            "content": [
+                "Al-Saad Home seeks to provide the products on the website and the application to be as close to reality as possible in terms of colors, images, and description.",
+                "The prices of products, such as events, offers, and discounts, may vary from time to time, so users should visit the website and application to view the latest goods and prices.",
+                "If the purchased goods are unavailable in stock, the customer will be contacted to inform them of the unavailability and to obtain approval to replace or delete the item from the invoice."
+            ]
+        },
+        {
+            "title": "Shipping",
+            "content": [
+                "To complete the purchase process, you are responsible for providing all required data correctly and accurately.",
+                "Al-Saad Home is not responsible for delays in shipping caused by inaccurate information or lack of customer response.",
+                "Orders typically take 2 to 4 working days to arrive, though it may extend longer for certain products like mattresses.",
+                "If any issue arises with the product during shipping, Al-Saad Home will replace the product at no additional cost.",
+                "Products are carefully inspected before being packed and shipped to ensure there are no deficiencies.",
+                "Al-Saad Home offers various shipping methods: same-day shipping, next-day shipping, and normal shipping (2-4 days). Some orders may take up to 7 days depending on the products."
+            ]
+        },
+        {
+            "title": "Return & Exchange Policies",
+            "content": [
+                "Al-Saad Home provides both return & exchange services according to the company's policy.",
+                "Return is accepted within 3 days, and exchange is accepted within 7 days of purchase, provided that:",
+                "The original invoice is available.",
+                "The products are in their original condition, unopened, and unused.",
+                "The original purchase invoice must be presented for either a return or exchange.",
+                "If return conditions are met, the amount will be refunded as credit to the customer's e-wallet, which can be used within 6 months of the return date.",
+                "For health and safety reasons, pillows and towels cannot be exchanged or returned."
+            ]
+        }
+    ],
+    "chekout": [
+        {
+            "id": 1,
+            "img": "https://al-saad-home.mo.cloudinary.net/uploads/products/14594/thumb/belmond-091726558208.jpg",
+            "name": "Luxury Faux Cashmere Digital Carpet",
+            "price": 249
+        },
+        {
+            "id": 2,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/image-800x500-21701861226.jpg",
+            "name": "Belmond Comforter Bedding Set 6 PCS",
+            "price": 299
+        },
+        {
+            "id": 3,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/20501700129385.jpg",
+            "name": "Modern Geometric Area Rug",
+            "price": 199
+        },
+        {
+            "id": 4,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/grid-s16951282741700565808.jpg",
+            "name": "Velvet Touch Premium Carpet",
+            "price": 349
+        },
+        {
+            "id": 5,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/11-1116995368141700628903.jpg",
+            "name": "Elegant Floral Pattern Rug",
+            "price": 279
+        },
+        {
+            "id": 6,
+            "img": "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/percentage_amount_banners/download-21704966257.jpeg",
+            "name": "Classic Persian Design Carpet",
+            "price": 399
+        }
+    ]
+}
