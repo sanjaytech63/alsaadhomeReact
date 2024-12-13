@@ -67,6 +67,7 @@ const useCartStore = create((set, get) => ({
         setCartIds([...cartIds, id.toString()]);
         set({ item_count: res.item_count });
       }
+      await get().getCart('');
     } catch (e) {
       showToast("warning", e.response?.data?.message || "An error occurred", "danger");
     } finally {
@@ -90,7 +91,7 @@ const useCartStore = create((set, get) => ({
   },
 
   getCart: async (id) => {
-    const { setLoading, setCartItems } = get();
+    const { setLoading, setCartItems, setCartDetails } = get();
     try {
       setLoading(true);
       const data = { customer_id: id, cart_id: localStorage.getItem('cart_id') };
@@ -184,6 +185,7 @@ const useCartStore = create((set, get) => ({
 
   isItemInCart: (product_variant_id) => {
     const { cartIds } = get();
+
     return cartIds.includes(product_variant_id.toString());
   },
 }));

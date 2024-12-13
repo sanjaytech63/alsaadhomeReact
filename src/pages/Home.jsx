@@ -22,6 +22,7 @@ import NewArrivalsShimmer from "../components/ShimerEffect/NewArrivalsShimmer";
 import ProductShimmer from "../components/ShimerEffect/ProductShimmer";
 import { useLocation } from "react-router-dom";
 import useCartStore from "../store/useCartStore";
+import { Box, Typography } from "@mui/material";
 // import RecentlyViewed from "../components/RecentlyViewed";
 
 const Home = () => {
@@ -30,12 +31,12 @@ const Home = () => {
     const [error, setError] = useState(null);
     const location = useLocation();
     const { product_id, variant_id } = location.state || {};
-    const {fetchCartProductIds} = useCartStore()
+    const { fetchCartProductIds } = useCartStore()
 
     useEffect(() => {
-        fetchCartProductIds()
+        fetchCartProductIds();
     }, [])
-    
+
     const fetchData = useCallback(async () => {
         setLoading(true);
         setError(null);
@@ -55,11 +56,11 @@ const Home = () => {
             setLoading(false);
         }
     }, [product_id, variant_id]);
-    
+
     useEffect(() => {
         fetchData();
     }, [fetchData]);
-    
+
 
     if (loading) {
         return <Loading />;
@@ -93,7 +94,11 @@ const Home = () => {
                     <Newsletter />
                 </>
             ) : (
-                <p>No data available.</p>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                    <Typography variant="h6" >
+                        No data available
+                    </Typography>
+                </Box>
             )}
         </div>
     );

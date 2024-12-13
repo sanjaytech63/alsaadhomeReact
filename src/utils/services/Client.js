@@ -6,7 +6,7 @@ import useUserStore from "../../store/user";
 import { useSettingsStore } from "../../store/useSettingsStore";
 
 const axiosInstance = axios.create({
-  baseURL: "https://stagingapp.alsaadhome.com/api/v22/",
+  baseURL: "https://stagingapp.alsaadhome.com/api/v23/",
   headers: {
     'Accept': 'application/json',
     'Authorization': 'gUmwgu9OVfXE9LVCaAU8xw74CownYWQ0HIfFGvWw',

@@ -1,13 +1,15 @@
 import { Box, Typography, Container, Breadcrumbs, Card, CardContent, Grid, Button } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaShoppingCart } from "react-icons/fa";
 import { Add, Remove } from '@mui/icons-material';
+import LinearProgress from '@mui/material/LinearProgress';
 import SearchBar from '../components/SearchBar';
 import { RiDeleteBin5Line } from "react-icons/ri";
+import useCartStore from '../store/useCartStore';
 
-const Cart = ({ image, title, price, color, size, pattern }) => {
+const Cart = ({ image, title, list_price, colors, sizes, pattern_image }) => {
     const [quantity, setQuantity] = useState(1);
 
     const incrementQuantity = () => {
@@ -35,34 +37,38 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
                     alt={title}
                     loading="lazy"
                     sx={{
-                        maxWidth: { sm: '250px', xs: '110px' },
-                        height: '100%',
-                        objectFit: 'cover'
+                        width: '250px',
+                        height: '200px',
+                        objectFit: 'cover',
                     }}
                 />
-
             </Box>
-            <Box sx={{}}>
-                <CardContent>
+            <Box sx={{ width: '100%' }}>
+                <CardContent sx={{ lineHeight: '2', }}>
                     <Typography sx={{
                         fontSize: { sm: '1.1rem', xs: '1rem' }, fontWeight: 600, textTransform: 'capitalize', display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         WebkitLineClamp: 2,
+                        cursor: "pointer",
+                        lineHeight: '2',
+                        ":hover": {
+                            color: "#bb1f2a"
+                        }
                     }}>{title}</Typography>
-                    <Typography variant="body1" sx={{ fontWeight: '500' }}>Price: {price} AED</Typography>
-                    {color && <Typography variant="body1" sx={{ fontWeight: '500' }}>Color:   <span style={{ backgroundColor: color, borderRadius: '50%', padding: '0 10px' }}> </span></Typography>}
-                    {pattern && <Typography variant="body1" sx={{ fontWeight: '500' }}>Pattern:  <img src={pattern} alt="pattern" loading="lazy" style={{ width: '20px', height: '20px' }} /></Typography>}
-                    <Typography variant="body1" sx={{ fontWeight: '500' }}>Size:  {size}</Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1 }}>
+                    <Typography variant="body1" sx={{ fontWeight: '500', lineHeight: '2' }}>Price: {list_price} AED</Typography>
+                    {colors && colors.length > 0 ? <Typography variant="body1" sx={{ fontWeight: '500', lineHeight: '2' }}>Color:   <span style={{ backgroundColor: colors, borderRadius: '50%', padding: '0 10px', marginLeft: '10px' }}> </span></Typography> : null}
+                    {pattern_image && <Typography variant="body1" sx={{ fontWeight: '500', lineHeight: '2' }}>{pattern_image && "Pattern:"}   <img src={pattern_image} alt="pattern" loading="lazy" style={{ width: '20px', height: '20px', marginLeft: '10px' }} /></Typography>}
+                    <Typography variant="body1" sx={{ fontWeight: '500', mb: 1 }}>{sizes && "Size:"}   {sizes}</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: "5px" }}>
                             <Typography onClick={decrementQuantity} sx={{ backgroundColor: "#eee", mr: 1 }}><Remove /></Typography>
                             <Typography sx={{ border: "solid 1px #ddd", px: 2 }} variant="body1">{quantity}</Typography>
                             <Typography onClick={incrementQuantity} sx={{ backgroundColor: "#eee", ml: 1 }}><Add /></Typography>
                         </Box>
-                        <Box component="span" onClick={handleDelete} sx={{ color: '#bb1f2a', cursor: 'pointer', mr: 2 }}>
-                            <RiDeleteBin5Line size={25} />
+                        <Box component="div" onClick={handleDelete} sx={{ color: '#bb1f2a', cursor: 'pointer', mr: 2 }}>
+                            <RiDeleteBin5Line sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }} size={25} />
                         </Box>
                     </Box>
                 </CardContent>
@@ -74,23 +80,11 @@ const Cart = ({ image, title, price, color, size, pattern }) => {
 const CartPage = () => {
     const nevigate = useNavigate();
 
-    const products = [
-        {
-            image: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14727/thumb/lori-051728805716.jpg',
-            title: 'Lori Hotel Cotton Comforter Bedding Set 6 PCS - King Size',
-            price: '349',
-            color: '#f8a5c2',
-            size: 'Super King',
-        },
-        {
-            image: 'https://al-saad-home.mo.cloudinary.net/uploads/products/14544/thumb/tokyo-121725627128.jpg',
-            title: 'Lori Hotel Cotton Comforter Bedding Set 6 PCS - King Size',
-            price: '99',
-            pattern: 'https://via.placeholder.com/20',
-            size: '180 X 240',
-        },
-
-    ];
+    const { cartItems, getCart } = useCartStore();
+    
+    useEffect(() => {
+        getCart();
+    }, []);
 
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(Boolean);
@@ -98,13 +92,13 @@ const CartPage = () => {
         <>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
-                    <Box sx={{ display: { sm: "flex", xs: "block" }, justifyContent: "space-between", alignItems: "center", py: {sm:"30px",xs:"15px"},  fontFamily: "Roboto" }}>
+                    <Box sx={{ display: { sm: "flex", xs: "block" }, justifyContent: "space-between", alignItems: "center", py: { sm: "30px", xs: "15px" }, fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Shopping Cart
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                             <Link className='breadcrumbs-hover'
-                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize',}}
+                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', }}
                                 to="/"
                             >
                                 Home
@@ -139,18 +133,22 @@ const CartPage = () => {
             <Container maxWidth="lg" sx={{ py: 5 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={8}>
-                        {products &&
-                            products.map((product, index) => (
-                                <Cart key={index} {...product} />
+                        {cartItems?.branch && cartItems?.branch?.map((item) => (
+                            item.item && item.item.map((item) => (
+                                <Cart key={item.cart_item_id} {...item} />
                             ))
-                        }
+                        ))}
                     </Grid>
 
                     <Grid item xs={12} md={4}>
+                        <Box sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)",mb:1 }}>
+                            <Typography  sx={{ mb:1,color: "#687188", textTransform: "capitalize", fontSize:{sm:"14px",xs:"12px"},textAlign:"center" }}>{cartItems?.free_delivery_title}</Typography>
+                            <LinearProgress color="error" variant="determinate" sx={{height:"6px",borderRadius:"4px"}} value={cartItems?.progress} />
+                        </Box>
                         <Box sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
                             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-around", my: 2 }}>
                                 <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "600", fontSize: { sm: "18px", xs: "16px" } }}>Sub Total</Typography>
-                                <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "600", fontSize: { sm: "18px", xs: "16px" } }} >448.00 AED</Typography>
+                                <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "600", fontSize: { sm: "18px", xs: "16px" } }} >{cartItems?.total_amount} AED</Typography>
                             </Box>
                             <Button onClick={() => nevigate('/chekout')} variant="contained" sx={{ backgroundColor: "#bb1f2a", padding: "10px", mt: 1 }} fullWidth>
                                 Proceed To Checkout

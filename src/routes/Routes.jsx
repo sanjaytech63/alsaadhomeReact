@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       { path: "/category/:subcategory", element: <SubCategoryList /> },
       { path: "/search", element: <ProductListing /> },
       { path: "/brand/:brandName", element: <ProductListing /> },
-      { path: "/category/:category/:subcategory", element: <ProductListing /> },
+      { path: "/category/:category/:id/:slug", element: <ProductListing /> },
       { path: "/smart-shopping/details/:id", element: <SmartShoppingDetails /> },
       { path: "/products/details/:id", element: <SmartShoppingDetails /> },
 

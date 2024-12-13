@@ -8,35 +8,38 @@ const SubCategoryList = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    let { subcategory } = useParams();
+    const { subcategory, id, slug } = useParams();
     const location = useLocation();
-    const { type, id } = location.state || {};
     const pathnames = location.pathname.split('/').filter(x => x);
-
-    const fetchCategory = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const requestData = {
-                category_id: subcategory,
-                id: id || "",
-                type: type || "",
-            };
-            const response = await homeApi.getSubCategory(requestData);
-            if (response && response.status === 200) {
-                setData(response.data);
-            }
-        } catch (err) {
-            setError("Failed to load data. Please try again.");
-            console.error("Error fetching data:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
+  
+    console.log(subcategory, id, slug);
+    
 
     useEffect(() => {
+        const fetchCategory = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const requestData = {
+                    category_id: subcategory,
+                    id: id || "",
+                    type: slug || "",
+                };
+                const response = await homeApi.getSubCategory(requestData);
+                if (response && response.status === 200) {
+                    setData(response.data);
+                }
+            } catch (err) {
+                setError("Failed to load data. Please try again.");
+                console.error("Error fetching data:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchCategory();
-    }, []);
+    }, [subcategory, id, slug]);
+
 
     if (error) {
         return <p>{error}</p>;
@@ -107,7 +110,8 @@ const SubCategoryList = () => {
                                         type: 'category'
                                     }}
 
-                                    to={`/category/${subcategory}/${item.slug}`}
+                                    to={`/category/${encodeURIComponent(subcategory)}/${item?.id}/${encodeURIComponent(item?.slug)}`}
+
                                     key={item.id}
                                 >
                                     <Box
