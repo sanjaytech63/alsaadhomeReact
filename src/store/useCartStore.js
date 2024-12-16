@@ -67,6 +67,7 @@ const useCartStore = create((set, get) => ({
         setCartIds([...cartIds, id.toString()]);
         set({ item_count: res.item_count });
       }
+      await get().getCart('');
     } catch (e) {
       showToast("warning", e.response?.data?.message || "An error occurred", "danger");
     } finally {
@@ -90,7 +91,7 @@ const useCartStore = create((set, get) => ({
   },
 
   getCart: async (id) => {
-    const { setLoading, setCartItems } = get();
+    const { setLoading, setCartItems, setCartDetails } = get();
     try {
       setLoading(true);
       const data = { customer_id: id, cart_id: localStorage.getItem('cart_id') };
@@ -156,24 +157,12 @@ const useCartStore = create((set, get) => ({
     }
   },
 
-  deleteCartItem: async (branchIndex, itemIndex, cart_item_id, id) => {
-    const params = { cart_id: localStorage.getItem('cart_id'), cart_item_id: "156" };
-    const { cartIds, setCartIds, cartItems, setCartItems } = get();
+  deleteCartItem: async (branchIndex, itemIndex,) => {
+    const params = { cart_id: localStorage.getItem('cart_id'), cart_item_id: itemIndex };
+    
     try {
       const response = await cardApi.removeCartItem(params);
       if (response && response.status === 200) {
-        if (cartIds.includes(id.toString())) {
-          const updatedCartIds = new Set(cartIds);
-          updatedCartIds.delete(id.toString());
-          setCartIds([...updatedCartIds]);
-          set({ item_count: updatedCartIds.size });
-        }
-        const updatedCartItems = [...cartItems.branch];
-        updatedCartItems[branchIndex].item.splice(itemIndex, 1);
-        setCartItems({
-          ...cartItems,
-          branch: updatedCartItems,
-        });
         showToast("success", 'Item removed from cart', 'success');
         await get().getCart('');
       }

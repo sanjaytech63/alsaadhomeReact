@@ -6,7 +6,7 @@ import {
     useTheme,
     useMediaQuery,
 } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 // import tamaraImg from "../../src/assets/tamara.svg";
 import jsonData from "../../src/blogData.json";
 import data from "../../src/product.json";
@@ -72,7 +72,8 @@ const ProductDetails = () => {
     // Memoize frequently accessed props
     const location = useLocation();
     const { product_id, variant_id } = location.state || {};
-
+    const {id} = useParams()
+    console.log(product_id, variant_id);
     const memoizedProps = useMemo(
         () => ({
             imageSlider,
@@ -107,16 +108,17 @@ const ProductDetails = () => {
     );
 
     const fetchData = useCallback(async () => {
-        if (!product_id || !variant_id) return;
+        // if (!product_id || !variant_id) return;
 
         setLoading(true);
         setError(null);
         try {
             const requestBody = {
+                product_slug: id,
                 "product_id": product_id,
                 "product_variant_id": variant_id,
             };
-
+            console.log(requestBody);
             const response = await homeApi.getProductDetails(requestBody);
             if (response && response.status === 200) {
                 const similarProducts = response.data?.similar_product || [];
@@ -161,7 +163,7 @@ const ProductDetails = () => {
                             </Box>
                         </Grid>
                         {/* Product Info */}
-                        <MainInfoCom {...memoizedProps} proDetails={proDetails} variants={variants} />
+                        <MainInfoCom {...memoizedProps} proDetails={proDetails} variants={variants}/>
                     </Grid>
                     <ReviewSection />
                     <BundleProductsModal bundleProduct={bundleProduct} open={open} handleClose={handleClose} />

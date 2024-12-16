@@ -5,7 +5,6 @@ import { BsCart3 } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
-import chekoutJson from '../../product.json';
 import { Close } from '@mui/icons-material';
 import useCartStore from '../../store/useCartStore';
 const Navbar = () => {
@@ -13,9 +12,12 @@ const Navbar = () => {
     const [openSearch, setSearchOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-    const data = chekoutJson.chekout
 
-    const { item_count } = useCartStore();
+    const { item_count, cartItems, getCart, deleteCartItem } = useCartStore();
+    const cartId = localStorage.getItem('cart_id');
+    useEffect(() => {
+        getCart();
+    }, []);
 
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
@@ -85,7 +87,7 @@ const Navbar = () => {
                                         to={`${item.slug}`}
                                         style={{ margin: '0 15px', fontWeight: '500', fontFamily: "Poppins, sans-serif", textDecoration: 'none', textTransform: "uppercase", fontSize: '14px', }}
                                         key={index}
-                                     >
+                                    >
                                         {item.name}
                                     </NavLink>
                                 ))}
@@ -133,50 +135,107 @@ const Navbar = () => {
                                 <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#292b2c' }}>Your Cart</Typography>
                                 <Divider />
                                 <Box sx={{ maxHeight: '250px', overflowY: 'auto', px: 2 }}>
-                                    {data.map((item) => (
-                                        <Box
-                                            key={item.id}
-                                            sx={{ display: 'flex', gap: 3, my: 1, justifyContent: 'space-between', alignItems: 'center' }}
+                                    {cartItems.branch && cartItems.branch.length > 0 ? (
+                                        cartItems.branch.map((branch) =>
+                                            branch.item && branch.item.length > 0 ? (
+                                                branch.item.map((item) => (
+                                                    <Box
+                                                        key={item.cart_item_id}
+                                                        sx={{
+                                                            display: 'flex',
+                                                            gap: 3,
+                                                            my: 1,
+                                                            justifyContent: 'space-between',
+                                                            alignItems: 'center',
+                                                        }}
+                                                    >
+                                                        <img
+                                                            style={{ width: '80px', height: '60px', objectFit: 'cover' }}
+                                                            src={item.image}
+                                                            alt={item.title}
+                                                        />
+                                                        <Box>
+                                                            <Typography
+                                                                sx={{
+                                                                    fontSize: '14px',
+                                                                    WebkitBoxOrient: 'vertical',
+                                                                    WebkitLineClamp: 3,
+                                                                    display: '-webkit-box',
+                                                                    overflow: 'hidden',
+                                                                    wordBreak: 'break-all',
+                                                                    whiteSpace: 'normal',
+                                                                    textOverflow: 'ellipsis',
+                                                                    color: '#292b2c',
+                                                                    fontWeight: '500',
+                                                                    cursor: 'pointer',
+                                                                    ':hover': {
+                                                                        color: '#bb1f2a',
+                                                                    },
+                                                                }}
+                                                            >
+                                                                {item.title}
+                                                            </Typography>
+                                                            <Typography
+                                                                sx={{
+                                                                    fontSize: '14px',
+                                                                    fontWeight: '500',
+                                                                    color: '#292b2c',
+                                                                    display: 'flex',
+                                                                    alignItems: 'center',
+                                                                    gap: '4px',
+                                                                }}
+                                                            >
+                                                                <span>1 X {item.list_price}</span> <span>AED</span>
+                                                            </Typography>
+                                                        </Box>
+                                                        <Close
+                                                            onClick={() => deleteCartItem(cartId, item.cart_item_id)}
+                                                            sx={{
+                                                                cursor: 'pointer',
+                                                                margin: '20px',
+                                                                fontWeight: '500',
+                                                                color: '#292b2c',
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                justifyContent: 'flex-end',
+                                                            }}
+                                                        />
+                                                    </Box>
+                                                ))
+                                            ) : null
+                                        )
+                                    ) : (
+                                        <Typography sx={{ textAlign: 'center', fontWeight: '500', color: '#292b2c', my: 2 }}>
+                                            No products added to the cart
+                                        </Typography>
+                                    )}
+                                </Box>
+
+                                {cartItems.branch && cartItems.branch.length > 0 && (
+                                    <Box display="flex" justifyContent="space-between" mt={2}>
+                                        <Button
+                                            onClick={() => {
+                                                navigateToCart();
+                                                handleMouseLeave();
+                                            }}
+                                            variant="contained"
+                                            sx={{ backgroundColor: '#000',borderRadius: '0px' }}
                                         >
-                                            <img style={{ width: '50px', height: '50px', objectFit: "cover" }} src={item.img} alt="cart-img" />
-                                            <Box>
-                                                <Typography
-                                                    sx={{
-                                                        fontSize: '14px',
-                                                        WebkitBoxOrient: 'vertical',
-                                                        WebkitLineClamp: 3,
-                                                        display: '-webkit-box',
-                                                        overflow: 'hidden',
-                                                        wordBreak: 'break-all',
-                                                        whiteSpace: 'normal',
-                                                        textOverflow: 'ellipsis',
-                                                        color: '#292b2c',
-                                                        fontWeight: '500',
-                                                        cursor: 'pointer',
-                                                        ":hover": {
-                                                            color: '#bb1f2a'
-                                                        }
-                                                    }}
-                                                >
-                                                    {item.quantity}  {item.name}
-                                                </Typography>
-                                                <Typography sx={{ fontSize: '14px', fontWeight: '500', color: '#292b2c', display: 'flex', alignItems: 'center', gap: "4px" }}><span>AED</span> <span>{item.price}</span></Typography>
-                                            </Box>
-                                            <Close sx={{ cursor: 'pointer', margin: "20px", fontWeight: '500', color: '#292b2c', display: 'flex', alignItems: 'center', justifyContent: "flex-end" }} />
-                                        </Box>
-                                    ))}
-                                </Box>
-                                <Box display="flex" justifyContent="space-between" mt={2}>
-                                    <Button onClick={() => {
-                                        navigateToCart();
-                                        handleMouseLeave();
-                                    }} variant="contained" sx={{ backgroundColor: '#000' }}>
-                                        View Cart
-                                    </Button>
-                                    <Button onClick={() => { navigateToChekout(); handleMouseLeave(); }} variant="contained" sx={{ backgroundColor: '#bb1f2a' }}>
-                                        Checkout
-                                    </Button>
-                                </Box>
+                                            View Cart
+                                        </Button>
+                                        <Button
+                                            onClick={() => {
+                                                navigateToChekout();
+                                                handleMouseLeave();
+                                            }}
+                                            variant="contained"
+                                            sx={{ backgroundColor: '#bb1f2a',borderRadius: '0px' }}
+                                        >
+                                            Checkout
+                                        </Button>
+                                    </Box>
+                                )}
+
                             </Box>
                         )}
                     </Container>

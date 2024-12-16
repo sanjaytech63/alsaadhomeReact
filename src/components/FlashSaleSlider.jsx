@@ -13,7 +13,6 @@ const FlashSaleSlider = ({ item }) => {
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
     const [timers, setTimers] = useState([]);
-
     const calculateTimeLeft = (endDate) => {
         const now = new Date();
         const saudiTime = new Date(now.getTime() + (-2 * 45 * 60 * 1000));

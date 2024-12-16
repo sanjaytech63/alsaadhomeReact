@@ -11,6 +11,7 @@ const Category = () => {
     const [error, setError] = useState(null);
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(Boolean);
+    
     const fetchCategory = async () => {
         setLoading(true);
         setError(null);
