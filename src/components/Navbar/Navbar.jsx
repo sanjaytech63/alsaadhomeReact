@@ -185,7 +185,7 @@ const Navbar = () => {
                                                             </Typography>
                                                         </Box>
                                                         <Close
-                                                            onClick={() => deleteCartItem(cartId, item.cart_item_id)}
+                                                            onClick={() => deleteCartItem(item.cart_item_id)}
                                                             sx={{
                                                                 cursor: 'pointer',
                                                                 margin: '20px',

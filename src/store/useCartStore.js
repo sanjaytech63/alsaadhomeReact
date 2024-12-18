@@ -113,7 +113,7 @@ const useCartStore = create((set, get) => ({
         set({ item_count: res.data.item_count });
       }
     } catch (error) {
-      console.log('error',error)
+      console.log("error", error);
     } finally {
       setLoading(false);
     }
@@ -177,12 +177,11 @@ const useCartStore = create((set, get) => ({
     }
   },
 
-  deleteCartItem: async (branchIndex, itemIndex) => {
+  deleteCartItem: async (cartItemId) => {
     const params = {
       cart_id: localStorage.getItem("cart_id"),
-      cart_item_id: itemIndex,
+      cart_item_id: cartItemId,
     };
-
     try {
       const response = await cardApi.removeCartItem(params);
       if (response && response.status === 200) {
