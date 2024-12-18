@@ -11,6 +11,8 @@ import useCartStore from '../store/useCartStore';
 import { showToast } from '../utils/helper';
 
 const Cart = ({ image, title, list_price, colors, sizes, pattern_image, deleteCartItem, cartItemId, itmeslug, product_id, variant_id, cart_quantity, quantity }) => {
+    console.log(quantity,'qty',cart_quantity)
+    console.log(variant_id,'variantid')
     const [inQut, setQut] = useState({
         cart_quantity: cart_quantity || 1,
         quantity: quantity || 1,
@@ -103,7 +105,9 @@ const Cart = ({ image, title, list_price, colors, sizes, pattern_image, deleteCa
 // CartPage Component
 const CartPage = () => {
     const navigate = useNavigate();
-    const { cartItems, getCart, deleteCartItem } = useCartStore();
+    const { cartItems, getCart, deleteCartItem, incrementQuantity } =
+      useCartStore();
+    console.log(cartItems, 'cartItems');
 
     useEffect(() => {
         getCart();
@@ -158,6 +162,7 @@ const CartPage = () => {
                                         product_id={item?.product_id}
                                         variant_id={item?.product_variant_id}
                                         deleteCartItem={deleteCartItem}
+                                        incrementQuantity={incrementQuantity}
                                     />
                                 ))
                             )))
