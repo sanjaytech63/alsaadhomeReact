@@ -28,7 +28,7 @@ const BannerSection = ({ bannerSection }) => {
                                     type: 'display_banners'
                                 }}
                                     className="link-none"
-                                    to={`/search?type=display-banner&id=${item.id}`} >
+                                    to={`/search/banner/${item.id}`} >
                                     <img
                                         style={{
                                             width: '100%',

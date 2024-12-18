@@ -53,7 +53,7 @@ const DealsSlider = ({ DealsSlider }) => {
                                 className="link-none"
                                 state={{ id: item.id, type: "display_banners" }}
                                 key={item.id}
-                                to={`/search?type=display-banner&id=${item.id}`}
+                                to={`/search/banner/${item.id}`}
                             >
                                 <Box
                                     component="img"

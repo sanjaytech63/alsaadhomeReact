@@ -1,22 +1,21 @@
 import axios from "axios";
 import useLoaderStore from "../../store/loaderStore";
-
-import { showToast } from "../helper";
+import { getSessionId, showToast } from "../helper";
 import useUserStore from "../../store/user";
 import { useSettingsStore } from "../../store/useSettingsStore";
 
 const axiosInstance = axios.create({
   baseURL: "https://stagingapp.alsaadhome.com/api/v23/",
   headers: {
-    'Accept': 'application/json',
-    'Authorization': 'gUmwgu9OVfXE9LVCaAU8xw74CownYWQ0HIfFGvWw',
-    'lng': 'en',
-    'currency': 'AED',
-    'country-id': '2',
-    'type': 'online',
-    'retailer-id': '1',
-    token: ""
-  }
+    Accept: "application/json",
+    Authorization: "gUmwgu9OVfXE9LVCaAU8xw74CownYWQ0HIfFGvWw",
+    lng: "en",
+    currency: "AED",
+    "country-id": "2",
+    type: "online",
+    "retailer-id": "1",
+    token: "",
+  },
 });
 // Utility to check network connectivity
 export const checkNetworkConnectivity = async () => {
@@ -42,21 +41,20 @@ axiosInstance.interceptors.request.use(
     // Check network connectivity
     const isAvailable = await checkNetworkConnectivity();
     if (!isAvailable) {
-      showToast("error", 'No internet connection');
-      showToast("error", 'No internet connection');
+      showToast("error", "No internet connection");
+      showToast("error", "No internet connection");
     }
 
     // Modify headers if required
     if (config.data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
     }
-
     if (settingsStore.selectedCountry?.id) {
-      config.headers['country-id'] = settingsStore.selectedCountry.id;
+      config.headers["country-id"] = settingsStore.selectedCountry.id;
     }
 
     if (settingsStore.selectedCountry?.currency_code) {
-      config.headers['currency'] = settingsStore.selectedCountry.currency_code;
+      config.headers["currency"] = settingsStore.selectedCountry.currency_code;
     }
 
     // Show loader if required

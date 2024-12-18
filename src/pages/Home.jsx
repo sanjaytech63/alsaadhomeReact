@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { homeApi } from "../utils/services/homeServices";
 import Loading from "../components/Loading";
 import TopSlider from "../components/TopSlider";
@@ -20,47 +20,56 @@ import FlashSaleShimmer from "../components/ShimerEffect/FlashSaleShimmer";
 import BannerSectionShimer from "../components/ShimerEffect/BannerSectionShimer";
 import NewArrivalsShimmer from "../components/ShimerEffect/NewArrivalsShimmer";
 import ProductShimmer from "../components/ShimerEffect/ProductShimmer";
-import { useLocation } from "react-router-dom";
 import useCartStore from "../store/useCartStore";
-import { Box, Typography } from "@mui/material";
-// import RecentlyViewed from "../components/RecentlyViewed";
 
 const Home = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const location = useLocation();
-    const { product_id, variant_id } = location.state || {};
-    const { fetchCartProductIds } = useCartStore()
+    const {fetchCartProductIds} = useCartStore()
+    const { addToCart, isItemInCart, deleteCartItem, createToCart } =
+      useCartStore();
 
-    useEffect(() => {
-        fetchCartProductIds();
-    }, [])
+   useEffect(() => {
+    const fetchCartId = async () => {
+      try {
+        const cartId = localStorage.getItem("cart_id"); 
+        if (!cartId) {
+          await createToCart();
+        } else {
+          const cartId = localStorage.getItem("cart_id"); 
+          await fetchCartProductIds();
+        }
+      } catch (error) {
+        console.error("Error retrieving cart_id:", error);
+      }
+    };
 
-    const fetchData = useCallback(async () => {
+    fetchCartId();
+  }, [fetchCartProductIds, createToCart]); 
+
+    
+    const fetchHomeData = async() => {
         setLoading(true);
-        setError(null);
         try {
-            const requestBody = {
-                product_id: product_id,
-                product_variant_id: variant_id,
-            };
-            const response = await homeApi.getHomeData(requestBody);
-            if (response && response.status === 200) {
+            const response = await homeApi.getHomeData();
+            if (response && response?.status === 200) {
+                setLoading(false);
                 setData(response.data);
+                
             }
-        } catch (err) {
-            setError("Failed to load data. Please try again.");
-            console.error("Error fetching data:", err);
+        } catch (error) {
+            setLoading(false);
+            console.log("Error fetching home data:-", error)
         } finally {
             setLoading(false);
         }
-    }, [product_id, variant_id]);
-
+    }
+    
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
+        fetchHomeData();
+    }, []);
+    
 
     if (loading) {
         return <Loading />;
@@ -71,36 +80,71 @@ const Home = () => {
     }
 
     return (
-        <div className="min-vh-100 w-full">
-            {data ? (
-                <>
-                    {data.category ? <TopSlider topSlider={data.category} /> : <TopSliderShimmer />}
-                    {data.slider ? <BannderSlider BannderSliderData={data.slider} /> : <BannerSliderShimmer />}
-                    {data.featured_brands ? <FeatureBrandsSlider FeaturedBrands={data.featured_brands} /> : <TopSliderShimmer />}
-                    {data.display_banners ? <DealsSlider DealsSlider={data.display_banners} /> : <DealsSliderShimmer />}
-                    {data.flash_sale ? <FlashSale flashSale={data.flash_sale} /> : <FlashSaleShimmer />}
-                    {data.banner ? <BannerSection bannerSection={data.banner} /> : <BannerSectionShimer />}
-                    {data.new_product ? <NewArrivalsSlider productsCard={data.new_product} /> : <NewArrivalsShimmer />}
-                    {data.grid_product ? <Products products={data.grid_product} /> : <ProductShimmer />}
-                    {data.recommended_product ? (
-                        <RecommendedProducts title="Recommended Products" productsCard={data.recommended_product} />
-                    ) : (
-                        <NewArrivalsShimmer />
-                    )}
-                    {data.flash_sale_products &&
-                        data.flash_sale_products.map((item) => <FlashSaleSlider key={item.id} item={item} />)}
-                    {/* <RecentlyViewed title="Recently Viewed" productsCard={data.recommended_product} /> */}
-                    <BlogCard />
-                    <Newsletter />
-                </>
+      <div className="min-vh-100 w-full">
+        {data ? (
+          <>
+            {data.category ? (
+              <TopSlider topSlider={data.category} />
             ) : (
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                    <Typography variant="h6" >
-                        No data available
-                    </Typography>
-                </Box>
+              <TopSliderShimmer />
             )}
-        </div>
+            {data.slider ? (
+              <BannderSlider BannderSliderData={data.slider} />
+            ) : (
+              <BannerSliderShimmer />
+            )}
+            {data.featured_brands ? (
+              <FeatureBrandsSlider FeaturedBrands={data.featured_brands} />
+            ) : (
+              <TopSliderShimmer />
+            )}
+            {data.display_banners ? (
+              <DealsSlider DealsSlider={data.display_banners} />
+            ) : (
+              <DealsSliderShimmer />
+            )}
+            {data.flash_sale ? (
+              <FlashSale flashSale={data.flash_sale} />
+            ) : (
+              <FlashSaleShimmer />
+            )}
+            {data.banner ? (
+              <BannerSection bannerSection={data.banner} />
+            ) : (
+              <BannerSectionShimer />
+            )}
+            {data.new_product ? (
+              <NewArrivalsSlider productsCard={data.new_product} />
+            ) : (
+              <NewArrivalsShimmer />
+            )}
+            {data.grid_product ? (
+              <Products products={data.grid_product} />
+            ) : (
+              <ProductShimmer />
+            )}
+            {data?.recommended_product ? (
+              <RecommendedProducts
+                title="Recommended Products"
+                productsCard={data?.recommended_product}
+                addToCart={addToCart}
+                deleteCartItem={deleteCartItem}
+              />
+            ) : (
+              <NewArrivalsShimmer />
+            )}
+            {data?.flash_sale_products &&
+              data?.flash_sale_products.map((item,index) => (
+                <FlashSaleSlider key={index} item={item} />
+              ))}
+            {/* <RecentlyViewed title="Recently Viewed" productsCard={data.recommended_product} /> */}
+            <BlogCard />
+            <Newsletter />
+          </>
+        ) : (
+          <p>No data available.</p>
+        )}
+      </div>
     );
 };
 

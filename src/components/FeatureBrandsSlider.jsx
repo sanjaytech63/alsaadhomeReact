@@ -8,7 +8,6 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
-
     return (
         <div className="w-100">
             <Container maxWidth="lg" sx={{ padding: 0 }}>
@@ -52,7 +51,7 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                                     id: item.id,
                                     type: 'brand'
                                 }}
-                                to={`/brand/${encodeURIComponent(item.name)}`}
+                                to={`/brand/${item.id}`}
                                 key={item.id}
                                 draggable={false}
                                 sx={{

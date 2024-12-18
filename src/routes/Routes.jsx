@@ -57,9 +57,9 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/category/:subcategory", element: <SubCategoryList /> },
-      { path: "/search", element: <ProductListing /> },
-      { path: "/brand/:brandName", element: <ProductListing /> },
-      { path: "/category/:category/:id/:slug", element: <ProductListing /> },
+      { path: "/search/:type/:id", element: <ProductListing /> },
+      { path: "/brand/:id", element: <ProductListing /> },
+      { path: "/category/:category/:id/:subcategory", element: <ProductListing /> },
       { path: "/smart-shopping/details/:id", element: <SmartShoppingDetails /> },
       { path: "/products/details/:id", element: <SmartShoppingDetails /> },
 

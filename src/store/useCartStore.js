@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { cardApi } from '../utils/services/cartSevices';
-import { showToast } from "../utils/helper";
+import { getSessionId, showToast } from "../utils/helper";
 
 const useCartStore = create((set, get) => ({
   cartItems: null,
@@ -13,12 +13,12 @@ const useCartStore = create((set, get) => ({
   setLoading: (loading) => set({ isLoading: loading }),
 
   // Function to create a new cart
-  creteToCart: async () => {
+  createToCart: async () => {
     const { setCartIds, setLoading } = get();
     const params = {
-      customer_id: "11194",
-      sessionID: "abc4561241",
-      cart_type: "worker",
+      sessionID: getSessionId(),
+      customer_id: "",
+      cart_type: "customer",
     };
 
     try {
@@ -27,19 +27,21 @@ const useCartStore = create((set, get) => ({
       if (res && res.status === 200) {
         const cartId = res.data.cart_id;
         localStorage.setItem("cart_id", cartId);
-        showToast("success", "Cart created successfully");
         return cartId;
       }
     } catch (e) {
-      showToast("warning", e.response?.data?.message || "An error occurred", "danger");
+      showToast(
+        "warning",
+        e.response?.data?.message || "An error occurred",
+        "danger"
+      );
     } finally {
       setLoading(false);
     }
     return null;
   },
 
-
-  addToCart: async (id) => {
+  addToCart: async (id, qty) => {
     const { cartIds, setCartIds, setLoading } = get();
     let cartId = localStorage.getItem("cart_id");
 
@@ -51,10 +53,10 @@ const useCartStore = create((set, get) => ({
     }
 
     const params = {
-      customer_id: "11194",
+      customer_id: "",
       cart_id: cartId,
       product_variant_id: id,
-      qty: "1",
+      qty: qty ? qty : "1",
       type: "online",
       branch_id: "",
     };
@@ -63,25 +65,32 @@ const useCartStore = create((set, get) => ({
       setLoading(true);
       const res = await cardApi.addToCart(params);
       if (res && res.status === 200) {
-        showToast("success", "Added to cart successfully");
+        showToast("success", res.message, "success");
         setCartIds([...cartIds, id.toString()]);
         set({ item_count: res.item_count });
       }
-      await get().getCart('');
+      await get().getCart("");
     } catch (e) {
-      showToast("warning", e.response?.data?.message || "An error occurred", "danger");
+      showToast(
+        "warning",
+        e.response?.data?.message || "An error occurred",
+        "danger"
+      );
     } finally {
       setLoading(false);
     }
   },
 
-
   fetchCartProductIds: async () => {
     const { setCartIds } = get();
     try {
-      const response = await cardApi.getCartProductIds({ cart_id: localStorage.getItem('cart_id'), branch_id: 1, type: 'branch' });
+      const response = await cardApi.getCartProductIds({
+        cart_id: localStorage.getItem("cart_id"),
+        branch_id: 1,
+        type: "branch",
+      });
       if (response && response.status === 200) {
-        const ids = response.data.map(item => item.id.toString());
+        const ids = response.data.map((item) => item.id.toString());
         setCartIds(ids);
         set({ item_count: response.item_count });
       }
@@ -94,14 +103,17 @@ const useCartStore = create((set, get) => ({
     const { setLoading, setCartItems, setCartDetails } = get();
     try {
       setLoading(true);
-      const data = { customer_id: id, cart_id: localStorage.getItem('cart_id') };
+      const data = {
+        customer_id: id,
+        cart_id: localStorage.getItem("cart_id"),
+      };
       const res = await cardApi.getCart(data);
       if (res && res.status === 200) {
         setCartItems(res.data);
         set({ item_count: res.data.item_count });
       }
     } catch (error) {
-      showToast("warning", error.response?.data?.message || 'An error occurred', 'danger');
+      console.log('error',error)
     } finally {
       setLoading(false);
     }
@@ -111,24 +123,28 @@ const useCartStore = create((set, get) => ({
     if (maxQuantity > quantity) {
       const qty = quantity + 1;
       const params = {
-        customer_id: '',
-        cart_id: localStorage.getItem('cart_id'),
+        customer_id: "",
+        cart_id: localStorage.getItem("cart_id"),
         product_variant_id,
         qty: qty.toString(),
-        type: 'online',
-        branch_id: '',
+        type: "online",
+        branch_id: "",
       };
       try {
         const response = await cardApi.addToCart(params, true);
         if (response && response.status === 200) {
-          showToast("success", response.message, 'success');
-          get().getCart('');
+          showToast("success", response.message, "success");
+          get().getCart("");
         }
       } catch (e) {
-        showToast("warning", e.response?.data?.message || 'An error occurred', 'danger');
+        showToast(
+          "warning",
+          e.response?.data?.message || "An error occurred",
+          "danger"
+        );
       }
     } else {
-      showToast("warning", 'Maximum quantity reached!', 'danger');
+      showToast("warning", "Maximum quantity reached!", "danger");
     }
   },
 
@@ -136,44 +152,54 @@ const useCartStore = create((set, get) => ({
     if (quantity > 1) {
       const qty = quantity - 1;
       const params = {
-        customer_id: '',
-        cart_id: localStorage.getItem('cart_id'),
+        customer_id: "",
+        cart_id: localStorage.getItem("cart_id"),
         product_variant_id: id,
         qty: qty.toString(),
-        type: 'online',
-        branch_id: '',
+        type: "online",
+        branch_id: "",
       };
       try {
         const response = await cardApi.addToCart(params);
         if (response && response.status === 200) {
-          showToast("success", response.message, 'success');
-          await get().getCart('');
+          showToast("success", response.message, "success");
+          await get().getCart("");
         }
       } catch (e) {
-        showToast("warning", e.response?.data?.message || 'An error occurred', 'danger');
+        showToast(
+          "warning",
+          e.response?.data?.message || "An error occurred",
+          "danger"
+        );
       }
     } else {
-      showToast("warning", 'Minimum 1 item required', 'danger');
+      showToast("warning", "Minimum 1 item required", "danger");
     }
   },
 
-  deleteCartItem: async (branchIndex, itemIndex,) => {
-    const params = { cart_id: localStorage.getItem('cart_id'), cart_item_id: itemIndex };
-    
+  deleteCartItem: async (branchIndex, itemIndex) => {
+    const params = {
+      cart_id: localStorage.getItem("cart_id"),
+      cart_item_id: itemIndex,
+    };
+
     try {
       const response = await cardApi.removeCartItem(params);
       if (response && response.status === 200) {
-        showToast("success", 'Item removed from cart', 'success');
-        await get().getCart('');
+        showToast("success", response.message, "success");
+        await get().getCart("");
       }
     } catch (error) {
-      showToast("warning", error.response?.data?.message || 'An error occurred', 'danger');
+      showToast(
+        "warning",
+        error.response?.data?.message || "An error occurred",
+        "danger"
+      );
     }
   },
 
   isItemInCart: (product_variant_id) => {
     const { cartIds } = get();
-
     return cartIds.includes(product_variant_id.toString());
   },
 }));

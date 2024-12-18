@@ -6,7 +6,7 @@ import {
     useTheme,
     useMediaQuery,
 } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 // import tamaraImg from "../../src/assets/tamara.svg";
 import jsonData from "../../src/blogData.json";
 import data from "../../src/product.json";
@@ -63,8 +63,8 @@ const ProductDetails = () => {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [recdata, setRecData] = useState([]);
-    const [proDetails, setProDetails] = useState("");
+    const [recentlyProducts, setRecentlyProducts] = useState([]);
+    const [proDetails, setProDetails] = useState(null);
     const [variants, setVariants] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -72,6 +72,8 @@ const ProductDetails = () => {
     // Memoize frequently accessed props
     const location = useLocation();
     const { product_id, variant_id } = location.state || {};
+    const {id} = useParams()
+
 
     const memoizedProps = useMemo(
         () => ({
@@ -106,28 +108,26 @@ const ProductDetails = () => {
         ]
     );
 
-    const fetchData = useCallback(async () => {
-        if (!product_id || !variant_id) return;
 
+
+
+    const fetchProductDetails = useCallback(async () => {
         setLoading(true);
-        setError(null);
         try {
             const requestBody = {
+                product_slug: id,
                 "product_id": product_id,
                 "product_variant_id": variant_id,
             };
-
             const response = await homeApi.getProductDetails(requestBody);
             if (response && response.status === 200) {
-                const similarProducts = response.data?.similar_product || [];
-                setRecData(similarProducts);
-                const productDetails = response.data?.product_details || {};
-                setProDetails(productDetails);
-                const variants = response.data?.variants || [];
+                setLoading(false);
+                setRecentlyProducts(response?.data?.similar_product || []);
+                setProDetails(response?.data?.product_details || {});
+                const variants = response?.data?.variants || [];
                 setVariants(variants);
             }
         } catch (err) {
-            setError("Failed to load data. Please try again.");
             console.error("Error fetching data:", err);
         } finally {
             setLoading(false);
@@ -135,8 +135,8 @@ const ProductDetails = () => {
     }, [product_id, variant_id]);
 
     useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        fetchProductDetails();
+    }, [fetchProductDetails]);
 
     if (loading) {
         return <Loading />;
@@ -161,13 +161,13 @@ const ProductDetails = () => {
                             </Box>
                         </Grid>
                         {/* Product Info */}
-                        <MainInfoCom {...memoizedProps} proDetails={proDetails} variants={variants} />
+                        <MainInfoCom {...memoizedProps} proDetails={proDetails} variants={variants}/>
                     </Grid>
                     <ReviewSection />
                     <BundleProductsModal bundleProduct={bundleProduct} open={open} handleClose={handleClose} />
                 </Container>
                 <div className="mb-5">
-                    <RecommendedProducts title="Related Products" productsCard={recdata} />
+                    <RecommendedProducts title="Related Products" productsCard={recentlyProducts} />
                 </div>
             </Suspense>
         </div>

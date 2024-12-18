@@ -4,7 +4,6 @@ import FilterChip from './FilterChip';
 
 const FilterSection = ({ label, items, selectedItems, toggleItem, showMore, setShowMore }) => {
     const tags = showMore ? items : items.slice(0, 5);
-
     return (
         <Box mt={4}>
             <Typography variant="h5" sx={{ my: 2, color: "#292b2c", fontWeight: "600", fontSize: "1.5rem" }}>

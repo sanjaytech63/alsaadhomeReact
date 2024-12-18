@@ -42,7 +42,7 @@ const BannerSlider = ({ BannderSliderData }) => {
                     {BannderSliderData.length > 0 && BannderSliderData.map((item) => (
                         <Link className="link-none"
                             key={item.id}
-                            to={`/search?type=display-banner&id=${item.id}`}
+                            to={`/search/banner/${item.id}`}
                             state={{
                                 id: item.id,
                                 type: 'display_banners'

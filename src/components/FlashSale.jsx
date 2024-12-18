@@ -60,7 +60,7 @@ const FlashSale = ({ flashSale }) => {
                             <Link state={{
                                 id: item.id,
                                 type: 'flash_sale'
-                            }} to={`/search?type=flash-sale&id=${item.id}`} className="link-none">
+                            }} to={`/search/flash_sale/${item.id}`} className="link-none">
                                 <Box
                                     sx={{
                                         position: "relative",
