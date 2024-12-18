@@ -135,7 +135,7 @@ const Home = () => {
             )}
             {data?.flash_sale_products &&
               data?.flash_sale_products.map((item,index) => (
-                <FlashSaleSlider key={index} item={item} addToCart={()=> addToCart(item.product_variant_id)}/>
+                <FlashSaleSlider key={index} item={item} />
               ))}
             {/* <RecentlyViewed title="Recently Viewed" productsCard={data.recommended_product} /> */}
             <BlogCard />

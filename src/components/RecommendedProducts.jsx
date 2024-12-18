@@ -282,10 +282,7 @@ const RecommendedProducts = ({ productsCard, title,addToCart, deleteCartItem }) 
                                 },
                               },
                             }}
-                            onClick={() =>
-                              isItemInCart(item.product_variant_id)
-                                ? addToCart(item.product_variant_id,'0')
-                                : addToCart(item.product_variant_id)
+                            onClick={() => addToCart(item.product_variant_id)
                             }
                             aria-label="add to cart"
                           >
