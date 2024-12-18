@@ -13,12 +13,8 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
 
-    const { item_count, cartItems, getCart, deleteCartItem } = useCartStore();
+    const { item_count, cartItems, deleteCartItem } = useCartStore();
     const cartId = localStorage.getItem('cart_id');
-    // useEffect(() => {
-    //     getCart();
-    // }, []);
-
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
 
