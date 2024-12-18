@@ -6,7 +6,7 @@ import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, 
 import { Link } from 'react-router-dom';
 import CustomButtonGroup from './CustomButtonGroup';
 import useCartStore from '../store/useCartStore';
-const RecommendedProducts = ({ productsCard, title,addToCart, deleteCartItem }) => {
+const RecommendedProducts = ({ productsCard, title,addToCart}) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
@@ -41,7 +41,6 @@ const RecommendedProducts = ({ productsCard, title,addToCart, deleteCartItem }) 
               {title}
             </Typography>
             <Link
-              state={{ type: "display_banners" }}
               to={`/search/banner/${"recommended_product"}`}
               className="link-none"
             >
@@ -97,8 +96,9 @@ const RecommendedProducts = ({ productsCard, title,addToCart, deleteCartItem }) 
               }
             >
               {productsCard &&
-                productsCard.map((item,index) => (
-                  <Card
+                productsCard.map((item, index) =>{
+                  return (
+                   <Card
                     key={index}
                     sx={{
                       height: "100%",
@@ -131,14 +131,7 @@ const RecommendedProducts = ({ productsCard, title,addToCart, deleteCartItem }) 
                           }}
                         />
                       )}
-                      <Link
-                        state={{
-                          product_id: item.product_id,
-                          variant_id: item.product_variant_id,
-                        }}
-                        to={`/products/${item.slug}`}
-                        className="link-none"
-                      >
+                      <Link to={`/products/${item.slug}`} className="link-none">
                         <CardMedia
                           sx={{
                             minHeight: { sm: "276.37px", xs: "175px" },
@@ -263,12 +256,12 @@ const RecommendedProducts = ({ productsCard, title,addToCart, deleteCartItem }) 
                               p: { xs: "4px", sm: "8px" },
                               boxShadow: 2,
                               backgroundColor: isItemInCart(
-                                item.product_variant_id
+                                item?.product_variant_id
                               )
                                 ? "#bb1f2a"
                                 : "#fff",
                               "& .cart-svg-icon path": {
-                                fill: isItemInCart(item.product_variant_id)
+                                fill: isItemInCart(item?.product_variant_id)
                                   ? "#fff"
                                   : "#292b2c",
                                 transition: "fill 0.3s ease",
@@ -282,8 +275,11 @@ const RecommendedProducts = ({ productsCard, title,addToCart, deleteCartItem }) 
                                 },
                               },
                             }}
-                            onClick={() => addToCart(item.product_variant_id)
-                            }
+                            onClick={() => {
+                              if (!isItemInCart(item?.product_variant_id)) {
+                                addToCart(item?.product_variant_id);
+                              }
+                            }}
                             aria-label="add to cart"
                           >
                             <svg
@@ -335,7 +331,11 @@ const RecommendedProducts = ({ productsCard, title,addToCart, deleteCartItem }) 
                       </Box>
                     </CardContent>
                   </Card>
-                ))}
+                  )
+                 } 
+                  
+                  
+                )}
             </Carousel>
           </Box>
         </Container>

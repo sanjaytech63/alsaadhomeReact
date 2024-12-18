@@ -12,11 +12,13 @@ const Navbar = () => {
     const [openSearch, setSearchOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-
-    const { item_count, cartItems, deleteCartItem } = useCartStore();
-    const cartId = localStorage.getItem('cart_id');
+    const { item_count, cartItems, deleteCartItem,getCart } = useCartStore();
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
+
+     useEffect(() => {
+        getCart(); 
+     },[])
 
     const navList = [
         { name: "Home", slug: "/" },
@@ -131,12 +133,12 @@ const Navbar = () => {
                                 <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#292b2c' }}>Your Cart</Typography>
                                 <Divider />
                                 <Box sx={{ maxHeight: '250px', overflowY: 'auto', px: 2 }}>
-                                    {cartItems.branch && cartItems.branch.length > 0 ? (
-                                        cartItems.branch.map((branch) =>
-                                            branch.item && branch.item.length > 0 ? (
-                                                branch.item.map((item) => (
+                                    {cartItems?.branch && cartItems?.branch?.length > 0 ? (
+                                        cartItems?.branch?.map((branch) =>
+                                            branch?.item && branch?.item?.length > 0 ? (
+                                                branch?.item?.map((item,index) => (
                                                     <Box
-                                                        key={item.cart_item_id}
+                                                        key={index}
                                                         sx={{
                                                             display: 'flex',
                                                             gap: 3,
@@ -185,7 +187,7 @@ const Navbar = () => {
                                                             </Typography>
                                                         </Box>
                                                         <Close
-                                                            onClick={() => deleteCartItem(item.cart_item_id)}
+                                                            onClick={() => deleteCartItem(item?.cart_item_id)}
                                                             sx={{
                                                                 cursor: 'pointer',
                                                                 margin: '20px',
@@ -207,7 +209,7 @@ const Navbar = () => {
                                     )}
                                 </Box>
 
-                                {cartItems.branch && cartItems.branch.length > 0 && (
+                                {cartItems?.branch && cartItems?.branch?.length > 0 && (
                                     <Box display="flex" justifyContent="space-between" mt={2}>
                                         <Button
                                             onClick={() => {

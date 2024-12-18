@@ -128,11 +128,7 @@ const FlashSaleSlider = ({ item,addToCart }) => {
                 </>
               )}
             </Box>
-            <Link
-              state={{ id: item.id, type: "flash_sale" }}
-              to={`/search/flash_sale/${item.id}`}
-              className="link-none"
-            >
+            <Link to={`/search/flash_sale/${item.id}`} className="link-none">
               <Typography
                 variant="h6"
                 sx={{
@@ -209,13 +205,7 @@ const FlashSaleSlider = ({ item,addToCart }) => {
                           }}
                         />
                       )}
-                      <Link
-                        state={{
-                          product_id: item.product_id,
-                          variant_id: item.product_variant_id,
-                        }}
-                        to={`/products/${item.slug}`}
-                      >
+                      <Link to={`/products/${item.slug}`}>
                         <CardMedia
                           sx={{
                             minHeight: { sm: "276.37px", xs: "175px" },
@@ -389,7 +379,11 @@ const FlashSaleSlider = ({ item,addToCart }) => {
                                 },
                               },
                             }}
-                            onClick={() => addToCart(item.product_variant_id)}
+                            onClick={() => {
+                              if (!isItemInCart(item.product_variant_id)) {
+                                addToCart(item.product_variant_id);
+                              }
+                            }}
                             aria-label="add to cart"
                           >
                             <svg

@@ -38,11 +38,7 @@ const TopSlider = ({ topSlider }) => {
                         {topSlider.length > 0 && topSlider.map((item) => (
                             <Link className="link-none"
                                 to={{
-                                    pathname: `/category/${item.slug}`,
-                                    state: {
-                                        id: item.id,
-                                        type: 'category'
-                                    }
+                                    pathname: `/category/${item.slug}`
                                 }}
                                 key={item.id}
                                 draggable={false}

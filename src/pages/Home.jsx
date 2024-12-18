@@ -27,8 +27,7 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const {fetchCartProductIds} = useCartStore()
-    const { addToCart, isItemInCart, deleteCartItem, createToCart } =
-      useCartStore();
+    const { addToCart, createToCart, } =  useCartStore();
 
    useEffect(() => {
     const fetchCartId = async () => {
@@ -37,7 +36,6 @@ const Home = () => {
         if (!cartId) {
           await createToCart();
         } else {
-          const cartId = localStorage.getItem("cart_id"); 
           await fetchCartProductIds();
         }
       } catch (error) {
@@ -46,7 +44,7 @@ const Home = () => {
     };
 
     fetchCartId();
-  }, [fetchCartProductIds, createToCart]); 
+  }, [fetchCartProductIds, createToCart,]); 
 
     
     const fetchHomeData = async() => {
@@ -128,7 +126,6 @@ const Home = () => {
                 title="Recommended Products"
                 productsCard={data?.recommended_product}
                 addToCart={addToCart}
-                deleteCartItem={deleteCartItem}
               />
             ) : (
               <NewArrivalsShimmer />

@@ -41,6 +41,24 @@ const useCartStore = create((set, get) => ({
     return null;
   },
 
+  fetchCartProductIds: async () => {
+    const { setCartIds } = get();
+    try {
+      const response = await cardApi.getCartProductIds({
+        cart_id: localStorage.getItem("cart_id"),
+        branch_id: 1,
+        type: "branch",
+      });
+      if (response && response.status === 200) {
+        const ids = response.data.map((item) => item.id.toString());
+        setCartIds(ids);
+        set({ item_count: response.item_count });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   addToCart: async (id, qty) => {
     const { cartIds, setCartIds, setLoading } = get();
     let cartId = localStorage.getItem("cart_id");
@@ -68,6 +86,7 @@ const useCartStore = create((set, get) => ({
         showToast("success", res.message, "success");
         setCartIds([...cartIds, id.toString()]);
         set({ item_count: res.item_count });
+        await get().fetchCartProductIds();
       }
       await get().getCart("");
     } catch (e) {
@@ -78,24 +97,6 @@ const useCartStore = create((set, get) => ({
       );
     } finally {
       setLoading(false);
-    }
-  },
-
-  fetchCartProductIds: async () => {
-    const { setCartIds } = get();
-    try {
-      const response = await cardApi.getCartProductIds({
-        cart_id: localStorage.getItem("cart_id"),
-        branch_id: 1,
-        type: "branch",
-      });
-      if (response && response.status === 200) {
-        const ids = response.data.map((item) => item.id.toString());
-        setCartIds(ids);
-        set({ item_count: response.item_count });
-      }
-    } catch (error) {
-      console.error(error);
     }
   },
 
