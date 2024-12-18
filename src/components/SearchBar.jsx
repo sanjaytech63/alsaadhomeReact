@@ -31,7 +31,7 @@ const SearchBar = ({ setSearchOpen, openSearch }) => {
         setError(null);
         try {
             const response = await searchApi.getSearchData(debouncedSearchText);
-            setSearchData(response.data);
+            setSearchData(response?.data);
         } catch (err) {
             console.error('Error:', err);
             setError(err.response?.data?.message || 'Failed to load data. Please try again.');
