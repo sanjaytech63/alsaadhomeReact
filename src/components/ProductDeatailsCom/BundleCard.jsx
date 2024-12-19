@@ -63,8 +63,8 @@ const BundleCard = ({bundleCard,isRTL,handleNavigate,pathname,matchesSM}) => {
                             !matchesSM ? <CustomButtonGroup /> : null
                         }
                     >
-                        {bundleCard.map((product) => (
-                            <Box sx={{ px: 1 }}>
+                        {bundleCard.map((product,index) => (
+                            <Box key={index} sx={{ px: 1 }}>
                                 <Card
                                     sx={{
                                         width: "100%",

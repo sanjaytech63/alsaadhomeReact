@@ -3,6 +3,7 @@ const API = {
   // FLASH_SALE: 'flash_sale',
   BLOG_HOME: "blog/home",
   SEARCH: 'search',
+  UNBOXING_CHANLLENG: "unboxing_challenge",
   PRODUCT_DETAILS: 'product_details',
   FILTER: 'filter',
   SMART_SHOPPING: 'engagement/category',

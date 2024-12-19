@@ -108,9 +108,6 @@ const ProductDetails = () => {
         ]
     );
 
-
-
-
     const fetchProductDetails = useCallback(async () => {
         setLoading(true);
         try {

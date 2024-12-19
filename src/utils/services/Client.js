@@ -1,6 +1,6 @@
 import axios from "axios";
 import useLoaderStore from "../../store/loaderStore";
-import { getSessionId, showToast } from "../helper";
+import { showToast } from "../helper";
 import useUserStore from "../../store/user";
 import { useSettingsStore } from "../../store/useSettingsStore";
 

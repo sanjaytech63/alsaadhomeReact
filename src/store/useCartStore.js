@@ -69,7 +69,9 @@ const useCartStore = create((set, get) => ({
         setCartIds([...cartIds, id.toString()]);
         set({ item_count: res.item_count });
       }
+      await get().fetchCartProductIds();
       await get().getCart("");
+
     } catch (e) {
       showToast(
         "warning",

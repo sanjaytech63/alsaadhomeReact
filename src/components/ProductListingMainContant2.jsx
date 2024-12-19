@@ -10,30 +10,19 @@ import {
     Grid,
     Button,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { AddShoppingCart, FavoriteBorder } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import { FavoriteBorder } from '@mui/icons-material';
+import useCartStore from '../store/useCartStore';
 
 const ProductListingMainContant2 = ({ productsCard }) => {
-    const navigate = useNavigate();
 
-    const handleNavigate = () => {
-        navigate(`/prodect/123`);
-    };
-
-    const handleAddToCart = (e) => {
-        e.stopPropagation();
-        alert('Added to cart!')
-    }
-    const handleAddToWishlist = (e) => {
-        e.stopPropagation();
-        alert('Added to wishlist!')
-    }
+    const { addToCart, isItemInCart } = useCartStore();
 
     return (
         <>
             {productsCard.products && productsCard?.products.map((item) => (
                 <Grid key={item.id} mb={4} >
-                    <Card onClick={handleNavigate}
+                    <Card
                         sx={{
                             borderRadius: '8px',
                             cursor: 'pointer',
@@ -44,18 +33,24 @@ const ProductListingMainContant2 = ({ productsCard }) => {
                         }}
                     >
                         <Box>
-                            <CardMedia
+                            <Link state={{
+                                product_id: item.product_id,
+                                variant_id: item.product_variant_id
+                            }} className="link-none"
+                                to={`/products/${item.slug}`} >
+                                <CardMedia
 
-                                sx={{
-                                    maxWidth: { sm: '275.37px', xs: '175px' },
-                                    minHeight: "100%",
-                                    objectFit: 'cover',
-                                }}
-                                component="img"
-                                image={item.image}
-                                alt={item.title}
-                                loading="lazy"
-                            />
+                                    sx={{
+                                        maxWidth: { sm: '275.37px', xs: '175px' },
+                                        minHeight: "100%",
+                                        objectFit: 'cover',
+                                    }}
+                                    component="img"
+                                    image={item.image}
+                                    alt={item.title}
+                                    loading="lazy"
+                                />
+                            </Link>
                         </Box>
                         <CardContent sx={{ p: { xs: '8px', sm: '16px' } }}>
                             <Typography
@@ -104,7 +99,7 @@ const ProductListingMainContant2 = ({ productsCard }) => {
                                         backgroundColor: '#bb1f2a', color: '#fff',
                                         textTransform: 'capitalize',
                                     }}
-                                    onClick={handleAddToCart}
+                                    onClick={() => addToCart(item.product_variant_id)}
                                 >
                                     <Typography sx={{
                                         px: { xs: '6px', sm: '8px' },
@@ -120,7 +115,7 @@ const ProductListingMainContant2 = ({ productsCard }) => {
                                         boxShadow: 2,
                                         ':hover': { backgroundColor: '#bb1f2a', color: '#fff' },
                                     }}
-                                    onClick={handleAddToWishlist}
+
                                     aria-label="add to wishlist"
                                 >
                                     <FavoriteBorder sx={{ fontSize: '1rem' }} />

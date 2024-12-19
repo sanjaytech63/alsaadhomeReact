@@ -7,6 +7,8 @@ import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
 import { Close } from '@mui/icons-material';
 import useCartStore from '../../store/useCartStore';
+import { RiDeleteBin5Line } from "react-icons/ri";
+
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [openSearch, setSearchOpen] = useState(false);
@@ -131,10 +133,10 @@ const Navbar = () => {
                                 <Typography sx={{ fontSize: '16px', fontWeight: '600', color: '#292b2c' }}>Your Cart</Typography>
                                 <Divider />
                                 <Box sx={{ maxHeight: '250px', overflowY: 'auto', px: 2 }}>
-                                    {cartItems.branch && cartItems.branch.length > 0 ? (
-                                        cartItems.branch.map((branch) =>
-                                            branch.item && branch.item.length > 0 ? (
-                                                branch.item.map((item) => (
+                                    {cartItems?.branch && cartItems?.branch?.length > 0 ? (
+                                        cartItems?.branch.map((branch) =>
+                                            branch?.item && branch?.item.length > 0 ? (
+                                                branch?.item?.map((item) => (
                                                     <Box
                                                         key={item.cart_item_id}
                                                         sx={{
@@ -181,11 +183,11 @@ const Navbar = () => {
                                                                     gap: '4px',
                                                                 }}
                                                             >
-                                                                <span>1 X {item.list_price}</span> <span>AED</span>
+                                                                <span>1 X {item?.list_price}</span> <span>AED</span>
                                                             </Typography>
                                                         </Box>
-                                                        <Close
-                                                            onClick={() => deleteCartItem(cartId, item.cart_item_id)}
+                                                        {/* <Close
+                                                            onClick={() => deleteCartItem(item.cart_item_id)}
                                                             sx={{
                                                                 cursor: 'pointer',
                                                                 margin: '20px',
@@ -195,7 +197,14 @@ const Navbar = () => {
                                                                 alignItems: 'center',
                                                                 justifyContent: 'flex-end',
                                                             }}
-                                                        />
+                                                        /> */}
+                                                        <Box component="div" sx={{ bgcolor: '#bb1f2a', px: 0.5, py: 0.5, cursor: 'pointer', mr: 2, color: '#fff', borderRadius: '4px', ":hover": { bgcolor: 'red' } }}>
+                                                            <RiDeleteBin5Line
+                                                                onClick={() => deleteCartItem(item?.cart_item_id)}
+                                                                sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}
+                                                                size={20}
+                                                            />
+                                                        </Box>
                                                     </Box>
                                                 ))
                                             ) : null
@@ -207,7 +216,7 @@ const Navbar = () => {
                                     )}
                                 </Box>
 
-                                {cartItems.branch && cartItems.branch.length > 0 && (
+                                {cartItems?.branch && cartItems?.branch.length > 0 && (
                                     <Box display="flex" justifyContent="space-between" mt={2}>
                                         <Button
                                             onClick={() => {
@@ -215,7 +224,7 @@ const Navbar = () => {
                                                 handleMouseLeave();
                                             }}
                                             variant="contained"
-                                            sx={{ backgroundColor: '#000',borderRadius: '0px' }}
+                                            sx={{ backgroundColor: '#000', borderRadius: '0px' }}
                                         >
                                             View Cart
                                         </Button>
@@ -225,7 +234,7 @@ const Navbar = () => {
                                                 handleMouseLeave();
                                             }}
                                             variant="contained"
-                                            sx={{ backgroundColor: '#bb1f2a',borderRadius: '0px' }}
+                                            sx={{ backgroundColor: '#bb1f2a', borderRadius: '0px' }}
                                         >
                                             Checkout
                                         </Button>

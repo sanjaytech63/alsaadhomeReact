@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumbs, Grid, Typography, Container, Box } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link ,useLocation} from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import UnboxingTopSection from '../components/UnboxingTopSection';
 import UnboxingBottomSection from '../components/UnboxingBottomSection';
+import { unboxingData } from '../utils/services/unboxingChallenge';
+import Loading from '../components/Loading';
 
 const Unboxing = () => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const catList = [
         { id: 1, src: "https://al-saad-home.mo.cloudinary.net/uploads/unboxing_challenge/landing_screens/banner-eng1720873550.png" },
@@ -13,44 +18,77 @@ const Unboxing = () => {
 
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(Boolean);
+
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const response = await unboxingData.unboxingChanllege();
+            if (response && response?.status === 200) {
+                setLoading(false);
+                setData(response.data);
+
+            }
+        } catch (error) {
+            setLoading(false);
+            console.log("Error fetching home data:-", error)
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+
+    if (loading) {
+        return <Loading />;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
+    console.log(data, "data")
+
     return (
         <Box sx={{ minHeight: "100vh" }}>
             {/* Header Section */}
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
-                    <Box sx={{ display: {sm:"flex",xs:"block"}, justifyContent: "space-between", alignItems: "center",py: {sm:"30px",xs:"15px"},  fontFamily: "Roboto" }}>
+                    <Box sx={{ display: { sm: "flex", xs: "block" }, justifyContent: "space-between", alignItems: "center", py: { sm: "30px", xs: "15px" }, fontFamily: "Roboto" }}>
                         <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
                             Unboxing Challenge
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-              <Link className='breadcrumbs-hover'
-                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize',  }}
-                to="/"
-              >
-                Home
-              </Link>
-              {pathnames.map((segment, index) => {
-                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
-                const isLast = index === pathnames.length - 1;
+                            <Link className='breadcrumbs-hover'
+                                style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', }}
+                                to="/"
+                            >
+                                Home
+                            </Link>
+                            {pathnames.map((segment, index) => {
+                                const path = `/${pathnames.slice(0, index + 1).join('/')}`;
+                                const isLast = index === pathnames.length - 1;
 
-                return isLast ? (
-                  <span
-                    key={index}
-                    style={{ color: '#6c757d', textTransform: "capitalize" }}
-                  >
-                    {decodeURIComponent(segment)}
-                  </span>
-                ) : (
-                  <Link className='breadcrumbs-hover'
-                    key={index}
-                    style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
-                    to={path}
-                  >
-                    {decodeURIComponent(segment)}
-                  </Link>
-                );
-              })}
-            </Breadcrumbs>
+                                return isLast ? (
+                                    <span
+                                        key={index}
+                                        style={{ color: '#6c757d', textTransform: "capitalize" }}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </span>
+                                ) : (
+                                    <Link className='breadcrumbs-hover'
+                                        key={index}
+                                        style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
+                                        to={path}
+                                    >
+                                        {decodeURIComponent(segment)}
+                                    </Link>
+                                );
+                            })}
+                        </Breadcrumbs>
                     </Box>
                 </Container>
             </Box>
@@ -80,7 +118,7 @@ const Unboxing = () => {
                                             borderRadius: "10px",
                                         }}
                                         src={cat.src}
-                                         loading="lazy"
+                                        loading="lazy"
                                         alt="category-image"
                                     />
                                 </Box>
@@ -88,7 +126,7 @@ const Unboxing = () => {
                         ))}
                     </Grid>
                     <Box sx={{}}>
-                        <Box sx={{  mb: 2 }}>
+                        <Box sx={{ mb: 2 }}>
                             <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
                                 Participate in The Unboxing Challenge
                             </Typography>
@@ -116,9 +154,14 @@ const Unboxing = () => {
                             </Grid>
                         </Grid>
                     </Box>
-                    <UnboxingTopSection/>
-                    
-                    <UnboxingBottomSection />
+                    {
+                        data?.map((item, index) => (
+                            < UnboxingTopSection key={index} item={item} />
+                        ))
+                    }
+
+
+                    {/* <UnboxingBottomSection /> */}
                 </Box>
             </Container>
         </Box>

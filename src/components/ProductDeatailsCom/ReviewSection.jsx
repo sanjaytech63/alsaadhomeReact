@@ -1,4 +1,4 @@
-import { Box, Grid, Rating, Typography,    Avatar, } from '@mui/material'
+import { Box, Grid, Rating, Typography, Avatar, } from '@mui/material'
 import React, { useState } from 'react'
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import { showToast } from '../../utils/helper';
@@ -25,33 +25,29 @@ const ReviewSection = () => {
     return (
         <>
             <Box id="Reviews" sx={{ width: "100%" }}>
-                <Box sx={{ my: { sm: 6, xs: 3 }, textAlign: "center" }}>
-                    <Grid
-                        container
-                        spacing={2}
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Grid item xs={12} sm="auto">
-                            <Typography sx={{ fontWeight: 600, fontSize: 18 }}>
-                                Customer Reviews
-                            </Typography>
+                <Box
+                    sx={{
+                        my: { sm: 6, xs: 3 },
+                        textAlign: "left",
+                        display: "flex",
+                        alignItems: "flex-start",
+                    }}
+                >
+                    <Grid container spacing={2} display="flex" alignItems="center">
+                        <Grid item xs={12} >
+                            <Typography sx={{ fontWeight: 600, fontSize: 18 }}>Customer Reviews</Typography>
                         </Grid>
-                        <Grid item xs={12} sm="auto">
+                        <Grid item xs={12} >
                             <Rating value={null} precision={0.5} readOnly />
                         </Grid>
-                        <Grid item xs={12} sm="auto">
-                            <Typography
-                                sx={{
-                                    fontSize: { sm: 16, xs: 14 },
-                                    mt: { xs: 1, sm: "4px" },
-                                }}
-                            >
+                        <Grid item xs={12} >
+                            <Typography sx={{ fontSize: { sm: 16, xs: 14 }, mt: { xs: 1, sm: "4px" } }}>
                                 3.3 out of 5
                             </Typography>
                         </Grid>
                     </Grid>
                 </Box>
+
                 <hr />
                 {/* Reviews List */}
                 <Box sx={{ mt: 4, width: "100%" }}>
