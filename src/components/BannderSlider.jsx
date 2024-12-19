@@ -43,10 +43,6 @@ const BannerSlider = ({ BannderSliderData }) => {
                         <Link className="link-none"
                             key={item.id}
                             to={`/search/banner/${item.id}`}
-                            state={{
-                                id: item.id,
-                                type: 'display_banners'
-                            }}
                         >
                             <Box
                                 component="img"

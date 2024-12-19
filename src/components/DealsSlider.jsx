@@ -51,7 +51,6 @@ const DealsSlider = ({ DealsSlider }) => {
                         {DealsSlider.length > 0 && [...DealsSlider, ...DealsSlider].map((item) => (
                             <Link
                                 className="link-none"
-                                state={{ id: item.id, type: "display_banners" }}
                                 key={item.id}
                                 to={`/search/banner/${item.id}`}
                             >

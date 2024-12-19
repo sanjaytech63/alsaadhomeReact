@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-import { Box, Grid, Typography, Dialog, IconButton, CardMedia } from '@mui/material';
+import { Box, Grid, Typography, Dialog, IconButton } from '@mui/material';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
-import parse from 'html-react-parser';
-// const videoList = [
-//     {
-//         id: 1,
-//         youtubeId: "WMFIWEFZa7Y",
-//         thumbnail: "https://img.youtube.com/vi/WMFIWEFZa7Y/maxresdefault.jpg",
-//     },
-//     {
-//         id: 2,
-//         youtubeId: "L5JdEHUMNB0",
-//         thumbnail: "https://img.youtube.com/vi/L5JdEHUMNB0/maxresdefault.jpg",
-//     },
-//     {
-//         id: 3,
-//         youtubeId: "pw_AreztrTs",
-//         thumbnail: "https://img.youtube.com/vi/pw_AreztrTs/maxresdefault.jpg",
-//     },
-// ];
 
-const UnboxingTopSection = ({ item }) => {
+const videoList = [
+    {
+        id: 1,
+        youtubeId: "WMFIWEFZa7Y",
+        thumbnail: "https://img.youtube.com/vi/WMFIWEFZa7Y/maxresdefault.jpg",
+    },
+    {
+        id: 2,
+        youtubeId: "L5JdEHUMNB0",
+        thumbnail: "https://img.youtube.com/vi/L5JdEHUMNB0/maxresdefault.jpg",
+    },
+    {
+        id: 3,
+        youtubeId: "pw_AreztrTs",
+        thumbnail: "https://img.youtube.com/vi/pw_AreztrTs/maxresdefault.jpg",
+    },
+];
+
+const UnboxingTopSection = () => {
     const [open, setOpen] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState(null);
 
@@ -38,12 +38,15 @@ const UnboxingTopSection = ({ item }) => {
         <Box sx={{ mt: 5 }}>
             <Box sx={{ mb: 4 }}>
                 <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
-                    {item.name}
+                    Examples
+                </Typography>
+                <Typography variant="body1" sx={{ lineHeight: "28px", color: "#687188", fontWeight: "600" }}>
+                    Here are some video ideas for unboxing to get some inspiration.
                 </Typography>
             </Box>
             <Box sx={{ pb: 4 }}>
                 <Grid container sx={{ mb: 2 }} spacing={3}>
-                    {item?.video_image.map((video) => (
+                    {videoList.map((video) => (
                         <Grid item xs={12} sm={6} md={4} key={video.id}>
                             <Box
                                 sx={{
@@ -54,13 +57,13 @@ const UnboxingTopSection = ({ item }) => {
                                     cursor: 'pointer',
                                 }}
                             >
-                                <CardMedia component={"img"}
-                                    src={video}
-                                    loading="lazy"
-                                    alt={`Video Thumbnail `}
-                                    sx={{ width: '100%', height: { sm: "210px", xs: "120px" } }}
+                                <img
+                                    src={video.thumbnail}
+                                     loading="lazy"
+                                    alt={`Video Thumbnail ${video.id}`}
+                                    style={{ width: '100%', height: 'auto' }}
                                 />
-                                {/* <IconButton
+                                <IconButton
                                     sx={{
                                         position: 'absolute',
                                         top: '50%',
@@ -71,13 +74,13 @@ const UnboxingTopSection = ({ item }) => {
                                     }}
                                     onClick={() => handleOpen(video.youtubeId)}
                                 >
-                                    <PlayCircleOutlineIcon sx={{ fontSize: '60px' }} /> */}
-                                {/* </IconButton> */}
+                                    <PlayCircleOutlineIcon sx={{ fontSize: '60px' }} />
+                                </IconButton>
                             </Box>
                         </Grid>
                     ))}
                 </Grid>
-                {/* <Dialog
+                <Dialog
                     open={open}
                     onClose={handleClose}
                     fullWidth
@@ -101,13 +104,13 @@ const UnboxingTopSection = ({ item }) => {
                             />
                         )}
                     </Box>
-                </Dialog> */}
+                </Dialog>
                 <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
                     <Grid item xs={12} sm={12} md={12}>
                         <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: "#687188", fontSize: '18px', }}>
-                        {parse(item.description)}
+                            You can make your videos in different ways:
                         </Typography>
-                        {/* <Typography variant="body1" sx={{ mb: 1, color: "#687188", fontSize: '15px', }}>
+                        <Typography variant="body1" sx={{ mb: 1, color: "#687188", fontSize: '15px', }}>
                             <Box
                                 sx={{
                                     width: '5px',
@@ -130,7 +133,7 @@ const UnboxingTopSection = ({ item }) => {
                                     display: 'inline-block'
                                 }}
                             />  But showing yourself talking about the items or your experience could be an effective way to make better results.
-                        </Typography> */}
+                        </Typography>
                     </Grid>
                 </Grid>
             </Box>

@@ -14,11 +14,13 @@ const Navbar = () => {
     const [openSearch, setSearchOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-
-    const { item_count, cartItems, deleteCartItem } = useCartStore();
-    const cartId = localStorage.getItem('cart_id');
+    const { item_count, cartItems, deleteCartItem, getCart } = useCartStore();
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
+
+    useEffect(() => {
+        getCart();
+    }, [])
 
     const navList = [
         { name: "Home", slug: "/" },
@@ -134,11 +136,12 @@ const Navbar = () => {
                                 <Divider />
                                 <Box sx={{ maxHeight: '250px', overflowY: 'auto', px: 2 }}>
                                     {cartItems?.branch && cartItems?.branch?.length > 0 ? (
-                                        cartItems?.branch.map((branch) =>
-                                            branch?.item && branch?.item.length > 0 ? (
-                                                branch?.item?.map((item) => (
+                                        cartItems?.branch?.map((branch) =>
+                                            branch?.item && branch?.item?.length > 0 ? (
+                                                branch?.item?.map((item, index) => (
+                                                    console.log(item?.cart_item_id, "item?.cart_item_id"),
                                                     <Box
-                                                        key={item.cart_item_id}
+                                                        key={index}
                                                         sx={{
                                                             display: 'flex',
                                                             gap: 3,
@@ -186,18 +189,7 @@ const Navbar = () => {
                                                                 <span>1 X {item?.list_price}</span> <span>AED</span>
                                                             </Typography>
                                                         </Box>
-                                                        {/* <Close
-                                                            onClick={() => deleteCartItem(item.cart_item_id)}
-                                                            sx={{
-                                                                cursor: 'pointer',
-                                                                margin: '20px',
-                                                                fontWeight: '500',
-                                                                color: '#292b2c',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'flex-end',
-                                                            }}
-                                                        /> */}
+
                                                         <Box component="div" sx={{ bgcolor: '#bb1f2a', px: 0.5, py: 0.5, cursor: 'pointer', mr: 2, color: '#fff', borderRadius: '4px', ":hover": { bgcolor: 'red' } }}>
                                                             <RiDeleteBin5Line
                                                                 onClick={() => deleteCartItem(item?.cart_item_id)}
@@ -216,12 +208,11 @@ const Navbar = () => {
                                     )}
                                 </Box>
 
-                                {cartItems?.branch && cartItems?.branch.length > 0 && (
+                                {cartItems?.branch && cartItems?.branch?.length > 0 && (
                                     <Box display="flex" justifyContent="space-between" mt={2}>
                                         <Button
                                             onClick={() => {
                                                 navigateToCart();
-                                                handleMouseLeave();
                                             }}
                                             variant="contained"
                                             sx={{ backgroundColor: '#000', borderRadius: '0px' }}
@@ -231,7 +222,6 @@ const Navbar = () => {
                                         <Button
                                             onClick={() => {
                                                 navigateToChekout();
-                                                handleMouseLeave();
                                             }}
                                             variant="contained"
                                             sx={{ backgroundColor: '#bb1f2a', borderRadius: '0px' }}

@@ -47,10 +47,6 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                     >
                         {FeaturedBrands.length > 0 && FeaturedBrands.map((item) => (
                             <Link className="link-none"
-                                state={{
-                                    id: item.id,
-                                    type: 'brand'
-                                }}
                                 to={`/brand/${item.id}`}
                                 key={item.id}
                                 draggable={false}

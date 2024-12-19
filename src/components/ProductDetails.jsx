@@ -68,11 +68,7 @@ const ProductDetails = () => {
     const [variants, setVariants] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    // Memoize frequently accessed props
-    const location = useLocation();
-    const { product_id, variant_id } = location.state || {};
-    const {id} = useParams()
+    const { product_slug } = useParams();
 
 
     const memoizedProps = useMemo(
@@ -112,9 +108,7 @@ const ProductDetails = () => {
         setLoading(true);
         try {
             const requestBody = {
-                product_slug: id,
-                "product_id": product_id,
-                "product_variant_id": variant_id,
+              product_slug: product_slug,
             };
             const response = await homeApi.getProductDetails(requestBody);
             if (response && response.status === 200) {
@@ -129,7 +123,7 @@ const ProductDetails = () => {
         } finally {
             setLoading(false);
         }
-    }, [product_id, variant_id]);
+    }, [product_slug]);
 
     useEffect(() => {
         fetchProductDetails();

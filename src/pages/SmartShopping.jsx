@@ -84,7 +84,7 @@ const SmartShopping = () => {
                 <Box sx={{ my: { sm: 5, xs: 2 }, gap: 3, pb: { sm: 5, xs: 2 }, display: "flex", alignItems: "center", justifyContent: "space-between", flexDirection: { xs: "column", sm: "row" } }}>
                     {data?.map((cat) => (
                         <Box key={cat.id}
-                            onClick={() => navigate(`/smart-shopping/category/${cat.id}`)}
+                            onClick={() => navigate(`/smart-shopping/category/${cat.slug}`)}
                             sx={{
                                 boxShadow: 3,
                                 backgroundColor: '#000',

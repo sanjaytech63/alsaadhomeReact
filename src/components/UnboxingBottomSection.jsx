@@ -34,7 +34,7 @@ const UnboxingBottomSection = () => {
     // Custom button group for carousel navigation
     const CustomButtonGroup = ({ next, previous }) => (
         <>
-            {/* Previous Button */}
+            {/ Previous Button /}
             <Box
                 onClick={isRTL ? next : previous}
                 sx={{
@@ -46,7 +46,7 @@ const UnboxingBottomSection = () => {
             >
                 <MdOutlineArrowBackIos fontSize="20px" color="#222" />
             </Box>
-            {/* Next Button */}
+            {/ Next Button /}
             <Box
                 onClick={isRTL ? previous : next}
                 sx={{
@@ -96,7 +96,7 @@ const UnboxingBottomSection = () => {
 
     return (
         <div className="w-100">
-            {/* Section Header */}
+            {/ Section Header /}
             <Box sx={{ mb: 2 }}>
                 <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
                     Video Tutorials
@@ -111,7 +111,7 @@ const UnboxingBottomSection = () => {
                 </Typography>
             </Box>
 
-            {/* Carousel Section */}
+            {/ Carousel Section /}
             <Box sx={{ width: "100%", position: "relative", my: 3 }}>
                 <Carousel
                     additionalTransfrom={0}
@@ -169,7 +169,7 @@ const UnboxingBottomSection = () => {
                     ))}
                 </Carousel>
 
-                {/* Video Dialog */}
+                {/ Video Dialog /}
                 <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
                     <Box sx={{ position: "relative", paddingTop: "56.25%" }}>
                         {selectedVideo && (
