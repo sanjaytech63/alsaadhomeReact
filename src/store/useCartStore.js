@@ -1,20 +1,18 @@
-import { create } from 'zustand';
-import { cardApi } from '../utils/services/cartSevices';
+import { create } from "zustand";
+import { cardApi } from "../utils/services/cartSevices";
 import { getSessionId, showToast } from "../utils/helper";
 
 const useCartStore = create((set, get) => ({
   cartItems: null,
   cartIds: [],
   item_count: 0,
-  isLoading: false,
 
   setCartItems: (items) => set({ cartItems: items }),
   setCartIds: (ids) => set({ cartIds: ids }),
-  setLoading: (loading) => set({ isLoading: loading }),
 
   // Function to create a new cart
   createToCart: async () => {
-    const { setCartIds, setLoading } = get();
+    const { setCartIds } = get();
     const params = {
       sessionID: getSessionId(),
       customer_id: "",
@@ -22,7 +20,6 @@ const useCartStore = create((set, get) => ({
     };
 
     try {
-      setLoading(true);
       const res = await cardApi.creteCart(params);
       if (res && res.status === 200) {
         const cartId = res.data.cart_id;
@@ -35,8 +32,6 @@ const useCartStore = create((set, get) => ({
         e.response?.data?.message || "An error occurred",
         "danger"
       );
-    } finally {
-      setLoading(false);
     }
     return null;
   },
@@ -60,7 +55,7 @@ const useCartStore = create((set, get) => ({
   },
 
   addToCart: async (id, qty) => {
-    const { cartIds, setCartIds, setLoading } = get();
+    const { cartIds, setCartIds } = get();
     let cartId = localStorage.getItem("cart_id");
 
     if (!cartId) {
@@ -80,30 +75,25 @@ const useCartStore = create((set, get) => ({
     };
 
     try {
-      setLoading(true);
       const res = await cardApi.addToCart(params);
       if (res && res.status === 200) {
         showToast("success", res.message, "success");
         setCartIds([...cartIds, id.toString()]);
         set({ item_count: res.item_count });
-        await get().fetchCartProductIds();
+        get().getCart("");
       }
-      await get().getCart("");
     } catch (e) {
       showToast(
         "warning",
         e.response?.data?.message || "An error occurred",
         "danger"
       );
-    } finally {
-      setLoading(false);
     }
   },
 
   getCart: async (id) => {
-    const { setLoading, setCartItems, setCartDetails } = get();
+    const { setCartItems } = get();
     try {
-      setLoading(true);
       const data = {
         customer_id: id,
         cart_id: localStorage.getItem("cart_id"),
@@ -115,8 +105,6 @@ const useCartStore = create((set, get) => ({
       }
     } catch (error) {
       console.log("error", error);
-    } finally {
-      setLoading(false);
     }
   },
 

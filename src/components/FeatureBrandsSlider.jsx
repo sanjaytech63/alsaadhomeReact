@@ -3,11 +3,18 @@ import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, Typography, Container } from "@mui/material";
 import { Link } from "react-router-dom";
 import CustomButtonGroup from "./CustomButtonGroup";
+import useLoaderStore from "../store/loaderStore";
+import TopSliderShimmer from "./ShimerEffect/TopSliderShimer";
 
 const FeatureBrandsSlider = ({ FeaturedBrands }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
+    const isLoading = useLoaderStore((state) => state.isLoading);
+
+    if (isLoading) {
+      return <TopSliderShimmer />;
+    }
     return (
         <div className="w-100">
             <Container maxWidth="lg" sx={{ padding: 0 }}>

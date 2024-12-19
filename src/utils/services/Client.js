@@ -1,6 +1,6 @@
 import axios from "axios";
 import useLoaderStore from "../../store/loaderStore";
-import { getSessionId, showToast } from "../helper";
+import { showToast } from "../helper";
 import useUserStore from "../../store/user";
 import { useSettingsStore } from "../../store/useSettingsStore";
 
@@ -59,12 +59,11 @@ axiosInstance.interceptors.request.use(
 
     // Show loader if required
     if (config?.showLoader !== false) {
-      useLoaderStore.getState().setLoading(true);
+      useLoaderStore.getState().setIsLoading(true);
     }
     return config;
   },
   (error) => {
-    useLoaderStore.getState().setLoading(false);
     return Promise.reject(error);
   }
 );
@@ -72,7 +71,7 @@ axiosInstance.interceptors.request.use(
 // Response Interceptor
 axiosInstance.interceptors.response.use(
   (response) => {
-    useLoaderStore.getState().setLoading(false);
+    useLoaderStore.getState().setIsLoading(false);
     if (response?.data?.status === 401) {
       const userStore = useUserStore.getState();
       resetStack("Login");
@@ -82,7 +81,7 @@ axiosInstance.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    useLoaderStore.getState().setLoading(false);
+    useLoaderStore.getState().setIsLoading(false);
     if (error.response?.status === 401) {
       const userStore = useUserStore.getState();
       resetStack("Login");

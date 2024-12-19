@@ -6,11 +6,18 @@ import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, 
 import { Link } from 'react-router-dom';
 import CustomButtonGroup from './CustomButtonGroup';
 import useCartStore from '../store/useCartStore';
+import useLoaderStore from '../store/loaderStore';
+import NewArrivalsShimmer from './ShimerEffect/NewArrivalsShimmer';
 const RecommendedProducts = ({ productsCard, title,addToCart}) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
     const { isItemInCart } = useCartStore();
+    const isLoading = useLoaderStore((state) => state.isLoading);
+
+    if (isLoading) {
+      return <NewArrivalsShimmer />;
+    }
     return (
       <div className="w-100 ">
         <Container maxWidth="lg" sx={{ padding: 0 }}>

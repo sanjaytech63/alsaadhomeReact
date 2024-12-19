@@ -17,7 +17,6 @@ import LinearProgress from "@mui/material/LinearProgress";
 import SearchBar from "../components/SearchBar";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import useCartStore from "../store/useCartStore";
-import { showToast } from "../utils/helper";
 
 const Cart = ({
   image,
@@ -204,191 +203,194 @@ const CartPage = () => {
 
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter(Boolean);
-  console.log(cartItems,'==')
 
   return (
     <>
-      <Box sx={{ bgcolor: "#f7f8fb" }}>
-        <Container>
-          <Box
-            sx={{
-              display: { sm: "flex", xs: "block" },
-              justifyContent: "space-between",
-              alignItems: "center",
-              py: { sm: "30px", xs: "15px" },
-              fontFamily: "Roboto",
-            }}
-          >
-            <Typography
-              variant="h5"
+      <div style={{ minHeight: "100vh" }}>
+        <Box sx={{ bgcolor: "#f7f8fb" }}>
+          <Container>
+            <Box
               sx={{
-                color: "#292b2c",
-                textTransform: "capitalize",
-                fontWeight: "700",
-                fontSize: { sm: "24px", xs: "16px" },
+                display: { sm: "flex", xs: "block" },
+                justifyContent: "space-between",
+                alignItems: "center",
+                py: { sm: "30px", xs: "15px" },
+                fontFamily: "Roboto",
               }}
             >
-              Shopping Cart
-            </Typography>
-            <Breadcrumbs
-              sx={{ cursor: "pointer", fontSize: "14px" }}
-              separator={<NavigateNextIcon fontSize="small" />}
-              aria-label="breadcrumb"
-            >
-              <Link
-                className="breadcrumbs-hover"
-                style={{
+              <Typography
+                variant="h5"
+                sx={{
                   color: "#292b2c",
-                  textDecoration: "none",
                   textTransform: "capitalize",
+                  fontWeight: "700",
+                  fontSize: { sm: "24px", xs: "16px" },
                 }}
-                to="/"
               >
-                Home
-              </Link>
-              {pathnames.map((segment, index) => {
-                const path = `/${pathnames.slice(0, index + 1).join("/")}`;
-                const isLast = index === pathnames.length - 1;
-
-                return isLast ? (
-                  <span
-                    key={index}
-                    style={{ color: "#6c757d", textTransform: "capitalize" }}
-                  >
-                    {decodeURIComponent(segment)}
-                  </span>
-                ) : (
-                  <Link
-                    className="breadcrumbs-hover"
-                    key={index}
-                    style={{
-                      color: "#292b2c",
-                      textDecoration: "none",
-                      textTransform: "capitalize",
-                    }}
-                    to={path}
-                  >
-                    {decodeURIComponent(segment)}
-                  </Link>
-                );
-              })}
-            </Breadcrumbs>
-          </Box>
-          <SearchBar />
-        </Container>
-      </Box>
-
-      <Container maxWidth="lg" sx={{ py: 5 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={8}>
-            {cartItems?.branch && cartItems?.branch?.length > 0 ? (
-              cartItems?.branch &&
-              cartItems?.branch?.map(
-                (item) =>
-                  item.item &&
-                  item.item.map((item) => (
-                    <Cart
-                      key={item.cart_item_id}
-                      {...item}
-                      cartItemId={item?.cart_item_id}
-                      itmeslug={item?.slug}
-                      product_id={item?.product_id}
-                      variant_id={item?.product_variant_id}
-                      deleteCartItem={deleteCartItem}
-                      incrementQuantity={incrementQuantity}
-                      decrementQuantity={decrementQuantity}
-                    />
-                  ))
-              )
-            ) : (
-              <Typography sx={{ fontWeight: "500", color: "#687188", my: 2 }}>
-                No products added to the cart
+                Shopping Cart
               </Typography>
-            )}
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            {cartItems?.branch && cartItems?.branch?.length > 0 ? (
-              <Box sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)", mb: 1 }}>
-                <Typography
-                  sx={{
-                    mb: 1,
-                    color: "#687188",
+              <Breadcrumbs
+                sx={{ cursor: "pointer", fontSize: "14px" }}
+                separator={<NavigateNextIcon fontSize="small" />}
+                aria-label="breadcrumb"
+              >
+                <Link
+                  className="breadcrumbs-hover"
+                  style={{
+                    color: "#292b2c",
+                    textDecoration: "none",
                     textTransform: "capitalize",
-                    fontSize: { sm: "14px", xs: "12px" },
-                    textAlign: "center",
                   }}
+                  to="/"
                 >
-                  {cartItems?.free_delivery_title}
-                </Typography>
-                <LinearProgress
-                  color="error"
-                  variant="determinate"
-                  sx={{ height: "6px", borderRadius: "4px" }}
-                  value={cartItems?.progress}
-                />
-              </Box>
-            ) : null}
+                  Home
+                </Link>
+                {pathnames.map((segment, index) => {
+                  const path = `/${pathnames.slice(0, index + 1).join("/")}`;
+                  const isLast = index === pathnames.length - 1;
 
-            {cartItems?.branch && cartItems?.branch?.length > 0 ? (
-              <Box sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-around",
-                    my: 2,
-                  }}
-                >
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      color: "#292b2c",
-                      textTransform: "capitalize",
-                      fontWeight: "600",
-                      fontSize: { sm: "18px", xs: "16px" },
-                    }}
-                  >
-                    Sub Total
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      color: "#292b2c",
-                      textTransform: "capitalize",
-                      fontWeight: "600",
-                      fontSize: { sm: "18px", xs: "16px" },
-                    }}
-                  >
-                    {cartItems?.total_amount} AED
-                  </Typography>
-                </Box>
-                <Button
-                  onClick={() => navigate("/chekout")}
-                  variant="contained"
-                  sx={{ backgroundColor: "#bb1f2a", padding: "10px", mt: 1 }}
-                  fullWidth
-                >
-                  Proceed To Checkout
-                </Button>
-              </Box>
-            ) : null}
-          </Grid>
-        </Grid>
-        <Box sx={{ textAlign: "center" }}>
-          <div className="row d-flex align-items-center justify-content-between my-4 px-2">
-            <span
-              className="col-5"
-              style={{ backgroundColor: "#d9d9d9", height: "4px" }}
-            ></span>
-            <FaShoppingCart size={30} className="col-2" color="#d9d9d9" />
-            <span
-              className="col-5"
-              style={{ backgroundColor: "#d9d9d9", height: "4px" }}
-            ></span>
-          </div>
+                  return isLast ? (
+                    <span
+                      key={index}
+                      style={{ color: "#6c757d", textTransform: "capitalize" }}
+                    >
+                      {decodeURIComponent(segment)}
+                    </span>
+                  ) : (
+                    <Link
+                      className="breadcrumbs-hover"
+                      key={index}
+                      style={{
+                        color: "#292b2c",
+                        textDecoration: "none",
+                        textTransform: "capitalize",
+                      }}
+                      to={path}
+                    >
+                      {decodeURIComponent(segment)}
+                    </Link>
+                  );
+                })}
+              </Breadcrumbs>
+            </Box>
+            <SearchBar />
+          </Container>
         </Box>
-      </Container>
+
+        <Container maxWidth="lg" sx={{ py: 5 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={8}>
+              {cartItems?.branch && cartItems?.branch?.length > 0 ? (
+                cartItems?.branch &&
+                cartItems?.branch?.map(
+                  (item) =>
+                    item.item &&
+                    item.item.map((item, index) => (
+                      <Cart
+                        key={index}
+                        {...item}
+                        cartItemId={item?.cart_item_id}
+                        itmeslug={item?.slug}
+                        product_id={item?.product_id}
+                        variant_id={item?.product_variant_id}
+                        deleteCartItem={deleteCartItem}
+                        incrementQuantity={incrementQuantity}
+                        decrementQuantity={decrementQuantity}
+                      />
+                    ))
+                )
+              ) : (
+                <Typography sx={{ fontWeight: "500", color: "#687188", my: 2 }}>
+                  No products added to the cart
+                </Typography>
+              )}
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              {cartItems?.branch && cartItems?.branch?.length > 0 ? (
+                <Box
+                  sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)", mb: 1 }}
+                >
+                  <Typography
+                    sx={{
+                      mb: 1,
+                      color: "#687188",
+                      textTransform: "capitalize",
+                      fontSize: { sm: "14px", xs: "12px" },
+                      textAlign: "center",
+                    }}
+                  >
+                    {cartItems?.free_delivery_title}
+                  </Typography>
+                  <LinearProgress
+                    color="error"
+                    variant="determinate"
+                    sx={{ height: "6px", borderRadius: "4px" }}
+                    value={cartItems?.progress}
+                  />
+                </Box>
+              ) : null}
+
+              {cartItems?.branch && cartItems?.branch?.length > 0 ? (
+                <Box sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                      my: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        color: "#292b2c",
+                        textTransform: "capitalize",
+                        fontWeight: "600",
+                        fontSize: { sm: "18px", xs: "16px" },
+                      }}
+                    >
+                      Sub Total
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        color: "#292b2c",
+                        textTransform: "capitalize",
+                        fontWeight: "600",
+                        fontSize: { sm: "18px", xs: "16px" },
+                      }}
+                    >
+                      {cartItems?.total_amount} AED
+                    </Typography>
+                  </Box>
+                  <Button
+                    onClick={() => navigate("/chekout")}
+                    variant="contained"
+                    sx={{ backgroundColor: "#bb1f2a", padding: "10px", mt: 1 }}
+                    fullWidth
+                  >
+                    Proceed To Checkout
+                  </Button>
+                </Box>
+              ) : null}
+            </Grid>
+          </Grid>
+          <Box sx={{ textAlign: "center" }}>
+            <div className="row d-flex align-items-center justify-content-between my-4 px-2">
+              <span
+                className="col-5"
+                style={{ backgroundColor: "#d9d9d9", height: "4px" }}
+              ></span>
+              <FaShoppingCart size={30} className="col-2" color="#d9d9d9" />
+              <span
+                className="col-5"
+                style={{ backgroundColor: "#d9d9d9", height: "4px" }}
+              ></span>
+            </div>
+          </Box>
+        </Container>
+      </div>
     </>
   );
 };

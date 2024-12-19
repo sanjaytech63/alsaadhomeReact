@@ -1,8 +1,16 @@
 import { Box, Container, Grid } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import useLoaderStore from "../store/loaderStore";
+import BannerSectionShimer from "./ShimerEffect/BannerSectionShimer";
 
 const BannerSection = ({ bannerSection }) => {
+  const isLoading = useLoaderStore((state) => state.isLoading);
+
+  if (isLoading) {
+    return <BannerSectionShimer />;
+  }
+
   return (
     <Container sx={{ my: { xs: 1, sm: 4 }, px: 2 }}>
       <Grid

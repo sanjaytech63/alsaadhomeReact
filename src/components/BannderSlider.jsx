@@ -2,10 +2,17 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
+import useLoaderStore from "../store/loaderStore";
+import BannerSliderShimmer from "./ShimerEffect/BannerSliderShimmer";
 
 const BannerSlider = ({ BannderSliderData }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+    const isLoading = useLoaderStore((state) => state.isLoading);
+
+    if (isLoading) {
+      return <BannerSliderShimmer />;
+    }
 
     return (
         <Box sx={{ width: "100%", mb: { xs: 2, sm: 4 }, mt: { xs: 0, sm: 2 } }}>

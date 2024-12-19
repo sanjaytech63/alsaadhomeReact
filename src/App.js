@@ -5,9 +5,12 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState, useEffect } from 'react';
 import router from './routes/Routes';
 import { RouterProvider } from 'react-router-dom';
+import useLoaderStore from './store/loaderStore';
+import Loading from './components/Loading';
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
+  const isLoading = useLoaderStore((state) => state.isLoading);
   useEffect(() => {
     const handleScroll = () => {
       setShowScroll(window.scrollY > 100);
@@ -21,28 +24,29 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-
   return (
     <div>
       <RouterProvider router={router} />
+      {isLoading && <Loading />}
       <Zoom in={showScroll}>
         <Fab
           onClick={scrollToTop}
           sx={{
-            margin: '0 auto',
+            margin: "0 auto",
             width: "40px",
             height: "20px",
-            position: 'fixed',
-            backgroundColor: '#000',
-            color: '#fff',
+            position: "fixed",
+            backgroundColor: "#000",
+            color: "#fff",
             bottom: {
-              xs: 80, sm: 24
+              xs: 80,
+              sm: 24,
             },
             right: 24,
-            borderRadius: '0px',
-            '&:hover': {
-              backgroundColor: '#bb1f2a',
-              color: '#fff',
+            borderRadius: "0px",
+            "&:hover": {
+              backgroundColor: "#bb1f2a",
+              color: "#fff",
             },
           }}
           aria-label="Scroll to top"
@@ -52,7 +56,7 @@ function App() {
       </Zoom>
       <ToastContainer />
     </div>
-  )
+  );
 }
 
 export default App;
