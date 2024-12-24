@@ -10,13 +10,14 @@ import {
 } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { Add, Remove } from "@mui/icons-material";
 import LinearProgress from "@mui/material/LinearProgress";
 import SearchBar from "../components/SearchBar";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import useCartStore from "../store/useCartStore";
+import { showToast } from "../utils/helper";
 
 const Cart = ({
   image,
@@ -34,6 +35,9 @@ const Cart = ({
   quantity,
   incrementQuantity,
   decrementQuantity,
+  cartItemQuantity,
+  index,
+  branchIndex,
 }) => {
   return (
     <Card
@@ -134,7 +138,7 @@ const Cart = ({
             <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
               <Typography
                 onClick={() =>
-                  decrementQuantity(variant_id, quantity, cart_quantity)
+                  decrementQuantity(variant_id,branchIndex, index)
                 }
                 sx={{ backgroundColor: "#eee", mr: 1, cursor: "pointer" }}
               >
@@ -144,12 +148,11 @@ const Cart = ({
                 sx={{ border: "solid 1px #ddd", px: 2 }}
                 variant="body1"
               >
-                {" "}
-                {cart_quantity}
+                {cartItemQuantity}
               </Typography>
               <Typography
                 onClick={() =>
-                  incrementQuantity(variant_id, quantity, cart_quantity)
+                  incrementQuantity(variant_id, quantity,branchIndex, index)
                 }
                 sx={{ backgroundColor: "#eee", ml: 1, cursor: "pointer" }}
               >
@@ -188,7 +191,8 @@ const Cart = ({
 // CartPage Component
 const CartPage = () => {
   const navigate = useNavigate();
-  const [quantity, setQuantity] = useState([]);
+  const [quantity, setQuantity] = useState(null);
+  const debounceRef = useRef(null);
   const {
     cartItems,
     getCart,
@@ -203,6 +207,71 @@ const CartPage = () => {
 
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter(Boolean);
+
+ useEffect(() => {
+   if (cartItems?.branch) {
+     const initialQuantities = cartItems.branch.map(
+       (branch) =>
+         branch.item?.map((item) => parseInt(item.cart_quantity, 10))
+     );
+     setQuantity(initialQuantities);
+   }
+ }, [cartItems]);
+
+const handleIncrement = (product_variant_id, maxQuantity, branch, index) => {
+  if (branch != null && index !== -1) {
+    const currentQuantity = quantity[branch]?.[index] || 0;
+    const maxItemQuantity =
+      cartItems?.branch?.[branch]?.item?.[index]?.quantity || 0;
+
+    if (currentQuantity < maxQuantity && currentQuantity < maxItemQuantity) {
+      const updatedQuantities = [...quantity];
+      updatedQuantities[branch][index] = currentQuantity + 1;
+      setQuantity(updatedQuantities);
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+      debounceRef.current = setTimeout(() => {
+        incrementQuantity(
+          product_variant_id,
+          maxQuantity,
+          updatedQuantities[branch][index]
+        );
+      }, 500);
+    } else {
+      showToast("warning", "Maximum quantity reached!", "danger");
+    }
+  } else {
+    console.warn("Invalid branch or index provided.");
+  }
+};
+
+const handleDecrement = (product_variant_id, branch, index) => {
+  if (branch != null && index !== -1) {
+    const currentQuantity = quantity[branch]?.[index] || 0;
+
+    if (currentQuantity > 1) {
+      const updatedQuantities = [...quantity];
+      updatedQuantities[branch][index] = currentQuantity - 1;
+      setQuantity(updatedQuantities);
+
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+      debounceRef.current = setTimeout(() => {
+        decrementQuantity(product_variant_id, updatedQuantities[branch][index]);
+      }, 500);
+    } else {
+      showToast("warning", "Minimum quantity is 1!", "danger");
+    }
+  } else {
+    console.warn("Invalid branch or index provided.");
+  }
+};
+
+
+
+ 
 
   return (
     <>
@@ -281,11 +350,11 @@ const CartPage = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
               {cartItems?.branch && cartItems?.branch?.length > 0 ? (
-                cartItems?.branch &&
                 cartItems?.branch?.map(
-                  (item) =>
+                  (item, branchIndex) =>
                     item.item &&
-                    item.item.map((item, index) => (
+                    item.item.map((item, index) => {                    
+                    return (
                       <Cart
                         key={index}
                         {...item}
@@ -294,10 +363,13 @@ const CartPage = () => {
                         product_id={item?.product_id}
                         variant_id={item?.product_variant_id}
                         deleteCartItem={deleteCartItem}
-                        incrementQuantity={incrementQuantity}
-                        decrementQuantity={decrementQuantity}
+                        incrementQuantity={handleIncrement}
+                        decrementQuantity={handleDecrement}
+                        cartItemQuantity={quantity ? quantity?.[branchIndex]?.[index] : 1}
+                        index={index}
+                        branchIndex={branchIndex}
                       />
-                    ))
+                    );})
                 )
               ) : (
                 <Typography sx={{ fontWeight: "500", color: "#687188", my: 2 }}>

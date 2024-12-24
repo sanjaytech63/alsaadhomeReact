@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { FilterTags } from "./ProductListing/FilterTags";
 import { ProdictListingHeader } from "./ProductListing/ProdictListingHeader";
 import { ProductGridToggle } from "./ProductListing/ProductGridToggle";
@@ -52,12 +52,17 @@ const ProductListing = () => {
   const [filterColors, setFilterColors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [newest, setNewest] = useState("new");
-//   const { product_id, variant_id, id, type } = location.state || {};
   const url = new URL(window.location.href); 
   const pathSegments = url.pathname.split("/"); 
   const category = pathSegments[1];
   const id = pathSegments[3];
   const subcategory = pathSegments[2];
+
+ const cleanedArray = pathSegments.some(
+   (item) => item === "search" || item === "brand"
+ )
+   ? ["Product List & Search"]
+   : pathSegments.filter((item) => item !== "" && isNaN(Number(item)));
 
   useEffect(() => {
     const initialParams = Object.fromEntries(searchParams.entries());
@@ -101,7 +106,7 @@ const ProductListing = () => {
 
     if (initialParams.page) setCurrentPage(Number(initialParams.page));
     if (initialParams.title) setSearchTerm(initialParams.search);
-    if (initialParams.newest) setNewest(initialParams.newest);
+    if (initialParams.newest) setNewest(initialParams.newest); 
   }, [searchParams]);
 
   const getRequestBody = () => {
@@ -179,9 +184,10 @@ const ProductListing = () => {
   const handleSearch = (term) => {
     setSearchTerm(term);
   };
-  const handleNewest = (event, id, type) => {
-    setNewest(event.target.value);
-    fetchData();
+  const handleNewest =  (event) => {
+    const selectedValue = String(event.target.value);
+    setNewest(selectedValue);
+    fetchData(1,selectedValue);
   };
   const applyFilters = (e) => {
     e.preventDefault();
@@ -227,43 +233,21 @@ const ProductListing = () => {
     setSearchParams({});
     fetchData();
   };
-  const fetchData = async (page = currentPage) => {
+  const fetchData = async (page = currentPage,keyValue) => {
     setLoading(true);
     setError(null);
     try {
       const request = getRequestBody();
       const obj = {
         ...request,
-        key: newest,
+        key: keyValue ? keyValue : newest,
         title: searchTerm,
         id: id ? id : subcategory,
-        // product_id: product_id,
-        // product_variant_id: variant_id,
-        type: category === 'search' ? subcategory :category || "",
+        type: category === "search" ? subcategory : category || "",
+        page: page,
+        filter_type: selectedCatlist.length > 0 ? "OR" : "AND",
+        category_ids: selectedCatlist,
       };
-      //   const requestBody = {
-      //     sale_high_price:
-      //       parseInt(price.max || "0", 10) > 0
-      //         ? parseInt(price.max || "0", 10)
-      //         : "",
-      //     sale_low_price:
-      //       parseInt(price.min || "0", 10) > 0
-      //         ? parseInt(price.min || "0", 10)
-      //         : "",
-      //     filter_type: selectedCatlist.length > 0 ? "OR" : "AND",
-      //     id: id || "",
-      //     product_id: product_id,
-      //     product_variant_id: variant_id,
-      //     type: type || "",
-      //     sort_by: sortOrder,
-      //     page: page,
-      //     key: newest,
-      //     title: searchTerm,
-      //     size_id: selectedSizes,
-      //     color_id: selectedColor,
-      //     brand_id: selectedBrands,
-      //     attributes_value_id: otherSelectedAttributes,
-      //   };
       const response = await homeApi.getProduct(obj);
       if (response && response.status === 200) {
         setData(response.data || []);
@@ -342,7 +326,7 @@ const ProductListing = () => {
 
   return (
     <>
-      <ProdictListingHeader pathnames={pathnames} />
+      <ProdictListingHeader pathnames={cleanedArray} />
       <Container maxWidth="lg" sx={{ py: 5 }}>
         <Modal
           open={isModalOpen}

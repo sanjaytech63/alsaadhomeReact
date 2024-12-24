@@ -64,7 +64,6 @@ const Home = () => {
     );
   }
 
-
   return (
     <div className="min-vh-100 w-full">
       {data ? (
@@ -95,7 +94,12 @@ const Home = () => {
           )}
           {data?.flash_sale_products &&
             data?.flash_sale_products.map((item, index) => (
-              <FlashSaleSlider key={index} item={item} addToCart={addToCart} length={data?.flash_sale_products?.length}/>
+              <FlashSaleSlider
+                key={index}
+                item={item}
+                addToCart={addToCart}
+                length={data?.flash_sale_products?.length}
+              />
             ))}
           {/* <RecentlyViewed title="Recently Viewed" productsCard={data.recommended_product} /> */}
           <BlogCard />
