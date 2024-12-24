@@ -1,57 +1,71 @@
-
-import { Grid, Container, Box, Typography, Pagination, Breadcrumbs, } from '@mui/material';
-// import jsonData from "../../src/blogData.json";
+import { Grid, Container, Box, Typography, Pagination, Breadcrumbs } from '@mui/material';
 import BlogCards from '../components/BlogCards';
 import BlogSideBar from '../components/BlogSideBar';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import instance from '../EndPoint';
 import { useState, useEffect } from 'react';
+import { blogApi } from '../utils/services/blogServices';
+import Loading from '../components/Loading';
 
-// ?page=1&limit=10
 const Blog = () => {
-    // const [blogs, setBlogs] = useState(jsonData.blogPosts);
-    const [blog, setBlog] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
-    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [totalPages, setTotalPages] = useState(1);
+    const location = useLocation();
+    const pathnames = location.pathname.split('/').filter(Boolean);
+    // const { slug } = useParams();
 
-    const fetchProducts = async (pageNumber) => {
+    const fetchHomeData = async (page) => {
+        setLoading(true);
         try {
-            setLoading(true);
-            const response = await instance.get(`/randomproducts/?page=${pageNumber}&limit=10`);
-            setBlog(response.data.data.data);
-            setTotalPages(response.data.data.totalPages);
-            setLoading(false);
+            const reqBody = {
+                "keyword": "",
+                "tag": "",
+                "dates": "",
+                "page": page
+            };
+            const response = await blogApi.getBlog(reqBody);
+            if (response && response?.status === 200) {
+                setData(response.data);
+                setTotalPages(Math.ceil(response?.data?.total_page / response.data?.per_page));
+            }
         } catch (error) {
-            console.error("Error fetching blogs:", error);
+            console.error("Error fetching blog data:", error);
+            setError("Failed to fetch blog data. Please try again later.");
         } finally {
             setLoading(false);
         }
     };
 
-    const handleChangePage = (e, newPage) => {
+    useEffect(() => {
+        fetchHomeData(pageNumber);
+    }, [pageNumber]);
+
+    const handleChangePage = (event, newPage) => {
         setPageNumber(newPage);
     };
 
-    useEffect(() => {
-        fetchProducts(pageNumber);
-    }, [pageNumber]);
+    if (loading) {
+        return <Loading />;
+    }
 
-
-    const location = useLocation();
-    const pathnames = location.pathname.split('/').filter(Boolean);
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     return (
-        <Box sx={{ minHeight: "100vh", }}>
+        <Box sx={{ minHeight: "100vh" }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
                 <Container>
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: "30px", px: "14px", fontFamily: "Roboto" }}>
-                        <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }} >
+                        <Typography variant="h5" sx={{ color: "#292b2c", textTransform: "capitalize", fontWeight: "700", fontSize: { sm: "24px", xs: "16px" } }}>
                             Blog
                         </Typography>
                         <Breadcrumbs sx={{ cursor: "pointer", fontSize: "14px" }} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-                            <Link className='breadcrumbs-hover'
+                            <Link
+                                className="breadcrumbs-hover"
                                 style={{ color: '#292b2c', textDecoration: 'none', textTransform: 'capitalize', marginRight: '8px' }}
                                 to="/"
                             >
@@ -69,7 +83,8 @@ const Blog = () => {
                                         {decodeURIComponent(segment)}
                                     </span>
                                 ) : (
-                                    <Link className='breadcrumbs-hover'
+                                    <Link
+                                        className="breadcrumbs-hover"
                                         key={index}
                                         style={{ color: '#292b2c', textDecoration: "none", textTransform: "capitalize" }}
                                         to={path}
@@ -82,14 +97,14 @@ const Blog = () => {
                     </Box>
                 </Container>
             </Box>
-            <Container maxWidth="lg" sx={{ py: 5, }}>
-                <Grid container spacing={4} className='any' sx={{ display: "flex", flexDirection: { xs: "column-reverse !important", sm: "row !important" } }}>
+            <Container maxWidth="lg" sx={{ py: 5 }}>
+                <Grid container spacing={4} sx={{ display: "flex", flexDirection: { xs: "column-reverse", sm: "row" } }}>
                     <Grid item xs={12} md={3}>
-                        <BlogSideBar />
+                        <BlogSideBar data={data} />
                     </Grid>
                     <Grid item xs={12} md={9}>
                         <Grid container spacing={4}>
-                            {blog.map((blog) => (
+                            {data?.blogs?.map((blog) => (
                                 <Grid item xs={12} sm={6} md={4} key={blog.id}>
                                     <BlogCards blog={blog} loading={loading} />
                                 </Grid>
@@ -101,13 +116,21 @@ const Blog = () => {
                 {totalPages > 1 && (
                     <Box display="flex" justifyContent="center" my={4}>
                         <Pagination
-                            sx={{ fontSize: { xs: '12px', sm: '14px' } }}
                             count={totalPages}
                             page={pageNumber}
-                            size='small'
                             onChange={handleChangePage}
-                            shape='rounded'
-                            color='error'
+                            shape="rounded"
+                            size="small"
+                            variant="outlined"
+                            sx={{
+                                "& .MuiPaginationItem-root": {
+                                    "&.Mui-selected": {
+                                        backgroundColor: "#bb1f2a",
+                                        color: "#fff",
+                                        "&:hover": { backgroundColor: "#a91c26" },
+                                    },
+                                },
+                            }}
                         />
                     </Box>
                 )}

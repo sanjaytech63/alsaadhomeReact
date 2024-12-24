@@ -1,4 +1,4 @@
-import { Box, Typography, TextField, Grid, Button } from '@mui/material';
+import { Box, Typography, TextField, Grid, Button, CardMedia } from '@mui/material';
 import React from 'react';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import TextsmsIcon from '@mui/icons-material/Textsms';
@@ -7,44 +7,46 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import EastIcon from '@mui/icons-material/East';
 import WestIcon from '@mui/icons-material/West';
 import { BsGrid } from "react-icons/bs";
-
+import parse from 'html-react-parser';
+import { Link } from 'react-router-dom';
 const BlogDetailsCard = ({ blog }) => {
+
     return (
         <div>
-            {blog?.title && (
+            {blog.blogs && (
                 <Typography
                     sx={{
                         fontSize: { xs: "22px", md: "30px" },
                         color: "#292b2c",
-                        fontFamily: "Roboto",
+
                         fontWeight: "600",
                     }}
                 >
-                    {blog?.title}
+                    {blog.blogs?.title_blog}
                 </Typography>
             )}
-            {blog?.comments && (
+            {blog.blogs && (
                 <Box className='d-flex  gap-3 m-0 p-0 my-4'>
                     <Typography sx={{
                         color: "#292b2c", cursor: "pointer", ":hover": {
                             color: "#bb1f2a"
                         }
                     }}>
-                        <span style={{ color: "#bb1f2a" }}><DateRangeIcon /></span>  {blog?.dates}
+                        <span style={{ color: "#bb1f2a" }}><DateRangeIcon /></span>  {blog.blogs?.created_at}
                     </Typography>
                     <Typography sx={{
                         color: "#292b2c", cursor: "pointer", ":hover": {
                             color: "#bb1f2a"
                         }
                     }}>
-                        <span style={{ color: "#bb1f2a" }}><TextsmsIcon /></span>  {blog?.comments}
+                        <span style={{ color: "#bb1f2a" }}><TextsmsIcon /></span>  {blog.blogs?.comment_count}
                     </Typography>
                 </Box>
             )}
-            {blog?.img && (
+            {blog.blogs && (
                 <img
-                    src={blog?.img}
-                    alt={blog?.subtitle}
+                    src={blog.blogs?.image}
+                    alt={blog.blogs?.title_blog}
                     style={{
                         width: '100%',
                         maxHeight: '400px',
@@ -56,15 +58,15 @@ const BlogDetailsCard = ({ blog }) => {
 
             <Typography
                 sx={{
-                    fontSize: { xs: "18px", md: "24px" },
-                    color: "#6c757d",
+                    fontSize: "16px",
+                    color: "#6c757d !important",
                     mt: 3,
                     fontWeight: "500"
                 }}
             >
-                {blog?.subtitle}
+                {parse(blog.blogs.description)}
             </Typography>
-            <Typography sx={{ mt: 2, color: "#6c757d", fontSize: { xs: "12px", sm: "15px" }, }}>
+            {/* <Typography sx={{ mt: 2, color: "#6c757d", fontSize: { xs: "12px", sm: "15px" }, }}>
                 {blog?.introduction}
             </Typography>
             <Box sx={{ mt: 4 }}>
@@ -75,53 +77,129 @@ const BlogDetailsCard = ({ blog }) => {
                         </Typography>
                     </Box>
                 ))}
-            </Box>
+            </Box> */}
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 4 }}>
-                <Typography sx={{ backgroundColor: "#f7f7f7", p: 1, color: "#292b2c" }}>
-                    Mattress
-                </Typography>
-                {/* Share Section */}
-                <Box display="flex" gap={2} alignItems="center">
-                    <span style={{ backgroundColor: "#1877f2", padding: "4px 8px", borderRadius: "4px", color: "#fff" }}><FaFacebookF /></span>
-                    <span style={{ backgroundColor: "#1877f2", padding: "4px 8px", borderRadius: "4px", color: "#fff" }}><FaTwitter /></span>
-                    <span style={{ backgroundColor: "#12af0a", padding: "3px", borderRadius: "4px", color: "#fff" }}><WhatsAppIcon /> </span>
-                </Box>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                        <Grid item xs={12} sx={{ display: "flex", gap: 1, flexWrap: "wrap" }} >
+                            {blog.blogs?.tags?.map((tag, index) => (
+                                <Typography key={index} sx={{ fontSize: "14px", backgroundColor: "#f7f7f7", p: 1, color: "#333", textTransform: "capitalize", cursor: "pointer", ":hover": { backgroundColor: "#bb1f2a", color: "#fff" } }}>
+                                    {tag}
+                                </Typography>
+                            ))}
+                        </Grid>
+                    </Grid>
+
+                    {/* Share Section */}
+                    <Grid item xs={12} md={6}>
+                        <Box sx={{ display: "flex", gap: 2, justifyContent: "center", alignItems: "center" }}>
+                            <span style={{ backgroundColor: "#1877f2", padding: "4px 8px", borderRadius: "4px", color: "#fff" }}><FaFacebookF /></span>
+                            <span style={{ backgroundColor: "#1877f2", padding: "4px 8px", borderRadius: "4px", color: "#fff" }}><FaTwitter /></span>
+                            <span style={{ backgroundColor: "#12af0a", padding: "3px", borderRadius: "4px", color: "#fff" }}><WhatsAppIcon /> </span>
+                        </Box>
+                    </Grid>
+                </Grid>
             </Box>
-            <Box sx={{ backgroundColor: "#f7f8fb", padding: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <Box sx={{
-                    fontSize: { sm: "16px", xs: "14px" }, display: "flex", gap: 1, alignItems: "center", ":hover": {
-                        color: "#bb1f2a", cursor: "pointer"
-                    }
-                }}>
-                    <span><WestIcon /></span>
-                    <span className="d-sm-block d-none">Hotel Bed Comforter</span>
-                </Box>
-                <Typography sx={{
-                    ":hover": {
-                        color: "#bb1f2a", cursor: "pointer"
-                    }
-                }}><BsGrid size={20} /></Typography>
-                <Box sx={{
-                    fontSize: { sm: "16px", xs: "14px" }, display: "flex", gap: 1, alignItems: "center", ":hover": {
-                        color: "#bb1f2a", cursor: "pointer"
-                    }
-                }}>
-                    <span className="d-sm-block d-none">Bed linen Types</span>
-                    <span><EastIcon /></span>
-                </Box>
+            <Box sx={{ backgroundColor: "#f7f7f7", padding: "1.5rem", display: "flex", justifyContent: "space-around", alignItems: "center" }}>
+                <Grid container spacing={3}>
+                    {/* Previous Button Section */}
+                    <Grid item xs={12} md={5} display="flex" justifyContent="center" alignItems="center">
+                        <Box sx={{
+                            fontSize: "14px", color: "#292b2c", display: "flex", gap: 1, alignItems: "center", ":hover": {
+                                color: "#bb1f2a", cursor: "pointer"
+                            }
+                        }}>
+
+                            <Link to={`/blog/${blog?.navigation_data?.previous?.slug}`} className='link-none link-hover d-flex gap-4 align-items-center' >
+                                <span><WestIcon /></span>
+                                <span className="d-sm-block d-none">{blog?.navigation_data?.previous?.title}</span>
+                            </Link>
+                        </Box>
+                    </Grid>
+
+                    {/* Center Section (Grid Icon) */}
+                    <Grid item xs={12} md={2} display="flex" justifyContent="center" alignItems="center">
+                        <Typography sx={{
+                            ":hover": {
+                                color: "#bb1f2a", cursor: "pointer"
+                            }
+                        }}>
+                            <BsGrid size={20} />
+                        </Typography>
+                    </Grid>
+
+                    {/* Next Button Section */}
+                    <Grid item xs={12} md={5} display="flex" justifyContent="center" alignItems="center">
+                        <Box sx={{
+                            fontSize: "14px", color: "#292b2c", display: "flex", gap: 1, alignItems: "center", ":hover": {
+                                color: "#bb1f2a", cursor: "pointer"
+                            }
+                        }}>
+                            <Link to={`/blog/${blog?.navigation_data?.next?.slug}`} className='link-none link-hover  d-flex  align-items-center' >
+                                <span className="d-sm-block d-none align-self-end">{blog?.navigation_data?.next?.title}</span>
+                                <span><EastIcon /></span>
+                            </Link>
+                        </Box>
+                    </Grid>
+                </Grid>
             </Box>
+
             <Box sx={{ border: "solid 1px #eee", my: 4, padding: "1.5rem", display: "flex", alignItems: "center", gap: 2 }}>
-                <img style={{ maxWidth: "100px" }} src="https://al-saad-home.mo.cloudinary.net/assets/images/user.png" alt="blog-avtar" />
-                <span style={{ color: "#687188", fontSize: "14px" }} >Author</span>
+                <img style={{ maxWidth: "100px" }} src="https://staging-alsaadhome.s3.us-east-2.amazonaws.com/assets/images/user.png" alt="blog-avtar" />
+                <span style={{ color: "#687188", fontSize: "14px" }} >{blog?.author_name || "Author"}</span>
             </Box>
-            <Typography sx={{ my: 4, color: "#292b2c", fontFamily: "Roboto", fontWeight: "600" }}>
-                (0) Comment
+            <Typography sx={{ my: 4, color: "#292b2c", fontWeight: "600" }}>
+                ({blog?.comment})  comment
             </Typography >
-            <Typography sx={{ my: 4, color: "#292b2c", fontFamily: "Roboto", }}>
-                This is a comment
-            </Typography >
+            <Box sx={{ my: 1 }}>
+                {blog?.blog_comment && blog?.blog_comment.map((comment, index) => (
+                    <>
+                        <Grid container spacing={2} >
+                            {/* Avatar */}
+                            <Grid item>
+                                <CardMedia
+                                    sx={{ width: "80px", height: "80px", objectFit: "cover" }}
+                                    loading="lazy"
+                                    component="img"
+                                    src="https://staging.alsaadhome.com/assets/images/user.webp"
+                                    alt="blog-avatar"
+                                />
+                            </Grid>
+
+                            {/* Text Content */}
+                            <Grid item xs>
+                                <Typography
+                                    sx={{
+                                        color: "#292b2c",
+                                        fontWeight: "500",
+                                        fontSize: "16px",
+                                        ":hover": { color: "#bb1f2a", cursor: "pointer" },
+                                    }}
+                                >
+                                    {comment.coustmer_name}
+                                </Typography>
+                                <Typography
+                                    sx={{
+                                        my: 1,
+                                        color: "#687188",
+                                        fontSize: "14px",
+                                        textTransform: "uppercase",
+                                    }}
+                                >
+                                    {comment.comment_date}
+                                </Typography>
+                                <Typography
+                                    sx={{ my: 1, color: "#687188", fontSize: "16px" }}
+                                >
+                                    {comment.message}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </>
+                ))}
+            </Box >
             <Box component="form" mb={5}>
-                <Typography sx={{ my: 4, color: "#292b2c", fontFamily: "Roboto", fontWeight: "600" }}>
+                <Typography sx={{ my: 4, color: "#292b2c", fontWeight: "600" }}>
                     Write a comment
                 </Typography >
                 <Grid item>
@@ -143,7 +221,6 @@ const BlogDetailsCard = ({ blog }) => {
                     </Box>
                 </Grid>
             </Box>
-
         </div>
     );
 }

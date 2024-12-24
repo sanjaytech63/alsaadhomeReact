@@ -4,37 +4,33 @@ import {
     Box,
     useMediaQuery,
     useTheme,
-    IconButton,
-    Dialog,
     Typography,
+    CardMedia,
+    Dialog,
+    IconButton,
 } from "@mui/material";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
+import CloseIcon from "@mui/icons-material/Close";
+import ModalVideo from 'react-modal-video';
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-
-const UnboxingBottomSection = () => {
+import parse from 'html-react-parser';
+const UnboxingBottomSection = ({ data }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down("md"));
 
-    const [open, setOpen] = useState(false);
+    const [isOpen, setOpen] = useState(false);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const isRTL = theme.direction === "rtl";
 
-    // Handle opening the dialog with selected YouTube video
     const handleOpen = (youtubeId) => {
-        setSelectedVideo(youtubeId);
-        setOpen(true);
+        if (youtubeId) {
+            setSelectedVideo(youtubeId);
+            setOpen(true);
+        }
     };
 
-    // Handle closing the dialog
-    const handleClose = () => {
-        setOpen(false);
-        setTimeout(() => setSelectedVideo(null), 200); // Reset video state after closing
-    };
-
-    // Custom button group for carousel navigation
     const CustomButtonGroup = ({ next, previous }) => (
         <>
-            {/ Previous Button /}
             <Box
                 onClick={isRTL ? next : previous}
                 sx={{
@@ -46,7 +42,6 @@ const UnboxingBottomSection = () => {
             >
                 <MdOutlineArrowBackIos fontSize="20px" color="#222" />
             </Box>
-            {/ Next Button /}
             <Box
                 onClick={isRTL ? previous : next}
                 sx={{
@@ -61,58 +56,18 @@ const UnboxingBottomSection = () => {
         </>
     );
 
-    const videoList = [
-        {
-            id: 1,
-            youtubeId: "WMFIWEFZa7Y",
-            thumbnail: "https://img.youtube.com/vi/WMFIWEFZa7Y/maxresdefault.jpg",
-        },
-        {
-            id: 2,
-            youtubeId: "L5JdEHUMNB0",
-            thumbnail: "https://img.youtube.com/vi/L5JdEHUMNB0/maxresdefault.jpg",
-        },
-        {
-            id: 3,
-            youtubeId: "pw_AreztrTs",
-            thumbnail: "https://img.youtube.com/vi/pw_AreztrTs/maxresdefault.jpg",
-        },
-        {
-            id: 4,
-            youtubeId: "WMFIWEFZa7Y",
-            thumbnail: "https://img.youtube.com/vi/WMFIWEFZa7Y/maxresdefault.jpg",
-        },
-        {
-            id: 5,
-            youtubeId: "L5JdEHUMNB0",
-            thumbnail: "https://img.youtube.com/vi/L5JdEHUMNB0/maxresdefault.jpg",
-        },
-        {
-            id: 6,
-            youtubeId: "pw_AreztrTs",
-            thumbnail: "https://img.youtube.com/vi/pw_AreztrTs/maxresdefault.jpg",
-        },
-    ];
-
-    return (
-        <div className="w-100">
-            {/ Section Header /}
-            <Box sx={{ mb: 2 }}>
-                <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
-                    Video Tutorials
-                </Typography>
-                <Typography
-                    variant="body1"
-                    sx={{ lineHeight: "28px", color: "#687188" }}
-                >
-                    Learn the secrets to creating engaging unboxing videos! Our tutorials
-                    guide you step-by-step to captivate your audience and showcase
-                    products like a pro.
-                </Typography>
-            </Box>
-
-            {/ Carousel Section /}
-            <Box sx={{ width: "100%", position: "relative", my: 3 }}>
+    const renderCarousel = (item) => (
+        <Box sx={{ width: "100%", position: "relative", my: 3 }} key={item.id}>
+            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1, px: "10px" }}>
+                {item.video_title}
+            </Typography>
+            <Typography
+                variant="body2"
+                sx={{ lineHeight: "24px", color: "#687188", mb: 1, px: "10px" }}
+            >
+                {item.video_sub_title}
+            </Typography>
+            <Box sx={{ py: 0 }}>
                 <Carousel
                     additionalTransfrom={0}
                     autoPlaySpeed={3000}
@@ -129,68 +84,79 @@ const UnboxingBottomSection = () => {
                     showDots={false}
                     slidesToSlide={1}
                     swipeable
-                    customButtonGroup={!matchesSM ? <CustomButtonGroup /> : null}
+                    customButtonGroup={item.video_image.length > 4 && !matchesSM ? <CustomButtonGroup /> : null}
                     rtl={isRTL}
                 >
-                    {videoList.map((video) => (
+                    {item.video_image.map((image, index) => (
                         <Box
-                            key={video.id}
-                            onClick={() => handleOpen(video.youtubeId)}
+                            key={index}
+                            onClick={() => handleOpen(image.video_id)}
                             sx={{
                                 position: "relative",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                cursor: "pointer",
+                                cursor: image.video_id ? "pointer" : "default",
                                 width: matchesSM ? "90%" : "100%",
-                                height: "auto",
+                                height: { xs: "110px", sm: "220px" },
                                 padding: "10px",
+                                borderRadius: "12px",
+                                overflow: "hidden",
+
                             }}
                         >
-                            <img
+                            <CardMedia
+                                component="img"
                                 draggable="false"
-                                src={video.thumbnail}
+                                src={image.url}
                                 loading="lazy"
-                                alt={`Video Thumbnail ${video.id}`}
-                                style={{ width: "100%", height: "auto", borderRadius: "10px" }}
-                            />
-                            <IconButton
+                                alt={`Video/Image Thumbnail ${index}`}
                                 sx={{
-                                    position: "absolute",
-                                    top: "50%",
-                                    left: "50%",
-                                    transform: "translate(-50%, -50%)",
-                                    color: "white",
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                    borderRadius: "10px",
                                 }}
-                            >
-                                <PlayCircleOutlineIcon sx={{ fontSize: "60px" }} />
-                            </IconButton>
+                            />
+                            {image.video_id && (
+                                <PlayCircleOutlineIcon
+                                    sx={{
+                                        position: "absolute",
+                                        fontSize: "50px",
+                                        color: "white",
+                                        opacity: 0.8,
+                                        zIndex: 2,
+                                    }}
+                                />
+                            )}
                         </Box>
                     ))}
                 </Carousel>
-
-                {/ Video Dialog /}
-                <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-                    <Box sx={{ position: "relative", paddingTop: "56.25%" }}>
-                        {selectedVideo && (
-                            <iframe
-                                title="YouTube Video"
-                                src={`https://www.youtube.com/embed/${selectedVideo}`}
-                                style={{
-                                    position: "absolute",
-                                    top: 0,
-                                    left: 0,
-                                    width: "100%",
-                                    height: "100%",
-                                }}
-                                frameBorder="0"
-                                allow="autoplay; encrypted-media"
-                                allowFullScreen
-                            />
-                        )}
-                    </Box>
-                </Dialog>
             </Box>
+            <Typography sx={{ lineHeight: "24px", color: "#687188", pb: 5, fontSize: "16px" }} >
+                {parse(item.video_description)}
+            </Typography>
+        </Box>
+    );
+
+    return (
+        <div>
+            {data?.video_image_data?.map((item) => renderCarousel(item))}
+            <Dialog  disableScrollLock open={isOpen} onClose={() => setOpen(false)} maxWidth="md">
+                <IconButton onClick={() => setOpen(false)} sx={{ position: "absolute", top: 0, right: 0, zIndex: 9999 }} >
+                    <CloseIcon sx={{ color: "white" }} />
+                </IconButton>
+                <Box sx={{ height: "400px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <ModalVideo
+                        allowFullScreen={false}
+                        channel="youtube"
+                        youtube={{ mute: 0, autoplay: 0 }}
+                        isOpen={isOpen}
+                        videoId={selectedVideo}
+                        onClose={() => setOpen(false)}
+                    />
+                </Box>
+            </Dialog>
         </div>
     );
 };

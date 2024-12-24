@@ -63,65 +63,65 @@ const BlogCard = () => {
                         {blog && blog.map((blog) => (
                             <Grid item xs={12} sm={6} md={4} key={blog.id}>
                                 <Link to={`/blog/${blog.slug}`} className='link-none' >
-                                <Card  key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)", height: "100%", overflow: "hidden" }}>
-                                    <Box position="relative">
-                                        <CardMedia
-                                            sx={{
-                                                minHeight: "233px",
-                                                maxHeight: "233px",
-                                                objectFit: "cover",
-                                                overflow: "hidden",
-                                                transition: "transform 0.3s ease-in-out",
-                                                "&:hover": {
-                                                    transform: "scale(1.1)",
-                                                },
-                                            }}
-                                            component="img"
-                                            image={blog.image}
-                                            alt={blog.title_blog}
-                                            loading="lazy"
-                                        />
-                                    </Box>
-                                    <CardContent>
-                                        <Typography variant="h6" sx={{
-                                            display: "-webkit-box",
-                                            overflow: "hidden",
-                                            WebkitBoxOrient: "vertical",
-                                            WebkitLineClamp: 2,
-                                            wordBreak: "break-all",
-                                            whiteSpace: "normal",
-                                            textOverflow: "ellipsis",
-                                            color: "#292b2c",
-                                            fontWeight: 600,
-                                            fontSize: { xs: "14px", sm: "1rem" },
-                                            fontFamily: "Roboto, sans-serif",
-                                            ":hover": { color: "#bb1f2a" }
-                                        }} component="div">
-                                            {blog.title_blog}
-                                        </Typography>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                                            <CalendarTodayIcon sx={{ fontSize: '16px', mr: 1, color: 'gray' }} />
-                                            <Typography variant="body2">{blog.created_at}</Typography>
-                                            <IconButton size="small" sx={{ ml: 2 }}>
-                                                <ChatBubbleOutlineIcon sx={{ fontSize: '16px', color: 'gray' }} /> {blog.comment_count}
-                                            </IconButton>
+                                    <Card key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)", height: "100%", overflow: "hidden" }}>
+                                        <Box position="relative">
+                                            <CardMedia
+                                                sx={{
+                                                    minHeight: "233px",
+                                                    maxHeight: "233px",
+                                                    objectFit: "cover",
+                                                    overflow: "hidden",
+                                                    transition: "transform 0.3s ease-in-out",
+                                                    "&:hover": {
+                                                        transform: "scale(1.1)",
+                                                    },
+                                                }}
+                                                component="img"
+                                                image={blog.image}
+                                                alt={blog.title_blog}
+                                                loading="lazy"
+                                            />
                                         </Box>
-                                        <Typography sx={{
-                                            display: "-webkit-box",
-                                            overflow: "hidden",
-                                            WebkitBoxOrient: "vertical",
-                                            WebkitLineClamp: 4,
-                                            wordBreak: "break-all",
-                                            whiteSpace: "normal",
-                                            textOverflow: "ellipsis",
-                                            lineHeight: "28px",
-                                            color: "#687188",
-                                            fontSize: { xs: "14px", sm: "16px" },
-                                        }} variant="body2">
-                                            {blog.short_description}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
+                                        <CardContent>
+                                            <Typography variant="h6" sx={{
+                                                display: "-webkit-box",
+                                                overflow: "hidden",
+                                                WebkitBoxOrient: "vertical",
+                                                WebkitLineClamp: 2,
+                                                wordBreak: "break-all",
+                                                whiteSpace: "normal",
+                                                textOverflow: "ellipsis",
+                                                color: "#292b2c",
+                                                fontWeight: 600,
+                                                fontSize: { xs: "14px", sm: "1rem" },
+                                                fontFamily: "Roboto, sans-serif",
+                                                ":hover": { color: "#bb1f2a" }
+                                            }} component="div">
+                                                {blog.title_blog}
+                                            </Typography>
+                                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                                                <CalendarTodayIcon sx={{ fontSize: '16px', mr: 1, color: 'gray' }} />
+                                                <Typography variant="body2">{blog.created_at}</Typography>
+                                                <IconButton size="small" sx={{ ml: 2 }}>
+                                                    <ChatBubbleOutlineIcon sx={{ fontSize: '16px', color: 'gray' }} /> {blog.comment_count}
+                                                </IconButton>
+                                            </Box>
+                                            <Typography sx={{
+                                                display: "-webkit-box",
+                                                overflow: "hidden",
+                                                WebkitBoxOrient: "vertical",
+                                                WebkitLineClamp: 4,
+                                                wordBreak: "break-all",
+                                                whiteSpace: "normal",
+                                                textOverflow: "ellipsis",
+                                                lineHeight: "28px",
+                                                color: "#687188",
+                                                fontSize: { xs: "14px", sm: "16px" },
+                                            }} variant="body2">
+                                                {blog.short_description}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
                                 </Link>
                             </Grid>
                         ))}

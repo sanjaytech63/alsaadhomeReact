@@ -6,4 +6,12 @@ export const blogApi = {
     getHomeBlogData: async (data) => {
         return await axiosInstance.get(API.BLOG_HOME, data);
     },
+
+    getBlog: async (data) => {
+        return await axiosInstance.post(API.BLOG_SEARCH, data);
+    },
+
+    getBlogDetails: async (data) => {
+        return await axiosInstance.post(API.BLOG_DETAILS, data);
+    },
 };

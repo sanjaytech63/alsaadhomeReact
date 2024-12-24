@@ -1,13 +1,9 @@
 import React from 'react';
-import { Box, Typography, Divider, List, ListItem, ListItemText, Chip, CardMedia, Paper, InputBase, IconButton } from '@mui/material';
-import jsonData from "../../src/blogData.json";
+import { Box, Typography, Divider, List, ListItem, ListItemText, CardMedia, Paper, InputBase, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-const BlogSideBar = () => {
-    const recentPosts = jsonData.recentPosts;
-    const archive = jsonData.archive;
-    const tags = jsonData.tags;
-
+import { Link } from 'react-router-dom';
+const BlogSideBar = ({ data }) => {
 
     return (
         <Box sx={{ width: "100%", mb: 3 }}>
@@ -31,18 +27,36 @@ const BlogSideBar = () => {
                 <hr />
                 <Typography variant="h6" gutterBottom>Recent Posts</Typography>
                 <List>
-                    {recentPosts.map(post => (
-                        <Box key={post.id} sx={{ display: "flex", alignItems: "center" }}>
+                    {data?.recent_blogs?.map(post => (
+                        <Box key={post.id} sx={{ display: "flex", gap: 2, my: 2, alignItems: "center" }}>
                             <CardMedia
                                 sx={{ maxWidth: "100%", width: "80px", objectFit: "cover" }}
                                 component="img"
                                 image={post.image}
-                                alt={post.title}
+                                alt={post.title_blog}
                                 loading="lazy"
                             />
-                            <ListItem key={post.id}>
-                                <ListItemText sx={{ ":hover": { color: "#bb1f2a" }, cursor: "pointer", fontSize: "14px", fowntweight: "600" }} primary={post.title} secondary={post.date} />
-                            </ListItem>
+                            <Box>
+                                <Link to={`/blog/${post.slug}`} className='link-none link-hover'>
+                                    <Typography sx={{
+                                        ":hover": { color: "#bb1f2a" },
+                                        cursor: "pointer",
+                                        fontSize: "14px",
+                                        color: "#292b2c",
+                                        fowntweight: "600",
+                                        display: "-webkit-box",
+                                        overflow: "hidden",
+                                        WebkitBoxOrient: "vertical",
+                                        WebkitLineClamp: 2,
+                                        wordBreak: "break-all",
+                                        whiteSpace: "normal",
+                                    }}
+                                    >
+                                        {post.title_blog}
+                                    </Typography>
+                                </Link>
+                                <Typography sx={{ fontSize: "14px", color: "#687188" }}>{post?.created_at}</Typography>
+                            </Box>
                         </Box>
                     ))}
                 </List>
@@ -51,10 +65,10 @@ const BlogSideBar = () => {
             <Box my={4}>
                 <Typography variant="h6" gutterBottom>Archive</Typography>
                 <List sx={{ padding: "0px !important" }}>
-                    {archive.map((month, index) => (
+                    {data?.archive?.map((item, index) => (
                         <ListItem sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0px !important", my: 1, ":hover": { color: "#bb1f2a" }, cursor: "pointer" }} key={index}>
-                            <span><KeyboardArrowRightIcon /></span> <ListItemText primary={month} />
-                            <span>(1)</span>
+                            <span><KeyboardArrowRightIcon /></span> <ListItemText primary={item?.month} />
+                            <span>({item?.total_blog})</span>
                         </ListItem>
                     ))}
                 </List>
@@ -63,22 +77,12 @@ const BlogSideBar = () => {
             <Box mt={4}>
                 <Typography variant="h6" gutterBottom>Tags</Typography>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, }} >
-                    {tags.map((tag) => (
-                        <Chip sx={{
-                            cursor: "pointer",
-                            backgroundColor: "#f7f7f7",
-                            color: "#333",
-                            border: "none",
-                            fontSize: "14px",
-                            borderRadius: "0px",
-                            padding: "8px 15px",
-                            "&:hover": {
-                                backgroundColor: "#bb1f2a",
-                                color: "#fff",
-                            },
-
-                        }}
-                            key={tag.id} label={tag.label} variant="outlined" />
+                    {data?.tags?.map((tag, index) => (
+                        <Link to={`blog?tag=${tag}`} className='link-none'>
+                            <Typography key={index} sx={{ fontSize: "14px", backgroundColor: "#f7f7f7", p: 1, color: "#333", textTransform: "capitalize", cursor: "pointer", ":hover": { backgroundColor: "#bb1f2a", color: "#fff" } }}>
+                                {tag}
+                            </Typography>
+                        </Link>
                     ))}
                 </Box>
             </Box>

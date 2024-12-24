@@ -2,6 +2,8 @@ const API = {
   HOME: 'home',
   // FLASH_SALE: 'flash_sale',
   BLOG_HOME: "blog/home",
+  BLOG_DETAILS: 'blog/details',
+  BLOG_SEARCH:"blog/search",
   SEARCH: 'search',
   UNBOXING_CHANLLENG: "unboxing_challenge",
   PRODUCT_DETAILS: 'product_details',
