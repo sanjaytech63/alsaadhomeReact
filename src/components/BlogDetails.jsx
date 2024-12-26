@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Container, Box, Typography, Breadcrumbs } from '@mui/material';
 import BlogSideBar from '../components/BlogSideBar';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import BlogDetailsCard from './BlogDetailsCard';
 import Loading from './Loading';

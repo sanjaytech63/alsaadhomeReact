@@ -72,6 +72,7 @@ const router = createBrowserRouter([
       { path: "/privacy-policy", element: <PrivacyPolice /> },
       { path: "/blog", element: <Blog /> },
       { path: "/blog/:slug", element: <BlogDetails /> },
+      
       { path: "/smart-shopping/category/:slug", element: <SmartShoppingBedroom /> },
       { path: "/smart-shopping/category/:id", element: <SmartShoppingLivingRoom /> },
       { path: "/logout", element: <Logout /> },

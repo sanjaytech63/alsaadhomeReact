@@ -1,43 +1,37 @@
-import axiosInstance from './Client';
-import API from './Endpoints';
+import axiosInstance from "./Client";
+import API from "./Endpoints";
 
 export const homeApi = {
-    // Method to fetch home data
-    getHomeData: async (showLoader = true) => {
-        return await axiosInstance.post(API.HOME, {
-            showLoader: showLoader,
-        });
-    },
+  getHomeData: (showLoader = true) => {
+    return axiosInstance.post(API.HOME, {
+      showLoader: showLoader,
+    });
+  },
 
-    // Method to fetch category data
-    getCategory: async () => {
-        return await axiosInstance.get(API.CATEGORY);
-    },
+  getCategory: () => {
+    return axiosInstance.get(API.CATEGORY);
+  },
 
-    // Method to fetch subcategory data
-    getSubCategory: async (data) => {
-        return await axiosInstance.post(API.SUB_CATEGORY, data);
-    },
+  getSubCategory: (data) => {
+    return axiosInstance.post(API.SUB_CATEGORY, data);
+  },
 
-    // Method to fetch product data
-    getProduct: async (data, showLoader = true) => {
-        return await axiosInstance.post(API.PRODUCTS, data, {
-            showLoader: showLoader,
-        });
-    },
+  getProduct: (data, showLoader = true) => {
+    return axiosInstance.post(API.PRODUCTS, data, {
+      showLoader: showLoader,
+    });
+  },
 
-    // Method to fetch filter data
-    getFilter: async (data, showLoader = true) => {
-        return await axiosInstance.post(API.FILTER, data, {
-            showLoader: showLoader,
-        });
-    },
+  getFilter: (data, showLoader = true) => {
+    return axiosInstance.post(API.FILTER, data, {
+      showLoader: showLoader,
+    });
+  },
 
-    // Method to fetch product details
-    getProductDetails: async (data, showLoader = true) => {
-        return await axiosInstance.post(API.PRODUCT_DETAILS, data, {
-            showLoader: showLoader,
-        });
-    },
-
+  // Method to fetch product details
+  getProductDetails: (data, showLoader = true) => {
+    return axiosInstance.post(API.PRODUCT_DETAILS, data, {
+      showLoader: showLoader,
+    });
+  },
 };

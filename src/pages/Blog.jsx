@@ -1,7 +1,7 @@
 import { Grid, Container, Box, Typography, Pagination, Breadcrumbs } from '@mui/material';
 import BlogCards from '../components/BlogCards';
 import BlogSideBar from '../components/BlogSideBar';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useState, useEffect } from 'react';
 import { blogApi } from '../utils/services/blogServices';
@@ -15,15 +15,17 @@ const Blog = () => {
     const [totalPages, setTotalPages] = useState(1);
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(Boolean);
-    // const { slug } = useParams();
+    const [searchParams] = useSearchParams();
+    const tag = searchParams.get('tag');
+    const dates = searchParams.get('dates');
 
     const fetchHomeData = async (page) => {
         setLoading(true);
         try {
             const reqBody = {
                 "keyword": "",
-                "tag": "",
-                "dates": "",
+                "tag": tag,
+                "dates": dates,
                 "page": page
             };
             const response = await blogApi.getBlog(reqBody);
@@ -41,7 +43,7 @@ const Blog = () => {
 
     useEffect(() => {
         fetchHomeData(pageNumber);
-    }, [pageNumber]);
+    }, [pageNumber, searchParams]);
 
     const handleChangePage = (event, newPage) => {
         setPageNumber(newPage);

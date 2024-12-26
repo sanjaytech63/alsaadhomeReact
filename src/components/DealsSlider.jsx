@@ -3,10 +3,17 @@ import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import CustomButtonGroup from "./CustomButtonGroup";
+import useLoaderStore from "../store/loaderStore";
+import DealsSliderShimmer from "./ShimerEffect/DealsSliderShimmer";
 const DealsSlider = ({ DealsSlider }) => {
     const theme = useTheme();
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const isRTL = theme.direction === 'rtl';
+     const isLoading = useLoaderStore((state) => state.isLoading);
+
+     if (isLoading) {
+       return <DealsSliderShimmer />;
+     }
 
     return (
         <div className="w-100 my-4">

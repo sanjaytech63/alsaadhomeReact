@@ -7,16 +7,15 @@ import {
   Box,
   Grid,
   Container,
-  CssBaseline,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Login from "../../auth/Login/Login.jsx";
 import Register from "../../auth/Register/Register.jsx";
 import { useCountryStore } from "../../store/useCountryStore.js";
+import { useSettingsStore } from "../../store/useSettingsStore.js";
 
 const Header = () => {
   const [language, setLanguage] = useState("en");
-  const [country, setCountry] = useState("United Arab Emirates");
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const { countries, fetchCountries } = useCountryStore();
@@ -28,6 +27,11 @@ const Header = () => {
 
   const handleLanguageChange = (event) => setLanguage(event.target.value);
 
+  const selectedCountry = useSettingsStore((state) => state.selectedCountry);
+  const setSelectedCountry = useSettingsStore(
+    (state) => state.setSelectedCountry
+  );
+
   useEffect(() => {
     document.body.style.direction = language === "ar" ? "rtl" : "ltr";
   }, [language]);
@@ -35,19 +39,20 @@ const Header = () => {
   const theme = createTheme({
     direction: language === "ar" ? "rtl" : "ltr",
     typography: {
-      fontFamily: language === "ar" ? "Tajawal, sans-serif" : "Roboto, sans-serif",
+      fontFamily:
+        language === "ar" ? "Tajawal, sans-serif" : "Roboto, sans-serif",
     },
   });
 
   useEffect(() => {
     fetchCountries();
-  }, [fetchCountries]);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ borderBottom: "1px solid #eee", width: "100%" }}>
-        <Container maxWidth="lg" sx={{ px: "0 !important" }} >
-          <Box sx={{  width: "100%" }}>
+        <Container maxWidth="lg" sx={{ px: "0 !important" }}>
+          <Box sx={{ width: "100%" }}>
             <Box sx={{ px: 2 }}>
               <Grid container alignItems="center">
                 <Grid
@@ -55,7 +60,8 @@ const Header = () => {
                   xs={9}
                   sx={{
                     display: "flex",
-                    justifyContent: language === "ar" ? "flex-start" : "flex-start",
+                    justifyContent:
+                      language === "ar" ? "flex-start" : "flex-start",
                   }}
                 >
                   <FormControl sx={{ mr: 2 }}>
@@ -70,7 +76,10 @@ const Header = () => {
                         overflow: "hidden",
                         width: 50,
                         ".MuiOutlinedInput-notchedOutline": { border: "none" },
-                        ".MuiSelect-select": { padding: "10px 0", fontSize: 14 },
+                        ".MuiSelect-select": {
+                          padding: "10px 0",
+                          fontSize: 14,
+                        },
                       }}
                     >
                       <MenuItem sx={{ fontSize: 14 }} value="en">
@@ -85,8 +94,8 @@ const Header = () => {
                     <Select
                       disablePortal
                       MenuProps={{ disableScrollLock: true }}
-                      value={country}
-                      onChange={(e) => setCountry(e.target.value)}
+                      value={selectedCountry}
+                      onChange={(e) => setSelectedCountry(e.target.value)}
                       displayEmpty
                       sx={{
                         border: "none",
@@ -94,13 +103,16 @@ const Header = () => {
                         overflow: "hidden",
                         minWidth: 170,
                         ".MuiOutlinedInput-notchedOutline": { border: "none" },
-                        ".MuiSelect-select": { padding: "10px 0", fontSize: 14 },
+                        ".MuiSelect-select": {
+                          padding: "10px 0",
+                          fontSize: 14,
+                        },
                       }}
                     >
-                      {countries.map((c) => (
+                      {countries.map((country, index) => (
                         <MenuItem
-                          value={c.country_name}
-                          key={c.id}
+                          key={index}
+                          value={country.country_name}
                           sx={{
                             fontSize: 14,
                             ":hover": {
@@ -109,7 +121,7 @@ const Header = () => {
                             },
                           }}
                         >
-                          {c.country_name}
+                          {country.country_name}
                         </MenuItem>
                       ))}
                     </Select>
@@ -148,6 +160,8 @@ const Header = () => {
                     open={openRegister}
                     handleOpenLogin={handleOpenLogin}
                     handleClose={handleCloseRegister}
+                    countries={countries}
+                    selectedCountry={selectedCountry}
                   />
                 </Grid>
               </Grid>

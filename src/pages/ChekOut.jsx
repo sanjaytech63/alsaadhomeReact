@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControl, Dialog, DialogTitle, IconButton, DialogContent, CardMedia } from '@mui/material';
 import { FaRegCreditCard } from "react-icons/fa6";
 import CloseIcon from '@mui/icons-material/Close';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import tamaraImg from "../../src/assets/tamara.svg"
 import { useNavigate } from 'react-router-dom';
+import { useCheckOutStore } from '../store/useCheckOutStore';
 const Checkout = () => {
     const [countryCode, setCountryCode] = useState("+ 968");
     const [open, setOpen] = useState(false);
@@ -50,6 +51,18 @@ const Checkout = () => {
     const navigateToTermsCondactions = () => {
         navigate("/terms-of-use")
     }
+
+    const { fetchCheckOut, checkOut } = useCheckOutStore();
+    console.log("checkOut fsdfsdf", checkOut);
+
+
+    useEffect(() => {
+        fetchCheckOut();
+    }, [])
+
+
+
+
 
     return (
         <Box sx={{ my: 2, }}>
@@ -216,6 +229,7 @@ const Checkout = () => {
                             <Button onClick={handleOpen} fullWidth variant="contained" sx={{ marginBottom: 2, backgroundColor: "#bb1f2a" }}>
                                 Shipping Address
                             </Button>
+                            {/* google maps */}
                             <Dialog disablePortal
                                 MenuProps={{ disableScrollLock: true }} open={open} onClose={handleClose} fullWidth maxWidth="md">
                                 <DialogTitle>
@@ -320,7 +334,7 @@ const Checkout = () => {
                                 </Grid>
                             </Grid>
                             <hr />
-                            {orderData.map((product) => (
+                            {checkOut?.item?.map((product) => (
                                 <Grid
                                     key={product.id}
                                     container
@@ -334,7 +348,7 @@ const Checkout = () => {
                                     {/* Product Image */}
                                     <Grid item xs={3} sm={2}>
                                         <img
-                                            src={product.imgSrc}
+                                            src={product.image}
                                             alt="product"
                                             style={{
                                                 width: '50px',
@@ -347,13 +361,13 @@ const Checkout = () => {
                                     {/* Product Name */}
                                     <Grid item xs={6} sm={8}>
                                         <Typography sx={{ ":hover": { color: "#bb1f2a" }, fontSize: { xs: '14px', sm: '16px' }, }}>
-                                            {product.name}
+                                            {product?.title}
                                         </Typography>
                                     </Grid>
                                     {/* Product Price */}
                                     <Grid item xs={3} sm={2} sx={{ textAlign: 'right' }}>
                                         <Typography sx={{ fontSize: { xs: '14px', sm: '16px' }, }}>
-                                            {product.price.toFixed(2)} AED
+                                            {product?.sale_price} AED
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -362,7 +376,7 @@ const Checkout = () => {
 
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
                                 <Typography>Sub Total</Typography>
-                                <Typography>{total.toFixed(2)} AED</Typography>
+                                <Typography>{checkOut?.sub_total} AED</Typography>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
                                 <Typography>Flat Shipping Rate</Typography>
@@ -370,12 +384,12 @@ const Checkout = () => {
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
                                 <Typography>Cod Processing Fee</Typography>
-                                <Typography>{processing.toFixed(2)} AED</Typography>
+                                <Typography>{checkOut?.shipping_cost} AED</Typography>
                             </Box>
                             <hr />
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
                                 <Typography sx={{ fontWeight: 700 }}>Final Total</Typography>
-                                <Typography sx={{ fontWeight: 700 }}>{finalTotal.toFixed(2)} AED</Typography>
+                                <Typography sx={{ fontWeight: 700 }}>{checkOut?.final_order_total_price} AED</Typography>
                             </Box>
                         </Box>
 
@@ -443,7 +457,7 @@ const Checkout = () => {
                                             Sharia compliant! Tamara <strong><a href='https://www.tamara.com/' className='text-black'>Learn more</a></strong>
                                         </Typography>
                                     </Box>
-                                    <CardMedia component="img" src={tamaraImg} sx={{ display: "flex", justifyContent: "start", width: "100px", mt: {xs: 1, sm: 0}, objectFit: "contain" }} loading="lazy" alt="tamaraImg" />
+                                    <CardMedia component="img" src={tamaraImg} sx={{ display: "flex", justifyContent: "start", width: "100px", mt: { xs: 1, sm: 0 }, objectFit: "contain" }} loading="lazy" alt="tamaraImg" />
                                 </Box>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

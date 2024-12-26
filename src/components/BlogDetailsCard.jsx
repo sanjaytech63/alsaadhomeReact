@@ -1,4 +1,4 @@
-import { Box, Typography, TextField, Grid, Button, CardMedia } from '@mui/material';
+import { Box, Typography, TextField, Grid, Button, CardMedia, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import TextsmsIcon from '@mui/icons-material/Textsms';
@@ -8,12 +8,13 @@ import EastIcon from '@mui/icons-material/East';
 import WestIcon from '@mui/icons-material/West';
 import { BsGrid } from "react-icons/bs";
 import parse from 'html-react-parser';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 const BlogDetailsCard = ({ blog }) => {
+
 
     return (
         <div>
-            {blog.blogs && (
+            {blog?.blogs && (
                 <Typography
                     sx={{
                         fontSize: { xs: "22px", md: "30px" },
@@ -25,7 +26,7 @@ const BlogDetailsCard = ({ blog }) => {
                     {blog.blogs?.title_blog}
                 </Typography>
             )}
-            {blog.blogs && (
+            {blog?.blogs && (
                 <Box className='d-flex  gap-3 m-0 p-0 my-4'>
                     <Typography sx={{
                         color: "#292b2c", cursor: "pointer", ":hover": {
@@ -43,10 +44,10 @@ const BlogDetailsCard = ({ blog }) => {
                     </Typography>
                 </Box>
             )}
-            {blog.blogs && (
+            {blog?.blogs && (
                 <img
-                    src={blog.blogs?.image}
-                    alt={blog.blogs?.title_blog}
+                    src={blog?.blogs?.image}
+                    alt={blog?.blogs?.title_blog}
                     style={{
                         width: '100%',
                         maxHeight: '400px',
@@ -64,28 +65,31 @@ const BlogDetailsCard = ({ blog }) => {
                     fontWeight: "500"
                 }}
             >
-                {parse(blog.blogs.description)}
+                {parse(blog?.blogs?.description)}
             </Typography>
-            {/* <Typography sx={{ mt: 2, color: "#6c757d", fontSize: { xs: "12px", sm: "15px" }, }}>
-                {blog?.introduction}
-            </Typography>
-            <Box sx={{ mt: 4 }}>
-                {blog?.tips && blog?.tips?.map((tip, index) => (
-                    <Box key={index} sx={{ mb: 2, display: "flex", alignItems: "center", gap: "10px" }}>
-                        <Typography sx={{ color: "#6c757d", fontSize: { xs: "12px", sm: "15px" }, }}>
-                            {tip?.text}
-                        </Typography>
-                    </Box>
-                ))}
-            </Box> */}
+            
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 4 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
                         <Grid item xs={12} sx={{ display: "flex", gap: 1, flexWrap: "wrap" }} >
-                            {blog.blogs?.tags?.map((tag, index) => (
-                                <Typography key={index} sx={{ fontSize: "14px", backgroundColor: "#f7f7f7", p: 1, color: "#333", textTransform: "capitalize", cursor: "pointer", ":hover": { backgroundColor: "#bb1f2a", color: "#fff" } }}>
-                                    {tag}
-                                </Typography>
+                            {blog?.blogs?.tags?.map((tag, index) => (
+                                <Link to={`/blog?tag=${tag}`} className="link-none" key={index}>
+                                    <ListItem
+                                        sx={{
+                                            backgroundColor: "#f7f7f7",
+                                            display: "flex",
+
+                                            alignItems: "center",
+                                            justifyContent: "space-between",
+                                            padding: "0px !important",
+                                            my: 1,
+                                            ":hover": { color: "#bb1f2a" },
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        <ListItemText sx={{ px: 1, py: "4px", }} primary={tag} />
+                                    </ListItem>
+                                </Link>
                             ))}
                         </Grid>
                     </Grid>
@@ -176,7 +180,7 @@ const BlogDetailsCard = ({ blog }) => {
                                         ":hover": { color: "#bb1f2a", cursor: "pointer" },
                                     }}
                                 >
-                                    {comment.coustmer_name}
+                                    {comment?.coustmer_name}
                                 </Typography>
                                 <Typography
                                     sx={{
@@ -186,12 +190,12 @@ const BlogDetailsCard = ({ blog }) => {
                                         textTransform: "uppercase",
                                     }}
                                 >
-                                    {comment.comment_date}
+                                    {comment?.comment_date}
                                 </Typography>
                                 <Typography
                                     sx={{ my: 1, color: "#687188", fontSize: "16px" }}
                                 >
-                                    {comment.message}
+                                    {comment?.message}
                                 </Typography>
                             </Grid>
                         </Grid>

@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Box, Typography, Grid, Container, CardMedia } from "@mui/material";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import useLoaderStore from "../store/loaderStore";
+import FlashSaleShimmer from "./ShimerEffect/FlashSaleShimmer";
 
 const FlashSale = ({ flashSale }) => {
   const [timers, setTimers] = useState([]);
-  const navigate = useNavigate();
+  const isLoading = useLoaderStore((state) => state.isLoading);
+
 
   const saudiTimeOffset = -2 * 45 * 60 * 1000;
 
@@ -39,6 +42,10 @@ const FlashSale = ({ flashSale }) => {
   }, [flashSale]);
 
   const memoizedTimers = useMemo(() => timers, [timers]);
+
+  if (isLoading) {
+    return <FlashSaleShimmer />;
+  }
 
   return (
     <Container maxWidth="lg">

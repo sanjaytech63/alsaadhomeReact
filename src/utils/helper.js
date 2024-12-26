@@ -1,6 +1,17 @@
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from "uuid";
+
+const displayedMessages = new Set();
+
 export const showToast = (type, message) => {
+    if (displayedMessages.has(message)) {
+      // Prevent duplicate toast
+      return;
+    }
+
+    // Add the message to the set
+    displayedMessages.add(message);
+
     switch (type) {
         case 'success':
             toast.success(message, {
@@ -28,6 +39,11 @@ export const showToast = (type, message) => {
             });
             break;
     }
+
+     setTimeout(() => {
+       displayedMessages.delete(message);
+     }, 3000);
+
 };
 
 export const getSessionId = () => {

@@ -65,25 +65,52 @@ const BlogSideBar = ({ data }) => {
             <Box my={4}>
                 <Typography variant="h6" gutterBottom>Archive</Typography>
                 <List sx={{ padding: "0px !important" }}>
-                    {data?.archive?.map((item, index) => (
-                        <ListItem sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0px !important", my: 1, ":hover": { color: "#bb1f2a" }, cursor: "pointer" }} key={index}>
-                            <span><KeyboardArrowRightIcon /></span> <ListItemText primary={item?.month} />
-                            <span>({item?.total_blog})</span>
-                        </ListItem>
-                    ))}
+                    {data?.archive?.map((item, index) => {
+                        const date = new Date(item?.month);
+                        const year = date.getFullYear(); 
+                        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+                        const formattedDate = `${year}-${month}`; 
+                        return (
+                            <Link to={`/blog?dates=${formattedDate}`} className="link-none" key={index}>
+                                <ListItem
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "space-between",
+                                        padding: "0px !important",
+                                        my: 1,
+                                        ":hover": { color: "#bb1f2a" },
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    <span>
+                                        <KeyboardArrowRightIcon />
+                                    </span>
+                                    <ListItemText primary={formattedDate} />
+                                    <span>({item?.total_blog})</span>
+                                </ListItem>
+                            </Link>
+                        );
+                    })}
                 </List>
+
             </Box>
             <Divider />
             <Box mt={4}>
                 <Typography variant="h6" gutterBottom>Tags</Typography>
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, }} >
-                    {data?.tags?.map((tag, index) => (
-                        <Link to={`blog?tag=${tag}`} className='link-none'>
-                            <Typography key={index} sx={{ fontSize: "14px", backgroundColor: "#f7f7f7", p: 1, color: "#333", textTransform: "capitalize", cursor: "pointer", ":hover": { backgroundColor: "#bb1f2a", color: "#fff" } }}>
-                                {tag}
-                            </Typography>
-                        </Link>
-                    ))}
+                    {data?.tags?.map((tag, index) => {
+                        return (
+                            (
+                                <Link to={`/blog?tag=${tag}`} className='link-none'>
+                                    <Typography key={index} sx={{ fontSize: "14px", backgroundColor: "#f7f7f7", p: 1, color: "#333", textTransform: "capitalize", cursor: "pointer", ":hover": { backgroundColor: "#bb1f2a", color: "#fff" } }}>
+                                        {tag}
+                                    </Typography>
+                                </Link>
+                            )
+                        )
+                    }
+                    )}
                 </Box>
             </Box>
         </Box>

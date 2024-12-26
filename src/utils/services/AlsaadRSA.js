@@ -1,0 +1,23 @@
+import forge from "node-forge";
+
+// Define your public and private keys here
+const publicKeyPem = `-----BEGIN PUBLIC KEY-----
+MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQB1kSTy518I484q+2mVV1a55LRmu0BCF91YR91tP2ayVLtAqkKcpZynNUqarA0ZhAj4hUWqYTW8haa+rXVUST9dRy/OCmjQvMubJ1b5szU3jEgB3IKc2UE4+cf4pO5FWGA8SRVcC5ze8ivtuRw7ENaT0bj89hD+hFmv8iKw3gb4jfUkT6XWQ9IMX/JGN0cy143A3PVitIel9fLIyKoo4IOa0DmOoFZ0tRypl6BHwq0qxAIQgkHa0OhlXvmmAKIbQgYWhKjqV55iiHgb4Cn0cPd4VPezElSuT/j7o71zQuUO9BE9sFf3P6eeZb4CFgmFox7uT5J/9Gr+bDJI+pf9mCcFAgMBAAE=
+-----END PUBLIC KEY-----`;
+
+const privateKeyPem = `-----BEGIN PRIVATE KEY-----
+MIIEogIBAAKCAQB1kSTy518I484q+2mVV1a55LRmu0BCF91YR91tP2ayVLtAqkKcpZynNUqarA0ZhAj4hUWqYTW8haa+rXVUST9dRy/OCmjQvMubJ1b5szU3jEgB3IKc2UE4+cf4pO5FWGA8SRVcC5ze8ivtuRw7ENaT0bj89hD+hFmv8iKw3gb4jfUkT6XWQ9IMX/JGN0cy143A3PVitIel9fLIyKoo4IOa0DmOoFZ0tRypl6BHwq0qxAIQgkHa0OhlXvmmAKIbQgYWhKjqV55iiHgb4Cn0cPd4VPezElSuT/j7o71zQuUO9BE9sFf3P6eeZb4CFgmFox7uT5J/9Gr+bDJI+pf9mCcFAgMBAAECggEAVYGgHu56ZyvQOeCq9QwVrpQRRRpxbOCQgvGZsShIl/EaU7jBQ88LtW0D+qShzmoCYEYF2hpji96k3M+powi3Bi+NLEzT2OVHLGwbTPazANiNUpU/hbZZQoggkc3a4iKZs57v4wcrK9d0bayRRMBFYDNLWOfailJWLKpt4rdI2KLco6Bqmv6huvmZBEngM+gguhrw80MtYWoc65nrneRZjSkWC5cJxBdTSCe6azfxaFUHVuwr6wvx7zmq9pnCzEU3WeoRDckPqFxSmY6e6IZoSIJvkuCFLFolJwMZPcviZ2rQJtg1DHnUEroNv20UCTTCAQ/DdPbWZdG4UvzmsauPTQKBgQDWSvJdzps4oYs+shPzEpn747FUBnmFQOIygtkMqh0YOjF9yyf/eP58977DsGNrfbsZaGUttGyMvXYow/n4mCuXSZT+Vg2OyUJT/Y1uLFEcoPzRexYV4ruLjbPENM13ZYtpW+lfKx7YvPZdUtKisp0EbDDRP1Wt84qjKAg6ENyAOwKBgQCMct9uXraAHLSHw585sSNUdqjQIjV5VXIHUeRtN8hms7ri3AZmvvPsn6wWZG7uO8GtbBYq1cr71DBHbngQmA+DCX1rIRRL8sX8/MEfb7w2CyGaUsZDUBIeNCQD9ZY3VDXbBPLjvXdrm9r+3QSppCCBXwMphz6nD8SVMES65rjBvwKBgALgnsCDtbHc+XGuEnaBGXA4bnkiXR9c76yd9SwmXJ2mqmN2BuN3THOBIB6gj7UxywFcVX93nL2HDb8eYozj/jHZ2xZPMX9pVGqsTOndznkD8GEftfw1Py9wh6lqzBd+VZDkmw2cFp3ya5x1MD7fBxy4Fy+4Gf5r9sCaGQIul8dhAoGAY6JqVsXh+ehjOZzRLAA57AVxpJVgEf9HsWGrBr/37sO55I3qDKGSMV7kmc4N0/uYXgq7fw/Du/q/dS0tB7iX6IGm84S3/Vjwk5RK/J4rirtCz1PBSqdW8w5SLmzeb8nRmtpb5KvYOAKMzRjF4gKI/L4GZEOJcsKA1sUzPNPIZckCgYEAgQihi9SJN52FyuU1CeNGD3tQ6P4b54P0IQXSCjOJ0SqyPCORmT2AT8+qFMFGgpVFsXDUOE09Fz/9UwlUgRac0ragpt5NP88VKZOX9RajlYwoaaaAMWRNTyi1LpsxTJ7qlZBXrPSaEwoaWYwD7vH+/AXyvidVvHD0sui/k3zxyUs=
+-----END PRIVATE KEY-----`;
+
+export const encryptData = (plainText) => {
+  const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
+  const encrypted = publicKey.encrypt(plainText, "RSAES-PKCS1-V1_5");
+  return forge.util.encode64(encrypted); 
+};
+
+export const decryptData = (encryptedMessage) => {
+  const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
+  const decodedMessage = forge.util.decode64(encryptedMessage); 
+  const decrypted = privateKey.decrypt(decodedMessage, "RSAES-PKCS1-V1_5");
+  return decrypted; 
+};

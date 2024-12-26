@@ -4,13 +4,10 @@ import { showToastMessage } from '../../utils/toast';
 
 const useCategoryStore = create((set) => ({
     categories: [],
-
     setCategories: (categories) => set({ categories }),
-
     fetchCategories: async () => {
         try {
             const response = await homeApi.getHomeData({});
-
             if (response?.status === 200 && Array.isArray(response.data)) {
                 set({ categories: response.data });
             } else {

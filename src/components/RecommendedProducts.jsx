@@ -6,29 +6,23 @@ import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, 
 import { Link } from 'react-router-dom';
 import CustomButtonGroup from './CustomButtonGroup';
 import useCartStore from '../store/useCartStore';
-const RecommendedProducts = ({ productsCard, title, addToCart }) => {
-  const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
-  const isRTL = theme.direction === 'rtl';
-  const { isItemInCart } = useCartStore();
-  return (
-    <div className="w-100 ">
-      <Container maxWidth="lg" sx={{ padding: 0 }}>
-        <Box
-          sx={{
-            px: {
-              xs: 2,
-              sm: "0px",
-            },
-            my: 3,
-            cursor: "pointer",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+import useLoaderStore from '../store/loaderStore';
+import NewArrivalsShimmer from './ShimerEffect/NewArrivalsShimmer';
+const RecommendedProducts = ({ productsCard, title,addToCart}) => {
+    const theme = useTheme();
+    const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
+    const isRTL = theme.direction === 'rtl';
+    const { isItemInCart } = useCartStore();
+    const isLoading = useLoaderStore((state) => state.isLoading);
+
+    if (isLoading) {
+      return <NewArrivalsShimmer />;
+    }
+    return (
+      <div className="w-100 ">
+        <Container maxWidth="lg" sx={{ padding: 0 }}>
+          <Box>
           <Typography
-            variant="h5"
             sx={{
               fontWeight: 600,
               textAlign: "left",

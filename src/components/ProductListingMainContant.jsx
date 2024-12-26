@@ -120,17 +120,17 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         sx={{
                           fontWeight:
                             item.sale_price > 0 &&
-                            item.sale_price !== item.list_price
+                              item.sale_price !== item.list_price
                               ? "0"
                               : "600",
                           color:
                             item.sale_price > 0 &&
-                            item.sale_price !== item.list_price
+                              item.sale_price !== item.list_price
                               ? "gray"
                               : "#bb1f2a",
                           textDecoration:
                             item.sale_price > 0 &&
-                            item.sale_price !== item.list_price
+                              item.sale_price !== item.list_price
                               ? "line-through"
                               : "none",
                           fontSize: { xs: "14px", sm: "1rem" },

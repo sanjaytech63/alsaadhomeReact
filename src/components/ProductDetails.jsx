@@ -69,6 +69,7 @@ const ProductDetails = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { product_slug } = useParams();
+    const [selectedProductInfo, setSelectedProductInfo] = useState(null);
 
 
     const memoizedProps = useMemo(
@@ -113,9 +114,20 @@ const ProductDetails = () => {
             const response = await homeApi.getProductDetails(requestBody);
             if (response && response.status === 200) {
                 setLoading(false);
+                const variants = response?.data?.variants || [];
+                const selectedProductInfo = variants
+                  .flatMap((infoD) => infoD.items)
+                  .find(
+                    (info) =>
+                      info.slug === product_slug
+                  );
+                const variant = variants.find((variant) =>
+                  variant.items?.some((item) => item.slug === product_slug)
+                );
+                console.log("selectedProductInfo", selectedProductInfo);
+                selectedProductInfo && setSelectedProductInfo(selectedProductInfo);
                 setRecentlyProducts(response?.data?.similar_product || []);
                 setProDetails(response?.data?.product_details || {});
-                const variants = response?.data?.variants || [];
                 setVariants(variants);
             }
         } catch (err) {
