@@ -43,7 +43,8 @@ const API = {
   GET_COUNTRY: 'country',
   Merge_Cart: 'merge_cart',
   GETRECOMMENDEDPRODUCTS: 'getRecommendedProducts',
-  FORGOTPASSWORD: 'forgot'
+  FORGOTPASSWORD: 'forgot',
+  SendOtp:"send_otp"
 };
 
 export default API;

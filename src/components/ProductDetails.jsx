@@ -12,6 +12,7 @@ import jsonData from "../../src/blogData.json";
 import data from "../../src/product.json";
 import { homeApi } from "../utils/services/homeServices";
 import Loading from "./Loading";
+import useCartStore from "../store/useCartStore";
 
 const BreadcrumbsProductDetails = React.lazy(() =>
     import("./ProductDeatailsCom/BreadcrumbsProductDetails")
@@ -70,6 +71,7 @@ const ProductDetails = () => {
     const [error, setError] = useState(null);
     const { product_slug } = useParams();
     const [selectedProductInfo, setSelectedProductInfo] = useState(null);
+     const { addToCart } = useCartStore();
 
 
     const memoizedProps = useMemo(
@@ -173,7 +175,7 @@ const ProductDetails = () => {
                     <BundleProductsModal bundleProduct={bundleProduct} open={open} handleClose={handleClose} />
                 </Container>
                 <div className="mb-5">
-                    <RecommendedProducts title="Related Products" productsCard={recentlyProducts} />
+                    <RecommendedProducts title="Related Products" productsCard={recentlyProducts} addToCart={addToCart}/>
                 </div>
             </Suspense>
         </div>

@@ -1,4 +1,3 @@
-import useUserStore from "../DataManager/store/user";
 import axiosInstance from "./Client";
 import API from "./Endpoints";
 
@@ -34,4 +33,14 @@ export const userService = {
   changePassword: (data) => {
     return axiosInstance.post(API.CHANGE_PASSWORD, data);
   },
+
+  signUp: (data) => {
+    return axiosInstance.post(API.REGISTER, data);
+  },
+  socialLogin: (data) => {
+    return axiosInstance.post(API.SOCIAL_LOGIN, data);
+  },
+  sendOtp:(data) => {
+    return axiosInstance.post(API.SendOtp,data);
+  }
 };
