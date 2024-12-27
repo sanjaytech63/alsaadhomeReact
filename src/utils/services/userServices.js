@@ -42,5 +42,17 @@ export const userService = {
   },
   sendOtp:(data) => {
     return axiosInstance.post(API.SendOtp,data);
+  },
+  verifyOtp:(data) => {
+    return axiosInstance.post(API.OTP_VERIFY,data);
+  },
+  updateUserProfile:(data) => {
+    return axiosInstance.post(API.UPDATE_PROFILE, data);
+  },
+  updateProfileImage:(data) => {
+    return axiosInstance.post(API.UPDATE_PROFILE_PHOTO, data);
+  }, 
+  resetPassword:(data) => {
+    return axiosInstance.post(API.RESET_PASSWORD, data);
   }
 };

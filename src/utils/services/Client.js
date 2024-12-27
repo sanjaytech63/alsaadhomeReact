@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
     "country-id": "2",
     type: "online",
     "retailer-id": "1",
-    token: "",
+    // token: "",
   },
 });
 // Utility to check network connectivity
@@ -37,12 +37,16 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     const userStore = useUserStore.getState();
     const settingsStore = useSettingsStore.getState();
-
+    
     // Check network connectivity
     const isAvailable = await checkNetworkConnectivity();
     if (!isAvailable) {
       showToast("error", "No internet connection");
       showToast("error", "No internet connection");
+    }
+    
+    if (userStore && userStore?.loginToken) {
+      config.headers["Authorization"] = `Bearer ${userStore.loginToken}`;
     }
 
     // Modify headers if required
@@ -74,8 +78,8 @@ axiosInstance.interceptors.response.use(
     useLoaderStore.getState().setIsLoading(false);
     if (response?.data?.status === 401) {
       const userStore = useUserStore.getState();
-      resetStack("Login");
       userStore.logout();
+      window.location.href = "/";
     }
 
     return response.data;
@@ -84,8 +88,8 @@ axiosInstance.interceptors.response.use(
     useLoaderStore.getState().setIsLoading(false);
     if (error.response?.status === 401) {
       const userStore = useUserStore.getState();
-      resetStack("Login");
       userStore.logout();
+      window.location.href = "/";
     }
 
     return Promise.reject(error.response?.data);

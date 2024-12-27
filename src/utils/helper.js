@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from "uuid";
+import { cardApi } from './services/cartSevices';
 
 const displayedMessages = new Set();
 
@@ -54,3 +55,16 @@ export const getSessionId = () => {
   }
   return sessionId;
 };
+
+export const mergeCartCall = async (id, userId) => {
+  const params = {
+    cart_id: id,
+    customer_id: userId,
+  };
+  try {
+    await cardApi.mergeCart(params);
+  } catch (error) {
+    console.log(error);
+  }
+};
+

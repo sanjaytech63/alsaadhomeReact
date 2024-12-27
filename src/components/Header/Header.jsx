@@ -14,19 +14,25 @@ import Login from "../../auth/Login/Login.jsx";
 import Register from "../../auth/Register/Register.jsx";
 import { useCountryStore } from "../../store/useCountryStore.js";
 import { useSettingsStore } from "../../store/useSettingsStore.js";
-import { showToast } from "../../utils/helper.js";
+import { mergeCartCall, showToast } from "../../utils/helper.js";
 import {userService} from "../../utils/services/userServices.js";  
 import { encryptData } from "../../utils/services/AlsaadRSA.js";
 import useUserStore from "../../store/user.js";
 import { signInWithPopup } from "firebase/auth";
 import { auth, facebookProvider, provider } from "../../utils/firebase.js";
 import ForgotPasswordModal from "../../auth/Login/ForgotPasswordModal.jsx";
+import { PermIdentity } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import MobileOtpDialog from "../../auth/MobileOtp/index.js";
 const Header = () => {
+  const navigate = useNavigate();
   const [language, setLanguage] = useState("en");
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const { countries, fetchCountries } = useCountryStore();
   const [openForgotPassword, setOpenForgotPassword] = useState(false);
+  const [openMobileOtp, setOpenMobileOtp] = useState(false);
+  const[userId,setUserId] = useState(null);
 
 
   const handleOpenLogin = () => setOpenLogin(true);
@@ -101,6 +107,10 @@ const Header = () => {
       }
       const response = await userService.signIn(request);
       if(response && response.status === 200){
+         mergeCartCall(
+           localStorage.getItem("cart_id"),
+           response?.data?.id
+         );
         setUserInfo(response.data);
         setOpenLogin(false);
         showToast("success", response.message, "success");
@@ -120,7 +130,7 @@ const Header = () => {
        result = await signInWithPopup(auth, provider);
      } else if (type === "facebook") {
        result = await signInWithPopup(auth, facebookProvider);
-       console.log(result,'====');
+       
      }
 
      if (!result) throw new Error("No result returned from sign-in");
@@ -148,6 +158,7 @@ const Header = () => {
      const response = await userService.socialLogin(data);
 
      if (response && response.status === 200) {
+      mergeCartCall(localStorage.getItem("cart_id"),response?.data?.id)
        setOpenLogin(false);
        setUserInfo(response.data); 
        showToast("success", response.message, "success");
@@ -177,8 +188,9 @@ const Header = () => {
      };
      const res = await userService.sendOtp(req);
      if (res && res?.status === 200) {
-       setOpenForgotPassword(false);
+      setUserId(id);
        showToast("success", res?.message, "success");
+       
      } else {
        showToast("error", res?.message, "danger");
      }
@@ -198,7 +210,9 @@ const handleForgotPass = async(values) => {
     let response = await userService.forgotPassword(request);
     if(response && response.status === 200){
       if(!values.isEmail){
+        setOpenForgotPassword(false);
         sendOtp(values.phone, values.countryCode, response.data.user_id);
+        setOpenMobileOtp(true);
       } else {
         setOpenForgotPassword(false);
         showToast("success", response.message, "success");
@@ -213,6 +227,23 @@ const handleForgotPass = async(values) => {
   }
 }
 
+const verifyOtp = async(values) => {
+  const request = {
+    user_id: userId,
+    otp: values.otp,
+  };
+  try {
+    const response = await userService.verifyOtp(request);
+    if(response && response.status === 200){
+      setOpenMobileOtp(false);
+      showToast("success", response.message, "success");
+    } else {
+      showToast("error", response.message, "danger");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
   return (
     <ThemeProvider theme={theme}>
@@ -307,9 +338,25 @@ const handleForgotPass = async(values) => {
                   }}
                 >
                   {useUserStore.getState().isLoggedIn ? (
-                    <Typography>
-                      {useUserStore.getState().userInfo?.name}
-                    </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        cursor: "pointer",
+                        ":hover": {
+                          color: "#bb1f2a",
+                          background: "#fff",
+                        },
+                        justifyContent:"flex-end"
+                      }}
+                      onClick={() => navigate("/my-account")}
+                    >
+                      <PermIdentity />
+                      <Typography>
+                        {useUserStore.getState().userInfo?.name}
+                      </Typography>
+                    </Box>
                   ) : (
                     <Button
                       onClick={handleOpenLogin}
@@ -358,6 +405,9 @@ const handleForgotPass = async(values) => {
                     selectedCountry={selectedCountry}
                     setSelectedCountry={setSelectedCountry}
                     handleForgotPassword={handleForgotPass}
+                  />
+                  <MobileOtpDialog open={openMobileOtp} onClose={()=>setOpenMobileOtp(false)}
+                    handleVerifyOtp={verifyOtp}
                   />
                 </Grid>
               </Grid>
