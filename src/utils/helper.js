@@ -68,3 +68,4 @@ export const mergeCartCall = async (id, userId) => {
   }
 };
 
+ export const google_place_api = "AIzaSyAu37ksjrUkMbG03AltrktENJDkkrrXlF8";
