@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Breadcrumbs, Container, Typography, Grid, Button, Dialog, DialogTitle, TextField, IconButton, DialogContent, FormControl, Select, MenuItem, FormControlLabel, Checkbox, InputAdornment } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link, useLocation } from 'react-router-dom';
@@ -9,13 +9,20 @@ import CloseIcon from '@mui/icons-material/Close';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { GoogleMap, useLoadScript, Marker, Autocomplete } from "@react-google-maps/api";
 import MapDialog from './Map/MapDialog';
-import { checkOutServices } from '../utils/services/checkOutServices';
+import { useSettingsStore } from '../store/useSettingsStore';
+import { shippingApi } from '../utils/services/shippingApi';
 import useLoaderStore from '../store/loaderStore';
-import Loading from './Loading';
+import { useCountryStore } from '../store/useCountryStore';
+import _ from 'lodash'; 
+
 const MyAddress = () => {
   const [open, setOpen] = useState(false);
   const [dailog, setDailog] = useState(false);
   const [data, setData] = useState(null);
+  const [city, setCity] = useState(null);
+  const [area, setArea] = useState(null);
+  const [selectedCity, setSelectedCity] = useState("Select City");
+  const [selectedArea, setSelectedArea] = useState("Select Area");
   const handleOpenDailog = () => setDailog(true);
   const handleCloseDailog = () => setDailog(false);
   const handleOpen = () => {
@@ -26,17 +33,21 @@ const MyAddress = () => {
     mobile_number: "",
     alternate_number: "",
     email: "",
-    address: "",
     appartment: "",
     building: "",
-    pincode: "",
-    area: "",
-    country_code: "",
-    country_id: 2,
-    city_id: 1,
-    area_id: "50",
-    is_default: false,
+    note: "",
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInitialValues((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+
+
 
   const [currentLocation, setCurrentLocation] = useState({
     lat: 0,
@@ -46,37 +57,79 @@ const MyAddress = () => {
     setCurrentLocation(latLng);
   };
 
+  const { countries, fetchCountries } = useCountryStore();
+  const selectedCountry = useSettingsStore((state) => state.selectedCountry);
 
+
+  const setSelectedCountry = useSettingsStore(
+    (state) => state.setSelectedCountry
+  );
+
+  const getCity = async () => {
+    try {
+      let req = { country_id: selectedCountry?.id };
+      const response = await shippingApi.getCity(req);
+      if (response && response.status === 200) {
+        setCity(response.data);
+      } else {
+        console.log("Error fetching city data:-", response);
+      }
+    } catch (error) {
+      console.log("Error fetching city data:-", error);
+    }
+  };
+
+  useEffect(() => {
+    getCity();
+  }, [selectedCountry]);
+
+  const getArea = async () => {
+    if (selectedCity === "Select City") return;
+    try {
+      let req = { country_id: selectedCountry?.id, city_id: selectedCity };
+      const response = await shippingApi.getArea(req);
+      if (response && response.status === 200) {
+        setArea(response.data);
+      } else {
+        console.log("Error fetching area data:-", response);
+      }
+    } catch (error) {
+      console.log("Error fetching area data:-", error);
+    }
+  };
+
+  const debouncedGetArea = useCallback(_.debounce(getArea, 300), [selectedCity]);
+  useEffect(() => {
+    debouncedGetArea();
+  }, [selectedCity]);
 
 
   const NewShhipingAddress = async () => {
     // useLoaderStore.getState().setLoading(true);
-    
     try {
       let reqBody = {
-        "country_id": 2,
-        "city_id": 10,
-        "area_id": "2648",
-        "area": "new",
-        "address": "Sha Uae",
+        "country_id": selectedCountry?.id,
+        "city_id": selectedCity,
+        "area_id": selectedArea,
+        "area": "",
+        "address": "",
         "latitude": "",
         "longitude": "",
         "pincode": "",
-        "appartment": "2",
-        "building": "2",
-        "note": "2",
-        "name": "Prahlad Parasara",
-        "mobile_number": "89550956",
-        "alternate_number": "963963963",
-        "email": "kumharprahlad90@gmail.com",
-        "is_default": "1",
-        "country_code": "+971"
+        "appartment": initialValues.appartment,
+        "building": initialValues.building,
+        "note": initialValues.note,
+        "name": initialValues.name,
+        "mobile_number": initialValues.mobile_number,
+        "alternate_number": initialValues.alternate_number,
+        "email": initialValues.email,
+        "is_default": "",
+        "country_code": selectedCountry.code
       };
-      const response = await checkOutServices.addNewShippingAddress(reqBody);
+
+      const response = await shippingApi.addShippingAddress(reqBody);
       if (response && response?.status === 200) {
         // useLoaderStore.getState().setLoading(false);
-        console.log(response.data);
-
         setData(response.data);
       }
     } catch (error) {
@@ -84,8 +137,18 @@ const MyAddress = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    NewShhipingAddress();
+  };
+
+
   useEffect(() => {
     NewShhipingAddress();
+  }, [selectedArea]);
+
+  useEffect(() => {
+    fetchCountries();
   }, []);
 
   // if (useLoaderStore.getState().isLoading || data === null) {
@@ -93,6 +156,7 @@ const MyAddress = () => {
   //     <Loading />
   //   );
   // }
+
 
 
   const location = useLocation();
@@ -166,21 +230,28 @@ const MyAddress = () => {
               {
                 open ? (
                   <Box sx={{}}>
-                    <TextField fullWidth label="Name" variant="outlined" sx={{ marginBottom: 2 }} />
+                    <TextField name='name' value={initialValues.name} onChange={handleChange} fullWidth label="Name" variant="outlined" sx={{ marginBottom: 2 }} />
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: { sm: 2, xs: 0 } }}>
                       <Grid container spacing={2}>
                         {/* Select Country Code */}
                         <Grid item xs={5} sm={4}>
                           <FormControl fullWidth>
-                            <Select disablePortal
-                              MenuProps={{ disableScrollLock: true }}
-                              value={""}
-                              onChange={""}
+                            <Select
+                              value={selectedCountry?.code || ""}
+                              onChange={(event) => {
+                                const selectedCountry = countries.find(
+                                  (country) =>
+                                    country.code === event.target.value
+                                );
+                                setSelectedCountry(selectedCountry);
+                              }}
                               variant="outlined"
                               sx={{
-                                padding: '2px 4px',
-                                border: '1px solid #ccc',
-                                '.MuiOutlinedInput-notchedOutline': { border: 'none' },
+                                padding: "2px 4px",
+                                border: "1px solid #ccc",
+                                ".MuiOutlinedInput-notchedOutline": {
+                                  border: "none",
+                                },
                                 ".MuiSelect-select": {
                                   padding: "13px 0px",
                                   fontSize: "14px",
@@ -188,32 +259,27 @@ const MyAddress = () => {
                                 },
                               }}
                             >
-                              <MenuItem value="Select Country Code" disabled hidden>
-                                Select Country
-                              </MenuItem>
-                              <MenuItem value="+ 971">
-                                <img
-                                  src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
-                                  alt="UAE"
-                                  style={{ width: "23px", height: "23px", marginRight: "4px" }}
-                                />
-                                + 971
-                              </MenuItem>
-                              <MenuItem value="+ 968">
-                                <img
-                                  src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
-                                  alt="Oman"
-                                  style={{ width: "23px", height: "23px", marginRight: "4px" }}
-                                />
-                                + 968
-                              </MenuItem>
+                              {countries.map((country, index) => (
+                                <MenuItem key={index} value={country.code}>
+                                  <img
+                                    src={country.flag}
+                                    alt={country.name}
+                                    style={{
+                                      width: "23px",
+                                      height: "23px",
+                                      marginRight: "4px",
+                                    }}
+                                  />
+                                  {country.code}
+                                </MenuItem>
+                              ))}
                             </Select>
                           </FormControl>
                         </Grid>
 
                         {/* Mobile Number Input */}
                         <Grid item xs={7} sm={8}>
-                          <TextField fullWidth type="number" label="Mobile Number" required />
+                          <TextField name='mobile_number' value={initialValues.mobile_number} onChange={handleChange} fullWidth type="number" label="Mobile Number" required />
                         </Grid>
                       </Grid>
                     </Box>
@@ -223,59 +289,118 @@ const MyAddress = () => {
                         <Grid item xs={5} sm={4}>
                           <FormControl fullWidth>
                             <Select
-                              disablePortal
-                              MenuProps={{ disableScrollLock: true }}
-                              value={""}
-                              onChange={""}
+                              value={selectedCountry?.code || ""}
+                              onChange={(event) => {
+                                const selectedCountry = countries.find(
+                                  (country) =>
+                                    country.code === event.target.value
+                                );
+                                setSelectedCountry(selectedCountry);
+                              }}
                               variant="outlined"
                               sx={{
-                                border: '1px solid #ccc',
-                                '.MuiOutlinedInput-notchedOutline': { border: 'none' },
+                                padding: "2px 4px",
+                                border: "1px solid #ccc",
+                                ".MuiOutlinedInput-notchedOutline": {
+                                  border: "none",
+                                },
+                                ".MuiSelect-select": {
+                                  padding: "13px 0px",
+                                  fontSize: "14px",
+                                  color: "#333",
+                                },
                               }}
                             >
-                              <MenuItem value="Select Country Code" disabled hidden>
-                                Select Country
-                              </MenuItem>
-                              <MenuItem value="+ 971">
-                                <img
-                                  src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
-                                  alt="UAE"
-                                  style={{ width: "23px", height: "23px", marginRight: "4px" }}
-                                />
-                                + 971
-                              </MenuItem>
-                              <MenuItem value="+ 968">
-                                <img
-                                  src="https://al-saad-home.mo.cloudinary.net/uploads/countries/1609425118.png"
-                                  alt="Oman"
-                                  style={{ width: "23px", height: "23px", marginRight: "4px" }}
-                                />
-                                + 968
-                              </MenuItem>
+                              {countries.map((country, index) => (
+                                <MenuItem key={index} value={country.code}>
+                                  <img
+                                    src={country.flag}
+                                    alt={country.name}
+                                    style={{
+                                      width: "23px",
+                                      height: "23px",
+                                      marginRight: "4px",
+                                    }}
+                                  />
+                                  {country.code}
+                                </MenuItem>
+                              ))}
                             </Select>
                           </FormControl>
                         </Grid>
 
                         {/* Mobile Number Input */}
                         <Grid item xs={7} sm={8}>
-                          <TextField fullWidth type="number" label="Whatsapp Number" required />
+                          <TextField name='alternate_number' value={initialValues.alternate_number} onChange={handleChange} fullWidth type="number" label="Whatsapp Number" required />
                         </Grid>
                       </Grid>
                     </Box>
-                    <TextField fullWidth label="Email" variant="outlined" sx={{ my: 2 }} />
-                    <Select disablePortal
-                      MenuProps={{ disableScrollLock: true }} fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
-                      <MenuItem value="Select Country">Select City</MenuItem>
-                      <MenuItem value="uae">United Arab Emirates</MenuItem>
+                    <TextField name='email' value={initialValues.email} onChange={handleChange} fullWidth label="Email" variant="outlined" sx={{ my: 2 }} />
+                    <FormControl fullWidth>
+                      <Select
+                        disablePortal
+                        MenuProps={{ disableScrollLock: true }}
+                        fullWidth
+                        variant="outlined"
+                        value={selectedCountry?.country_name || ""}
+                        onChange={(event) => {
+                          const selectedCountry = countries.find(
+                            (country) =>
+                              country.country_name === event.target.value
+                          );
+                          setSelectedCountry(selectedCountry);
+                        }}
+                        sx={{ marginBottom: 2 }} >
+                        {countries.map((country, index) => (
+                          <MenuItem
+                            key={index}
+                            value={country.country_name}
+                            sx={{
+                              fontSize: 14,
+                              ":hover": {
+                                backgroundColor: "#bb1f2a",
+                                color: "#fff",
+                              },
+                            }}
+                          >
+                            {country.country_name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <Select
+                      disablePortal
+                      MenuProps={{ disableScrollLock: true }}
+                      fullWidth
+                      variant="outlined"
+                      value={selectedCity}
+                      onChange={(e) => setSelectedCity(e.target.value)}
+                      sx={{ marginBottom: 2 }} >
+                      <MenuItem value="Select City">Select City</MenuItem>
+                      {city && city?.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.city_name}
+                        </MenuItem>
+                      ))}
                     </Select>
-                    <Select disablePortal
-                      MenuProps={{ disableScrollLock: true }} fullWidth variant="outlined" defaultValue="Select Country" sx={{ marginBottom: 2 }}>
-                      <MenuItem value="Select Country">Select Country</MenuItem>
-                      <MenuItem value="dubai">Dubai</MenuItem>
+                    <Select
+                      disablePortal
+                      MenuProps={{ disableScrollLock: true }}
+                      fullWidth
+                      variant="outlined"
+                      value={selectedArea}
+                      onChange={(e) => setSelectedArea(e.target.value)}
+                      sx={{ marginBottom: 2 }} >
+                      <MenuItem value="Select City">Select Area</MenuItem>
+                      {area && area?.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.area_name}
+                        </MenuItem>
+                      ))}
                     </Select>
-                    <TextField fullWidth label="Appartment No." variant="outlined" sx={{ marginBottom: 2 }} />
-                    <TextField fullWidth label="Building No." variant="outlined" sx={{ marginBottom: 2 }} />
-                    <TextField fullWidth label="Note" variant="outlined" sx={{ marginBottom: 2 }} />
+                    <TextField name='appartment' value={initialValues.appartment} onChange={handleChange} type="number" fullWidth label="Apartment No." variant="outlined" sx={{ marginBottom: 2 }} />
+                    <TextField name='building' value={initialValues.building} onChange={handleChange} fullWidth label="Building No." variant="outlined" sx={{ marginBottom: 2 }} />
+                    <TextField name='note' value={initialValues.note} onChange={handleChange} fullWidth label="Note" variant="outlined" sx={{ marginBottom: 2 }} />
                     <Box>
                       <TextField
                         fullWidth
@@ -317,7 +442,7 @@ const MyAddress = () => {
                       >
                         Cancel
                       </Button>
-                      <Button
+                      <Button onClick={handleSubmit}
                         variant="contained"
                         sx={{ backgroundColor: '#bb1f2a' }}
                       >

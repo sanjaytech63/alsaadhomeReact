@@ -6,7 +6,4 @@ export const checkOutServices = {
         return axiosInstance.post(API.CHECKOUT, data);
     },
 
-    addNewShippingAddress: (data) => {
-        return axiosInstance.post(API.ADD_SHIPPING_ADDRESS, data);
-    }
 };

@@ -5,6 +5,9 @@ export const settingsApi = {
   getCountry: () => {
     return axiosInstance.get(API.GET_COUNTRY);
   },
+  getGlobalSettings:() => {
+    return axiosInstance.get(API.SETTING)
+  }
 };
 
 
