@@ -12,15 +12,17 @@ import {
 import { Link } from "react-router-dom";
 import { AddShoppingCart, FavoriteBorder } from "@mui/icons-material";
 import useCartStore from "../store/useCartStore";
-
+import { useWishListStore } from "../store/useWishListStore";
+import Loading from "./Loading";
 const ProductListingMainContant = ({ productsCard = [] }) => {
   const { isItemInCart, addToCart } = useCartStore();
 
-  const handleAddToWishlist = (e) => {
-    e.stopPropagation();
-    alert("Added to wishlist!");
-  };
+  const { addWishList, loading } = useWishListStore();
 
+
+  if (loading) {
+    return <Loading />
+  }
   return (
     <Grid container spacing={{ xs: 0, sm: 2 }}>
       {productsCard?.products?.length > 0 ? (
@@ -213,7 +215,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         },
                         color: "#292b2c",
                       }}
-                      onClick={() => alert("Added to wishlist!")}
+                      onClick={() => addWishList(item?.product_id, item?.product_variant_id,)}
                       aria-label="add to wishlist"
                     >
                       <FavoriteBorder sx={{ fontSize: "1rem" }} />

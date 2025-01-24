@@ -8,13 +8,14 @@ const axiosInstance = axios.create({
   baseURL: "https://stagingapp.alsaadhome.com/api/v23/",
   headers: {
     Accept: "application/json",
-    Authorization: "gUmwgu9OVfXE9LVCaAU8xw74CownYWQ0HIfFGvWw",
     lng: "en",
     currency: "AED",
-    "country-id": "2",
+    "country-id": "1",
     type: "online",
     "retailer-id": "1",
-    token: "",
+    Authorization: 'gUmwgu9OVfXE9LVCaAU8xw74CownYWQ0HIfFGvWw',
+    token:
+      'KMETvUfeIgQB3m/bvmvhdkwLMrGMiBZnLUwiNMTEObuJZbiuAvro/KRRyAmFcpDEkgWlTi9jB0+lXugmGtck8mVQ8e6+qWYlQ3lInnJE2cYv1nsBm9vaf7JBQsKIjcdG7TxnM7FuPmWUTQklf0KT3cVPoSy8fNK5K1gbGpfUO91+6uqxSycc5vYU8WEl82zfZ+7/uWVPbGRqAJBiUhlm8UXOJjOPolu2WESsW/eNNGkJd/tPKNGgRyIEPWjBhXqBYuEDrlmHucQQ2AIxj4pZky8g39YC3FlcuP+apiOKFLZtjVyXQ/rZbnZA4e2bmj7BRGxNTorAM+3ejmekq6Vz7A==',
   },
 });
 // Utility to check network connectivity
@@ -43,6 +44,10 @@ axiosInstance.interceptors.request.use(
     if (!isAvailable) {
       showToast("error", "No internet connection");
       showToast("error", "No internet connection");
+    }
+
+    if (userStore && userStore?.loginToken) {
+      config.headers["Authorization"] = `Bearer ${userStore.loginToken}`;
     }
 
     // Modify headers if required
@@ -74,8 +79,8 @@ axiosInstance.interceptors.response.use(
     useLoaderStore.getState().setIsLoading(false);
     if (response?.data?.status === 401) {
       const userStore = useUserStore.getState();
-      resetStack("Login");
       userStore.logout();
+      window.location.href = "/";
     }
 
     return response.data;
@@ -84,8 +89,8 @@ axiosInstance.interceptors.response.use(
     useLoaderStore.getState().setIsLoading(false);
     if (error.response?.status === 401) {
       const userStore = useUserStore.getState();
-      resetStack("Login");
       userStore.logout();
+      window.location.href = "/";
     }
 
     return Promise.reject(error.response?.data);

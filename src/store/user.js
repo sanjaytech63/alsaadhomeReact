@@ -5,7 +5,7 @@ const useUserStore = create((set) => {
   const storedToken = localStorage.getItem("TOKEN");
 
   return {
-    isLoggedIn: storedUserInfo ? true : false, 
+    isLoggedIn: storedUserInfo ? true : false,
     userInfo: storedUserInfo ? JSON.parse(storedUserInfo) : null,
     loginToken: storedToken || "",
     setUserInfo: (userInfo) => {

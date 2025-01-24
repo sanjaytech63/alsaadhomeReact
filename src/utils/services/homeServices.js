@@ -3,7 +3,13 @@ import API from "./Endpoints";
 
 export const homeApi = {
   getHomeData: (showLoader = true) => {
-    return axiosInstance.post(API.HOME, {
+    return axiosInstance.get(API.HOME, {
+      showLoader: showLoader,
+    });
+  },
+
+  getRecommended: (data, showLoader = true) => {
+    return axiosInstance.get(API.GETRECOMMENDEDPRODUCTS, data, {
       showLoader: showLoader,
     });
   },

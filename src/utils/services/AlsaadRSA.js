@@ -12,12 +12,12 @@ MIIEogIBAAKCAQB1kSTy518I484q+2mVV1a55LRmu0BCF91YR91tP2ayVLtAqkKcpZynNUqarA0ZhAj4
 export const encryptData = (plainText) => {
   const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
   const encrypted = publicKey.encrypt(plainText, "RSAES-PKCS1-V1_5");
-  return forge.util.encode64(encrypted); 
+  return forge.util.encode64(encrypted);
 };
 
 export const decryptData = (encryptedMessage) => {
   const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
-  const decodedMessage = forge.util.decode64(encryptedMessage); 
+  const decodedMessage = forge.util.decode64(encryptedMessage);
   const decrypted = privateKey.decrypt(decodedMessage, "RSAES-PKCS1-V1_5");
-  return decrypted; 
+  return decrypted;
 };

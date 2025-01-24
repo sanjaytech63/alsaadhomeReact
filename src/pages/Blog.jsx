@@ -1,7 +1,7 @@
 import { Grid, Container, Box, Typography, Pagination, Breadcrumbs } from '@mui/material';
 import BlogCards from '../components/BlogCards';
 import BlogSideBar from '../components/BlogSideBar';
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useState, useEffect } from 'react';
 import { blogApi } from '../utils/services/blogServices';
@@ -54,7 +54,7 @@ const Blog = () => {
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return <p className='minHeight'>{error}</p>;
     }
 
     return (

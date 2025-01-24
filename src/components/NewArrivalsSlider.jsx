@@ -20,14 +20,18 @@ import CustomButtonGroup from "./CustomButtonGroup";
 import useCartStore from "../store/useCartStore";
 import useLoaderStore from "../store/loaderStore";
 import NewArrivalsShimmer from "./ShimerEffect/NewArrivalsShimmer";
+import { useWishListStore } from "../store/useWishListStore";
 const NewArrivalsSlider = ({ productsCard, addToCart }) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("lg"));
   const isRTL = theme.direction === "rtl";
-  const {  isItemInCart } = useCartStore();
-  const isLoading = useLoaderStore((state) => state.isLoading);
+  const { isItemInCart } = useCartStore();
 
-  if (isLoading) {
+  const { addWishList, loading } = useWishListStore();
+
+  const wishList = useWishListStore((state) => state.wishList);
+
+  if (loading) {
     return <NewArrivalsShimmer />;
   }
 
@@ -249,17 +253,17 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                                 sx={{
                                   fontWeight:
                                     item.sale_price > 0 &&
-                                    item.sale_price !== item.list_price
+                                      item.sale_price !== item.list_price
                                       ? "0"
                                       : "600",
                                   color:
                                     item.sale_price > 0 &&
-                                    item.sale_price !== item.list_price
+                                      item.sale_price !== item.list_price
                                       ? "gray"
                                       : "#bb1f2a",
                                   textDecoration:
                                     item.sale_price > 0 &&
-                                    item.sale_price !== item.list_price
+                                      item.sale_price !== item.list_price
                                       ? "line-through"
                                       : "none",
                                   fontSize: { xs: "14px", sm: "1rem" },
@@ -344,7 +348,7 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                                 },
                                 color: "#292b2c",
                               }}
-                              onClick={() => alert("Added to wishlist!")}
+                              onClick={() => addWishList(item?.product_id.toString(), item?.product_variant_id.toString(),)}
                               aria-label="add to wishlist"
                             >
                               <FavoriteBorder sx={{ fontSize: "1rem" }} />

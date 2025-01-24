@@ -31,7 +31,7 @@ const Category = () => {
     }, []);
 
     if (error) {
-        return <p>{error}</p>;
+        return <p className='minHeight'>{error}</p>;
     }
 
     if (loading) {

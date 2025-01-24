@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { AppBar, Toolbar, IconButton, Drawer, ListItem, Box, Container, Badge, Divider, Button, Typography } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
-import { Close } from '@mui/icons-material';
+import { Close, FavoriteBorder } from '@mui/icons-material';
 import useCartStore from '../../store/useCartStore';
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { useWishListStore } from '../../store/useWishListStore';
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
@@ -17,6 +18,17 @@ const Navbar = () => {
     const { item_count, cartItems, deleteCartItem, getCart } = useCartStore();
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
+    const navigate = useNavigate();
+
+    const navigateToWishList = () => {
+        navigate("/wishlist");
+    }
+
+    const wishList = useWishListStore((state) => state.wishList);
+
+    const wishListCount = useMemo(() => wishList.length, [wishList]);
+    const storedUserInfo = localStorage.getItem("USER");
+
 
     useEffect(() => {
         getCart();
@@ -49,7 +61,6 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const navigate = useNavigate();
 
     const navigateToChekout = () => {
         navigate("/chekout");
@@ -93,8 +104,29 @@ const Navbar = () => {
                                 ))}
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center', }}>
-                                <IoSearchOutline className='search_icon' onClick={handleClickOpen} color='#292b2c' size={20} />
-                                <SearchBar setSearchOpen={setSearchOpen} openSearch={openSearch} />
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <IoSearchOutline className='search_icon' onClick={handleClickOpen} color='#292b2c' size={20} />
+                                    <SearchBar setSearchOpen={setSearchOpen} openSearch={openSearch} />
+                                    {
+                                        storedUserInfo && (
+                                            <IconButton
+                                                sx={{
+                                                    mr: "24px",
+                                                }}
+
+                                                aria-label="add to wishlist"
+                                            >
+                                                <Badge badgeContent={wishListCount || 0} color="error">
+                                                    <div onClick={navigateToWishList} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} >
+                                                        <FavoriteBorder cursor={"pointer"} color='#292b2c' size={20} />
+                                                    </div>
+                                                </Badge>
+                                            </IconButton>
+                                        )
+                                    }
+
+
+                                </Box>
                                 {/* <Link to="/cart"> */}
                                 <Typography onMouseEnter={handleMouseEnter}
                                     onMouseLeave={handleMouseLeave} color="inherit">
@@ -139,7 +171,6 @@ const Navbar = () => {
                                         cartItems?.branch?.map((branch) =>
                                             branch?.item && branch?.item?.length > 0 ? (
                                                 branch?.item?.map((item, index) => (
-                                                    console.log(item?.cart_item_id, "item?.cart_item_id"),
                                                     <Box
                                                         key={index}
                                                         sx={{

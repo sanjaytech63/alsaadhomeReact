@@ -14,9 +14,9 @@ export const userService = {
     return axiosInstance.post(API.FORGOTPASSWORD, data);
   },
 
-  resetPassword: (params) => {
-    return axiosInstance.post(API.CHANGE_PASSWORD, params);
-  },
+  // resetPassword: (params) => {
+  //   return axiosInstance.post(API.CHANGE_PASSWORD, params);
+  // },
 
   home: (params, config = { showLoader: true }) => {
     return axiosInstance.post(API.HOME, params, config);
@@ -42,5 +42,17 @@ export const userService = {
   },
   sendOtp:(data) => {
     return axiosInstance.post(API.SendOtp,data);
+  },
+  verifyOtp:(data) => {
+    return axiosInstance.post(API.OTP_VERIFY,data);
+  },
+  updateUserProfile:(data) => {
+    return axiosInstance.post(API.UPDATE_PROFILE, data);
+  },
+  updateProfileImage:(data) => {
+    return axiosInstance.post(API.UPDATE_PROFILE_PHOTO, data);
+  }, 
+  resetPassword:(data) => {
+    return axiosInstance.post(API.RESET_PASSWORD, data);
   }
 };

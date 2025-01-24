@@ -5,7 +5,7 @@ import { ThreeDots } from 'react-loader-spinner';
 
 const Loading = () => {
   return (
-    <Box sx={{ height:{sm: "87vh", xs: "70vh"}, justifyContent: "center", display: "flex", alignItems: "center" }}>
+    <Box sx={{ height: { sm: "87vh", xs: "70vh" }, justifyContent: "center", display: "flex", alignItems: "center" }}>
       <p>
         <ThreeDots
           visible={true}

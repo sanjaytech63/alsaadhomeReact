@@ -47,7 +47,9 @@ const API = {
   Merge_Cart: 'merge_cart',
   GETRECOMMENDEDPRODUCTS: 'getRecommendedProducts',
   FORGOTPASSWORD: 'forgot',
-  SendOtp:"send_otp"
+  SendOtp:"send_otp",
+  OTP_VERIFY:"otp_verify",
+  RESET_PASSWORD:"reset_password"
 };
 
 export default API;

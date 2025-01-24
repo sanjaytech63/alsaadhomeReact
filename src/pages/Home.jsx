@@ -17,6 +17,7 @@ import useLoaderStore from "../store/loaderStore";
 
 const Home = () => {
   const [data, setData] = useState(null);
+  const [getRec, setGetRec] = useState(null);
   const { fetchCartProductIds } = useCartStore();
   const { addToCart, createToCart } = useCartStore();
 
@@ -37,6 +38,7 @@ const Home = () => {
     fetchCartId();
   }, [fetchCartProductIds, createToCart]);
 
+
   const fetchHomeData = async () => {
     try {
       const response = await homeApi.getHomeData();
@@ -48,8 +50,24 @@ const Home = () => {
     }
   };
 
+  const getRecommendedProducts = async () => {
+    try {
+      const response = await homeApi.getRecommended();
+      if (response && response?.status === 200) {
+        setGetRec(response.data);
+      }
+    } catch (error) {
+      console.log("Error fetching home data:-", error);
+    }
+  };
+
   useEffect(() => {
     fetchHomeData();
+  }, []);
+
+
+  useEffect(() => {
+    getRecommendedProducts();
   }, []);
 
   if (useLoaderStore.getState().isLoading || data === null) {
@@ -63,6 +81,8 @@ const Home = () => {
       ></div>
     );
   }
+
+
 
   return (
     <div className="min-vh-100 w-full">
@@ -85,10 +105,10 @@ const Home = () => {
             />
           )}
           {data.grid_product && <Products products={data.grid_product} />}
-          {data?.recommended_product && (
+          {getRec && (
             <RecommendedProducts
               title="Recommended Products"
-              productsCard={data?.recommended_product}
+              productsCard={getRec}
               addToCart={addToCart}
             />
           )}

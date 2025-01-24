@@ -13,6 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import { useTheme } from '@mui/material/styles';
+import { userService } from './../utils/services/userServices';
+import { showToast } from '../utils/helper';
+import useUserStore from '../store/user';
 
 const Dashboard = ({ selectItem }) => {
     const theme = useTheme();
@@ -30,6 +33,23 @@ const Dashboard = ({ selectItem }) => {
         { id: 6, text: 'Change Password', icon: <LockOutlinedIcon />, path: '/change-password' },
         { id: 7, text: 'Logout', icon: <LogoutIcon />, path: '/' },
     ];
+    
+
+    const handleLogout = async() => {
+        try {
+            const response  = await userService.logout();
+            if(response && response.status === 200){
+                useUserStore.getState().logout();
+                showToast("success", response.message, "success");
+            } else{
+                showToast("error", response.message, "danger");
+                console.log('error', response);
+            }
+        } catch (error) {
+          showToast("error", error.message, "danger");  
+        }
+    }
+
 
     return (
         <Box>
@@ -56,7 +76,7 @@ const Dashboard = ({ selectItem }) => {
                         <CloseIcon />
                     </IconButton>
 
-                    <List>
+                    <List >
                         {menuItems.map((item) => (
                             <ListItem
                                 button
@@ -108,6 +128,7 @@ const Dashboard = ({ selectItem }) => {
                                     },
                                     marginBottom: '8px',
                                 }}
+                                onClick={item.text === 'Logout' ? handleLogout : null}
                             >
                                 <ListItemIcon sx={{ color: selectItem === item.id ? '#fff' : '#2b2f4c' }}>
                                     {item.icon}

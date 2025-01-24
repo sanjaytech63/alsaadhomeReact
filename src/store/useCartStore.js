@@ -144,8 +144,10 @@ const useCartStore = create((set, get) => ({
       branch_id: "",
     };
     try {
+
       const response = await cardApi.addToCart(params);
       if (response && response.status === 200) {
+        console.log("Success message: ", response);
         showToast("success", response.message, "success");
         await get().getCart("");
       } else {

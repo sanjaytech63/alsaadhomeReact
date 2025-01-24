@@ -42,7 +42,7 @@ const Unboxing = () => {
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return <p className='minHeight'>{error}</p>;
     }
 
     return (

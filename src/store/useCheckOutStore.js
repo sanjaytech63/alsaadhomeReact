@@ -8,11 +8,11 @@ export const useCheckOutStore = create((set, get) => ({
 
     fetchCheckOut: async () => {
         set({ loading: true });
-        let cart_id = localStorage.getItem("cart_id")
+        let cart_id = localStorage.getItem("cart_id");
         try {
             let checkoutData = {
                 "address": "Sha Uae",
-                "device_type": "android",
+              
                 "whatsapp_number": "+968 89550945",
                 "city_id": "10",
                 "area_id": "2648",
@@ -22,7 +22,7 @@ export const useCheckOutStore = create((set, get) => ({
                 "email": "kumharprahlad90@gmail.com",
                 "customer_id": "",
                 "applied_coupon": "",
-                "cart_id": "112",
+                cart_id: cart_id,
                 "version": "36",
                 "userName": "Prahlad Parasara",
                 "currency": "AED",
@@ -37,7 +37,7 @@ export const useCheckOutStore = create((set, get) => ({
             }
             const response = await checkOutServices.checkOut(checkoutData);
             if (response && response.status === 200) {
-                console.log(response.data);
+                console.log(response.data, "response");
 
                 set({ checkOut: response.data, loading: false });
             } else {

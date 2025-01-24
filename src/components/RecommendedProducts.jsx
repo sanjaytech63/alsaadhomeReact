@@ -8,20 +8,21 @@ import CustomButtonGroup from './CustomButtonGroup';
 import useCartStore from '../store/useCartStore';
 import useLoaderStore from '../store/loaderStore';
 import NewArrivalsShimmer from './ShimerEffect/NewArrivalsShimmer';
-const RecommendedProducts = ({ productsCard, title,addToCart}) => {
-    const theme = useTheme();
-    const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
-    const isRTL = theme.direction === 'rtl';
-    const { isItemInCart } = useCartStore();
-    const isLoading = useLoaderStore((state) => state.isLoading);
-
-    if (isLoading) {
-      return <NewArrivalsShimmer />;
-    }
-    return (
-      <div className="w-100 ">
-        <Container maxWidth="lg" sx={{ padding: 0 }}>
-          <Box>
+import { useWishListStore } from '../store/useWishListStore';
+const RecommendedProducts = ({ productsCard, title, addToCart }) => {
+  const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
+  const isRTL = theme.direction === 'rtl';
+  const { isItemInCart } = useCartStore();
+  const isLoading = useLoaderStore((state) => state.isLoading);
+  const { addWishList, loading } = useWishListStore();
+  if (isLoading) {
+    return <NewArrivalsShimmer />;
+  }
+  return (
+    <div className="w-100 ">
+      <Container maxWidth="lg" sx={{ padding: 0 }}>
+        <Box>
           <Typography
             sx={{
               fontWeight: 600,
@@ -300,7 +301,7 @@ const RecommendedProducts = ({ productsCard, title,addToCart}) => {
                               },
                               color: "#292b2c",
                             }}
-                            onClick={() => alert("Added to wishlist!")}
+                            onClick={() => addWishList(item?.product_id, item?.product_variant_id,)}
                             aria-label="add to wishlist"
                           >
                             <FavoriteBorder sx={{ fontSize: "1rem" }} />

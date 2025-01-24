@@ -14,8 +14,8 @@ import Login from "../../auth/Login/Login.jsx";
 import Register from "../../auth/Register/Register.jsx";
 import { useCountryStore } from "../../store/useCountryStore.js";
 import { useSettingsStore } from "../../store/useSettingsStore.js";
-import { showToast } from "../../utils/helper.js";
-import { userService } from "../../utils/services/userServices.js";
+import { mergeCartCall, showToast } from "../../utils/helper.js";
+import {userService} from "../../utils/services/userServices.js";  
 import { encryptData } from "../../utils/services/AlsaadRSA.js";
 import useUserStore from "../../store/user.js";
 import { signInWithPopup } from "firebase/auth";
@@ -23,13 +23,17 @@ import { auth, facebookProvider, provider } from "../../utils/firebase.js";
 import ForgotPasswordModal from "../../auth/Login/ForgotPasswordModal.jsx";
 import { PermIdentity } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import MobileOtpDialog from "../../auth/MobileOtp/index.js";
 const Header = () => {
+  const navigate = useNavigate();
   const [language, setLanguage] = useState("en");
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const { countries, fetchCountries } = useCountryStore();
   const [openForgotPassword, setOpenForgotPassword] = useState(false);
-  const navigate = useNavigate();
+  const [openMobileOtp, setOpenMobileOtp] = useState(false);
+  const[userId,setUserId] = useState(null);
+
 
   const handleOpenLogin = () => setOpenLogin(true);
   const handleCloseLogin = () => setOpenLogin(false);
@@ -65,7 +69,7 @@ const Header = () => {
 
   const handleRegister = async (values) => {
     const encryptCPass = encryptData(values.confirm_password || "");
-    const encryptPass = encryptData(values.password || "");
+    const encryptPass =  encryptData(values.password || "");
     let request = {
       email: values.email,
       phone: values.phone,
@@ -73,7 +77,7 @@ const Header = () => {
       country_code: values.countryCode,
       password: encryptPass,
       confirm_password: encryptCPass,
-      lang_type: 'en',
+      lang_type:'en',
     };
 
     try {
@@ -83,27 +87,30 @@ const Header = () => {
         setUserInfo(response.data);
         showToast("success", response.message, "success");
       } else {
-        showToast("error", response.message, "danger");
         console.log(response, 'response');
       }
     } catch (error) {
       showToast("error", error.message, "danger");
       console.log(error);
-    }
+    } 
   };
 
   const handleLogin = async (values) => {
     const encrypted = encryptData(values.password || "");
     try {
       const request = {
-        "email": values.isEmail ? values.email : values.phone,
-        "password": encrypted,
-        "lang_type": 'en',
-        country_code: values.isEmail ? "" : values.countryCode,
+      "email": values.isEmail ? values.email : values.phone,
+      "password": encrypted,
+      "lang_type": 'en',
+      country_code: values.isEmail ? "" : values.countryCode,
 
       }
       const response = await userService.signIn(request);
-      if (response && response.status === 200) {
+      if(response && response.status === 200){
+         mergeCartCall(
+           localStorage.getItem("cart_id"),
+           response?.data?.id
+         );
         setUserInfo(response.data);
         setOpenLogin(false);
         showToast("success", response.message, "success");
@@ -116,106 +123,127 @@ const Header = () => {
     }
   }
 
-  const handleGoogleSignIn = async (type) => {
-    try {
-      let result;
-      if (type === "google") {
-        result = await signInWithPopup(auth, provider);
-      } else if (type === "facebook") {
-        result = await signInWithPopup(auth, facebookProvider);
-        console.log(result, '====');
-      }
+ const handleGoogleSignIn = async (type) => {
+   try {
+     let result;
+     if (type === "google") {
+       result = await signInWithPopup(auth, provider);
+     } else if (type === "facebook") {
+       result = await signInWithPopup(auth, facebookProvider);
+       
+     }
 
-      if (!result) throw new Error("No result returned from sign-in");
+     if (!result) throw new Error("No result returned from sign-in");
 
-      const user = result.user;
-      const userId = user.uid;
-      const encryptedToken = encryptData(userId);
+     const user = result.user;
+     const userId = user.uid;
+     const encryptedToken = encryptData(userId);
 
-      // Construct data payload
-      const data = {
-        name:
-          user.displayName || result?.additionalUserInfo?.profile?.name || "",
-        email: user.email || result?.additionalUserInfo?.profile?.email || "",
-        phone: "",
-        social_id: encryptedToken,
-        login_by: type,
-        lang_type: "en",
-        avatar:
-          user.photoURL ||
-          result?.additionalUserInfo?.profile?.picture?.data?.url ||
-          "",
-      };
+     // Construct data payload
+     const data = {
+       name:
+         user.displayName || result?.additionalUserInfo?.profile?.name || "",
+       email: user.email || result?.additionalUserInfo?.profile?.email || "",
+       phone: "", 
+       social_id: encryptedToken,
+       login_by: type,
+       lang_type: "en",
+       avatar:
+         user.photoURL ||
+         result?.additionalUserInfo?.profile?.picture?.data?.url ||
+         "",
+     };
 
-      // Make the API call for social login
-      const response = await userService.socialLogin(data);
+     // Make the API call for social login
+     const response = await userService.socialLogin(data);
 
-      if (response && response.status === 200) {
-        setOpenLogin(false);
-        setUserInfo(response.data);
-        showToast("success", response.message, "success");
-      } else {
-        showToast("error", response?.message || "Failed to log in", "danger");
-        console.error("Login API error:", response);
-      }
-    } catch (error) {
-      console.error("Error during sign-in:", error.message);
-      showToast(
-        "error",
-        error.message || "An error occurred during sign-in",
-        "danger"
-      );
-    }
-  };
+     if (response && response.status === 200) {
+      mergeCartCall(localStorage.getItem("cart_id"),response?.data?.id)
+       setOpenLogin(false);
+       setUserInfo(response.data); 
+       showToast("success", response.message, "success");
+     } else {
+       showToast("error", response?.message || "Failed to log in", "danger");
+       console.error("Login API error:", response);
+     }
+   } catch (error) {
+     console.error("Error during sign-in:", error.message);
+     showToast(
+       "error",
+       error.message || "An error occurred during sign-in",
+       "danger"
+     );
+   }
+ };
 
-  const sendOtp = async (phone, code, id) => {
-    try {
-      const encryptPhone = encryptData(phone || "");
-      const encryptCode = code ? encryptData(code || "") : "";
-      const req = {
-        user_id: id,
-        phone: encryptPhone?.toString(),
-        type: "phone",
-        country_code: encryptCode,
-      };
-      const res = await userService.sendOtp(req);
-      if (res && res?.status === 200) {
+ const sendOtp = async (phone, code, id) => {
+   try {
+     const encryptPhone = encryptData(phone || "");
+     const encryptCode = code ? encryptData(code || "") : "";
+     const req = {
+       user_id: id,
+       phone: encryptPhone?.toString(),
+       type: "phone",
+       country_code: encryptCode,
+     };
+     const res = await userService.sendOtp(req);
+     if (res && res?.status === 200) {
+      setUserId(id);
+       showToast("success", res?.message, "success");
+       
+     } else {
+       showToast("error", res?.message, "danger");
+     }
+   } catch (error) {
+     console.error("Error sending OTP:", error);
+   }
+ };
+
+
+const handleForgotPass = async(values) => {
+  try {
+    let request = {
+      phone: values.isEmail ? values.email : values.phone,
+      type: values.isEmail ? "email" : "phone",
+      country_code: values.isEmail ? "" : values.countryCode,
+    };
+    let response = await userService.forgotPassword(request);
+    if(response && response.status === 200){
+      if(!values.isEmail){
         setOpenForgotPassword(false);
-        showToast("success", res?.message, "success");
+        sendOtp(values.phone, values.countryCode, response.data.user_id);
+        setOpenMobileOtp(true);
       } else {
-        showToast("error", res?.message, "danger");
+        setOpenForgotPassword(false);
+        showToast("success", response.message, "success");
       }
-    } catch (error) {
-      console.error("Error sending OTP:", error);
+      
+    } else {
+      showToast("error", response.message, "danger");
+      console.log('error msg:-', response);
     }
-  };
-
-
-  const handleForgotPass = async (values) => {
-    try {
-      let request = {
-        phone: values.isEmail ? values.email : values.phone,
-        type: values.isEmail ? "email" : "phone",
-        country_code: values.isEmail ? "" : values.countryCode,
-      };
-      let response = await userService.forgotPassword(request);
-      if (response && response.status === 200) {
-        if (!values.isEmail) {
-          sendOtp(values.phone, values.countryCode, response.data.user_id);
-        } else {
-          setOpenForgotPassword(false);
-          showToast("success", response.message, "success");
-        }
-
-      } else {
-        showToast("error", response.message, "danger");
-        console.log('error msg:-', response);
-      }
-    } catch (error) {
-      showToast("error", error.message, "danger");
-    }
+  } catch (error) {
+    showToast("error", error.message, "danger");
   }
+}
 
+const verifyOtp = async(values) => {
+  const request = {
+    user_id: userId,
+    otp: values.otp,
+  };
+  try {
+    const response = await userService.verifyOtp(request);
+    if(response && response.status === 200){
+      setOpenMobileOtp(false);
+      showToast("success", response.message, "success");
+    } else {
+      showToast("error", response.message, "danger");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
   return (
     <ThemeProvider theme={theme}>
@@ -313,14 +341,14 @@ const Header = () => {
                     <Box
                       sx={{
                         display: "flex",
-                        alignItems: "end",
-                        justifyContent: "end",
+                        alignItems: "center",
                         gap: 1,
                         cursor: "pointer",
                         ":hover": {
                           color: "#bb1f2a",
                           background: "#fff",
                         },
+                        justifyContent:"flex-end"
                       }}
                       onClick={() => navigate("/my-account")}
                     >
@@ -377,6 +405,9 @@ const Header = () => {
                     selectedCountry={selectedCountry}
                     setSelectedCountry={setSelectedCountry}
                     handleForgotPassword={handleForgotPass}
+                  />
+                  <MobileOtpDialog open={openMobileOtp} onClose={()=>setOpenMobileOtp(false)}
+                    handleVerifyOtp={verifyOtp}
                   />
                 </Grid>
               </Grid>

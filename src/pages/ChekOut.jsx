@@ -53,19 +53,13 @@ const Checkout = () => {
     }
 
     const { fetchCheckOut, checkOut } = useCheckOutStore();
-    console.log("checkOut fsdfsdf", checkOut);
-
 
     useEffect(() => {
         fetchCheckOut();
     }, [])
 
-
-
-
-
     return (
-        <Box sx={{ my: 2, }}>
+        <Box sx={{ my: 4, py: 4 }}>
             <Container maxWidth="lg">
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6} >
