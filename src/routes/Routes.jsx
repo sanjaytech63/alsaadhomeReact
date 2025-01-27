@@ -3,6 +3,7 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { ScrollRestoration } from "react-router-dom";
 import Loading from '../components/Loading';
 import SmartShoppingDetails from '../components/SmartShoppingDetails';
+import CheckoutSuccess from '../pages/CheckoutSuccess';
 
 const Home = React.lazy(() => import('../pages/Home'));
 const Header = React.lazy(() => import('../components/Header/Header'));
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: '/oder-details', element: <OderTable /> },
+      { path: '/checkout/success', element: <CheckoutSuccess /> },
       { path: '/oder-history', element: <Dashboard /> },
       { path: '/my-account', element: <MyAccount /> },
       { path: '/order-history', element: <OderHistory /> },

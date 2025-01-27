@@ -162,7 +162,6 @@ const MyAddress = () => {
     if (selectedCity === "Select City") return;
     try {
       let req = { country_id: selectedCountry?.id, city_id: selectedCity };
-
       const response = await shippingApi.getArea(req);
       if (response && response.status === 200) {
         setArea(response.data);
@@ -628,38 +627,41 @@ const MyAddress = () => {
                             </Select>
                           </FormControl>
 
-                          <Select
-                            disablePortal
-                            MenuProps={{ disableScrollLock: true }}
-                            fullWidth
-                            variant="outlined"
-                            value={selectedCity}
-                            onChange={(e) => setSelectedCity(e.target.value)}
-                            sx={{ marginBottom: 2 }}
-                          >
-                            {city?.map((item) => (
-                              <MenuItem key={item.id} value={item.id}>
-                                {item.city_name}
-                              </MenuItem>
-                            ))}
-                          </Select>
-
-                          <Select
-                            disablePortal
-                            MenuProps={{ disableScrollLock: true }}
-                            fullWidth
-                            variant="outlined"
-                            value={selectedArea}
-                            onChange={(e) => setSelectedArea(e.target.value)}
-                            sx={{ marginBottom: 2 }}
-                          >
-                            <MenuItem value="Select City">Select Area</MenuItem>
-                            {area?.map((item) => (
-                              <MenuItem key={item.id} value={item.id}>
-                                {item.area_name}
-                              </MenuItem>
-                            ))}
-                          </Select>
+                          <FormControl fullWidth>
+                            <Select
+                              disablePortal
+                              MenuProps={{ disableScrollLock: true }}
+                              fullWidth
+                              variant="outlined"
+                              value={selectedCity}
+                              onChange={(e) => setSelectedCity(e.target.value)}
+                              sx={{ marginBottom: 2 }}
+                            >
+                              {city?.map((item) => (
+                                <MenuItem key={item.id} value={item.id}>
+                                  {item.city_name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                          <FormControl fullWidth>
+                            <Select
+                              disablePortal
+                              MenuProps={{ disableScrollLock: true }}
+                              fullWidth
+                              variant="outlined"
+                              value={selectedArea}
+                              onChange={(e) => setSelectedArea(e.target.value)}
+                              sx={{ marginBottom: 2 }}
+                            >
+                              <MenuItem value="Select City">Select Area</MenuItem>
+                              {area?.map((item) => (
+                                <MenuItem key={item.id} value={item.id}>
+                                  {item.area_name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
 
                           <TextField
                             name="appartment"

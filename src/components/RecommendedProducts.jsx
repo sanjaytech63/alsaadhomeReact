@@ -14,11 +14,11 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
   const isRTL = theme.direction === 'rtl';
   const { isItemInCart } = useCartStore();
-  const isLoading = useLoaderStore((state) => state.isLoading);
-  const { addWishList, loading } = useWishListStore();
-  if (isLoading) {
-    return <NewArrivalsShimmer />;
-  }
+  // const isLoading = useLoaderStore((state) => state.isLoading);
+  const { addWishList } = useWishListStore();
+  // if (isLoading) {
+  //   return <NewArrivalsShimmer />;
+  // }
   return (
     <div className="w-100 ">
       <Container maxWidth="lg" sx={{ padding: 0 }}>

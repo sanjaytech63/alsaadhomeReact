@@ -184,7 +184,7 @@ const useCartStore = create((set, get) => ({
 
   isItemInCart: (product_variant_id) => {
     const { cartIds } = get();
-    return cartIds.includes(product_variant_id.toString());
+    return cartIds.includes(product_variant_id?.toString());
   },
 }));
 

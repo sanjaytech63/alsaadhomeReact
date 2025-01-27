@@ -14,12 +14,14 @@ import BlogCard from "../components/BlogCard";
 import Newsletter from "../components/Newsletter";
 import useCartStore from "../store/useCartStore";
 import useLoaderStore from "../store/loaderStore";
+import { useWishListStore } from "../store/useWishListStore";
 
 const Home = () => {
   const [data, setData] = useState(null);
   const [getRec, setGetRec] = useState(null);
   const { fetchCartProductIds } = useCartStore();
   const { addToCart, createToCart } = useCartStore();
+  const { getWishList } = useWishListStore();
 
   useEffect(() => {
     const fetchCartId = async () => {
@@ -38,6 +40,18 @@ const Home = () => {
     fetchCartId();
   }, [fetchCartProductIds, createToCart]);
 
+
+  useEffect(() => {
+    const getWishListData = async () => {
+      try {
+        await getWishList();
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    getWishListData();
+  }, [])
 
   const fetchHomeData = async () => {
     try {

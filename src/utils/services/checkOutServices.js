@@ -6,4 +6,8 @@ export const checkOutServices = {
         return axiosInstance.post(API.CHECKOUT, data);
     },
 
+    addCoupon: (data) => {
+        return axiosInstance.post(API.VALIDATE_COUPON, data);
+    }
+
 };

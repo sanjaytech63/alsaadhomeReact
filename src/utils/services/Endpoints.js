@@ -2,7 +2,7 @@ const API = {
   HOME: 'home',
   BLOG_HOME: "blog/home",
   BLOG_DETAILS: 'blog/details',
-  BLOG_SEARCH:"blog/search",
+  BLOG_SEARCH: "blog/search",
   SEARCH: 'search',
   UNBOXING_CHANLLENG: "unboxing_challenge",
   PRODUCT_DETAILS: 'product_details',
@@ -47,9 +47,10 @@ const API = {
   Merge_Cart: 'merge_cart',
   GETRECOMMENDEDPRODUCTS: 'getRecommendedProducts',
   FORGOTPASSWORD: 'forgot',
-  SendOtp:"send_otp",
-  OTP_VERIFY:"otp_verify",
-  RESET_PASSWORD:"reset_password"
+  SendOtp: "send_otp",
+  OTP_VERIFY: "otp_verify",
+  RESET_PASSWORD: "reset_password",
+  VALIDATE_COUPON: "validate_coupon"
 };
 
 export default API;

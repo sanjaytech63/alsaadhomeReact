@@ -12,16 +12,16 @@ export const useCheckOutStore = create((set, get) => ({
         try {
             let checkoutData = {
                 "address": "Sha Uae",
-              
+                "device_type": "web",
                 "whatsapp_number": "+968 89550945",
                 "city_id": "10",
                 "area_id": "2648",
                 "country_code": "+971",
                 "token": "",
-                "is_coupon_applied": "0",
+                "is_coupon_applied": "ma",
                 "email": "kumharprahlad90@gmail.com",
                 "customer_id": "",
-                "applied_coupon": "",
+                "applied_coupon": "ma",
                 cart_id: cart_id,
                 "version": "36",
                 "userName": "Prahlad Parasara",

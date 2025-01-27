@@ -19,16 +19,12 @@ const Navbar = () => {
     const handleMouseEnter = () => setIsHovered(true);
     const handleMouseLeave = () => setIsHovered(false);
     const navigate = useNavigate();
-
     const navigateToWishList = () => {
         navigate("/wishlist");
     }
-
     const wishList = useWishListStore((state) => state.wishList);
-
     const wishListCount = useMemo(() => wishList.length, [wishList]);
     const storedUserInfo = localStorage.getItem("USER");
-
 
     useEffect(() => {
         getCart();

@@ -4,7 +4,6 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import Loading from './Loading';
 import useCartStore from '../store/useCartStore';
 import { useWishListStore } from '../store/useWishListStore';
 
@@ -14,7 +13,7 @@ const WishList = () => {
   const navigate = useNavigate();
 
   const { isItemInCart, addToCart } = useCartStore();
-  const { wishList, getWishList, removeWishList, loading } = useWishListStore();
+  const { wishList, getWishList, removeWishList,loading, error  } = useWishListStore();
 
   const navigateToCart = () => {
     navigate('/cart');
@@ -24,9 +23,9 @@ const WishList = () => {
     getWishList();
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div style={{ minHeight: '100vh' }}>
@@ -118,7 +117,6 @@ const WishList = () => {
                   }}
                 >
                   <Box position="relative">
-                    {console.log(item?.wishlist_id?.toString())}
                     <Typography
                       onClick={() => {
                         if (item?.wishlist_id?.toString()) {

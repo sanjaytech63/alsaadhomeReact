@@ -10,19 +10,16 @@ import {
   Grid,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { AddShoppingCart, FavoriteBorder } from "@mui/icons-material";
+import { FavoriteBorder } from "@mui/icons-material";
 import useCartStore from "../store/useCartStore";
 import { useWishListStore } from "../store/useWishListStore";
 import Loading from "./Loading";
 const ProductListingMainContant = ({ productsCard = [] }) => {
   const { isItemInCart, addToCart } = useCartStore();
 
-  const { addWishList, loading } = useWishListStore();
+  const { addWishList, wishList } = useWishListStore();
 
 
-  if (loading) {
-    return <Loading />
-  }
   return (
     <Grid container spacing={{ xs: 0, sm: 2 }}>
       {productsCard?.products?.length > 0 ? (
@@ -205,12 +202,31 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                       </svg>
                     </IconButton>
                     <IconButton
+
                       sx={{
                         p: { xs: "4px", sm: "8px" },
                         boxShadow: 2,
+                        "& .css-1wdc28j-MuiSvgIcon-root": {
+                          fill: wishList.some(
+                            (wish) =>
+                              wish.product_id === item.product_id &&
+                              wish.product_variant_id === item.product_variant_id
+                          )
+                            ? "#fff"
+                            : "#292b2c",
+                          transition: "fill 0.3s ease",
+                        },
+
+                        backgroundColor: wishList.some(
+                          (wish) =>
+                            wish.product_id === item.product_id &&
+                            wish.product_variant_id === item.product_variant_id
+                        )
+                          ? "#bb1f2a"
+                          : "#fff",
                         ":hover": {
                           backgroundColor: "#bb1f2a",
-                          color: "#fff",
+                          color: "#fff !important",
                           transition: "fill 0.3s ease",
                         },
                         color: "#292b2c",
