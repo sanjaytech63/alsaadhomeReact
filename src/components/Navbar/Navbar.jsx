@@ -188,7 +188,8 @@ const Navbar = () => {
                                                     >
                                                         <img
                                                             style={{ width: '80px', height: '60px', objectFit: 'cover' }}
-                                                            src={item.image}
+                                                            // src={item.image}
+                                                            src='https://cdn.pixabay.com/photo/2020/09/13/14/24/coffee-5568374_1280.jpg'
                                                             alt={item.title}
                                                         />
                                                         <Box>
