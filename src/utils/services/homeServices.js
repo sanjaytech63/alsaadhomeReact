@@ -8,8 +8,8 @@ export const homeApi = {
     });
   },
 
-  getRecommended: (data, showLoader = true) => {
-    return axiosInstance.get(API.GETRECOMMENDEDPRODUCTS, data, {
+  getRecommended: (showLoader = true) => {
+    return axiosInstance.get(API.GETRECOMMENDEDPRODUCTS, {
       showLoader: showLoader,
     });
   },
@@ -34,10 +34,36 @@ export const homeApi = {
     });
   },
 
-  // Method to fetch product details
-  getProductDetails: (data, showLoader = true) => {
-    return axiosInstance.post(API.PRODUCT_DETAILS, data, {
+  getProductDetails: (params, showLoader = true) => {
+    return axiosInstance.get(API.PRODUCT_DETAILS, {
+      params,
       showLoader: showLoader,
     });
   },
+
+  getNewProductsApi: (showLoader = true) => {
+    return axiosInstance.get(API.NEW_PRODUCTS, {
+      showLoader: showLoader,
+    });
+  },
+
+
+  getBundleProductItemApi: (data, showLoader = true) => {
+    return axiosInstance.post(API.GET_BUNDLE_PRODUCTS_ITEM, data, {
+      showLoader: showLoader,
+    });
+  },
+
+  getBundleProductApi: (data, showLoader = true) => {
+    return axiosInstance.post(API.GET_BUNDLE_PRODUCTS, data, {
+      showLoader: showLoader,
+    });
+  },
+
+  getSimilarProductApi: (showLoader = true) => {
+    return axiosInstance.get(API.GET_SIMILAR_PRODUCT, {
+      showLoader: showLoader,
+    });
+  },
+
 };

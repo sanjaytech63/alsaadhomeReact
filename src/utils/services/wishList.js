@@ -6,8 +6,8 @@ export const wishListApi = {
         return axiosInstance.post(API.ADD_WISHLIST, data);
     },
 
-    getWishList: ( showLoader) => {
-        return axiosInstance.get(API.Wishlist, {
+    getWishList: (showLoader = false) => {
+        return axiosInstance.get(API.Wishlist,{
             showLoader: showLoader,
         });
     },
@@ -15,3 +15,4 @@ export const wishListApi = {
         return axiosInstance.post(API.REMOVE_WISHLIST, data);
     }
 }
+

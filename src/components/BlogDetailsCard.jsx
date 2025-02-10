@@ -1,5 +1,5 @@
 import { Box, Typography, TextField, Grid, Button, CardMedia, ListItem, ListItemText } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import TextsmsIcon from '@mui/icons-material/Textsms';
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
@@ -8,9 +8,51 @@ import EastIcon from '@mui/icons-material/East';
 import WestIcon from '@mui/icons-material/West';
 import { BsGrid } from "react-icons/bs";
 import parse from 'html-react-parser';
-import { Link, useSearchParams } from 'react-router-dom';
-const BlogDetailsCard = ({ blog }) => {
+import { Link } from 'react-router-dom';
+import { showToast } from '../utils/helper';
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { blogApi } from '../utils/services/blogServices';
 
+const BlogDetailsCard = ({ blog }) => {
+    const [userComment, setUserComment] = useState({
+        name: "",
+        email: "",
+        message: ""
+    });
+
+
+    const validationSchema = Yup.object({
+        name: Yup.string().required('Name is required'),
+        email: Yup.string()
+            .email('Invalid email address')
+            .required('Email is required'),
+        message: Yup.string().required('Message is required'),
+    });
+
+    const addBlogComment = async (values) => {
+        try {
+            const reqBody = {
+                name: values.name,
+                email: values.email,
+                message: values.message
+            }
+            const response = await blogApi.addBlogCommentApi(reqBody);
+            if (response && response.status === 200) {
+                showToast("success", response.message, "success");
+            }
+        } catch (error) {
+            console.log(error, "error in add blog comment")
+        }
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserComment((pre) => ({
+            ...pre,
+            [name]: value
+        }))
+    }
 
     return (
         <div>
@@ -46,7 +88,8 @@ const BlogDetailsCard = ({ blog }) => {
             )}
             {blog?.blogs && (
                 <img
-                    src={blog?.blogs?.image}
+                    // src={blog?.blogs?.image}
+                    src='https://cdn.pixabay.com/photo/2021/11/25/09/27/building-6822998_1280.jpg'
                     alt={blog?.blogs?.title_blog}
                     style={{
                         width: '100%',
@@ -62,12 +105,13 @@ const BlogDetailsCard = ({ blog }) => {
                     fontSize: "16px",
                     color: "#6c757d !important",
                     mt: 3,
-                    fontWeight: "500"
+                    fontWeight: "500",
                 }}
             >
-                {parse(blog?.blogs?.description)}
+                {typeof blog?.blogs?.description === 'string' ? parse(blog.blogs.description) : ''}
             </Typography>
-            
+
+
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", my: 4 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
@@ -165,7 +209,7 @@ const BlogDetailsCard = ({ blog }) => {
                                     sx={{ width: "80px", height: "80px", objectFit: "cover" }}
                                     loading="lazy"
                                     component="img"
-                                    src="https://staging.alsaadhome.com/assets/images/user.webp"
+                                    src="https://cdn.pixabay.com/photo/2021/11/25/09/27/building-6822998_1280.jpg"
                                     alt="blog-avatar"
                                 />
                             </Grid>
@@ -208,20 +252,83 @@ const BlogDetailsCard = ({ blog }) => {
                 </Typography >
                 <Grid item>
                     <Box>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={4}>
-                                <TextField fullWidth label="Your Name" required />
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <TextField fullWidth label="Enter Email Email" required />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField fullWidth multiline rows={4} label="Message" required />
-                            </Grid>
-                            <Grid item xs={2}>
-                                <Button sx={{ backgroundColor: "#bb1f2a", color: "#fff", py: 2, px: 4 }}>Submit</Button>
-                            </Grid>
-                        </Grid>
+
+                        <Formik
+                            initialValues={userComment}
+                            validationSchema={validationSchema}
+                            onSubmit={async (values, { resetForm }) => {
+                                await addBlogComment(values);
+                                resetForm();
+                            }}
+                            enableReinitialize
+                        >
+                            {({
+                                handleChange,
+                                handleBlur,
+                                values,
+                                errors,
+                                touched,
+                                isValid,
+                                handleSubmit,
+                            }) => (
+                                <Grid container spacing={3}>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} md={4}>
+                                            <TextField
+                                                name="name"
+                                                type="text"
+                                                value={values.name}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                fullWidth
+                                                label="Your Name"
+                                                error={touched.name && Boolean(errors.name)}
+                                                helperText={touched.name && errors.name}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
+                                            <TextField
+                                                name="email"
+                                                type="email"
+                                                value={values.email}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                fullWidth
+                                                label="Enter Email"
+                                                error={touched.email && Boolean(errors.email)}
+                                                helperText={touched.email && errors.email}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                name="message"
+                                                type="text"
+                                                value={values.message}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                fullWidth
+                                                label="Enter Message"
+                                                error={touched.message && Boolean(errors.message)}
+                                                helperText={touched.message && errors.message}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Button
+                                                onClick={() => addBlogComment(values)}
+                                                sx={{
+                                                    backgroundColor: "#bb1f2a",
+                                                    color: "#fff",
+                                                    py: 2,
+                                                    px: 4,
+                                                }}
+                                            >
+                                                Submit
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            )}
+                        </Formik>
                     </Box>
                 </Grid>
             </Box>

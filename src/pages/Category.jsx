@@ -16,7 +16,7 @@ const Category = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await homeApi.getCategory({});
+            const response = await homeApi.getCategory();
             setData(response.data);
         } catch (err) {
             setError("Failed to load data. Please try again.");
@@ -88,9 +88,9 @@ const Category = () => {
             <Container>
                 <Box sx={{ my: 5 }}>
                     <Grid container spacing={2} sx={{ pb: 4 }}>
-                        {data && data.map((cat) => (
+                        {data && data?.map((cat) => (
                             <Grid item xs={12} sm={4} key={cat.id}>
-                                <Link state={{id: cat.id,type: "category"}} to={`/category/${cat.slug}`}>
+                                <Link state={{id: cat.id,type: "category"}} to={`/category/${cat?.slug}`}>
                                     <Box
                                         sx={{
                                             position: 'relative',
@@ -110,8 +110,9 @@ const Category = () => {
                                                 objectFit: "cover",
                                             }}
                                             loading="lazy"
-                                            src={cat.image}
-                                            alt={cat.name}
+                                            // src={cat.image}
+                                            src='https://cdn.pixabay.com/photo/2024/02/25/15/50/product-display-stand-8596024_1280.jpg'
+                                            alt={cat?.name}
                                         />
                                         {/* Text on image */}
                                         <Box
@@ -125,7 +126,7 @@ const Category = () => {
                                                 py: 1,
                                             }}
                                         >
-                                            <Typography variant="h6">{cat.name}</Typography>
+                                            <Typography variant="h6">{cat?.name}</Typography>
                                         </Box>
                                     </Box>
                                 </Link>
@@ -139,6 +140,3 @@ const Category = () => {
 }
 
 export default Category;
-
-
-

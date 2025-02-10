@@ -6,16 +6,17 @@ import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, 
 import { Link } from 'react-router-dom';
 import CustomButtonGroup from './CustomButtonGroup';
 import useCartStore from '../store/useCartStore';
-import useLoaderStore from '../store/loaderStore';
-import NewArrivalsShimmer from './ShimerEffect/NewArrivalsShimmer';
 import { useWishListStore } from '../store/useWishListStore';
+
 const RecommendedProducts = ({ productsCard, title, addToCart }) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
   const isRTL = theme.direction === 'rtl';
   const { isItemInCart } = useCartStore();
   // const isLoading = useLoaderStore((state) => state.isLoading);
-  const { addWishList } = useWishListStore();
+  const { toggleWishlist, isItemInWishlist } = useWishListStore();
+
+  
   // if (isLoading) {
   //   return <NewArrivalsShimmer />;
   // }
@@ -43,7 +44,6 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
               variant="h6"
               sx={{
                 color: "#bb1f2a",
-                mt: 1,
                 fontSize: "1rem",
                 textAlign: "right",
               }}
@@ -91,7 +91,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
             }
           >
             {productsCard &&
-              productsCard.map((item, index) => {
+              productsCard?.map((item, index) => {
                 return (
                   <Card
                     key={index}
@@ -111,7 +111,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                     }}
                   >
                     <Box position="relative">
-                      {item.is_new === true && (
+                      {item?.is_new === true && (
                         <Chip
                           label="New"
                           sx={{
@@ -126,7 +126,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                           }}
                         />
                       )}
-                      <Link to={`/products/${item.slug}`} className="link-none">
+                      <Link to={`/products/${item?.slug}?product_id=${item.product_id}&variant_id=${item.product_variant_id}`} className="link-none">
                         <CardMedia
                           sx={{
                             minHeight: { sm: "276.37px", xs: "175px" },
@@ -134,8 +134,9 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                             objectFit: "cover",
                           }}
                           component="img"
-                          image={item.image}
-                          alt={item.title}
+                          // src={item?.image}
+                          src='https://cdn.pixabay.com/photo/2021/11/14/12/53/ship-6794508_1280.jpg'
+                          alt={item?.title}
                           loading="lazy"
                         />
                       </Link>
@@ -161,7 +162,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                           },
                         }}
                       >
-                        {item.title}
+                        {item?.title}
                       </Typography>
                       <Box
                         sx={{
@@ -180,8 +181,8 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                             mt: 1,
                           }}
                         >
-                          {item.sale_price > 0 &&
-                            item.sale_price !== item.list_price && (
+                          {item?.sale_price > 0 &&
+                            item?.sale_price !== item?.list_price && (
                               <Typography
                                 noWrap
                                 sx={{
@@ -190,7 +191,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                                   fontSize: { xs: "14px", sm: "1rem" },
                                 }}
                               >
-                                {item.sale_price} AED
+                                {item?.sale_price} AED
                               </Typography>
                             )}
 
@@ -205,18 +206,18 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                               noWrap
                               sx={{
                                 fontWeight:
-                                  item.sale_price > 0 &&
-                                    item.sale_price !== item.list_price
+                                  item?.sale_price > 0 &&
+                                    item?.sale_price !== item?.list_price
                                     ? "0"
                                     : "600",
                                 color:
-                                  item.sale_price > 0 &&
-                                    item.sale_price !== item.list_price
+                                  item?.sale_price > 0 &&
+                                    item?.sale_price !== item?.list_price
                                     ? "gray"
                                     : "#bb1f2a",
                                 textDecoration:
-                                  item.sale_price > 0 &&
-                                    item.sale_price !== item.list_price
+                                  item?.sale_price > 0 &&
+                                    item?.sale_price !== item?.list_price
                                     ? "line-through"
                                     : "none",
                                 fontSize: { xs: "14px", sm: "1rem" },
@@ -224,8 +225,8 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                             >
                               {item.list_price} AED
                             </Typography>
-                            {item.sale_price > 0 &&
-                              item.sale_price !== item.list_price && (
+                            {item?.sale_price > 0 &&
+                              item?.sale_price !== item?.list_price && (
                                 <Typography
                                   noWrap
                                   sx={{
@@ -233,7 +234,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                                     fontSize: { xs: "14px", sm: "1rem" },
                                   }}
                                 >
-                                  {item.discount_label}
+                                  {item?.discount_label}
                                 </Typography>
                               )}
                           </Box>
@@ -291,17 +292,28 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                             </svg>
                           </IconButton>
                           <IconButton
+
                             sx={{
                               p: { xs: "4px", sm: "8px" },
                               boxShadow: 2,
+                              "& .css-1wdc28j-MuiSvgIcon-root": {
+                                fill: isItemInWishlist(item?.product_variant_id)
+                                  ? "#fff"
+                                  : "#292b2c",
+                                transition: "fill 0.3s ease",
+                              },
+
+                              backgroundColor: isItemInWishlist(item?.product_variant_id)
+                                ? "#bb1f2a"
+                                : "#fff",
                               ":hover": {
                                 backgroundColor: "#bb1f2a",
-                                color: "#fff",
+                                color: "#fff !important",
                                 transition: "fill 0.3s ease",
                               },
                               color: "#292b2c",
                             }}
-                            onClick={() => addWishList(item?.product_id, item?.product_variant_id,)}
+                            onClick={() => toggleWishlist(item?.product_id, item?.product_variant_id,)}
                             aria-label="add to wishlist"
                           >
                             <FavoriteBorder sx={{ fontSize: "1rem" }} />
@@ -328,8 +340,6 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                   </Card>
                 )
               }
-
-
               )}
           </Carousel>
         </Box>

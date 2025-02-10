@@ -4,7 +4,7 @@ import privacyData from '../../src/product.json';
 
 const PrivacyPolice = () => {
     const { privecyPolicy } = privacyData;
-
+    
     const renderSection = (section, title) => (
         <Box mb={4}>
             <Typography variant="h6" gutterBottom>{title}</Typography>

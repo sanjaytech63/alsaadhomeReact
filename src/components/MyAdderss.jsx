@@ -34,6 +34,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useAddressStore } from "../store/useAddressStore";
 import Loading from "./Loading";
+import useLoaderStore from "../store/loaderStore";
 
 const MyAddress = () => {
   const [open, setOpen] = useState(false);
@@ -48,18 +49,9 @@ const MyAddress = () => {
   const handleOpen = () => {
     setOpen(!open);
   };
-  const { addresses, getShipping, loading, error, deleteShippingAddress } = useAddressStore();
+  // const { addresses, getShipping, loading, error, deleteShippingAddress } = useAddressStore();
 
-  useEffect(() => {
-    const fetchAddress = async () => {
-      try {
-        await getShipping();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchAddress();
-  }, [])
+
 
   const [address, setAddress] = useState("");
   const [searchResult, setSearchResult] = useState();
@@ -145,6 +137,7 @@ const MyAddress = () => {
       let req = { country_id: selectedCountry?.id };
       const response = await shippingApi.getCity(req);
       if (response && response.status === 200) {
+        await getArea();
         setCity(response.data);
       } else {
         console.log("Error fetching city data:-", response);
@@ -255,14 +248,14 @@ const MyAddress = () => {
       }
 
 
-      if (response.data.results.length > 0) {
+      if (response?.data?.results?.length > 0) {
         setInitialValues((pri) => ({
           ...pri,
-          address: response.data.results[0].formatted_address,
+          address: response?.data?.results[0]?.formatted_address,
         }));
-        setAddress(response.data.results[0].formatted_address);
-        const isValidCity = city.find(
-          (cityName) => cityName.city_name === newCity
+        setAddress(response?.data?.results[0]?.formatted_address);
+        const isValidCity = city?.find(
+          (cityName) => cityName?.city_name === newCity
         );
         if (isValidCity) {
           setInitialValues((prev) => ({
@@ -300,7 +293,7 @@ const MyAddress = () => {
       mobile_number: values.mobile_number,
       alternate_number: values.alternate_number,
       email: values.email,
-      is_default: "1",
+      is_default: values.is_default,
       country_code: selectedCountry?.country_code,
     };
     try {
@@ -316,7 +309,38 @@ const MyAddress = () => {
   };
 
 
-  if (loading) {
+  const getShipping = async () => {
+    try {
+      const response = await shippingApi.getShippingAddress();
+      if (response && response.status === 200) {
+        setGetAddress(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  useEffect(() => {
+    getShipping();
+  }, [])
+
+  const deleteShippingAddress = async (id) => {
+    try {
+      const req = {
+        shipping_address_id: id
+      }
+      const response = await shippingApi.deleteShippingAddress(req);
+      if (response && response.status === 200) {
+        showToast("Success", response.message, "success");
+      }
+    } catch (error) {
+      console.error("Error deleting address:", error);
+    }
+  }
+
+
+  if (useLoaderStore.getState().isLoading === true) {
     return <Loading />
   }
 
@@ -727,6 +751,9 @@ const MyAddress = () => {
                           <FormControlLabel
                             control={
                               <Checkbox
+                                name="is_default"
+                                onChange={handleChange}
+                                value={values.is_default}
                                 sx={{
                                   "&.Mui-checked": {
                                     color: "#bb1f2a",
@@ -830,7 +857,7 @@ const MyAddress = () => {
                               }}
                             >
                               {
-                                addresses.map((item) => (
+                                getAddress.map((item) => (
 
                                   <Box key={item.id}
                                     sx={{

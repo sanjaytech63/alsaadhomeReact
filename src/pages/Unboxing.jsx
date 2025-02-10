@@ -122,8 +122,11 @@ const Unboxing = () => {
                             <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
                                 {data?.title}
                             </Typography>
-                            <Typography variant="body1" sx={{ fontSize: '15px', lineHeight: "28px", color: "#687188", fontWeight: "600" }}>
-                                {parse(data?.description)}
+                            <Typography
+                                variant="body1"
+                                sx={{ fontSize: '15px', lineHeight: "28px", color: "#687188", fontWeight: "600" }}
+                            >
+                                {data?.description ? parse(data.description) : "Description not available"}
                             </Typography>
                         </Box>
                     </Box>

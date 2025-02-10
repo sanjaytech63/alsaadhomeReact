@@ -4,7 +4,7 @@ import API from "./Endpoints";
 
 export const blogApi = {
     getHomeBlogData: (data) => {
-        return  axiosInstance.get(API.BLOG_HOME, data);
+        return axiosInstance.get(API.BLOG_HOME, data);
     },
 
     getBlog: async (data) => {
@@ -13,5 +13,9 @@ export const blogApi = {
 
     getBlogDetails: async (data) => {
         return await axiosInstance.post(API.BLOG_DETAILS, data);
+    },
+
+    addBlogCommentApi: async (data) => {
+        return await axiosInstance.post(API.ADD_BLOG_COMMENT, data);
     },
 };

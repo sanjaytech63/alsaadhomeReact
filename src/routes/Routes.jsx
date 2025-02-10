@@ -4,6 +4,7 @@ import { ScrollRestoration } from "react-router-dom";
 import Loading from '../components/Loading';
 import SmartShoppingDetails from '../components/SmartShoppingDetails';
 import CheckoutSuccess from '../pages/CheckoutSuccess';
+import ProductDetails from '../components/ProductDetails';
 
 const Home = React.lazy(() => import('../pages/Home'));
 const Header = React.lazy(() => import('../components/Header/Header'));
@@ -20,13 +21,11 @@ const BottomNav = React.lazy(() => import('../components/BottomNav/BottomNav'));
 const Cart = React.lazy(() => import('../pages/Cart'));
 const Login = React.lazy(() => import('../auth/Login/Login'));
 const Checkout = React.lazy(() => import('../pages/ChekOut'));
-const ProductDetails = React.lazy(() => import('../components/ProductDetails'));
 const NotFoundPage = React.lazy(() => import('../components/NotPageFound'));
 const TermsConditions = React.lazy(() => import('../components/TermsConditions'));
 const PrivacyPolice = React.lazy(() => import('../components/PrivacyPolice'));
 const BlogDetails = React.lazy(() => import('../components/BlogDetails'));
 const SmartShoppingBedroom = React.lazy(() => import('../components/SmartShoppingBedroom'));
-const SmartShoppingLivingRoom = React.lazy(() => import('../components/SmartShoppingLivingRoom'));
 const Dashboard = React.lazy(() => import('../components/Dashboard'));
 const MyAccount = React.lazy(() => import('../components/MyAccount'));
 const OderHistory = React.lazy(() => import('../components/OderHistory'));
@@ -45,7 +44,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      { path: '/oder-details', element: <OderTable /> },
+      { path: '/order-details/:id', element: <OderTable /> },
       { path: '/checkout/success', element: <CheckoutSuccess /> },
       { path: '/oder-history', element: <Dashboard /> },
       { path: '/my-account', element: <MyAccount /> },
@@ -61,7 +60,7 @@ const router = createBrowserRouter([
       { path: "/category/:subcategory", element: <SubCategoryList /> },
       { path: "/search/:type/:id", element: <ProductListing /> },
       { path: "/brand/:id", element: <ProductListing /> },
-      { path: "/category/:category/:id/:subcategory", element: <ProductListing /> },
+      { path: "/category/:category/:subcategory", element: <ProductListing /> },
       { path: "/smart-shopping/details/:id", element: <SmartShoppingDetails /> },
       { path: "/products/details/:id", element: <SmartShoppingDetails /> },
       { path: "/smart-shopping", element: <SmartShopping /> },
@@ -74,9 +73,7 @@ const router = createBrowserRouter([
       { path: "/privacy-policy", element: <PrivacyPolice /> },
       { path: "/blog", element: <Blog /> },
       { path: "/blog/:slug", element: <BlogDetails /> },
-      
-      { path: "/smart-shopping/category/:slug", element: <SmartShoppingBedroom /> },
-      { path: "/smart-shopping/category/:id", element: <SmartShoppingLivingRoom /> },
+      { path: "/smart-shopping/category/:id", element: <SmartShoppingBedroom /> },
       { path: "/logout", element: <Logout /> },
       { path: "*", element: <NotFoundPage /> }
     ]

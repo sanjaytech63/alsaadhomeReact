@@ -80,8 +80,9 @@ const FlashSale = ({ flashSale }) => {
                   {/* Image */}
                   <CardMedia
                     component="img"
-                    src={item.image}
-                    alt={item.banner_name}
+                    // src={item.image}
+                    src="https://cdn.pixabay.com/photo/2017/12/12/09/09/business-3014200_1280.jpg"
+                    alt={item?.banner_name}
                     loading="lazy"
                     style={{
                       width: "100%",

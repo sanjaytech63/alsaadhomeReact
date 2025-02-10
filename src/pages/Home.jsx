@@ -15,10 +15,12 @@ import Newsletter from "../components/Newsletter";
 import useCartStore from "../store/useCartStore";
 import useLoaderStore from "../store/loaderStore";
 import { useWishListStore } from "../store/useWishListStore";
+import { useSearchParams } from "react-router-dom";
 
 const Home = () => {
   const [data, setData] = useState(null);
   const [getRec, setGetRec] = useState(null);
+  const [getNewPro, setGetNewPro] = useState(null);
   const { fetchCartProductIds } = useCartStore();
   const { addToCart, createToCart } = useCartStore();
   const { getWishList } = useWishListStore();
@@ -39,19 +41,6 @@ const Home = () => {
 
     fetchCartId();
   }, [fetchCartProductIds, createToCart]);
-
-
-  useEffect(() => {
-    const getWishListData = async () => {
-      try {
-        await getWishList();
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    getWishListData();
-  }, [])
 
   const fetchHomeData = async () => {
     try {
@@ -75,6 +64,19 @@ const Home = () => {
     }
   };
 
+
+  const getNewProducts = async () => {
+    try {
+      const response = await homeApi.getNewProductsApi();
+      if (response && response?.status === 200) {
+        setGetNewPro(response.data);
+      }
+    } catch (error) {
+      console.log("Error fetching home data:-", error);
+    }
+  };
+
+
   useEffect(() => {
     fetchHomeData();
   }, []);
@@ -82,6 +84,11 @@ const Home = () => {
 
   useEffect(() => {
     getRecommendedProducts();
+  }, []);
+
+
+  useEffect(() => {
+    getNewProducts();
   }, []);
 
   if (useLoaderStore.getState().isLoading || data === null) {
@@ -112,9 +119,9 @@ const Home = () => {
           )}
           {data.flash_sale && <FlashSale flashSale={data.flash_sale} />}
           {data.banner && <BannerSection bannerSection={data.banner} />}
-          {data.new_product && (
+          {getNewPro && (
             <NewArrivalsSlider
-              productsCard={data.new_product}
+              productsCard={getNewPro}
               addToCart={addToCart}
             />
           )}

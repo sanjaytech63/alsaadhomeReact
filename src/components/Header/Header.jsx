@@ -43,9 +43,9 @@ const Header = () => {
 
   const handleLanguageChange = (event) => setLanguage(event.target.value);
 
-  const selectedCountry = useSettingsStore((state) => state.selectedCountry);
+  const selectedCountry = useSettingsStore((state) => state?.selectedCountry);
   const setSelectedCountry = useSettingsStore(
-    (state) => state.setSelectedCountry
+    (state) => state?.setSelectedCountry
   );
   const setUserInfo = useUserStore((state) => state.setUserInfo);
 
@@ -295,7 +295,7 @@ const verifyOtp = async(values) => {
                       onChange={(event) => {
                         const selectedCountry = countries.find(
                           (country) =>
-                            country.country_name === event.target.value
+                            country?.country_name === event.target.value
                         );
                         setSelectedCountry(selectedCountry);
                       }}

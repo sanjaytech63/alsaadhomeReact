@@ -248,6 +248,7 @@ const ProductListing = () => {
         filter_type: selectedCatlist.length > 0 ? "OR" : "AND",
         category_ids: selectedCatlist,
       };
+      
       const response = await homeApi.getProduct(obj);
       if (response && response.status === 200) {
         setData(response.data || []);

@@ -5,7 +5,7 @@ import useUserStore from "../../store/user";
 import { useSettingsStore } from "../../store/useSettingsStore";
 
 const axiosInstance = axios.create({
-  baseURL: "https://stagingapp.alsaadhome.com/api/v23/",
+  baseURL: "https://stagingapp.alsaadhome.com/api/v24/",
   headers: {
     Accept: "application/json",
     lng: "en",
@@ -29,9 +29,9 @@ export const checkNetworkConnectivity = async () => {
   }
 };
 
-export const resetStack = (route) => {
-  console.log(`Navigating to: ${route}`);
-};
+// export const resetStack = (route) => {
+//   console.log(`Navigating to: ${route}`);
+// };
 
 // Request Interceptor
 axiosInstance.interceptors.request.use(
@@ -42,7 +42,6 @@ axiosInstance.interceptors.request.use(
     // Check network connectivity
     const isAvailable = await checkNetworkConnectivity();
     if (!isAvailable) {
-      showToast("error", "No internet connection");
       showToast("error", "No internet connection");
     }
 

@@ -28,16 +28,17 @@ const BlogSideBar = ({ data }) => {
                 <Typography variant="h6" gutterBottom>Recent Posts</Typography>
                 <List>
                     {data?.recent_blogs?.map(post => (
-                        <Box key={post.id} sx={{ display: "flex", gap: 2, my: 2, alignItems: "center" }}>
+                        <Box key={post?.id} sx={{ display: "flex", gap: 2, my: 2, alignItems: "center" }}>
                             <CardMedia
                                 sx={{ maxWidth: "100%", width: "80px", objectFit: "cover" }}
                                 component="img"
-                                image={post.image}
-                                alt={post.title_blog}
+                                // src={post?.image}
+                                src='https://cdn.pixabay.com/photo/2021/11/08/11/19/buildings-6778915_1280.jpg'
+                                alt={post?.title_blog}
                                 loading="lazy"
                             />
                             <Box>
-                                <Link to={`/blog/${post.slug}`} className='link-none link-hover'>
+                                <Link to={`/blog/${post?.slug}`} className='link-none link-hover'>
                                     <Typography sx={{
                                         ":hover": { color: "#bb1f2a" },
                                         cursor: "pointer",
@@ -52,7 +53,7 @@ const BlogSideBar = ({ data }) => {
                                         whiteSpace: "normal",
                                     }}
                                     >
-                                        {post.title_blog}
+                                        {post?.title_blog}
                                     </Typography>
                                 </Link>
                                 <Typography sx={{ fontSize: "14px", color: "#687188" }}>{post?.created_at}</Typography>

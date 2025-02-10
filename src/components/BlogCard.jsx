@@ -60,10 +60,10 @@ const BlogCard = () => {
                     </Typography>
 
                     <Grid container spacing={3} justifyContent="center">
-                        {blog && blog.map((blog) => (
-                            <Grid item xs={12} sm={6} md={4} key={blog.id}>
-                                <Link to={`/blog/${blog.slug}`} className='link-none' >
-                                    <Card key={blog.id} sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)", height: "100%", overflow: "hidden" }}>
+                        {blog && blog?.map((blog) => (
+                            <Grid item xs={12} sm={6} md={4} key={blog?.id}>
+                                <Link to={`/blog/${blog?.slug}`} className='link-none' >
+                                    <Card sx={{ borderRadius: '8px', margin: "5px", cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)", height: "100%", overflow: "hidden" }}>
                                         <Box position="relative">
                                             <CardMedia
                                                 sx={{
@@ -77,8 +77,9 @@ const BlogCard = () => {
                                                     },
                                                 }}
                                                 component="img"
-                                                image={blog.image}
-                                                alt={blog.title_blog}
+                                                // src={blog?.image}
+                                                src="https://cdn.pixabay.com/photo/2019/09/17/18/48/computer-4484282_960_720.jpg"
+                                                alt={blog?.title_blog}
                                                 loading="lazy"
                                             />
                                         </Box>
@@ -97,13 +98,13 @@ const BlogCard = () => {
                                                 fontFamily: "Roboto, sans-serif",
                                                 ":hover": { color: "#bb1f2a" }
                                             }} component="div">
-                                                {blog.title_blog}
+                                                {blog?.title_blog}
                                             </Typography>
                                             <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
                                                 <CalendarTodayIcon sx={{ fontSize: '16px', mr: 1, color: 'gray' }} />
-                                                <Typography variant="body2">{blog.created_at}</Typography>
+                                                <Typography variant="body2">{blog?.created_at}</Typography>
                                                 <IconButton size="small" sx={{ ml: 2 }}>
-                                                    <ChatBubbleOutlineIcon sx={{ fontSize: '16px', color: 'gray' }} /> {blog.comment_count}
+                                                    <ChatBubbleOutlineIcon sx={{ fontSize: '16px', color: 'gray' }} /> {blog?.comment_count}
                                                 </IconButton>
                                             </Box>
                                             <Typography sx={{
@@ -118,7 +119,7 @@ const BlogCard = () => {
                                                 color: "#687188",
                                                 fontSize: { xs: "14px", sm: "16px" },
                                             }} variant="body2">
-                                                {blog.short_description}
+                                                {blog?.short_description}
                                             </Typography>
                                         </CardContent>
                                     </Card>

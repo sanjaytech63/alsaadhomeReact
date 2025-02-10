@@ -22,12 +22,21 @@ const Navbar = () => {
     const navigateToWishList = () => {
         navigate("/wishlist");
     }
-    const wishList = useWishListStore((state) => state.wishList);
-    const wishListCount = useMemo(() => wishList.length, [wishList]);
+    const {wishList,getWishList} = useWishListStore();
+    const wishListCount = wishList.length;
     const storedUserInfo = localStorage.getItem("USER");
 
     useEffect(() => {
         getCart();
+        const getWishListData = async () => {
+            try {
+              await getWishList();
+            } catch (error) {
+              console.log(error)
+            }
+          }
+          getWishListData();
+      
     }, [])
 
     const navList = [

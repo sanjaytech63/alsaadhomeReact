@@ -16,8 +16,7 @@ import { useWishListStore } from "../store/useWishListStore";
 import Loading from "./Loading";
 const ProductListingMainContant = ({ productsCard = [] }) => {
   const { isItemInCart, addToCart } = useCartStore();
-
-  const { addWishList, wishList } = useWishListStore();
+  const { toggleWishlist, isItemInWishlist } = useWishListStore();
 
 
   return (
@@ -25,7 +24,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
       {productsCard?.products?.length > 0 ? (
         productsCard?.products &&
         productsCard?.products.map((item) => (
-          <Grid sx={{ pb: 2 }} key={item.id} item xs={6} sm={4} md={4}>
+          <Grid sx={{ pb: 2 }} key={item?.id} item xs={6} sm={4} md={4}>
             <Card
               sx={{
                 height: "100%",
@@ -44,12 +43,8 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
             >
               <Box>
                 <Link
-                  state={{
-                    product_id: item.product_id,
-                    variant_id: item.product_variant_id,
-                  }}
                   className="link-none"
-                  to={`/products/${item.slug}`}
+                  to={`/products/${item?.slug}?product_id=${item?.product_id}&variant_id=${item?.product_variant_id}`}
                 >
                   <CardMedia
                     sx={{
@@ -58,11 +53,13 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                       objectFit: "cover",
                     }}
                     component="img"
-                    image={item.image}
-                    alt={item.title}
+                    // src={item?.image}
+                    src="https://cdn.pixabay.com/photo/2020/09/13/14/24/coffee-5568374_1280.jpg"
+                    alt={item?.title}
                     loading="lazy"
                   />
                 </Link>
+
               </Box>
               <CardContent sx={{ p: { xs: "8px", sm: "16px" } }}>
                 <Typography
@@ -99,8 +96,8 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                       gap: 1,
                     }}
                   >
-                    {item.sale_price > 0 &&
-                      item.sale_price !== item.list_price && (
+                    {item?.sale_price > 0 &&
+                      item?.sale_price !== item?.list_price && (
                         <Typography
                           noWrap
                           sx={{
@@ -109,7 +106,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                             fontSize: { xs: "14px", sm: "1rem" },
                           }}
                         >
-                          {item.sale_price} AED
+                          {item?.sale_price} AED
                         </Typography>
                       )}
 
@@ -118,27 +115,27 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         noWrap
                         sx={{
                           fontWeight:
-                            item.sale_price > 0 &&
-                              item.sale_price !== item.list_price
+                            item?.sale_price > 0 &&
+                              item?.sale_price !== item?.list_price
                               ? "0"
                               : "600",
                           color:
-                            item.sale_price > 0 &&
-                              item.sale_price !== item.list_price
+                            item?.sale_price > 0 &&
+                              item?.sale_price !== item?.list_price
                               ? "gray"
                               : "#bb1f2a",
                           textDecoration:
-                            item.sale_price > 0 &&
-                              item.sale_price !== item.list_price
+                            item?.sale_price > 0 &&
+                              item?.sale_price !== item?.list_price
                               ? "line-through"
                               : "none",
                           fontSize: { xs: "14px", sm: "1rem" },
                         }}
                       >
-                        {item.list_price} AED
+                        {item?.list_price} AED
                       </Typography>
                       {item.sale_price > 0 &&
-                        item.sale_price !== item.list_price && (
+                        item?.sale_price !== item?.list_price && (
                           <Typography
                             noWrap
                             sx={{
@@ -146,7 +143,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                               fontSize: { xs: "14px", sm: "1rem" },
                             }}
                           >
-                            {item.discount_label}
+                            {item?.discount_label}
                           </Typography>
                         )}
                     </Box>
@@ -163,11 +160,11 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                       sx={{
                         p: { xs: "4px", sm: "8px" },
                         boxShadow: 2,
-                        backgroundColor: isItemInCart(item.product_variant_id)
+                        backgroundColor: isItemInCart(item?.product_variant_id)
                           ? "#bb1f2a"
                           : "#fff",
                         "& .cart-svg-icon path": {
-                          fill: isItemInCart(item.product_variant_id)
+                          fill: isItemInCart(item?.product_variant_id)
                             ? "#fff"
                             : "#292b2c",
                           transition: "fill 0.3s ease",
@@ -182,8 +179,8 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         },
                       }}
                       onClick={() => {
-                        if (!isItemInCart(item.product_variant_id)) {
-                          addToCart(item.product_variant_id);
+                        if (!isItemInCart(item?.product_variant_id)) {
+                          addToCart(item?.product_variant_id);
                         }
                       }}
                       aria-label="add to cart"
@@ -207,21 +204,13 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         p: { xs: "4px", sm: "8px" },
                         boxShadow: 2,
                         "& .css-1wdc28j-MuiSvgIcon-root": {
-                          fill: wishList.some(
-                            (wish) =>
-                              wish.product_id === item.product_id &&
-                              wish.product_variant_id === item.product_variant_id
-                          )
+                          fill: isItemInWishlist(item?.product_variant_id)
                             ? "#fff"
                             : "#292b2c",
                           transition: "fill 0.3s ease",
                         },
 
-                        backgroundColor: wishList.some(
-                          (wish) =>
-                            wish.product_id === item.product_id &&
-                            wish.product_variant_id === item.product_variant_id
-                        )
+                        backgroundColor: isItemInWishlist(item?.product_variant_id)
                           ? "#bb1f2a"
                           : "#fff",
                         ":hover": {
@@ -231,7 +220,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         },
                         color: "#292b2c",
                       }}
-                      onClick={() => addWishList(item?.product_id, item?.product_variant_id,)}
+                      onClick={() => toggleWishlist(item?.product_id, item?.product_variant_id,)}
                       aria-label="add to wishlist"
                     >
                       <FavoriteBorder sx={{ fontSize: "1rem" }} />
@@ -250,7 +239,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                     variant="body2"
                     sx={{ ml: { xs: 0, sm: 1 }, color: "#9a9696" }}
                   >
-                    ({item.rating})
+                    ({item?.rating})
                   </Typography>
                 </Box>
               </CardContent>

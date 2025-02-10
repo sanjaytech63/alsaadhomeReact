@@ -7,13 +7,11 @@ import OrderDetails from './OrderDetails';
 
 const OderTable = () => {
   const location = useLocation();
-  console.log(location.pathname);
   const pathnames = location.pathname.split('/').filter(Boolean);
-  console.log(pathnames);
   return (
     <div style={{ minHeight: '100vh', }}>
       {/* Header Section */}
-      <Box sx={{ bgcolor: '#f7f8fb', py: {sm:"30px",xs:"15px"},  }}>
+      <Box sx={{ bgcolor: '#f7f8fb', py: { sm: "30px", xs: "15px" }, }}>
         <Container>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography

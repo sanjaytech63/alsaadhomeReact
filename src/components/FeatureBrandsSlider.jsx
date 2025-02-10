@@ -76,7 +76,7 @@ const FeatureBrandsSlider = ({ FeaturedBrands }) => {
                                     <Box
                                         component="img"
                                         draggable="false"
-                                        src={item.image}
+                                        src={"https://cdn.pixabay.com/photo/2020/09/13/14/24/coffee-5568374_1280.jpg"}
                                         alt={item.name}
                                         loading="lazy"
                                         className={!matchesSM ? "rounded-circle" : "rounded-3"}

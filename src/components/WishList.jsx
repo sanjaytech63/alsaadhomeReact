@@ -14,13 +14,17 @@ const WishList = () => {
 
   const { isItemInCart, addToCart } = useCartStore();
   const { wishList, getWishList, removeWishList,loading, error  } = useWishListStore();
+  console.log(wishList,'vvfhg');
 
   const navigateToCart = () => {
     navigate('/cart');
   };
 
   useEffect(() => {
-    getWishList();
+    const getWishListItem = async () => {
+      await getWishList();
+    }
+    getWishListItem();
   }, []);
 
 
@@ -144,7 +148,8 @@ const WishList = () => {
                         objectFit: 'cover',
                       }}
                       component="img"
-                      image={item?.image || '/placeholder.jpg'}
+                      // src={item?.image || '/placeholder.jpg'}
+                      src='https://cdn.pixabay.com/photo/2020/09/13/14/24/coffee-5568374_1280.jpg'
                       alt={item?.title || 'Product Image'}
                       loading="lazy"
                     />

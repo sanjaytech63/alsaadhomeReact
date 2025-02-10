@@ -54,7 +54,8 @@ const BannerSlider = ({ BannderSliderData }) => {
                             <Box
                                 component="img"
                                 draggable="false"
-                                src={item.image}
+                                // src={item.image}
+                                src="https://cdn.pixabay.com/photo/2016/04/15/11/48/hotel-1330847_1280.jpg"
                                 loading="lazy"
                                 alt={`BannerSlide-${item.banner_name}`}
                                 sx={{

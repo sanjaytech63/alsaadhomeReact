@@ -50,7 +50,15 @@ const API = {
   SendOtp: "send_otp",
   OTP_VERIFY: "otp_verify",
   RESET_PASSWORD: "reset_password",
-  VALIDATE_COUPON: "validate_coupon"
+  VALIDATE_COUPON: "validate_coupon",
+  NEW_PRODUCTS: "new_product",
+  ADD_BLOG_COMMENT: "blog/add_comment",
+  CONTACT_ENQUIRY: "contact_enquiry",
+  SMART_SHOPPING_SUBCATEGORY: "engagement/sub_category",
+  SMART_SHOPPING_DETAILS: "engagement/details",
+  GET_BUNDLE_PRODUCTS_ITEM: "get_bundle_product_item",
+  GET_BUNDLE_PRODUCTS:"get_bundle_products",
+  GET_SIMILAR_PRODUCT:"similar_product",
 };
 
 export default API;

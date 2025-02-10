@@ -14,49 +14,41 @@ import ProductFeatures from './ProductFeatures';
 import ProductDetailsTable from './ProductDetailsTable';
 
 const MainInfoCom = ({
-  products,
+  tags,
   productInfo,
-  selectedColor,
-  setSelectedColor,
-  count,
-  incrementChange,
-  decrementChange,
-  proDetails,
-  variants
 }) => {
+
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item xs={12} md={6} sx={{ p: 0 }}>
       <Box>
-        {products.map(product => (
-          <Box key={product.id}>
-            <ProductTitle title={product.title} />
-            <PriceAndRating product={product} />
-            <ColorOptions
-              colorOptions={variants}
-              selectedColor={selectedColor}
-              setSelectedColor={setSelectedColor}
-            />
-            <SizeInfo size={product.size} />
-            <AvailabilityInfo availability={product.availability} />
-            <DeliveryText deliveryText={product.deliveryText} />
-            <PaymentOptions paymentText={product.paymentText} />
-            <QuantityControl
+        {console.log("productInfo", productInfo[0].items)};
+
+        {/* <ProductTitle title={product.title} /> */}
+        {/* <PriceAndRating product={product} /> */}
+
+        <ColorOptions
+          colorOptions={productInfo}
+        // selectedColor={selectedColor}
+        // setSelectedColor={setSelectedColor}
+        />
+
+        {/* <SizeInfo size={product.size} /> */}
+        {/* <AvailabilityInfo availability={product.availability} />
+        <DeliveryText deliveryText={product.deliveryText} />
+        <PaymentOptions paymentText={product.paymentText} /> */}
+        {/* <QuantityControl
               count={count}
               incrementChange={incrementChange}
               decrementChange={decrementChange}
-            />
-            <AddToCartActions />
-          </Box>
-        ))}
+            /> */}
+        {/* <AddToCartActions /> */}
       </Box>
       <Box>
-        {productInfo.map((info, index) => (
-          <Box key={index}>
-            <ProductInfo proDetails={proDetails} />
-            <ProductFeatures features={info.features} />
-            <ProductDetailsTable productDetails={info.productDetails} />
-          </Box>
-        ))}
+        <Box >
+          <ProductInfo tags={tags} />
+          {/* <ProductFeatures features={info.features} />
+            <ProductDetailsTable productDetails={info.productDetails} /> */}
+        </Box>
       </Box>
     </Grid>
   );

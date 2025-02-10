@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControl, Dialog, DialogTitle, IconButton, DialogContent, CardMedia, InputAdornment } from '@mui/material';
+import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControl, Dialog, DialogTitle, IconButton, DialogContent, CardMedia, InputAdornment, CircularProgress } from '@mui/material';
 import { FaRegCreditCard } from "react-icons/fa6";
 import CloseIcon from '@mui/icons-material/Close';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
@@ -22,6 +22,8 @@ import * as Yup from "yup";
 import _ from "lodash";
 import ChekOutMap from '../components/Map/ChekOutMap';
 import placeOrderApi from '../utils/services/placeOrder';
+import { decryptData, encryptData } from '../utils/services/AlsaadRSA';
+import useCartStore from '../store/useCartStore';
 
 const Checkout = () => {
     const [countryCode, setCountryCode] = useState("+ 968");
@@ -39,7 +41,7 @@ const Checkout = () => {
     const [selectedCity, setSelectedCity] = useState([]);
     const [selectedArea, setSelectedArea] = useState([]);
     const [checkout, setCheckOut] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     const [initialValues, setInitialValues] = useState({
         country_id: selectedCountry?.id,
         city_id: '',
@@ -102,10 +104,10 @@ const Checkout = () => {
 
 
     const addCuoponCode = async (id, cuoponCode) => {
-        // if (!cuoponCode) {
-        //     showToast("error", "Please enter a valid coupon code", "error");
-        //     return;
-        // }
+        if (!cuoponCode) {
+            return;
+        }
+        setLoading(true);
         try {
             const req = {
                 code: cuoponCode,
@@ -113,24 +115,17 @@ const Checkout = () => {
             }
             const response = await checkOutServices.addCoupon(req);
             if (response && response.status === 200) {
-                await fetchCheckOut();
                 showToast("success", response.message, "success");
                 setCuoponCode("");
+                setLoading(false);
             }
 
         } catch (error) {
             console.log(error, "error in addCuoponCode");
+            setLoading(false);
 
         }
     }
-
-    useEffect(() => {
-        addCuoponCode();
-    }, []);
-
-
-
-
 
 
     // balling address
@@ -165,7 +160,7 @@ const Checkout = () => {
         }
     };
 
-
+    const storedUserInfo = JSON.parse(localStorage.getItem("USER") || "{}");
     const validationSchema = Yup.object({
         name: Yup.string().required('Name is required'),
         mobile_number: Yup.string().required('Phone number is required'),
@@ -295,14 +290,14 @@ const Checkout = () => {
             }
 
 
-            if (response.data.results.length > 0) {
+            if (response?.data?.results?.length > 0) {
                 setInitialValues((pri) => ({
                     ...pri,
-                    address: response.data.results[0].formatted_address,
+                    address: response?.data?.results[0]?.formatted_address,
                 }));
-                setAddress(response.data.results[0].formatted_address);
-                const isValidCity = city.find(
-                    (cityName) => cityName.city_name === newCity
+                setAddress(response?.data?.results[0]?.formatted_address);
+                const isValidCity = city?.find(
+                    (cityName) => cityName?.city_name === newCity
                 );
                 if (isValidCity) {
                     setInitialValues((prev) => ({
@@ -333,18 +328,18 @@ const Checkout = () => {
             "city_id": selectedCity,
             "area_id": selectedArea,
             country_code: selectedCountry?.country_code,
-            // "token": "",
+            "token": "",
             "is_coupon_applied": cuoponCode,
             "email": values?.email,
-            // "customer_id": "",
+            customer_id: storedUserInfo.id.toString(),
             "applied_coupon": cuoponCode,
             cart_id: cart_id,
-            // "version": "36",
+            "version": "36",
             "userName": values?.name,
             "currency": "AED",
             country_id: selectedCountry?.id,
             "mobile_number": values?.mobile_number,
-            // "is_wallet": "0",
+            "is_wallet": "0",
             "area_name": values?.area_name,
             "appartment": values?.appartment,
             "building": values?.building,
@@ -354,44 +349,39 @@ const Checkout = () => {
         try {
             const response = await checkOutServices.checkOut(checkoutData);
             if (response && response.status === 200) {
-                console.log(response.data, "response ==========================");
                 setCheckOut(response?.data);
             }
         } catch (error) {
             console.log(error);
         }
     };
-
-
-    useEffect(() => {
-        fetchCheckOut();
-    }, []);
-
-
+    const { getCart } = useCartStore();
     const addPlaceOrder = async () => {
+        if (!checkout?.checkout_id) {
+            console.error("checkout_id is undefined");
+            return;
+        }
+
+        const encryptedCheckoutId = encryptData(checkout?.checkout_id?.toString());
+
         try {
             const req = {
-                "order_delivery_type_id": "standard",
-                "checkout_id": checkout?.checkout_id,
-                "payment_method": "1"
-            }
+                order_delivery_type_id: "standard",
+                checkout_id: encryptedCheckoutId,
+                payment_method: 1,
+                customer_id: storedUserInfo.id.toString(),
+            };
             const response = await placeOrderApi.placeOreder(req);
             if (response && response.status === 200) {
-                console.log(response.data, "response ==========================");
+                await getCart();
                 showToast("success", response.message, "success");
+                navigate("/checkout/success");
             }
-
         } catch (error) {
             console.log(error, "error in place order");
         }
-    }
+    };
 
-
-    useEffect(() => {
-        addPlaceOrder();
-    }, []);
-
-    console.log(checkout?.checkout_id, "checkout checkout_id");
 
     return (
         <Box sx={{ my: 4, py: 4 }}>
@@ -442,7 +432,7 @@ const Checkout = () => {
                                             backgroundColor: '#bb1f2a',
                                         }}
                                     >
-                                        Apply Coupon
+                                        {loading ? <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}><CircularProgress color="#333" size={24} /> Loading... </Box> : "Apply Coupon"}
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -612,14 +602,9 @@ const Checkout = () => {
                                         sx={{ my: 2 }}
                                     />
 
-                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: { sm: 2, xs: 0 } }}>
-                                        <Button fullWidth onClick={handleOpenShhipingAddress} variant="contained" sx={{ marginBottom: 2, backgroundColor: "#bb1f2a" }}>
-                                            Shipping Address
-                                        </Button>
-                                        <Button onClick={handleOpen} fullWidth variant="contained" sx={{ marginBottom: 2, backgroundColor: "#bb1f2a" }}>
-                                            Others
-                                        </Button>
-                                    </Box>
+                                    <Button fullWidth onClick={handleOpenShhipingAddress} variant="contained" sx={{ marginBottom: 2, backgroundColor: "#bb1f2a" }}>
+                                        Shipping Address
+                                    </Button>
                                     {/* shhipping address */}
                                     <Dialog disablePortal
                                         MenuProps={{ disableScrollLock: true }} open={opneShhipingAddress} onClose={handleCloseShhipingAddress} fullWidth maxWidth="md">
@@ -970,9 +955,9 @@ const Checkout = () => {
                                 </Grid>
                             </Grid>
                             <hr />
-                            {checkout?.item?.map((product) => (
+                            {checkout?.item?.map((product, index) => (
                                 <Grid
-                                    key={product?.id}
+                                    key={index}
                                     container
                                     spacing={2}
                                     sx={{
@@ -1016,15 +1001,15 @@ const Checkout = () => {
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
                                 <Typography>Flat Shipping Rate</Typography>
-                                <Typography>{checkout?.shipping_cost} AED</Typography>
+                                <Typography>{checkout?.convert_shipping_cost} AED</Typography>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 2 }}>
                                 <Typography>Cod Processing Fee</Typography>
-                                <Typography>{checkout?.shipping_cost} AED</Typography>
+                                <Typography>{checkout?.convert_processing_fees} AED</Typography>
                             </Box>
                             {/* Discount and Shipping Info Section */}
                             {
-                                !cuoponCode && <Grid item xs={12} sx={{ mt: 2 }}>
+                                cuoponCode && <Grid item xs={12} sx={{ mt: 2 }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', my: 1, alignItems: 'center' }}>
                                         <Typography variant="body1" sx={{ fontWeight: 600 }}>
                                             Discount: <span style={{ color: '#00a859' }}>{checkout?.discount_percentage} %</span>
@@ -1127,7 +1112,6 @@ const Checkout = () => {
                             <Grid item xs={12} sx={{ my: 2 }}>
                                 <Button onClick={async () => {
                                     await addPlaceOrder();
-                                    navigate("/checkout/success");
                                 }} fullWidth variant="contained" sx={{ backgroundColor: "#bb1f2a" }}>
                                     Place Order
                                 </Button>

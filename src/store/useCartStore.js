@@ -108,12 +108,12 @@ const useCartStore = create((set, get) => ({
     }
   },
 
-  incrementQuantity: async (product_variant_id, maxQuantity, quantity) => {
+  incrementQuantity: async (product_variant_id, quantity) => {
     const qty = quantity;
     const params = {
       customer_id: "",
       cart_id: localStorage.getItem("cart_id"),
-      product_variant_id,
+      product_variant_id: product_variant_id,
       qty: qty.toString(),
       type: "online",
       branch_id: "",

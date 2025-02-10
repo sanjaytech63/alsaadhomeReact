@@ -28,7 +28,6 @@ const contactLocations = [
 
 
 const Contact = () => {
-
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(Boolean);
     

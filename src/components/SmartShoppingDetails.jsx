@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Breadcrumbs, Rating, IconButton, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Breadcrumbs, Rating, IconButton, Table, TableBody, TableRow, TableCell, CardMedia } from '@mui/material';
 import tamaraImg from "../../src/assets/tamara.svg";
 import { Add, Remove } from '@mui/icons-material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -9,6 +9,9 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Carousel from "react-multi-carousel";
 import { useLocation } from 'react-router-dom';
+import { smartShoppingApi } from '../utils/services/smartShopping';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { keyframes } from "@mui/system";
 
 const product = {
     name: "Luri Duvet Cover Bedding Set 3 PCS - Single Multi Color",
@@ -99,7 +102,7 @@ const SmartShoppingDetails = () => {
     const [selectedColor, setSelectedColor] = useState(products[0].colorOptions[0]);
     const [selectedImage, setSelectedImage] = useState(product.images[0].src);
     const [count, setCount] = useState(1);
-
+    const [data, setData] = useState(null);
 
     const incrementChange = () => {
         if (count !== 10) {
@@ -119,65 +122,42 @@ const SmartShoppingDetails = () => {
         { id: 3, label: 'Throw', position: { top: { sm: 200, xs: 90 }, right: { sm: 110, xs: 50 } } },
     ];
 
-    const styles = {
-        tagContainer: {
-            position: 'absolute',
-            width: '100%',
-            top: 0,
-        },
-        tagWrapper: {
-            position: 'absolute',
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'row',
-            height: 100,
-            justifyContent: 'space-between',
-
-        },
-        tagTextContainer: {
-            backgroundColor: '#fff',
-            borderRadius: 10,
-            paddingX: 1,
-            paddingY: 0.5,
-            alignItems: 'center',
-            alignSelf: 'flex-start',
-        },
-        tagText: {
-            color: '#000',
-            fontSize: 12,
-            fontWeight: '600',
-        },
-        circle: {
-            backgroundColor: 'rgba(255, 255, 255, 0.67)',
-            width: 30,
-            height: 30,
-            borderRadius: '50%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            display: 'flex',
-            animation: 'pulse 0.8s infinite ease-in-out',
-        },
-        circle1: {
-            backgroundColor: 'rgba(255, 255, 255, 0.67)',
-            width: 20,
-            height: 20,
-            borderRadius: '50%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            display: 'flex',
-        },
-        circle2: {
-            width: 10,
-            height: 10,
-            borderRadius: '50%',
-            borderWidth: 2,
-            backgroundColor: 'rgb(230 221 221 / 67%)',
-            display: 'flex',
-        },
-    };
-
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter(x => x);
+
+    const ping = keyframes`
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+`;
+
+    const smartShoppingDetails = async () => {
+        try {
+            const requestBody = {
+                engagement_id: "5"
+            }
+            const response = await smartShoppingApi.smartShoppingDetailsApi(requestBody);
+            if (response && response.status === 200) {
+                setData(response.data);
+            }
+        } catch (error) {
+            console.log(error, "error in smart shopping smartShoppingDetails ")
+        }
+    }
+
+    useEffect(() => {
+        smartShoppingDetails();
+    }, []);
+
     return (
         <div style={{ minHeight: "100vh" }}>
             <Box sx={{ bgcolor: "#f7f8fb" }}>
@@ -225,36 +205,121 @@ const SmartShoppingDetails = () => {
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <Box sx={{ width: '100%', position: 'relative' }}>
                                 <img
-                                    src={selectedImage}
+                                    src={data?.image || "https://www.k12digest.com/wp-content/uploads/2024/03/1-3-550x330.jpg"}
                                     loading="lazy"
-                                    alt="Selected"
-                                    style={{ width: '100%', borderRadius: '8px' }}
+                                    alt={data?.title || "Image"}
+                                    style={{ width: data?.background_image_width, height: data?.background_image_height, }}
                                 />
-                                <Box sx={styles.tagContainer}>
-                                    {tags.map(tag => (
-                                        <Box key={tag.id} sx={[styles.tagWrapper, tag.position]}>
-                                            <Box sx={styles.circle}>
-                                                <Box sx={styles.circle1}>
-                                                    <Box sx={styles.circle2} />
+
+                                <Box
+                                    sx={{
+                                        position: "absolute",
+                                        top: 0,
+                                        left: 0,
+                                        width: "95%",
+                                        height: "100%",
+                                    }}
+                                >
+                                    <Box sx={{ position: "absolute", top: "2%", left: "0%", cursor: "pointer", zIndex: 1, width: "35px", height: "35px", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#fff", borderRadius: "50%", boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.2)" }}>
+                                        Piker
+                                    </Box>
+
+
+                                    <Box sx={{ position: "absolute", top: "2%", right: "0%", cursor: "pointer", zIndex: 1, width: "35px", height: "35px", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#fff", borderRadius: "50%", boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.2)" }}>
+                                        <VisibilityIcon />
+                                    </Box>
+
+                                    {data?.tag_list?.map((tag, index) => (
+                                        <Box
+                                            key={index}
+                                            sx={{
+                                                position: "absolute",
+                                                top: `${tag.top}%`,
+                                                left: `${tag.left}%`,
+                                                display: "flex",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            {/* Pointer Icon */}
+                                            <Box
+                                                sx={{
+                                                    width: "20px",
+                                                    height: "20px",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    backgroundColor: "rgba(255, 255, 255, 0.8)",
+                                                    borderRadius: "50%",
+                                                    boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.2)",
+                                                }}
+                                            >
+                                                <Box
+                                                    sx={{
+                                                        position: "relative",
+                                                        width: "20px",
+                                                        height: "20px",
+                                                    }}
+                                                >
+                                                    {/* Pulsing Effect */}
+                                                    <Box
+                                                        sx={{
+                                                            position: "absolute",
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            borderRadius: "50%",
+                                                            backgroundColor: "rgba(255, 0, 0, 0.5)",
+                                                            animation: `${ping} 1.5s cubic-bezier(0, 0, 0.2, 1) infinite`,
+                                                        }}
+                                                    />
+
+                                                    {/* Static Center Dot */}
+                                                    <Box
+                                                        sx={{
+                                                            width: "10px",
+                                                            height: "10px",
+                                                            backgroundColor: "red",
+                                                            borderRadius: "50%",
+                                                            position: "absolute",
+                                                            top: "50%",
+                                                            left: "50%",
+                                                            transform: "translate(-50%, -50%)",
+                                                        }}
+                                                    />
                                                 </Box>
                                             </Box>
-                                            <Box sx={{ flexDirection: 'column', position: 'absolute', top: 35, left: 20, display: 'flex' }}>
-                                                <Box sx={{ height: 17, width: 2, backgroundColor: '#000', alignSelf: 'flex-end', color: '#000' }} />
-                                                <Box sx={{ height: 2, width: 40, backgroundColor: '#000', color: '#000' }} />
-                                            </Box>
-                                            {/* Uncomment for arrow image */}
-                                            {/* <img src={ImagePath.arrowUp} style={{ height: 30, width: 40 }} alt="arrow" /> */}
-                                            <Box sx={styles.tagTextContainer}>
-                                                <Typography variant="body2" sx={styles.tagText}>
-                                                    {tag.label}
-                                                </Typography>
-                                            </Box>
+
+                                            {/* Line Connector */}
+                                            <Box
+                                                sx={{
+                                                    width: "30px",
+                                                    height: "2px",
+                                                    backgroundColor: "black",
+                                                    marginLeft: "4px",
+                                                }}
+                                            ></Box>
+
+                                            {/* Tag Label */}
+                                            <Typography
+                                                variant="body2"
+                                                sx={{
+                                                    fontSize: "12px",
+                                                    fontWeight: "bold",
+                                                    color: "#000",
+                                                    backgroundColor: "#fff",
+                                                    padding: "6px 12px",
+                                                    borderRadius: "16px",
+                                                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+                                                }}
+                                            >
+                                                {tag.text}
+                                            </Typography>
                                         </Box>
                                     ))}
                                 </Box>
+
                             </Box>
 
-                            <Box sx={{ width: '100%', position: 'relative', mt: 2 }}>
+                            {/* <Box sx={{ width: '100%', position: 'relative', mt: 2 }}>
                                 <Carousel
                                     additionalTransfrom={0}
                                     autoPlaySpeed={3000}
@@ -301,7 +366,7 @@ const SmartShoppingDetails = () => {
                                         </Box>
                                     ))}
                                 </Carousel>
-                            </Box>
+                            </Box> */}
                         </Box>
                     </Grid>
                     {/* Product Details */}
@@ -496,7 +561,7 @@ const SmartShoppingDetails = () => {
                     </Grid>
                 </Grid>
             </Container>
-        </div>
+        </div >
     );
 };
 

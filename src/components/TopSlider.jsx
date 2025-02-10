@@ -46,14 +46,14 @@ const TopSlider = ({ topSlider }) => {
               }
               rtl={isRTL}
             >
-              {topSlider && topSlider.length > 0 ? (
-                topSlider.map((item) => (
+              {topSlider && topSlider?.length > 0 ? (
+                topSlider?.map((item) => (
                   <Link
                     className="link-none"
                     to={{
-                      pathname: `/category/${item.slug}`,
+                      pathname: `/category/${item?.slug}`,
                     }}
-                    key={item.id}
+                    key={item?.id}
                     draggable={false}
                     sx={{
                       display: "flex",
@@ -75,8 +75,9 @@ const TopSlider = ({ topSlider }) => {
                       <Box
                         component="img"
                         draggable="false"
-                        src={item.image}
-                        alt={item.name}
+                        // src={item?.image}
+                        src="https://cdn.pixabay.com/photo/2024/05/22/00/01/product-8779366_1280.jpg"
+                        alt={item?.name}
                         loading="lazy"
                         className={!matchesSM ? "rounded-circle" : "rounded-3"}
                         sx={{
@@ -105,7 +106,7 @@ const TopSlider = ({ topSlider }) => {
                           "&:hover": { color: "#bb1f2a" },
                         }}
                       >
-                        {item.name}
+                        {item?.name}
                       </Typography>
                     </Box>
                   </Link>

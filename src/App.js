@@ -23,11 +23,10 @@ function App() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
+  {isLoading && <Loading />}
   return (
     <div>
       <RouterProvider router={router} />
-      {isLoading && <Loading />}
       <Zoom in={showScroll}>
         <Fab
           onClick={scrollToTop}

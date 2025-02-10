@@ -13,7 +13,7 @@ const BlogCards = ({ blog, loading }) => {
         <>
             <Card sx={{ borderRadius: '8px', mb: 4, cursor: "pointer", boxShadow: "0 0 7px rgb(0 0 0 / 10%)" }}>
                 <Box position="relative">
-                    <Link to={`/blog/${blog.slug}`} className='link-none' >
+                    <Link to={`/blog/${blog?.slug}`} className='link-none' >
                         <CardMedia
                             sx={{
                                 minHeight: "233px", maxHeight: "233px", objectFit: "cover", overflow: "hidden",
@@ -24,8 +24,9 @@ const BlogCards = ({ blog, loading }) => {
                                 },
                             }}
                             component="img"
-                            image={blog.image}
-                            alt={blog.title_blog}
+                            // src={blog?.image}
+                            src='https://cdn.pixabay.com/photo/2021/11/25/09/27/building-6822998_1280.jpg'
+                            alt={blog?.title_blog}
                             loading="lazy"
                         />
                     </Link>
@@ -43,7 +44,7 @@ const BlogCards = ({ blog, loading }) => {
                         },
                         textOverflow: "ellipsis", color: "#292b2c", fontWeight: 600, fontSize: { xs: "12px", sm: "15px" },
                     }} component="div">
-                        {blog.title_blog}
+                        {blog?.title_blog}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', lineHeight: "28px", }}>
                         <CalendarTodayIcon sx={{ fontSize: '16px', mr: 1, color: 'gray' }} />
@@ -63,7 +64,7 @@ const BlogCards = ({ blog, loading }) => {
                         whiteSpace: "normal",
                         textOverflow: "ellipsis"
                     }} variant="body2">
-                        {blog.short_description}
+                        {blog?.short_description}
                     </Typography>
                 </CardContent>
             </Card>

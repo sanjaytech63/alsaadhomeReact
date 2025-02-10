@@ -1,10 +1,18 @@
-import React, { useRef } from 'react';
-import { Grid, TextField, Button, Box, Typography, Card, CardContent, } from '@mui/material';
+import React, { useRef, useState } from 'react';
+import { Grid, TextField, Button, Box, Typography, Card, CardContent, CircularProgress, } from '@mui/material';
 import { Email, Phone } from '@mui/icons-material';
 import ReCAPTCHA from "react-google-recaptcha";
 import { showToast } from '../utils/helper';
-const ContactForm = ({ location }) => {
+import contactApi from '../utils/services/contactEnquireServices';
+const ContactForm = () => {
     const recaptcha = useRef(null);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+    });
+    const [loading, setLoading] = useState(false);
 
     const handleRecaptcha = (e) => {
         e.preventDefault();
@@ -12,6 +20,44 @@ const ContactForm = ({ location }) => {
             showToast("error", 'Please Submit Captcha')
         }
     }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData, [name]: value
+        }))
+    }
+
+
+    const contactEnquiry = async () => {
+        try {
+            setLoading(true);
+            const reqBody = {
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                message: formData.message
+            }
+            const responses = await contactApi.contactEnquire(reqBody);
+            if (responses.status === 200) {
+                setLoading(false)
+                showToast("success", responses.message, "success");
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    message: ''
+                })
+            }
+
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+    }
+
+
+
     return (
         <Box component="form">
             <Typography variant="h4" sx={{ my: 2, color: "#292b2c", fontWeight: "600", fontSize: "1.5rem", fontFamily: "Roboto, sans-serif" }}>
@@ -27,19 +73,16 @@ const ContactForm = ({ location }) => {
                     <Box>
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
-                                <TextField fullWidth label="Your Name" required />
+                                <TextField name='name' type='text' onChange={handleChange} value={formData?.name} fullWidth label="Your Name" required />
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <TextField fullWidth label="Enter Email Email" required />
+                                <TextField name='email' type='email' onChange={handleChange} value={formData?.email} fullWidth label="Enter Email Email" required />
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <TextField fullWidth label="Mobile Number" required />
+                                <TextField name='phone' type='number' onChange={handleChange} value={formData.phone} fullWidth label="Mobile Number" required />
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <TextField fullWidth label="Subject" required />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField fullWidth multiline rows={4} label="Message" required />
+                                <TextField name='message' type='text' onChange={handleChange} value={formData.message} fullWidth label="Message" required />
                             </Grid>
                             {/* reCAPTCHA (Placeholder) */}
                             <Grid item xs={12} sx={{ px: 2 }}>
@@ -47,15 +90,18 @@ const ContactForm = ({ location }) => {
                                     <ReCAPTCHA style={{ width: "100%" }}
                                         sitekey="6LfKpIYqAAAAAI_nzop_agYeyO6ef0IzEogfESd-"
                                         ref={recaptcha}
-                                        o
                                     />
                                 </form>
                             </Grid>
                             {/* Submit Button */}
                             <Grid item xs={12}>
                                 <Box display="flex" alignSelf={"start"}>
-                                    <Button variant="contained" sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}>
-                                        Send Message
+                                    <Button variant="contained" onClick={contactEnquiry} sx={{ px: 4, py: 1.5, background: "#bb1f2a", color: "#fff" }}>
+                                        {loading ? <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}>
+                                            <CircularProgress color="#333" size={24} />
+                                            Loading...
+                                        </Box>
+                                            : "Send Message"}
                                     </Button>
                                 </Box>
                             </Grid>

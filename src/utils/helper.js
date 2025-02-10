@@ -5,45 +5,45 @@ import { cardApi } from './services/cartSevices';
 const displayedMessages = new Set();
 
 export const showToast = (type, message) => {
-    if (displayedMessages.has(message)) {
-      // Prevent duplicate toast
-      return;
-    }
+  if (displayedMessages.has(message)) {
+    // Prevent duplicate toast
+    return;
+  }
 
-    // Add the message to the set
-    displayedMessages.add(message);
+  // Add the message to the set
+  displayedMessages.add(message);
 
-    switch (type) {
-        case 'success':
-            toast.success(message, {
-                autoClose: 3000,
-            });
-            break;
-        case 'error':
-            toast.error(message, {
-                autoClose: 3000,
-            });
-            break;
-        case 'info':
-            toast.info(message, {
-                autoClose: 3000,
-            });
-            break;
-        case 'warning':
-            toast.warn(message, {
-                autoClose: 3000,
-            });
-            break;
-        default:
-            toast(message, {
-                autoClose: 3000,
-            });
-            break;
-    }
+  switch (type) {
+    case 'success':
+      toast.success(message, {
+        autoClose: 3000,
+      });
+      break;
+    case 'error':
+      toast.error(message, {
+        autoClose: 3000,
+      });
+      break;
+    case 'info':
+      toast.info(message, {
+        autoClose: 3000,
+      });
+      break;
+    case 'warning':
+      toast.warn(message, {
+        autoClose: 3000,
+      });
+      break;
+    default:
+      toast(message, {
+        autoClose: 3000,
+      });
+      break;
+  }
 
-     setTimeout(() => {
-       displayedMessages.delete(message);
-     }, 3000);
+  setTimeout(() => {
+    displayedMessages.delete(message);
+  }, 3000);
 
 };
 
@@ -68,4 +68,4 @@ export const mergeCartCall = async (id, userId) => {
   }
 };
 
- export const google_place_api = "AIzaSyAu37ksjrUkMbG03AltrktENJDkkrrXlF8";
+export const google_place_api = "AIzaSyAu37ksjrUkMbG03AltrktENJDkkrrXlF8";

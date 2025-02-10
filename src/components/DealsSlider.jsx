@@ -64,7 +64,8 @@ const DealsSlider = ({ DealsSlider }) => {
                                 <Box
                                     component="img"
                                     draggable="false"
-                                    src={item.image}
+                                    // src={item.image}
+                                    src="https://cdn.pixabay.com/photo/2024/05/22/00/01/product-8779375_1280.jpg"
                                     loading="lazy"
                                     alt={item.banner_name}
                                     sx={{

@@ -1,1051 +1,872 @@
-import React, { useState, useMemo, Suspense, useCallback, useEffect } from "react";
-import {
-    Container,
-    Grid,
-    Box,
-    useTheme,
-    useMediaQuery,
-} from "@mui/material";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-// import tamaraImg from "../../src/assets/tamara.svg";
-import jsonData from "../../src/blogData.json";
-import data from "../../src/product.json";
+import React, { useCallback, useEffect, useState } from "react";
+import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Card, CardContent, useTheme, Breadcrumbs, Rating, IconButton, CardMedia, useMediaQuery, } from "@mui/material";
+import { FaFacebookF } from "react-icons/fa";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import Carousel from "react-multi-carousel";
+import ReactImageMagnify from "react-image-magnify";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { MdOutlineArrowBackIos } from "react-icons/md";
+import { MdOutlineArrowForwardIos } from "react-icons/md";
+import BundleProductsModal from "./BundleProductsModal";
+// import ReviewSection from "./ProductDeatailsCom/ReviewSection";
 import { homeApi } from "../utils/services/homeServices";
 import Loading from "./Loading";
+import parse from 'html-react-parser';
 import useCartStore from "../store/useCartStore";
-
-const BreadcrumbsProductDetails = React.lazy(() =>
-    import("./ProductDeatailsCom/BreadcrumbsProductDetails")
-);
-const ImageMagnify = React.lazy(() =>
-    import("./ProductDeatailsCom/ImageMagnify")
-);
-const ImageSlider = React.lazy(() =>
-    import("./ProductDeatailsCom/ImageSlider")
-);
-const BundleCard = React.lazy(() =>
-    import("./ProductDeatailsCom/BundleCard")
-);
-const ReviewSection = React.lazy(() =>
-    import("./ProductDeatailsCom/ReviewSection")
-);
-const RecommendedProducts = React.lazy(() =>
-    import("./RecommendedProducts")
-);
-const MainInfoCom = React.lazy(() =>
-    import("./ProductDeatailsCom/ProductInfo/MainInfoCom")
-);
-const BundleProductsModal = React.lazy(() =>
-    import("./BundleProductsModal")
-);
-
+import { useWishListStore } from "../store/useWishListStore";
+import { FavoriteBorder } from "@mui/icons-material";
+import { showToast } from "../utils/helper";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import RecommendedProducts from "./RecommendedProducts";
+import { WhatsappShareButton, WhatsappIcon, FacebookShareButton, FacebookIcon } from "react-share";
 const ProductDetails = () => {
-    const imageSlider = data.productDetailsImage;
-    const bundleCard = data.bundleCard;
-    const bundleProduct = jsonData.bundleProduct;
-    const productInfo = data.productInfo;
-    const products = data.product;
+  const { isItemInCart, addToCart, incrementQuantity, decrementQuantity } = useCartStore();
+  const { toggleWishlist, isItemInWishlist } = useWishListStore();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [productData, setProductData] = useState([]);
+  const [sizes, setSizes] = useState([])
+  const [selectedColorIndex, setSelectedColorIndex] = useState('')
+  const [selectedProductInfo, setSelectedProductInfo] = useState(null);
+  const [details, setDetails] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [images, setImages] = useState([]);
+  const [bundleDetails, setBundleDetails] = useState(null);
+  const [getDetails, setGetDetails] = useState(null);
+  const [getSimilar, setGetSimilar] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [loading,setLoading] = useState(false)
 
-    const [open, setOpen] = useState(false);
-    const [selectedColor, setSelectedColor] = useState(imageSlider.src);
-    const [selectedImage, setSelectedImage] = useState(imageSlider.src);
-    const [count, setCount] = useState(0);
+  const handleSelectImage = (src) => {
+    setSelectedImage(src);
+  };
 
-    const theme = useTheme();
-    const matchesSM = useMediaQuery(theme.breakpoints.down("lg"));
-    const isRTL = theme.direction === "rtl";
+  const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down("lg"));
+  const isRTL = theme.direction === "rtl";
+  const pathname = useLocation().pathname;
+  const location = useLocation();
+  const pathnames = location.pathname.split("/").filter((x) => x);
 
-    const incrementChange = () => setCount((prev) => (prev < 8 ? prev + 1 : prev));
-    const decrementChange = () => setCount((prev) => (prev > 1 ? prev - 1 : prev));
+  const CustomButtonGroup = ({ next, previous }) => (
+    <>
+      <Box
+        onClick={isRTL ? next : previous}
+        sx={{
+          position: "absolute",
+          top: "48%",
+          left: "0px",
+          display: "flex",
+          justifyContent: "space-between",
+          transform: "translateY(-50%)",
+          direction: isRTL ? "rtl" : "ltr",
+          cursor: "pointer",
+        }}
+      >
+        <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
+      </Box>
+      <Box
+        onClick={isRTL ? previous : next}
+        sx={{
+          position: "absolute",
+          top: "48%",
+          right: "0px",
+          display: "flex",
+          justifyContent: "space-between",
+          transform: "translateY(-50%)",
+          direction: isRTL ? "rtl" : "ltr",
+          cursor: "pointer",
+        }}
+      >
+        <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
+      </Box>
+    </>
+  );
 
-    const navigate = useNavigate();
-    const handleNavigate = () => navigate(`/products/1234`);
-    const pathname = useLocation().pathname;
+  // api call logic
+  const storedUserInfo = JSON.parse(localStorage.getItem("USER") || "{}");
+  const [searchParams] = useSearchParams();
+  const productId = searchParams.get("product_id");
+  const variantId = searchParams.get("variant_id");
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const [recentlyProducts, setRecentlyProducts] = useState([]);
-    const [proDetails, setProDetails] = useState(null);
-    const [variants, setVariants] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const { product_slug } = useParams();
-    const [selectedProductInfo, setSelectedProductInfo] = useState(null);
-     const { addToCart } = useCartStore();
+  const handleIncrement = (variant_id, maxQuantity) => {
+    let inCart = isItemInCart(variant_id);
+    if (maxQuantity > selectedQuantity) {
+      if (inCart) {
+        setSelectedQuantity(selectedQuantity + 1)
+        debouncedIncrement(productId, selectedQuantity);
+      } else {
+        setSelectedQuantity(selectedQuantity + 1)
+      }
+    } else {
+      showToast("error", 'You have booked all the products');
+    }
+  };
+
+  const handleDecrement = (variant_id, maxQuantity) => {
+    if (selectedQuantity > 1 && selectedQuantity <= maxQuantity) {
+      let inCart = isItemInCart(variant_id);
+      if (inCart) {
+        setSelectedQuantity(selectedQuantity - 1)
+        debouncedDecrement(variant_id, selectedQuantity);
+
+      } else {
+        setSelectedQuantity(selectedQuantity - 1)
+      }
+    } else {
+      showToast("error", 'Minimum quantity is 1');
+    }
+  };
+
+  const debouncedIncrement = useCallback((productI, qty) => {
+    incrementQuantity(productI, qty);
+  }, []);
 
 
-    const memoizedProps = useMemo(
-        () => ({
-            imageSlider,
-            selectedImage,
-            setSelectedImage,
-            bundleCard,
-            isRTL,
-            handleNavigate,
-            pathname,
-            matchesSM,
-            products,
-            productInfo,
-            selectedColor,
-            setSelectedColor,
-            count,
-            incrementChange,
-            decrementChange,
-        }),
-        [
-            imageSlider,
-            selectedImage,
-            setSelectedImage,
-            bundleCard,
-            isRTL,
-            pathname,
-            matchesSM,
-            products,
-            productInfo,
-            selectedColor,
-            count,
-        ]
-    );
+  const debouncedDecrement = useCallback((productI, qty) => {
+    decrementQuantity(productI, qty);
+  }, []);
 
-    const fetchProductDetails = useCallback(async () => {
-        setLoading(true);
-        try {
-            const requestBody = {
-              product_slug: product_slug,
-            };
-            const response = await homeApi.getProductDetails(requestBody);
-            if (response && response.status === 200) {
-                setLoading(false);
-                const variants = response?.data?.variants || [];
-                const selectedProductInfo = variants
-                  .flatMap((infoD) => infoD.items)
-                  .find(
-                    (info) =>
-                      info.slug === product_slug
-                  );
-                const variant = variants.find((variant) =>
-                  variant.items?.some((item) => item.slug === product_slug)
-                );
-                console.log("selectedProductInfo", selectedProductInfo);
-                selectedProductInfo && setSelectedProductInfo(selectedProductInfo);
-                setRecentlyProducts(response?.data?.similar_product || []);
-                setProDetails(response?.data?.product_details || {});
-                setVariants(variants);
+  const handleColorChange = (variantId, variantItemInfo) => {
+    if (selectedColorIndex === variantId) return;
+    const selectedVariant = variantItemInfo?.items?.find(item => item?.variant_id?.toString() === variantId);
+    if (selectedVariant) {
+      setSelectedProductInfo(selectedVariant);
+      if (variantItemInfo?.sizes) {
+        setSizes(variantItemInfo?.sizes || []);
+      }
+      setSelectedColorIndex(variantId);
+      fetchProductDetails(variantId);
+    }
+  };
+
+  const fetchProductDetails = useCallback(async (variantId) => {
+    setLoading(true)
+    if (!productId || !variantId) {
+      return;
+    }
+    try {
+      const res = await homeApi.getProductDetails({
+        customer_id: storedUserInfo.id.toString(),
+        product_id: productId,
+        variant_id: variantId,
+      });
+      if (res && res.status === 200) {
+        setLoading(false)
+        const variants = res?.data?.variants || [];
+        setImages(variants);
+        if (variants && variants?.length > 0) {
+          const flattenedItems = variants.flatMap((variant) => variant?.items || []);
+          const selectedProductInfo = flattenedItems.find((info) =>
+            info?.variant_id?.toString() === variantId?.toString()
+          );
+          if (selectedProductInfo) {
+            const selectedVariantIndex = variants?.findIndex((variant) =>
+              variant.items.some((item) => item?.variant_id?.toString() === selectedProductInfo?.variant_id?.toString())
+            );
+            const selectedSizes = variants[selectedVariantIndex]?.sizes || [];
+            setSizes(selectedSizes);
+            setSelectedColorIndex(selectedProductInfo?.variant_id);
+            setProductData(variants);
+            if (selectedProductInfo) {
+              setSelectedProductInfo(selectedProductInfo);
             }
-        } catch (err) {
-            console.error("Error fetching data:", err);
-        } finally {
-            setLoading(false);
+            setDetails(res?.data?.product_details);
+          } else {
+            console.error('Selected variant not found');
+          }
+        } else {
+          console.error('No variants found');
         }
-    }, [product_slug]);
-
-    useEffect(() => {
-        fetchProductDetails();
-    }, [fetchProductDetails]);
-
-    if (loading) {
-        return <Loading />;
+      }
     }
-
-    if (error) {
-        return <p>{error}</p>;
+    catch (err) {
+      console.error("Error fetching data:", err);
+      setLoading(false)
     }
+  }, [productId]);
 
-    return (
-        <div style={{ minHeight: "100vh", margin: 0, padding: 0 }}>
-            <Suspense fallback={<Loading />}>
-                <BreadcrumbsProductDetails />
-                <Container maxWidth="lg" sx={{ my: 5 }}>
-                    <Grid container spacing={4}>
-                        {/* Image Gallery */}
-                        <Grid item xs={12} sm={6}>
-                            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                <ImageMagnify selectedImage={memoizedProps.selectedImage} />
-                                <ImageSlider {...memoizedProps} />
-                                <BundleCard {...memoizedProps} />
-                            </Box>
-                        </Grid>
-                        {/* Product Info */}
-                        <MainInfoCom {...memoizedProps} proDetails={proDetails} variants={variants}/>
-                    </Grid>
-                    <ReviewSection />
-                    <BundleProductsModal bundleProduct={bundleProduct} open={open} handleClose={handleClose} />
-                </Container>
-                <div className="mb-5">
-                    <RecommendedProducts title="Related Products" productsCard={recentlyProducts} addToCart={addToCart}/>
+
+  useEffect(() => {
+    if (variantId) {
+      fetchProductDetails(variantId);
+    }
+  }, [fetchProductDetails, variantId]);
+
+
+  const fetchBundleDetails = async () => {
+    setLoading(true)
+    let reqBody = {
+      bundle_product_variant_id: variantId
+    };
+
+    try {
+      const res = await homeApi.getBundleProductItemApi(reqBody);
+      if (res && res.status === 200) {
+        setLoading(false)
+        setBundleDetails(res?.data);
+      }
+    } catch (error) {
+      console.error("Error fetching bundle details:", error);
+      setLoading(false)
+    }
+  };
+
+
+  useEffect(() => {
+    fetchBundleDetails();
+  }, []);
+
+  const getBunddel = async () => {
+    setLoading(true)
+    let reqBody = {
+      product_id: 13683,
+      product_variant_id: 30290
+    };
+
+    try {
+      const res = await homeApi.getBundleProductApi(reqBody);
+      if (res && res.status === 200) {
+        setLoading(false)
+        setGetDetails(res?.data);
+      }
+    } catch (error) {
+      console.error("Error fetching bundle details:", error);
+    }
+  };
+
+
+  useEffect(() => {
+    getBunddel();
+  }, []);
+
+
+  const getSimilarProduct = async () => {
+    setLoading(true)
+    let reqBody = {
+      customer_id: storedUserInfo.id.toString(),
+      product_id: productId,
+      product_varaint_id: variantId
+    };
+
+    try {
+      const res = await homeApi.getSimilarProductApi(reqBody);
+      if (res && res.status === 200) {
+        setLoading(false)
+        setGetSimilar(res?.data);
+      }
+    } catch (error) {
+      console.error("Error fetching bundle details:", error);
+    }
+  };
+
+
+  useEffect(() => {
+    getSimilarProduct();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  return (
+    <div style={{ minHeight: "100vh", margin: "0px", padding: "0px" }}>
+      <Box sx={{ bgcolor: "#f7f8fb" }}>
+        <Container>
+          <Box sx={{
+            display: { xs: "block", sm: "flex" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            py: "30px",
+            px: "14px",
+            fontFamily: "Roboto",
+          }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                color: "#292b2c",
+                textTransform: "capitalize",
+                fontWeight: "700",
+                fontSize: { sm: "24px", xs: "16px" },
+              }}
+            >
+              Product Detail
+            </Typography>
+            <Breadcrumbs
+              sx={{ cursor: "pointer", fontSize: "14px" }}
+              separator={<NavigateNextIcon fontSize="small" />}
+              aria-label="breadcrumb"
+            >
+              <Link
+                className="breadcrumbs-hover"
+                style={{
+                  color: "#292b2c",
+                  textDecoration: "none",
+                  textTransform: "capitalize",
+                  marginRight: "8px",
+                }}
+                to="/"
+              >
+                Home
+              </Link>
+              {pathnames.map((segment, index) => {
+                const path = `/${pathnames.slice(0, index + 1).join("/")}`;
+                const isLast = index === pathnames?.length - 1;
+
+                return isLast ? (
+                  <span
+                    key={index}
+                    style={{ color: "#6c757d", textTransform: "capitalize" }}
+                  >
+                    {decodeURIComponent(segment)}
+                  </span>
+                ) : (
+                  <Link
+                    className="breadcrumbs-hover"
+                    key={index}
+                    style={{
+                      color: "#292b2c",
+                      textDecoration: "none",
+                      textTransform: "capitalize",
+                    }}
+                    to={path}
+                  >
+                    {decodeURIComponent(segment)}
+                  </Link>
+                );
+              })}
+            </Breadcrumbs>
+          </Box>
+        </Container>
+      </Box>
+      <Container maxWidth="lg" sx={{ my: 5 }}>
+        <Grid container spacing={4}>
+          {/* Image Gallery */}
+          <Grid item xs={12} sm={6}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+
+              <Box sx={{ width: "100%", position: "relative" }}>
+                <div className="image-magnifier-container">
+                  {selectedImage && (
+                    <ReactImageMagnify
+                      {...{
+                        smallImage: {
+                          alt: "Product Image",
+                          isFluidWidth: true,
+                          // src: selectedImage,
+                          // srcSet: selectedImage,
+                          src: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg",
+                          srcSet: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg",
+                          className: "magnify-image",
+                        },
+                        largeImage: {
+                          isFluidWidth: true,
+                          src: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg",
+                          width: 1200,
+                          height: 800,
+                        },
+                        enlargedImageContainerStyle: {
+                          zIndex: 10,
+                        },
+                        enlargedImagePosition: "over",
+                      }}
+                    />
+                  )}
+
                 </div>
-            </Suspense>
-        </div>
-    );
+              </Box>
+              <Box sx={{ minHeight: "150px", mt: 3, width: "100%" }}>
+                <Carousel
+                  rtl={isRTL}
+                  additionalTransfrom={0}
+                  autoPlaySpeed={3000}
+                  renderButtonGroupOutside
+                  arrows={false}
+                  draggable
+                  infinite={true}
+                  responsive={{
+                    desktop: { breakpoint: { max: 3000, min: 1024 }, items: 3 },
+                    laptop: { breakpoint: { max: 1024, min: 768 }, items: 3 },
+                    tablet: { breakpoint: { max: 768, min: 464 }, items: 3 },
+                    mobile: { breakpoint: { max: 464, min: 0 }, items: 2 },
+                  }}
+                  showDots={false}
+                  slidesToSlide={1}
+                  swipeable
+                  customButtonGroup={matchesSM ? <CustomButtonGroup /> : null}
+                >
+                  {images?.length > 0 &&
+                    images.map((v, i) =>
+                      v?.items?.length > 0 &&
+                      v?.items?.map((item, j) =>
+                        item?.photo?.length > 0 &&
+                        item?.photo?.map((p, k) => (
+                          <Box sx={{ px: 1 }} key={p?.id || `${i}-${j}-${k}`}>
+                            <CardMedia onClick={() => handleSelectImage(p?.src)}
+                              component="img"
+                              src={
+                                p?.src ||
+                                "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000"
+                              }
+                              alt="Product Image"
+                              loading="lazy"
+                              sx={{
+                                width: { sm: "170px", xs: "100%" },
+                                height: { sm: "110px", xs: "80px" },
+                                objectFit: "cover",
+                                cursor: "pointer",
+                                borderRadius: "8px",
+                                border: selectedImage === p?.src ? "2px solid #bb1f2a" : "none",
+                              }}
+                            />
+                          </Box>
+                        ))
+                      )
+                    )}
+                </Carousel>
+              </Box>
+              {selectedProductInfo?.is_bundle_product === true && (
+                <>
+                  <Box sx={{ pt: 4, pb: 4, width: "100%" }}>
+                    <Box sx={{ mb: 3 }}>
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          color: "#292b2c",
+                          textTransform: "capitalize",
+                          fontWeight: "700",
+                          fontSize: { sm: "24px", xs: "16px" },
+                        }}
+                      >
+                        {selectedProductInfo?.is_bundle_product === true && pathname === "/prodect/1234"
+                          ? "Full Set / Package"
+                          : "Product"}
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        boxShadow: "0 0 7px rgb(0 0 0 / 10%)",
+                        borderRadius: "8px",
+                        overflow: "hidden",
+                        position: "relative",
+                      }}
+                    >
+                      <Carousel
+                        rtl={isRTL}
+                        additionalTransfrom={0}
+                        autoPlaySpeed={3000}
+                        renderButtonGroupOutside
+                        arrows={false}
+                        draggable
+                        infinite={true}
+                        responsive={{
+                          desktop: {
+                            breakpoint: { max: 3000, min: 1024 },
+                            items: 1,
+                          },
+                          laptop: {
+                            breakpoint: { max: 1024, min: 768 },
+                            items: 1,
+                          },
+                          tablet: {
+                            breakpoint: { max: 768, min: 464 },
+                            items: 1,
+                          },
+                          mobile: {
+                            breakpoint: { max: 464, min: 0 },
+                            items: 1,
+                          },
+                        }}
+                        showDots={false}
+                        slidesToSlide={1}
+                        swipeable
+                        customButtonGroup={
+                          !matchesSM ? <CustomButtonGroup /> : null
+                        }
+                      >
+                        {bundleDetails?.length > 0 &&
+                          bundleDetails?.map((product, index) => (
+                            <Box key={index} sx={{ px: 1 }}>
+                              <Card
+                                sx={{
+                                  width: "100%",
+                                  boxShadow: "none",
+                                  alignItems: "center",
+                                  padding: { xs: "0px", sm: "12px" },
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                  }}
+                                >
+                                  <CardMedia
+                                    component="img"
+                                    sx={{
+                                      width: { xs: "100px", sm: "150px" },
+                                      height: { xs: "100px", sm: "150px" },
+                                      objectFit: "cover",
+                                      borderRadius: "8px",
+                                      mr: { sm: 2 },
+                                    }}
+                                    image={product?.image}
+                                    alt={"bundel item"}
+                                  />
+                                  <CardContent
+                                    sx={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      flexGrow: 1,
+                                      p: { xs: 1, sm: 2 },
+                                    }}
+                                  >
+                                    <Typography
+                                      variant="h6"
+                                      sx={{
+                                        textTransform: "capitalize",
+                                        mt: 1,
+                                        fontWeight: 600,
+                                        fontSize: { sm: "16px", xs: "14px" },
+                                        "&:hover": { color: "#bb1f2a" },
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      {product?.title}
+                                    </Typography>
+                                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                      <Typography sx={{ fontSize: "20px", fontWeight: "600", color: "#bb1f2a" }}>
+                                        {product?.sale_price > 0 ? product?.sale_price : product?.list_price} AED
+                                      </Typography>
+
+                                      {product?.sale_price > 0 && (
+                                        <Typography sx={{ fontSize: "14px", color: "gray", textDecoration: "line-through" }}>
+                                          {product?.list_price} AED
+                                        </Typography>
+                                      )}
+
+                                      {product?.discount_label && (
+                                        <Typography sx={{ fontSize: "14px", color: "green" }}>
+                                          {product?.discount_label}
+                                        </Typography>
+                                      )}
+                                    </Box>
+                                  </CardContent>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+                                    <Button onClick={() => {
+                                      if (!isItemInCart(product?.product_variant_id)) {
+                                        addToCart(product?.product_variant_id);
+                                      }
+                                    }}
+                                      sx={{ py: 1, px: 1, mr: 2, background: "#bb1f2a" }}
+                                      variant="contained"
+                                    >
+                                      <IconButton
+                                        aria-label="add to cart"
+                                      >
+                                        <svg
+                                          className="cart-svg-icon"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="16"
+                                          height="16"
+                                          viewBox="0 0 1024 1024"
+                                        >
+                                          <path
+                                            fill="#fff"
+                                            d="M1015.66 284a31.82 31.82 0 0 0-25.999-13.502h-99.744L684.78 95.666c-24.976-24.976-65.52-25.008-90.495 0L392.638 270.498h-82.096l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.568 0-31.776 14.224-31.776 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.592 23.183h431.968c13.408 0 25.376-8.4 29.904-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM639.537 140.93l152.032 129.584H487.457zm175.488 579.263H429.538L328.386 334.065h616.096zm-63.023 127.936c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80"
+                                          />
+                                        </svg>
+                                      </IconButton>  {isItemInCart(product?.product_variant_id) ? "Go to Cart" : "Add to Cart"}
+                                    </Button>
+                                  </Box>
+                                </Box>
+                              </Card>
+                            </Box>
+                          ))}
+                      </Carousel>
+                    </Box>
+                  </Box>
+                </>
+              )}
+            </Box>
+          </Grid>
+
+          {/* Product Details */}
+          <Grid item xs={12} md={6}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+              <Box >
+                <Typography sx={{ fontSize: "20px", fontWeight: "600" }}>
+                  {selectedProductInfo?.title}
+                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1 }}>
+                  <Box>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <Typography sx={{ fontSize: "20px", fontWeight: "600", color: "#bb1f2a" }}>
+                        {selectedProductInfo?.sale_price > 0 ? selectedProductInfo?.sale_price : selectedProductInfo?.list_price} AED
+                      </Typography>
+
+                      {selectedProductInfo?.sale_price > 0 && (
+                        <Typography sx={{ fontSize: "14px", color: "gray", textDecoration: "line-through" }}>
+                          {selectedProductInfo?.list_price} AED
+                        </Typography>
+                      )}
+
+                      {selectedProductInfo?.discount_label && (
+                        <Typography sx={{ fontSize: "14px", color: "green" }}>
+                          {selectedProductInfo?.discount_label}
+                        </Typography>
+                      )}
+                    </Box>
+                    <Typography sx={{ fontSize: "14px", color: "#687188" }}>(Price includes VAT)</Typography>
+                  </Box>
+                  <Box>
+                    <Rating defaultValue={selectedProductInfo?.average_rating} />
+                    <Typography sx={{ fontSize: "14px", fontWeight: "600", color: "#687188" }}>
+                      ({selectedProductInfo?.total_rating}) ratings
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                {productData?.length > 0 &&
+                  productData.map((variantItemInfo, index) => {
+                    const { pattern, colors, sizes } = variantItemInfo;
+                    const patternVariantId = pattern?.variant_id?.toString();
+                    const colorVariantId = colors?.variant_id?.toString();
+
+                    const isActive =
+                      selectedProductInfo?.variant_id?.toString() === patternVariantId ||
+                      selectedProductInfo?.variant_id?.toString() === colorVariantId ||
+                      selectedColorIndex?.toString() === sizes?.find(size => size.variant_id?.toString() === selectedProductInfo?.variant_id?.toString());
+
+                    const borderColor = isActive ? '#bb1f2a' : '#fff';
+
+                    if (patternVariantId) {
+                      return (
+                        <Box key={index} onClick={() => handleColorChange(patternVariantId, variantItemInfo)}
+                          sx={{
+                            cursor: 'pointer',
+                            display: "flex"
+                          }}
+                        >
+                          <CardMedia
+                            component={"img"}
+                            src={variantItemInfo?.pattern?.image}
+                            sx={{
+                              width: 35,
+                              height: 35,
+                              borderRadius: '50%',
+                              border: isActive ? `solid 1px ${borderColor}` : `solid 1px ${borderColor}`,
+                            }}
+                          />
+                        </Box>
+                      );
+                    } else {
+                      return (
+                        <Box key={index} onClick={() => handleColorChange(colorVariantId, variantItemInfo)}  >
+                          {variantItemInfo?.colors?.all_colors?.map((c, i) => (
+                            <Box key={i} sx={{ backgroundColor: c, width: "25px", height: "25px", borderRadius: "50%", border: isActive ? `solid 1px ${borderColor}` : `solid 1px ${borderColor}`, }} />
+                          ))}
+                        </Box>
+                      );
+                    }
+                  })}
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 3 }}>
+              <Typography sx={{}} >
+                {selectedProductInfo?.size_group_name}:
+              </Typography>
+              <Typography sx={{ px: 1, py: 0.5, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "4px", cursor: "pointer" }} >
+                {selectedProductInfo?.size_name}
+              </Typography>
+            </Box>
+
+            <Typography sx={{ color: "green", fontSize: "18px", fontWeight: "bold", my: 2 }}>
+              {selectedProductInfo?.quantity > 0 ? `Available: ${selectedProductInfo?.quantity} Items in stock` : "Out of Stock"}
+            </Typography>
+
+            <Box>
+              <Typography sx={{ color: "gray", fontSize: "15px", my: 2 }}>
+                Check your area to see if we delivery this product on same day or tomorrow. <span style={{ color: "#bb1b2a" }}>Select Area</span>
+              </Typography>
+              {
+                selectedProductInfo?.is_bundle_product === true && (
+                  <Box onClick={handleOpen} sx={{ display: "flex", justifyContent: "flex-end" }} >
+                    <ErrorOutlineIcon />
+                  </Box>
+                )
+              }
+
+            </Box>
+
+            <Box display="flex" flexDirection="column" my={2} alignItems="flex-start" gap={4}>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Box sx={{ backgroundColor: "#eee", px: 1, cursor: "pointer" }} onClick={() => handleDecrement(selectedProductInfo?.variant_id, selectedProductInfo?.quantity)} size="small" >
+                  -
+                </Box>
+                {
+                  selectedQuantity
+                }
+                {productData && (
+                  <Box sx={{ backgroundColor: "#eee", px: 1, cursor: "pointer" }} onClick={() => handleIncrement(selectedProductInfo?.variant_id, selectedProductInfo?.quantity)}>
+                    +
+                  </Box>
+                )}
+
+                <Button onClick={() => {
+                  if (!isItemInCart(variantId)) {
+                    addToCart(variantId);
+                  }
+                }}
+                  sx={{ py: 1, px: 4, background: "#bb1f2a" }}
+                  variant="contained"
+                >
+                  <IconButton
+                    aria-label="add to cart"
+                  >
+                    <svg
+                      className="cart-svg-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 1024 1024"
+                    >
+                      <path
+                        fill="#fff"
+                        d="M1015.66 284a31.82 31.82 0 0 0-25.999-13.502h-99.744L684.78 95.666c-24.976-24.976-65.52-25.008-90.495 0L392.638 270.498h-82.096l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.568 0-31.776 14.224-31.776 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.592 23.183h431.968c13.408 0 25.376-8.4 29.904-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM639.537 140.93l152.032 129.584H487.457zm175.488 579.263H429.538L328.386 334.065h616.096zm-63.023 127.936c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80"
+                      />
+                    </svg>
+                  </IconButton>  {isItemInCart(variantId) ? "Go to Cart" : "Add to Cart"}
+                </Button>
+                <IconButton
+
+                  sx={{
+                    p: { xs: "4px", sm: "8px" },
+                    boxShadow: 2,
+                    "& .css-1wdc28j-MuiSvgIcon-root": {
+                      fill: isItemInWishlist(variantId)
+                        ? "#fff"
+                        : "#292b2c",
+                      transition: "fill 0.3s ease",
+                    },
+
+                    backgroundColor: isItemInWishlist(variantId)
+                      ? "#bb1f2a"
+                      : "#fff",
+                    ":hover": {
+                      backgroundColor: "#bb1f2a",
+                      color: "#fff !important",
+                      transition: "fill 0.3s ease",
+                    },
+                    color: "#292b2c",
+                  }}
+                  onClick={() => toggleWishlist(productId, variantId)}
+                  aria-label="add to wishlist"
+                >
+                  <FavoriteBorder sx={{ fontSize: "1rem" }} />
+                </IconButton>
+              </Box>
+            </Box>
+            <hr />
+            <Box sx={{ mb: 4 }}>
+              <Box sx={{ color: "#687188" }}>
+                <List sx={{ p: 0 }}>
+                  <ListItem sx={{ p: 0 }}>
+                    <Typography variant="body1">
+                      <strong >Model:</strong> {details?.group}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ p: 0 }}>
+                    <Typography variant="body1">
+                      <strong >Brand:</strong>
+                      <Link
+                        sx={{ textDecoration: "none", color: "#292b2c" }}
+                        color="primary"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        {` ${details?.brand}`}
+                      </Link>
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ p: 0 }}>
+                    <Typography variant="body1">
+                      <strong >Tags: </strong>
+                      {details?.tags}
+                    </Typography>
+                  </ListItem>
+                </List>
+                {/* Share Section */}
+                <Box mt={3} display="flex" gap={2} alignItems="center">
+                  <Typography variant="body1" color="#687188">
+                    <strong>Share:</strong>
+                  </Typography>
+                  <FacebookShareButton url={window.location.href} >
+                    <FacebookIcon size={32} round />
+                  </FacebookShareButton>
+
+                  <WhatsappShareButton
+                    url={window.location.href}
+                    separator=":: "
+                  >
+                    <WhatsappIcon size={32} round />
+                  </WhatsappShareButton>
+                </Box>
+              </Box>
+            </Box>
+            {selectedProductInfo?.description?.toString() && (
+              <Box sx={{ color: "#687188" }}>
+                <Typography>{parse(selectedProductInfo?.description?.toString())}</Typography>
+              </Box>
+            )}
+
+          </Grid>
+        </Grid>
+        {/* <ReviewSection /> */}
+        {
+          selectedProductInfo?.is_bundle_product === true && (
+            <BundleProductsModal
+              bundleProduct={getDetails}
+              open={open}
+              handleClose={handleClose}
+            />
+          )
+        }
+
+        <Box>
+          {
+            getSimilar?.length > 0 && (
+              <RecommendedProducts
+                productsCard={getSimilar}
+                title={"Realted Produts"}
+              />
+            )
+          }
+        </Box>
+
+      </Container>
+    </div >
+  );
 };
 
-export default React.memo(ProductDetails);
-
-
-
-
-// import React, { useState } from "react";
-// import {
-//     Container,
-//     Grid,
-//     Typography,
-//     Button,
-//     Box,
-//     List,
-//     ListItem,
-//     Link,
-//     Card,
-//     CardContent,
-//     useTheme,
-//     Breadcrumbs,
-//     Rating,
-//     IconButton,
-//     Table,
-//     TableBody,
-//     TableRow,
-//     TableCell,
-//     CardMedia,
-//     useMediaQuery,
-// } from "@mui/material";
-// import tamaraImg from "../../src/assets/tamara.svg";
-// import { Add, Remove } from "@mui/icons-material";
-// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-// import { MdOutlineShoppingCart } from "react-icons/md";
-// import { FaFacebookF } from "react-icons/fa";
-// import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-// import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-// import Carousel from "react-multi-carousel";
-// import RecommendedProducts from "./RecommendedProducts";
-// import ReactImageMagnify from "react-image-magnify";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import { MdOutlineArrowBackIos } from "react-icons/md";
-// import { MdOutlineArrowForwardIos } from "react-icons/md";
-// import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-// import jsonData from "../../src/blogData.json";
-// import BundleProductsModal from "./BundleProductsModal";
-// import data from "../../src/product.json";
-// import ReviewSection from "./ProductDeatailsCom/ReviewSection";
-
-// const ProductDetails = () => {
-//     const recommendedSliderData = data.recommendedSlider;
-//     const imageSlider = data.productDetailsImage;
-//     const bundleCard = data.bundleCard;
-//     const bundleProduct = jsonData.bundleProduct;
-//     const productInfo = data.productInfo;
-//     const products = data.product;
-//     const [open, setOpen] = useState(false);
-//     const handleOpen = () => setOpen(true);
-//     const handleClose = () => setOpen(false);
-//     const [selectedColor, setSelectedColor] = useState(imageSlider.src);
-//     const [selectedImage, setSelectedImage] = useState(imageSlider.src);
-//     const [count, setCount] = useState(0);
-//     const theme = useTheme();
-//     const matchesSM = useMediaQuery(theme.breakpoints.down("lg"));
-//     const isRTL = theme.direction === "rtl";
-//     const incrementChange = () => {
-//         if (count !== 8) {
-//             setCount(count + 1);
-//         }
-//     };
-
-//     const dicrementChange = () => {
-//         if (count !== 1) {
-//             setCount(count - 1);
-//         }
-//     };
-//     const CustomButtonGroup = ({ next, previous }) => (
-//         <>
-//             <Box
-//                 onClick={isRTL ? next : previous}
-//                 sx={{
-//                     position: "absolute",
-//                     top: "48%",
-//                     left: "0px",
-//                     display: "flex",
-//                     justifyContent: "space-between",
-//                     transform: "translateY(-50%)",
-//                     direction: isRTL ? "rtl" : "ltr",
-//                     cursor: "pointer",
-//                 }}
-//             >
-//                 <MdOutlineArrowBackIos fontSize={"20px"} color="#222" />
-//             </Box>
-//             <Box
-//                 onClick={isRTL ? previous : next}
-//                 sx={{
-//                     position: "absolute",
-//                     top: "48%",
-//                     right: "0px",
-//                     display: "flex",
-//                     justifyContent: "space-between",
-//                     transform: "translateY(-50%)",
-//                     direction: isRTL ? "rtl" : "ltr",
-//                     cursor: "pointer",
-//                 }}
-//             >
-//                 <MdOutlineArrowForwardIos fontSize={"20px"} color="#222" />
-//             </Box>
-//         </>
-//     );
-
-//     const navigate = useNavigate();
-//     const handleNavigate = () => {
-//         navigate(`/products/1234`);
-//     };
-
-//     const pathname = useLocation().pathname;
-
-//     const location = useLocation();
-//     const pathnames = location.pathname.split("/").filter((x) => x);
- 
-
-//     return (
-//         <div style={{ minHeight: "100vh", margin: "0px", padding: "0px" }}>
-//             <Box sx={{ bgcolor: "#f7f8fb" }}>
-//                 <Container>
-//                     <Box
-//                         sx={{
-//                             display: { xs: "block", sm: "flex" },
-//                             justifyContent: "space-between",
-//                             alignItems: "center",
-//                             py: "30px",
-//                             px: "14px",
-//                             fontFamily: "Roboto",
-//                         }}
-//                     >
-//                         <Typography
-//                             variant="h5"
-//                             sx={{
-//                                 color: "#292b2c",
-//                                 textTransform: "capitalize",
-//                                 fontWeight: "700",
-//                                 fontSize: { sm: "24px", xs: "16px" },
-//                             }}
-//                         >
-//                             Product Detail
-//                         </Typography>
-//                         <Breadcrumbs
-//                             sx={{ cursor: "pointer", fontSize: "14px" }}
-//                             separator={<NavigateNextIcon fontSize="small" />}
-//                             aria-label="breadcrumb"
-//                         >
-//                             <Link
-//                                 className="breadcrumbs-hover"
-//                                 style={{
-//                                     color: "#292b2c",
-//                                     textDecoration: "none",
-//                                     textTransform: "capitalize",
-//                                     marginRight: "8px",
-//                                 }}
-//                                 to="/"
-//                             >
-//                                 Home
-//                             </Link>
-//                             {pathnames.map((segment, index) => {
-//                                 const path = `/${pathnames.slice(0, index + 1).join("/")}`;
-//                                 const isLast = index === pathnames.length - 1;
-
-//                                 return isLast ? (
-//                                     <span
-//                                         key={index}
-//                                         style={{ color: "#6c757d", textTransform: "capitalize" }}
-//                                     >
-//                                         {decodeURIComponent(segment)}
-//                                     </span>
-//                                 ) : (
-//                                     <Link
-//                                         className="breadcrumbs-hover"
-//                                         key={index}
-//                                         style={{
-//                                             color: "#292b2c",
-//                                             textDecoration: "none",
-//                                             textTransform: "capitalize",
-//                                         }}
-//                                         to={path}
-//                                     >
-//                                         {decodeURIComponent(segment)}
-//                                     </Link>
-//                                 );
-//                             })}
-//                         </Breadcrumbs>
-//                     </Box>
-//                 </Container>
-//             </Box>
-//             <Container maxWidth="lg" sx={{ my: 5 }}>
-//                 <Grid container spacing={4}>
-//                     {/* Image Gallery */}
-//                     <Grid item xs={12} sm={6}>
-//                         <Box
-//                             sx={{
-//                                 display: "flex",
-//                                 flexDirection: "column",
-//                                 alignItems: "center",
-//                             }}
-//                         >
-//                             <Box sx={{ width: "100%", position: "relative" }}>
-//                                 <div
-//                                     className="image-magnifier-container"
-//                                     style={{
-//                                         width: "100%",
-//                                         height: "300px",
-//                                         maxWidth: "800px",
-//                                         margin: "0 auto",
-//                                         overflow: "hidden",
-//                                     }}
-//                                 >
-//                                     <ReactImageMagnify
-//                                         {...{
-//                                             smallImage: {
-//                                                 alt: "Wristwatch by Ted Baker London",
-//                                                 isFluidWidth: true,
-//                                                 src:
-//                                                     selectedImage ||
-//                                                     "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12096/thumb/161722603193.jpg",
-//                                                 srcSet: selectedImage,
-
-//                                                 className: "magnify-image",
-//                                             },
-//                                             largeImage: {
-//                                                 isFluidWidth: true,
-//                                                 src:
-//                                                     selectedImage ||
-//                                                     "https://staging-alsaadhome.s3.us-east-2.amazonaws.com/uploads/products/12096/thumb/161722603193.jpg",
-//                                                 width: 1200,
-//                                                 height: 800,
-//                                             },
-//                                             enlargedImageContainerStyle: {
-//                                                 zIndex: 10,
-//                                             },
-//                                             enlargedImagePosition: "over",
-//                                         }}
-//                                     />
-//                                 </div>
-//                             </Box>
-
-//                             <Box sx={{ width: "100%", position: "relative", mt: 2 }}>
-//                                 <Carousel
-//                                     additionalTransfrom={0}
-//                                     autoPlaySpeed={3000}
-//                                     renderButtonGroupOutside
-//                                     arrows={true}
-//                                     draggable={true}
-//                                     infinite={true}
-//                                     responsive={{
-//                                         desktop: {
-//                                             breakpoint: { max: 3000, min: 1024 },
-//                                             items: 3,
-//                                         },
-//                                         laptop: {
-//                                             breakpoint: { max: 1024, min: 768 },
-//                                             items: 3,
-//                                         },
-//                                         tablet: {
-//                                             breakpoint: { max: 768, min: 464 },
-//                                             items: 3,
-//                                         },
-//                                         mobile: {
-//                                             breakpoint: { max: 464, min: 0 },
-//                                             items: 2,
-//                                         },
-//                                     }}
-//                                     showDots={false}
-//                                     slidesToSlide={3}
-//                                     swipeable={true}
-//                                 >
-//                                     {imageSlider &&
-//                                         imageSlider.map((img, idx) => (
-//                                             <Box sx={{ px: 1 }} key={idx}>
-//                                                 <CardMedia
-//                                                     component="img"
-//                                                     src={img.src}
-//                                                     alt={img.alt}
-//                                                     loading="lazy"
-//                                                     onClick={() => setSelectedImage(img.src)}
-//                                                     sx={{
-//                                                         width: { sm: "170px", xs: "100%" },
-//                                                         height: { sm: "110px", xs: "80px" },
-//                                                         objectFit: "cover",
-//                                                         cursor: "pointer",
-//                                                         border:
-//                                                             selectedImage === img.src
-//                                                                 ? "2px solid #bb1f2a"
-//                                                                 : "1px solid gray",
-//                                                         borderRadius: "8px",
-//                                                     }}
-//                                                 />
-//                                             </Box>
-//                                         ))}
-//                                 </Carousel>
-//                             </Box>
-//                             <Box sx={{ pt: 4, pb: 4, width: "100%" }}>
-//                                 <Box sx={{ mb: 3 }}>
-//                                     <Typography
-//                                         variant="h5"
-//                                         sx={{
-//                                             color: "#292b2c",
-//                                             textTransform: "capitalize",
-//                                             fontWeight: "700",
-//                                             fontSize: { sm: "24px", xs: "16px" },
-//                                         }}
-//                                     >
-//                                         {pathname === "/prodect/1234"
-//                                             ? "Full Set / Package"
-//                                             : "Product"}
-//                                     </Typography>
-//                                 </Box>
-//                                 <Box
-//                                     sx={{
-//                                         boxShadow: "0 0 7px rgb(0 0 0 / 10%)",
-//                                         borderRadius: "8px",
-//                                         overflow: "hidden",
-//                                         position: "relative",
-//                                     }}
-//                                 >
-//                                     <Carousel
-//                                         rtl={isRTL}
-//                                         additionalTransfrom={0}
-//                                         autoPlaySpeed={3000}
-//                                         renderButtonGroupOutside
-//                                         arrows={false}
-//                                         draggable
-//                                         infinite={true}
-//                                         responsive={{
-//                                             desktop: {
-//                                                 breakpoint: { max: 3000, min: 1024 },
-//                                                 items: 1,
-//                                             },
-//                                             laptop: {
-//                                                 breakpoint: { max: 1024, min: 768 },
-//                                                 items: 1,
-//                                             },
-//                                             tablet: {
-//                                                 breakpoint: { max: 768, min: 464 },
-//                                                 items: 1,
-//                                             },
-//                                             mobile: {
-//                                                 breakpoint: { max: 464, min: 0 },
-//                                                 items: 1,
-//                                             },
-//                                         }}
-//                                         showDots={false}
-//                                         slidesToSlide={1}
-//                                         swipeable
-//                                         customButtonGroup={
-//                                             !matchesSM ? <CustomButtonGroup /> : null
-//                                         }
-//                                     >
-//                                         {bundleCard.map((product) => (
-//                                             <Box sx={{ px: 1 }}>
-//                                                 <Card
-//                                                     sx={{
-//                                                         width: "100%",
-//                                                         boxShadow: "none",
-//                                                         alignItems: "center",
-//                                                         padding: { xs: "0px", sm: "12px" },
-//                                                     }}
-//                                                 >
-//                                                     <Box
-//                                                         sx={{
-//                                                             display: "flex",
-//                                                             alignItems: "center",
-//                                                             justifyContent: "space-between",
-//                                                         }}
-//                                                     >
-//                                                         {/* Product Image */}
-//                                                         <CardMedia
-//                                                             component="img"
-//                                                             sx={{
-//                                                                 width: { xs: "100px", sm: "150px" },
-//                                                                 height: { xs: "100px", sm: "150px" },
-//                                                                 objectFit: "cover",
-//                                                                 borderRadius: "8px",
-//                                                                 mr: { sm: 2 },
-//                                                             }}
-//                                                             image={product.imgSrc}
-//                                                             alt={product.title}
-//                                                         />
-//                                                         {/* Product Details */}
-//                                                         <CardContent
-//                                                             sx={{
-//                                                                 display: "flex",
-//                                                                 flexDirection: "column",
-//                                                                 flexGrow: 1,
-//                                                                 p: { xs: 1, sm: 2 },
-//                                                             }}
-//                                                         >
-//                                                             <Typography
-//                                                                 onClick={handleNavigate}
-//                                                                 variant="h6"
-//                                                                 sx={{
-//                                                                     textTransform: "capitalize",
-//                                                                     mt: 1,
-//                                                                     fontWeight: 600,
-//                                                                     fontSize: { sm: "16px", xs: "14px" },
-//                                                                     "&:hover": { color: "#bb1f2a" },
-//                                                                     cursor: "pointer",
-//                                                                 }}
-//                                                             >
-//                                                                 {product.title}
-//                                                             </Typography>
-//                                                             <Typography
-//                                                                 variant="body2"
-//                                                                 color="text.secondary"
-//                                                                 sx={{ mb: 1 }}
-//                                                             >
-//                                                                 {product.offerTitle}
-//                                                             </Typography>
-
-//                                                             {product.discount && (
-//                                                                 <Box sx={{ display: "flex", gap: 1 }}>
-//                                                                     <Typography
-//                                                                         sx={{
-//                                                                             fontWeight: 600,
-//                                                                             color: "#bb1f2a",
-//                                                                             fontSize: { xs: "14px", sm: "16px" },
-//                                                                         }}
-//                                                                     >
-//                                                                         {product.originalPrice} AED
-//                                                                     </Typography>
-//                                                                     <Typography sx={{ color: "green" }}>
-//                                                                         ({product.discount}% off)
-//                                                                     </Typography>
-//                                                                 </Box>
-//                                                             )}
-
-//                                                             <Typography
-//                                                                 variant="body2"
-//                                                                 color="text.secondary"
-//                                                                 sx={{
-//                                                                     textTransform: "capitalize",
-//                                                                     mt: 1,
-//                                                                     textDecoration: "line-through",
-//                                                                 }}
-//                                                             >
-//                                                                 {product.price} AED
-//                                                             </Typography>
-//                                                         </CardContent>
-//                                                     </Box>
-//                                                     {/* Add to Cart Button */}
-//                                                     <Box
-//                                                         sx={{
-//                                                             display: "flex",
-//                                                             justifyContent: "flex-end",
-//                                                             alignItems: "center",
-//                                                         }}
-//                                                     >
-//                                                         <Button
-//                                                             variant="contained"
-//                                                             sx={{
-//                                                                 color: "#fff",
-//                                                                 width: "fit-content",
-//                                                                 height: "fit-content",
-//                                                                 background: "#bb1f2a",
-//                                                                 textTransform: "capitalize",
-//                                                                 textAlign: "right",
-//                                                                 padding: { xs: "2px 5px", sm: "5px 10px" },
-//                                                             }}
-//                                                         >
-//                                                             Go to cart
-//                                                         </Button>
-//                                                     </Box>
-//                                                 </Card>
-//                                             </Box>
-//                                         ))}
-//                                     </Carousel>
-//                                 </Box>
-//                             </Box>
-//                         </Box>
-//                     </Grid>
-
-//                     {/* Product Details */}
-//                     <Grid item xs={12} md={6}>
-//                         <Box sx={{}}>
-//                             {products.map((product) => (
-//                                 <Box key={product.id}>
-//                                     <Typography
-//                                         variant="h6"
-//                                         sx={{
-//                                             fontSize: { sm: "1.4rem", xs: "1rem", fontWeight: 600 },
-//                                         }}
-//                                     >
-//                                         {product.title}
-//                                     </Typography>
-//                                     {/* Price & Rating */}
-//                                     <Box
-//                                         sx={{ display: { sm: "flex", xs: "block" } }}
-//                                         alignItems="center"
-//                                         justifyContent="space-between"
-//                                         mt={2}
-//                                     >
-//                                         <Box>
-//                                             <Box display="flex" alignItems="center">
-//                                                 <Typography
-//                                                     sx={{
-//                                                         fontSize: { sm: "1.2rem", xs: "1rem" },
-//                                                         fontWeight: "500",
-//                                                         color: "#bb1f2a",
-//                                                     }}
-//                                                 >
-//                                                     {product.price} AED
-//                                                 </Typography>
-//                                                 <Typography
-//                                                     sx={{
-//                                                         fontSize: { sm: "1.2rem", xs: "1rem" },
-//                                                         fontWeight: "500",
-//                                                         color: "green",
-//                                                         textDecoration: "line-through",
-//                                                         mx: 2,
-//                                                     }}
-//                                                 >
-//                                                     {product.oldPrice} AED
-//                                                 </Typography>
-//                                                 <Typography
-//                                                     sx={{
-//                                                         fontSize: { sm: "1.2rem", xs: "1rem" },
-//                                                         fontWeight: "500",
-//                                                         color: "green",
-//                                                     }}
-//                                                 >
-//                                                     {product.discount}
-//                                                 </Typography>
-//                                             </Box>
-//                                             <Typography variant="body2" color="textSecondary" mt={1}>
-//                                                 {product.vatIncluded ? "(Price includes VAT)" : ""}
-//                                             </Typography>
-//                                         </Box>
-//                                         <Box>
-//                                             <Rating disabled value={product.ratings} />
-//                                             <Typography component="legend">
-//                                                 ({product.ratings}) ratings
-//                                             </Typography>
-//                                         </Box>
-//                                     </Box>
-
-//                                     {/* Color Options */}
-//                                     <Box mt={2}>
-//                                         <Typography variant="body1" fontWeight="bold">
-//                                             Color
-//                                         </Typography>
-//                                         <Box display="flex" gap={1} mt={1}>
-//                                             {product.colorOptions.map((color, index) => (
-//                                                 <img
-//                                                     key={index}
-//                                                     src={color}
-//                                                     loading="lazy"
-//                                                     alt={`color-${index}`}
-//                                                     style={{
-//                                                         width: 50,
-//                                                         height: 50,
-//                                                         border:
-//                                                             selectedColor === color
-//                                                                 ? "2px solid #bb1f2a"
-//                                                                 : "1px solid #ccc",
-//                                                         borderRadius: "50%",
-//                                                         cursor: "pointer",
-//                                                     }}
-//                                                     onClick={() => setSelectedColor(color)}
-//                                                 />
-//                                             ))}
-//                                         </Box>
-//                                     </Box>
-
-//                                     {/* Size */}
-//                                     <Box mt={2} display="flex" alignItems="center" gap={2}>
-//                                         <Typography variant="body1" color="#687188">
-//                                             Size
-//                                         </Typography>
-//                                         <Typography
-//                                             sx={{
-//                                                 backgroundColor: "#bb1f2a",
-//                                                 color: "#fff",
-//                                                 padding: "3px 10px",
-//                                                 borderRadius: "4px",
-//                                             }}
-//                                         >
-//                                             {product.size}
-//                                         </Typography>
-//                                     </Box>
-
-//                                     {/* Availability */}
-//                                     <Box mt={2}>
-//                                         <Typography
-//                                             variant="body1"
-//                                             sx={{ color: "#687188" }}
-//                                             fontWeight="bold"
-//                                         >
-//                                             Availability:{" "}
-//                                             <span style={{ color: "green" }}>
-//                                                 {product.availability} Item
-//                                                 {product.availability > 1 ? "s" : ""} in stock
-//                                             </span>
-//                                         </Typography>
-//                                     </Box>
-
-//                                     {/* Delivery Text */}
-//                                     <Box mt={2}>
-//                                         <Typography variant="body2" color="#687188">
-//                                             {product.deliveryText}{" "}
-//                                             <Typography
-//                                                 variant="body2"
-//                                                 color="#bb1f2a"
-//                                                 component="span"
-//                                             >
-//                                                 Select Area
-//                                             </Typography>
-//                                         </Typography>
-//                                     </Box>
-//                                     {pathname === "/prodect/1234" ? (
-//                                         <Box sx={{ my: 2 }}>
-//                                             <CardMedia
-//                                                 component="img"
-//                                                 src="https://al-saad-home.mo.cloudinary.net/uploads/products/13090/thumb/pomegranate-soap-31701495948.jpg"
-//                                                 loading="lazy"
-//                                                 alt="product"
-//                                             />
-//                                             <Typography
-//                                                 sx={{
-//                                                     display: "flex",
-//                                                     alignItems: "center",
-//                                                     my: 2,
-//                                                     justifyContent: "flex-end",
-//                                                 }}
-//                                             >
-//                                                 <ErrorOutlineIcon
-//                                                     onClick={handleOpen}
-//                                                     sx={{ cursor: "pointer" }}
-//                                                 />
-//                                             </Typography>
-//                                         </Box>
-//                                     ) : (
-//                                         ""
-//                                     )}
-
-//                                     {/* Payment Options */}
-//                                     <Box
-//                                         sx={{
-//                                             padding: 2,
-//                                             mt: 2,
-//                                             border: "1px solid #e0e0e0",
-//                                             borderRadius: "8px",
-//                                         }}
-//                                     >
-//                                         <Box>
-//                                             <Typography variant="body2" color="textSecondary">
-//                                                 {product.paymentText}
-//                                             </Typography>
-//                                             <img
-//                                                 src={tamaraImg}
-//                                                 loading="lazy"
-//                                                 alt="tamara"
-//                                                 style={{ marginTop: "5px" }}
-//                                             />
-//                                         </Box>
-//                                     </Box>
-
-//                                     {/* Quantity and Add to Cart */}
-//                                     <Box
-//                                         sx={{ display: { xs: "block", sm: "flex" } }}
-//                                         alignItems="center"
-//                                         gap={2}
-//                                         mt={2}
-//                                     >
-//                                         <Box
-//                                             sx={{ display: "flex", alignItems: "center", gap: "5px" }}
-//                                         >
-//                                             <Typography
-//                                                 onClick={dicrementChange}
-//                                                 sx={{
-//                                                     backgroundColor: "#eee",
-//                                                     mr: 1,
-//                                                     cursor: "pointer",
-//                                                 }}
-//                                             >
-//                                                 <Remove />
-//                                             </Typography>
-//                                             <Typography
-//                                                 sx={{ border: "solid 1px #ddd", px: 2 }}
-//                                                 variant="body1"
-//                                             >
-//                                                 {count}
-//                                             </Typography>
-//                                             <Typography
-//                                                 onClick={incrementChange}
-//                                                 sx={{
-//                                                     backgroundColor: "#eee",
-//                                                     ml: 1,
-//                                                     cursor: "pointer",
-//                                                 }}
-//                                             >
-//                                                 <Add />
-//                                             </Typography>
-//                                         </Box>
-
-//                                         <Box
-//                                             sx={{
-//                                                 pt: { xs: 2, sm: 0 },
-//                                                 gap: 2,
-//                                                 display: "flex",
-//                                                 alignItems: "center",
-//                                             }}
-//                                         >
-//                                             <Button
-//                                                 variant="contained"
-//                                                 sx={{
-//                                                     backgroundColor: "#bb1f2a",
-//                                                     color: "#fff",
-//                                                     display: "flex",
-//                                                     gap: 1,
-//                                                     alignItems: "center",
-//                                                 }}
-//                                             >
-//                                                 Add to Cart <MdOutlineShoppingCart size={20} />
-//                                             </Button>
-//                                             <IconButton
-//                                                 aria-label="add to favorites"
-//                                                 sx={{
-//                                                     ":hover": { color: "#bb1f2a" },
-//                                                     borderRadius: "50%",
-//                                                     backgroundColor: "#eee",
-//                                                 }}
-//                                             >
-//                                                 <FavoriteBorderIcon />
-//                                             </IconButton>
-//                                         </Box>
-//                                     </Box>
-//                                 </Box>
-//                             ))}
-//                         </Box>
-//                         <Box sx={{ mb: 4 }}>
-//                             {productInfo.map((product, index) => (
-//                                 <Box key={index}>
-//                                     <List>
-//                                         <ListItem>
-//                                             <Typography variant="body1">
-//                                                 <strong color="#687188">Model:</strong> {product.model}
-//                                             </Typography>
-//                                         </ListItem>
-//                                         <ListItem>
-//                                             <Typography variant="body1">
-//                                                 <strong color="#687188">Brand:</strong>
-//                                                 <Link
-//                                                     sx={{ textDecoration: "none", color: "#292b2c" }}
-//                                                     href={product.brand.link}
-//                                                     color="primary"
-//                                                     target="_blank"
-//                                                     rel="noopener"
-//                                                 >
-//                                                     {` ${product.brand.name}`}
-//                                                 </Link>
-//                                             </Typography>
-//                                         </ListItem>
-//                                         <ListItem>
-//                                             <Typography variant="body1">
-//                                                 <strong color="#687188">Tags:</strong>
-//                                                 {product.tags.map((tag, idx) => (
-//                                                     <React.Fragment key={idx}>
-//                                                         <Link
-//                                                             href={tag.link}
-//                                                             rel="tag"
-//                                                             sx={{ textDecoration: "none", color: "#292b2c" }}
-//                                                         >
-//                                                             {tag.label}
-//                                                         </Link>
-//                                                         {idx < product.tags.length - 1 && ","}
-//                                                     </React.Fragment>
-//                                                 ))}
-//                                             </Typography>
-//                                         </ListItem>
-//                                     </List>
-//                                     {/* Share Section */}
-//                                     <Box mt={3} display="flex" gap={2} alignItems="center">
-//                                         <Typography variant="body1" color="#687188">
-//                                             <strong>Share:</strong>
-//                                         </Typography>
-//                                         <span
-//                                             style={{
-//                                                 backgroundColor: "#1877f2",
-//                                                 padding: "4px 8px",
-//                                                 borderRadius: "4px",
-//                                                 color: "#fff",
-//                                             }}
-//                                         >
-//                                             <FaFacebookF />
-//                                         </span>
-//                                         <span
-//                                             style={{
-//                                                 backgroundColor: "#12af0a",
-//                                                 padding: "3px",
-//                                                 borderRadius: "4px",
-//                                                 color: "#fff",
-//                                             }}
-//                                         >
-//                                             <WhatsAppIcon />{" "}
-//                                         </span>
-//                                     </Box>
-//                                     {/* Features */}
-//                                     <Typography variant="h6" fontWeight="bold" mt={2}>
-//                                         Features
-//                                     </Typography>
-//                                     <List>
-//                                         {product.features.map((feature, idx) => (
-//                                             <ListItem key={idx}>
-//                                                 <Typography variant="body1">{feature}</Typography>
-//                                             </ListItem>
-//                                         ))}
-//                                     </List>
-
-//                                     {/* Product Details */}
-//                                     <Typography variant="h6" fontWeight="bold" mt={2}>
-//                                         Product Details
-//                                     </Typography>
-//                                     <Table sx={{ maxWidth: "100%" }}>
-//                                         <TableBody>
-//                                             <TableRow>
-//                                                 <TableCell>
-//                                                     <List>
-//                                                         <ListItem>
-//                                                             {product.productDetails.comforter}
-//                                                         </ListItem>
-//                                                         <ListItem>
-//                                                             {product.productDetails.fittedSheet}
-//                                                         </ListItem>
-//                                                         <ListItem>
-//                                                             {product.productDetails.pillowShams}
-//                                                         </ListItem>
-//                                                     </List>
-//                                                 </TableCell>
-//                                             </TableRow>
-//                                             <TableRow>
-//                                                 <TableCell>
-//                                                     <strong>Color:</strong>
-//                                                 </TableCell>
-//                                                 <TableCell>{product.productDetails.color}</TableCell>
-//                                             </TableRow>
-//                                             <TableRow>
-//                                                 <TableCell>
-//                                                     <strong>Material:</strong>
-//                                                 </TableCell>
-//                                                 <TableCell>{product.productDetails.material}</TableCell>
-//                                             </TableRow>
-//                                         </TableBody>
-//                                     </Table>
-//                                 </Box>
-//                             ))}
-//                         </Box>
-//                     </Grid>
-//                 </Grid>
-//                 <ReviewSection />
-//                 <BundleProductsModal
-//                     bundleProduct={bundleProduct}
-//                     open={open}
-//                     handleClose={handleClose}
-//                 />
-//             </Container>
-//             <div className="mb-5">
-//                 <RecommendedProducts productsCard={recommendedSliderData} />
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default ProductDetails;
+export default ProductDetails;

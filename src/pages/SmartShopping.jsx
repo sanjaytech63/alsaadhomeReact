@@ -18,7 +18,7 @@ const SmartShopping = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await smartShoppingApi.smartShopping({});
+            const response = await smartShoppingApi.smartShopping();
             setData(response.data);
         } catch (err) {
             setError("Failed to load data. Please try again.");

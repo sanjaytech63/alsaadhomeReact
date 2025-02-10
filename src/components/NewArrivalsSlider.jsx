@@ -18,22 +18,13 @@ import BoltIcon from "@mui/icons-material/Bolt";
 import { Link } from "react-router-dom";
 import CustomButtonGroup from "./CustomButtonGroup";
 import useCartStore from "../store/useCartStore";
-import useLoaderStore from "../store/loaderStore";
-import NewArrivalsShimmer from "./ShimerEffect/NewArrivalsShimmer";
 import { useWishListStore } from "../store/useWishListStore";
 const NewArrivalsSlider = ({ productsCard, addToCart }) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("lg"));
   const isRTL = theme.direction === "rtl";
   const { isItemInCart } = useCartStore();
-
-  const { addWishList, loading } = useWishListStore();
-
-  const wishList = useWishListStore((state) => state.wishList);
-
-  if (loading) {
-    return <NewArrivalsShimmer />;
-  }
+  const { toggleWishlist, isItemInWishlist } = useWishListStore();
 
   return (
     <>
@@ -141,7 +132,7 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                           />
                         )}
                         <Link
-                          to={`/products/${item.slug}`}
+                          to={`/products/${item.slug}?product_id=${item.product_id}&variant_id=${item.product_variant_id}`}
                           className="link-none"
                         >
                           <CardMedia
@@ -151,8 +142,9 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                               objectFit: "cover",
                             }}
                             component="img"
-                            image={item.image}
-                            alt={item.title}
+                            // src={item?.image}
+                            src="https://cdn.pixabay.com/photo/2021/08/03/06/43/bottles-6518626_1280.jpg"
+                            alt={item?.title}
                             loading="lazy"
                           />
                         </Link>
@@ -338,17 +330,28 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                               </svg>
                             </IconButton>
                             <IconButton
+
                               sx={{
                                 p: { xs: "4px", sm: "8px" },
                                 boxShadow: 2,
+                                "& .css-1wdc28j-MuiSvgIcon-root": {
+                                  fill: isItemInWishlist(item?.product_variant_id)
+                                    ? "#fff"
+                                    : "#292b2c",
+                                  transition: "fill 0.3s ease",
+                                },
+
+                                backgroundColor: isItemInWishlist(item?.product_variant_id)
+                                  ? "#bb1f2a"
+                                  : "#fff",
                                 ":hover": {
                                   backgroundColor: "#bb1f2a",
-                                  color: "#fff",
+                                  color: "#fff !important",
                                   transition: "fill 0.3s ease",
                                 },
                                 color: "#292b2c",
                               }}
-                              onClick={() => addWishList(item?.product_id.toString(), item?.product_variant_id.toString(),)}
+                              onClick={() => toggleWishlist(item?.product_id, item?.product_variant_id,)}
                               aria-label="add to wishlist"
                             >
                               <FavoriteBorder sx={{ fontSize: "1rem" }} />

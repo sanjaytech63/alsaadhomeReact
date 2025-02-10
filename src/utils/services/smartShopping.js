@@ -3,7 +3,17 @@ import API from "./Endpoints";
 
 
 export const smartShoppingApi = {
-    smartShopping:  (data) => {
-        return  axiosInstance.get(API.SMART_SHOPPING, data);
+    smartShopping: (showLoader = false) => {
+        return axiosInstance.get(API.SMART_SHOPPING, {
+            showLoader
+        });
     },
+
+    smartShoppinSubcategory: (data) => {
+        return axiosInstance.post(API.SMART_SHOPPING_SUBCATEGORY, data);
+    },
+
+    smartShoppingDetailsApi: (data) => {
+        return axiosInstance.post(API.SMART_SHOPPING_DETAILS, data);
+    }
 }

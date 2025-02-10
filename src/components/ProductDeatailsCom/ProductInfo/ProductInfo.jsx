@@ -1,25 +1,24 @@
 import React from 'react';
 import { Box, Typography, List, ListItem } from '@mui/material';
 
-const ProductInfo = ({ proDetails }) => {
+const ProductInfo = ({ tags }) => {
   return (
     <Box>
       <List>
         <ListItem>
           <Typography variant="body1">
-            <strong>Model :</strong> {proDetails.group}
+            <strong>Model :</strong> {tags?.group}
           </Typography>
         </ListItem>
         <ListItem>
           <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <strong>Brand :</strong>
-            <Typography sx={{ color: '#292b2c' }}> {proDetails.brand} </Typography>
+            <Typography sx={{ color: '#292b2c' }}> {tags?.brand} </Typography>
           </Typography>
         </ListItem>
         <ListItem>
           <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <strong>Tags :</strong>
-            <Typography sx={{ color: '#292b2c' }}> {proDetails.tags} </Typography>
+            <Typography sx={{ color: '#292b2c' }}> <strong>Tags :</strong> {tags?.tags} </Typography>
           </Typography>
         </ListItem>
       </List>

@@ -26,7 +26,7 @@ const CheckoutSuccess = () => {
       </Typography>
       <Button 
         variant="contained" 
-        color="primary" 
+        color="error" 
         size="large" 
         onClick={() => window.location.href = '/'}
         sx={{ mt: 2 }}
