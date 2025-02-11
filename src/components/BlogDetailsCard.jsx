@@ -1,5 +1,5 @@
-import { Box, Typography, TextField, Grid, Button, CardMedia, ListItem, ListItemText } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Box, Typography, TextField, Grid, Button, CardMedia, ListItem, ListItemText, CircularProgress } from '@mui/material';
+import React, { useState } from 'react';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import TextsmsIcon from '@mui/icons-material/Textsms';
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
@@ -20,7 +20,7 @@ const BlogDetailsCard = ({ blog }) => {
         email: "",
         message: ""
     });
-
+    const [loading, setLoading] = useState(false)
 
     const validationSchema = Yup.object({
         name: Yup.string().required('Name is required'),
@@ -37,14 +37,23 @@ const BlogDetailsCard = ({ blog }) => {
                 email: values.email,
                 message: values.message
             }
+            setLoading(true);
             const response = await blogApi.addBlogCommentApi(reqBody);
             if (response && response.status === 200) {
+                setLoading(false);
                 showToast("success", response.message, "success");
+                setUserComment({
+                    name: "",
+                    email: "",
+                    message: ""
+                })
             }
         } catch (error) {
             console.log(error, "error in add blog comment")
+            setLoading(false);
         }
     }
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -88,8 +97,7 @@ const BlogDetailsCard = ({ blog }) => {
             )}
             {blog?.blogs && (
                 <img
-                    // src={blog?.blogs?.image}
-                    src='https://cdn.pixabay.com/photo/2021/11/25/09/27/building-6822998_1280.jpg'
+                    src={blog?.blogs?.image}
                     alt={blog?.blogs?.title_blog}
                     style={{
                         width: '100%',
@@ -246,92 +254,86 @@ const BlogDetailsCard = ({ blog }) => {
                     </>
                 ))}
             </Box >
-            <Box component="form" mb={5}>
-                <Typography sx={{ my: 4, color: "#292b2c", fontWeight: "600" }}>
-                    Write a comment
-                </Typography >
-                <Grid item>
-                    <Box>
-
-                        <Formik
-                            initialValues={userComment}
-                            validationSchema={validationSchema}
-                            onSubmit={async (values, { resetForm }) => {
-                                await addBlogComment(values);
-                                resetForm();
-                            }}
-                            enableReinitialize
-                        >
-                            {({
-                                handleChange,
-                                handleBlur,
-                                values,
-                                errors,
-                                touched,
-                                isValid,
-                                handleSubmit,
-                            }) => (
-                                <Grid container spacing={3}>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={12} md={4}>
-                                            <TextField
-                                                name="name"
-                                                type="text"
-                                                value={values.name}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                fullWidth
-                                                label="Your Name"
-                                                error={touched.name && Boolean(errors.name)}
-                                                helperText={touched.name && errors.name}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} md={4}>
-                                            <TextField
-                                                name="email"
-                                                type="email"
-                                                value={values.email}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                fullWidth
-                                                label="Enter Email"
-                                                error={touched.email && Boolean(errors.email)}
-                                                helperText={touched.email && errors.email}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <TextField
-                                                name="message"
-                                                type="text"
-                                                value={values.message}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                fullWidth
-                                                label="Enter Message"
-                                                error={touched.message && Boolean(errors.message)}
-                                                helperText={touched.message && errors.message}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Button
-                                                onClick={() => addBlogComment(values)}
-                                                sx={{
-                                                    backgroundColor: "#bb1f2a",
-                                                    color: "#fff",
-                                                    py: 2,
-                                                    px: 4,
-                                                }}
-                                            >
-                                                Submit
-                                            </Button>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            )}
-                        </Formik>
+            <Formik
+                initialValues={userComment}
+                validationSchema={validationSchema}
+                onSubmit={async (values, { resetForm }) => {
+                    await addBlogComment(values);
+                    resetForm();
+                }}
+                enableReinitialize
+            >
+                {({
+                    handleChange,
+                    handleBlur,
+                    values,
+                    errors,
+                    touched,
+                    handleSubmit,
+                }) => (
+                    <Box component="form" onSubmit={handleSubmit}>  
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    name="name"
+                                    type="text"
+                                    value={values.name}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    fullWidth
+                                    label="Your Name"
+                                    error={touched.name && Boolean(errors.name)}
+                                    helperText={touched.name && errors.name}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    name="email"
+                                    type="email"
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    fullWidth
+                                    label="Enter Email"
+                                    error={touched.email && Boolean(errors.email)}
+                                    helperText={touched.email && errors.email}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    name="message"
+                                    type="text"
+                                    value={values.message}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    fullWidth
+                                    label="Enter Message"
+                                    error={touched.message && Boolean(errors.message)}
+                                    helperText={touched.message && errors.message}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button
+                                    type="submit"  
+                                    sx={{
+                                        backgroundColor: "#bb1f2a",
+                                        color: "#fff",
+                                        py: 2,
+                                        px: 4,
+                                    }}
+                                >
+                                    {loading ? (
+                                        <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}>
+                                            <CircularProgress color="#333" size={24} /> Submitting...
+                                        </Box>
+                                    ) : "Submit"}
+                                </Button>
+                            </Grid>
+                        </Grid>
                     </Box>
-                </Grid>
-            </Box>
+                )}
+            </Formik>
+
         </div>
     );
 }

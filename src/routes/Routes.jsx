@@ -5,6 +5,7 @@ import Loading from '../components/Loading';
 import SmartShoppingDetails from '../components/SmartShoppingDetails';
 import CheckoutSuccess from '../pages/CheckoutSuccess';
 import ProductDetails from '../components/ProductDetails';
+import PrivateRoute from './PrivateRoute';
 
 const Home = React.lazy(() => import('../pages/Home'));
 const Header = React.lazy(() => import('../components/Header/Header'));
@@ -44,17 +45,17 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
-      { path: '/order-details/:id', element: <OderTable /> },
+      { path: '/order-details/:id', element: <PrivateRoute><OderTable /></PrivateRoute> },
       { path: '/checkout/success', element: <CheckoutSuccess /> },
-      { path: '/oder-history', element: <Dashboard /> },
-      { path: '/my-account', element: <MyAccount /> },
-      { path: '/order-history', element: <OderHistory /> },
-      { path: '/my-address', element: <MyAdderss /> },
-      { path: "/account-details", element: <AccountDeatils /> },
-      { path: "/wishlist", element: <WishList /> },
-      { path: "/change-password", element: <ChangePassword /> },
+      { path: '/oder-history', element: <PrivateRoute><Dashboard /></PrivateRoute> },
+      { path: '/my-account', element: <PrivateRoute><MyAccount /></PrivateRoute> },
+      { path: '/order-history', element: <PrivateRoute><OderHistory /></PrivateRoute> },
+      { path: '/my-address', element: <PrivateRoute><MyAdderss /></PrivateRoute> },
+      { path: "/account-details", element: <PrivateRoute><AccountDeatils /></PrivateRoute> },
+      { path: "/wishlist", element: <PrivateRoute><WishList /></PrivateRoute> },
+      { path: "/change-password", element: <PrivateRoute><ChangePassword /></PrivateRoute> },
       { path: "/category", element: <Category /> },
-      { path: "/products/:product_slug", element: <ProductDetails /> },
+      { path: "/products/:product_slug", element: <PrivateRoute><ProductDetails /></PrivateRoute> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/category/:subcategory", element: <SubCategoryList /> },
@@ -89,12 +90,13 @@ function Layout() {
         <Header />
         <Navbar />
         <BottomNav />
-        <main>
+        <main style={{ minHeight: '100vh' }}>
           <Outlet />
         </main>
         <Footer />
         <ScrollRestoration />
       </Suspense>
+
     </div>
   );
 }

@@ -44,7 +44,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
               <Box>
                 <Link
                   className="link-none"
-                  to={`/products/${item?.slug}?product_id=${item?.product_id}&variant_id=${item?.product_variant_id}`}
+                  to={`/products/${item?.slug}?product_id=${item?.product_id?.toString()}&variant_id=${item?.product_variant_id?.toString()}`}
                 >
                   <CardMedia
                     sx={{
@@ -53,8 +53,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                       objectFit: "cover",
                     }}
                     component="img"
-                    // src={item?.image}
-                    src="https://cdn.pixabay.com/photo/2020/09/13/14/24/coffee-5568374_1280.jpg"
+                    src={item?.image}
                     alt={item?.title}
                     loading="lazy"
                   />
@@ -77,7 +76,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                     ":hover": { color: "#bb1f2a" },
                   }}
                 >
-                  {item.title}
+                  {item?.title}
                 </Typography>
                 <Box
                   sx={{
@@ -160,11 +159,11 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                       sx={{
                         p: { xs: "4px", sm: "8px" },
                         boxShadow: 2,
-                        backgroundColor: isItemInCart(item?.product_variant_id)
+                        backgroundColor: isItemInCart(item?.product_variant_id?.toString())
                           ? "#bb1f2a"
                           : "#fff",
                         "& .cart-svg-icon path": {
-                          fill: isItemInCart(item?.product_variant_id)
+                          fill: isItemInCart(item?.product_variant_id?.toString())
                             ? "#fff"
                             : "#292b2c",
                           transition: "fill 0.3s ease",
@@ -179,8 +178,8 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         },
                       }}
                       onClick={() => {
-                        if (!isItemInCart(item?.product_variant_id)) {
-                          addToCart(item?.product_variant_id);
+                        if (!isItemInCart(item?.product_variant_id?.toString())) {
+                          addToCart(item?.product_variant_id?.toString());
                         }
                       }}
                       aria-label="add to cart"
@@ -204,13 +203,13 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         p: { xs: "4px", sm: "8px" },
                         boxShadow: 2,
                         "& .css-1wdc28j-MuiSvgIcon-root": {
-                          fill: isItemInWishlist(item?.product_variant_id)
+                          fill: isItemInWishlist(item?.product_variant_id?.toString())
                             ? "#fff"
                             : "#292b2c",
                           transition: "fill 0.3s ease",
                         },
 
-                        backgroundColor: isItemInWishlist(item?.product_variant_id)
+                        backgroundColor: isItemInWishlist(item?.product_variant_id?.toString())
                           ? "#bb1f2a"
                           : "#fff",
                         ":hover": {
@@ -220,7 +219,7 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         },
                         color: "#292b2c",
                       }}
-                      onClick={() => toggleWishlist(item?.product_id, item?.product_variant_id,)}
+                      onClick={() => toggleWishlist(item?.product_id?.toString(), item?.product_variant_id?.toString())}
                       aria-label="add to wishlist"
                     >
                       <FavoriteBorder sx={{ fontSize: "1rem" }} />

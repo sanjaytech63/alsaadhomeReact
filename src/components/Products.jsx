@@ -5,17 +5,13 @@ import useLoaderStore from "../store/loaderStore";
 import ProductShimmer from "./ShimerEffect/ProductShimmer";
 
 const Products = ({ products }) => {
-  const isLoading = useLoaderStore((state) => state.isLoading);
 
-  if (isLoading) {
-    return <ProductShimmer />;
-  }
   return (
     <div className="my-5">
       <Container maxWidth="lg" sx={{ px: 2 }}>
         <Grid container spacing={2}>
           {products &&
-            products.map((product, index) => (
+            products?.map((product, index) => (
               <Grid
                 sx={{ cursor: "pointer" }}
                 item
@@ -37,7 +33,7 @@ const Products = ({ products }) => {
                 >
                   <Link
                     className="link-none"
-                    to={`/products/${product.product_slug}`}
+                    to={`/products/${product?.product_slug}`}
                   >
                     <Box
                       component={"img"}
@@ -46,7 +42,7 @@ const Products = ({ products }) => {
                         height: "150px",
                         objectFit: "cover",
                       }}
-                      src={product.image}
+                      src={product?.image}
                       alt="product-image"
                       loading="lazy"
                     />

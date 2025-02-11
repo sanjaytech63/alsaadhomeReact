@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Card, CardContent, useTheme, Breadcrumbs, Rating, IconButton, CardMedia, useMediaQuery, } from "@mui/material";
-import { FaFacebookF } from "react-icons/fa";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Carousel from "react-multi-carousel";
 import ReactImageMagnify from "react-image-magnify";
@@ -37,7 +35,8 @@ const ProductDetails = () => {
   const [getDetails, setGetDetails] = useState(null);
   const [getSimilar, setGetSimilar] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
 
   const handleSelectImage = (src) => {
     setSelectedImage(src);
@@ -362,17 +361,15 @@ const ProductDetails = () => {
                         smallImage: {
                           alt: "Product Image",
                           isFluidWidth: true,
-                          // src: selectedImage,
-                          // srcSet: selectedImage,
-                          src: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg",
-                          srcSet: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg",
+                          src: selectedImage,
+                          srcSet: selectedImage,
                           className: "magnify-image",
                         },
                         largeImage: {
                           isFluidWidth: true,
-                          src: "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-madebymath-90946.jpg&fm=jpg",
+                          src: selectedImage,
                           width: 1200,
-                          height: 800,
+                          height: 400,
                         },
                         enlargedImageContainerStyle: {
                           zIndex: 10,
@@ -411,12 +408,10 @@ const ProductDetails = () => {
                         item?.photo?.length > 0 &&
                         item?.photo?.map((p, k) => (
                           <Box sx={{ px: 1 }} key={p?.id || `${i}-${j}-${k}`}>
-                            <CardMedia onClick={() => handleSelectImage(p?.src)}
+                            <CardMedia
+                              onClick={() => handleSelectImage(p?.src)}
                               component="img"
-                              src={
-                                p?.src ||
-                                "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000"
-                              }
+                              src={  p?.src}
                               alt="Product Image"
                               loading="lazy"
                               sx={{
@@ -571,32 +566,40 @@ const ProductDetails = () => {
                                   }}
                                 >
                                   <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                                    <Button onClick={() => {
-                                      if (!isItemInCart(product?.product_variant_id)) {
-                                        addToCart(product?.product_variant_id);
-                                      }
-                                    }}
-                                      sx={{ py: 1, px: 1, mr: 2, background: "#bb1f2a" }}
-                                      variant="contained"
+                                    <IconButton
+                                      sx={{
+                                        py: 1,
+                                        px: 1,
+                                        mr: 2,
+                                        background: "#bb1f2a",
+                                        color: "#fff",
+                                        '&:hover': { background: "#a61c25" } // Optional hover effect
+                                      }}
+                                      onClick={() => {
+                                        if (!isItemInCart(product?.product_variant_id?.toString())) {
+                                          addToCart(product?.product_variant_id?.toString());
+                                        } else {
+                                          navigate("/cart");
+                                        }
+                                      }}
+                                      aria-label="add to cart"
                                     >
-                                      <IconButton
-                                        aria-label="add to cart"
+                                      <svg
+                                        className="cart-svg-icon"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 1024 1024"
                                       >
-                                        <svg
-                                          className="cart-svg-icon"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="16"
-                                          height="16"
-                                          viewBox="0 0 1024 1024"
-                                        >
-                                          <path
-                                            fill="#fff"
-                                            d="M1015.66 284a31.82 31.82 0 0 0-25.999-13.502h-99.744L684.78 95.666c-24.976-24.976-65.52-25.008-90.495 0L392.638 270.498h-82.096l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.568 0-31.776 14.224-31.776 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.592 23.183h431.968c13.408 0 25.376-8.4 29.904-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM639.537 140.93l152.032 129.584H487.457zm175.488 579.263H429.538L328.386 334.065h616.096zm-63.023 127.936c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80"
-                                          />
-                                        </svg>
-                                      </IconButton>  {isItemInCart(product?.product_variant_id) ? "Go to Cart" : "Add to Cart"}
-                                    </Button>
+                                        <path
+                                          fill="#fff"
+                                          d="M1015.66 284a31.82 31.82 0 0 0-25.999-13.502h-99.744L684.78 95.666c-24.976-24.976-65.52-25.008-90.495 0L392.638 270.498h-82.096l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.568 0-31.776 14.224-31.776 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.592 23.183h431.968c13.408 0 25.376-8.4 29.904-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM639.537 140.93l152.032 129.584H487.457zm175.488 579.263H429.538L328.386 334.065h616.096zm-63.023 127.936c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80"
+                                        />
+                                      </svg>
+                                      {isItemInCart(product?.product_variant_id?.toString()) ? "Go to Cart" : "Add to Cart"}
+                                    </IconButton>
                                   </Box>
+
                                 </Box>
                               </Card>
                             </Box>
@@ -646,22 +649,21 @@ const ProductDetails = () => {
                 </Box>
               </Box>
 
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Box sx={{ display: "flex", alignItems: "center", mt: 1, gap: 2 }}>
+                Color:
                 {productData?.length > 0 &&
                   productData.map((variantItemInfo, index) => {
                     const { pattern, colors, sizes } = variantItemInfo;
                     const patternVariantId = pattern?.variant_id?.toString();
                     const colorVariantId = colors?.variant_id?.toString();
-
                     const isActive =
                       selectedProductInfo?.variant_id?.toString() === patternVariantId ||
                       selectedProductInfo?.variant_id?.toString() === colorVariantId ||
-                      selectedColorIndex?.toString() === sizes?.find(size => size.variant_id?.toString() === selectedProductInfo?.variant_id?.toString());
-
-                    const borderColor = isActive ? '#bb1f2a' : '#fff';
-
+                      sizes?.some(size => size.variant_id?.toString() === selectedProductInfo?.variant_id?.toString());
+                    const borderColor = isActive ? "#bb1f2a" : "#fff";
                     if (patternVariantId) {
                       return (
+
                         <Box key={index} onClick={() => handleColorChange(patternVariantId, variantItemInfo)}
                           sx={{
                             cursor: 'pointer',
@@ -736,6 +738,8 @@ const ProductDetails = () => {
                 <Button onClick={() => {
                   if (!isItemInCart(variantId)) {
                     addToCart(variantId);
+                  }else{
+                    navigate("/cart")
                   }
                 }}
                   sx={{ py: 1, px: 4, background: "#bb1f2a" }}

@@ -75,8 +75,7 @@ const TopSlider = ({ topSlider }) => {
                       <Box
                         component="img"
                         draggable="false"
-                        // src={item?.image}
-                        src="https://cdn.pixabay.com/photo/2024/05/22/00/01/product-8779366_1280.jpg"
+                        src={item?.image}
                         alt={item?.name}
                         loading="lazy"
                         className={!matchesSM ? "rounded-circle" : "rounded-3"}

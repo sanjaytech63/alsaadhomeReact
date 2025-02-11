@@ -16,12 +16,12 @@ import { useTheme } from '@mui/material/styles';
 import { userService } from './../utils/services/userServices';
 import { showToast } from '../utils/helper';
 import useUserStore from '../store/user';
-
+import Loading from "./Loading"
 const Dashboard = ({ selectItem }) => {
     const theme = useTheme();
     const isXs = useMediaQuery(theme.breakpoints.down('sm'));
     const [open, setOpen] = useState(false);
-
+    const [loading, setLoading] = useState(false);
     const handleToggleModal = () => setOpen(!open);
 
     const menuItems = [
@@ -33,23 +33,28 @@ const Dashboard = ({ selectItem }) => {
         { id: 6, text: 'Change Password', icon: <LockOutlinedIcon />, path: '/change-password' },
         { id: 7, text: 'Logout', icon: <LogoutIcon />, path: '/' },
     ];
-    
 
-    const handleLogout = async() => {
+
+    const handleLogout = async () => {
         try {
-            const response  = await userService.logout();
-            if(response && response.status === 200){
+            setLoading(true);
+            const response = await userService.logout();
+            if (response && response.status === 200) {
+                setLoading(false);
                 useUserStore.getState().logout();
                 showToast("success", response.message, "success");
-            } else{
+            } else {
                 showToast("error", response.message, "danger");
-                console.log('error', response);
             }
         } catch (error) {
-          showToast("error", error.message, "danger");  
+            showToast("error", error.message, "danger");
+            setLoading(false);
         }
     }
 
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <Box>
@@ -91,7 +96,7 @@ const Dashboard = ({ selectItem }) => {
                                     },
                                     marginBottom: '8px',
                                 }}
-                                onClick={handleToggleModal} 
+                                onClick={handleToggleModal}
                             >
                                 <ListItemIcon sx={{ color: selectItem === item.id ? '#fff' : '#2b2f4c' }}>
                                     {item.icon}

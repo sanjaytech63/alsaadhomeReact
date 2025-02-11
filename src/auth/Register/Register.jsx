@@ -10,6 +10,7 @@ import {
   MenuItem,
   FormControl,
   Checkbox,
+  CircularProgress,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ const Register = ({
   selectedCountry,
   setSelectedCountry,
   handleRegister,
+  loading
 }) => {
   const switchToLogin = () => {
     handleClose();
@@ -312,7 +314,7 @@ const Register = ({
                           color: "#fff",
                         }}
                       >
-                        Register
+                        {loading ? <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}><CircularProgress color="#333" size={24} /> Register... </Box> : "Register"}
                       </Button>
                     </Grid>
                     <Grid

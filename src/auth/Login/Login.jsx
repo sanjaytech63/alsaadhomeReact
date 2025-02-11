@@ -1,17 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Button,
-  Grid,
-  Modal,
-  TextField,
-  Typography,
-  Checkbox,
-  FormControlLabel,
-  FormControl,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Box, Button, Grid, Modal, TextField, Typography, Checkbox, FormControlLabel, FormControl, Select, MenuItem, CircularProgress, } from "@mui/material";
 import { FaFacebookF } from "react-icons/fa";
 import AppleIcon from "@mui/icons-material/Apple";
 import { Close } from "@mui/icons-material";
@@ -22,7 +10,6 @@ const Login = ({
   handleClose,
   open,
   handleOpenRegister,
-  handleOpenLogin,
   handleCloseRegister,
   countries,
   selectedCountry,
@@ -30,6 +17,7 @@ const Login = ({
   handleLogin,
   handleGoogleSignIn,
   handleForgotPassword,
+  loading
 }) => {
   const switchToRegister = () => {
     handleClose();
@@ -329,7 +317,7 @@ const Login = ({
                           color: "#fff",
                         }}
                       >
-                        Login
+                        {loading ? <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}><CircularProgress color="#333" size={24} /> Login... </Box> : "Login"}
                       </Button>
                     </Grid>
 

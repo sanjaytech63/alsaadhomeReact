@@ -142,8 +142,7 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                               objectFit: "cover",
                             }}
                             component="img"
-                            // src={item?.image}
-                            src="https://cdn.pixabay.com/photo/2021/08/03/06/43/bottles-6518626_1280.jpg"
+                            src={item?.image}
                             alt={item?.title}
                             loading="lazy"
                           />

@@ -41,9 +41,9 @@ const BlogDetails = () => {
         return <p>{error}</p>;
     }
 
-    // if (loading) {
-    //     return <Loading />;
-    // }
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <Box sx={{ minHeight: "100vh", }}>

@@ -12,9 +12,6 @@ const useUserStore = create((set) => {
       localStorage.setItem("USER", JSON.stringify(userInfo));
       localStorage.setItem("TOKEN", userInfo.token);
 
-      console.log(localStorage.getItem("TOKEN", userInfo.token), "token")
-      console.log(localStorage.getItem("USER", JSON.stringify(userInfo)), "user")
-
       set(() => ({
         userInfo: userInfo,
         isLoggedIn: true,

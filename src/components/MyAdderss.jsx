@@ -42,8 +42,8 @@ const MyAddress = () => {
   const [getAddress, setGetAddress] = useState([]);
   const [city, setCity] = useState(null);
   const [area, setArea] = useState(null);
-  const [selectedCity, setSelectedCity] = useState([]);
-  const [selectedArea, setSelectedArea] = useState([]);
+  const [selectedCity, setSelectedCity] = useState("Select City");
+  const [selectedArea, setSelectedArea] = useState("Select Area");
   const handleOpenDailog = () => setDailog(true);
   const handleCloseDailog = () => setDailog(false);
   const handleOpen = () => {
@@ -661,6 +661,7 @@ const MyAddress = () => {
                               onChange={(e) => setSelectedCity(e.target.value)}
                               sx={{ marginBottom: 2 }}
                             >
+                               <MenuItem disabled value="Select City">Select City</MenuItem>
                               {city?.map((item) => (
                                 <MenuItem key={item.id} value={item.id}>
                                   {item.city_name}
@@ -678,7 +679,7 @@ const MyAddress = () => {
                               onChange={(e) => setSelectedArea(e.target.value)}
                               sx={{ marginBottom: 2 }}
                             >
-                              <MenuItem value="Select City">Select Area</MenuItem>
+                              <MenuItem disabled value="Select Area">Select Area</MenuItem>
                               {area?.map((item) => (
                                 <MenuItem key={item.id} value={item.id}>
                                   {item.area_name}

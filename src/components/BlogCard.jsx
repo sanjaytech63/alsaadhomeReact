@@ -77,8 +77,7 @@ const BlogCard = () => {
                                                     },
                                                 }}
                                                 component="img"
-                                                // src={blog?.image}
-                                                src="https://cdn.pixabay.com/photo/2019/09/17/18/48/computer-4484282_960_720.jpg"
+                                                src={blog?.image}
                                                 alt={blog?.title_blog}
                                                 loading="lazy"
                                             />

@@ -110,8 +110,7 @@ const Category = () => {
                                                 objectFit: "cover",
                                             }}
                                             loading="lazy"
-                                            // src={cat.image}
-                                            src='https://cdn.pixabay.com/photo/2024/02/25/15/50/product-display-stand-8596024_1280.jpg'
+                                            src={cat?.image}
                                             alt={cat?.name}
                                         />
                                         {/* Text on image */}

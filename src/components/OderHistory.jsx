@@ -31,10 +31,6 @@ const OderHistory = () => {
     getOderHistory();
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div style={{ minHeight: '100vh' }}>
       {/* Header Section */}

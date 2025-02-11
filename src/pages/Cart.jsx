@@ -31,7 +31,6 @@ const Cart = ({
   itmeslug,
   product_id,
   variant_id,
-  cart_quantity,
   quantity,
   incrementQuantity,
   decrementQuantity,
@@ -46,7 +45,8 @@ const Cart = ({
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           component="img"
-          src={image}
+          // src={image}
+          src="https://cdn.pixabay.com/photo/2020/01/30/17/49/book-4806076_1280.jpg"
           alt={title}
           loading="lazy"
           sx={{
@@ -128,7 +128,7 @@ const Cart = ({
             <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
               <Typography
                 onClick={() =>
-                  decrementQuantity(variant_id,branchIndex, index)
+                  decrementQuantity(variant_id, branchIndex, index)
                 }
                 sx={{ backgroundColor: "#eee", mr: 1, cursor: "pointer" }}
               >
@@ -142,7 +142,7 @@ const Cart = ({
               </Typography>
               <Typography
                 onClick={() =>
-                  incrementQuantity(variant_id, quantity,branchIndex, index)
+                  incrementQuantity(variant_id, quantity, branchIndex, index)
                 }
                 sx={{ backgroundColor: "#eee", ml: 1, cursor: "pointer" }}
               >
@@ -182,70 +182,78 @@ const CartPage = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter(Boolean);
 
- useEffect(() => {
-   if (cartItems?.branch) {
-     const initialQuantities = cartItems.branch.map(
-       (branch) =>
-         branch.item?.map((item) => parseInt(item.cart_quantity, 10))
-     );
-     setQuantity(initialQuantities);
-   }
- }, [cartItems]);
+  useEffect(() => {
+    if (cartItems?.branch) {
+      const initialQuantities = cartItems.branch.map(
+        (branch) =>
+          branch.item?.map((item) => parseInt(item.cart_quantity, 10))
+      );
+      setQuantity(initialQuantities);
+    }
+  }, [cartItems]);
 
-const handleIncrement = (product_variant_id, maxQuantity, branch, index) => {
-  if (branch != null && index !== -1) {
-    const currentQuantity = quantity[branch]?.[index] || 0;
-    const maxItemQuantity =
-      cartItems?.branch?.[branch]?.item?.[index]?.quantity || 0;
+  const handleIncrement = (product_variant_id, maxQuantity, branch, index) => {
+    if (branch != null && index !== -1) {
+      const currentQuantity = quantity[branch]?.[index] || 0;
+      const maxItemQuantity =
+        cartItems?.branch?.[branch]?.item?.[index]?.quantity || maxQuantity;
 
-    if (currentQuantity < maxQuantity && currentQuantity < maxItemQuantity) {
-      const updatedQuantities = [...quantity];
-      updatedQuantities[branch][index] = currentQuantity + 1;
-      setQuantity(updatedQuantities);
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
-      debounceRef.current = setTimeout(() => {
-        incrementQuantity(
-          product_variant_id,
-          maxQuantity,
-          updatedQuantities[branch][index]
+      if (currentQuantity < maxQuantity && currentQuantity < maxItemQuantity) {
+        // Deep copy to avoid modifying state directly
+        const updatedQuantities = quantity.map((b, i) =>
+          i === branch ? [...b] : b
         );
-      }, 500);
-    } else {
-      showToast("warning", "Maximum quantity reached!", "danger");
-    }
-  } else {
-    console.warn("Invalid branch or index provided.");
-  }
-};
 
-const handleDecrement = (product_variant_id, branch, index) => {
-  if (branch != null && index !== -1) {
-    const currentQuantity = quantity[branch]?.[index] || 0;
+        updatedQuantities[branch][index] = currentQuantity + 1;
+        setQuantity(updatedQuantities);
 
-    if (currentQuantity > 1) {
-      const updatedQuantities = [...quantity];
-      updatedQuantities[branch][index] = currentQuantity - 1;
-      setQuantity(updatedQuantities);
-
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
+        // Debounce to avoid unnecessary API calls
+        if (debounceRef.current) {
+          clearTimeout(debounceRef.current);
+        }
+        debounceRef.current = setTimeout(() => {
+          incrementQuantity(
+            product_variant_id,
+            maxQuantity,
+            updatedQuantities[branch][index]
+          );
+        }, 500);
+      } else {
+        showToast("warning", "Maximum quantity reached!", "danger");
       }
-      debounceRef.current = setTimeout(() => {
-        decrementQuantity(product_variant_id, updatedQuantities[branch][index]);
-      }, 500);
     } else {
-      showToast("warning", "Minimum quantity is 1!", "danger");
+      console.warn("Invalid branch or index provided.");
     }
-  } else {
-    console.warn("Invalid branch or index provided.");
-  }
-};
+  };
 
 
 
- 
+  const handleDecrement = (product_variant_id, branch, index) => {
+    if (branch != null && index !== -1) {
+      const currentQuantity = quantity[branch]?.[index] || 0;
+
+      if (currentQuantity > 1) {
+        const updatedQuantities = [...quantity];
+        updatedQuantities[branch][index] = currentQuantity - 1;
+        setQuantity(updatedQuantities);
+
+        if (debounceRef.current) {
+          clearTimeout(debounceRef.current);
+        }
+        debounceRef.current = setTimeout(() => {
+          decrementQuantity(product_variant_id, updatedQuantities[branch][index]);
+        }, 500);
+      } else {
+        showToast("warning", "Minimum quantity is 1!", "danger");
+      }
+    } else {
+      console.warn("Invalid branch or index provided.");
+    }
+  };
+
+
+
+
 
   return (
     <>
@@ -327,23 +335,24 @@ const handleDecrement = (product_variant_id, branch, index) => {
                 cartItems?.branch?.map(
                   (item, branchIndex) =>
                     item.item &&
-                    item.item.map((item, index) => {                    
-                    return (
-                      <Cart
-                        key={index}
-                        {...item}
-                        cartItemId={item?.cart_item_id}
-                        itmeslug={item?.slug}
-                        product_id={item?.product_id}
-                        variant_id={item?.product_variant_id}
-                        deleteCartItem={deleteCartItem}
-                        incrementQuantity={handleIncrement}
-                        decrementQuantity={handleDecrement}
-                        cartItemQuantity={quantity ? quantity?.[branchIndex]?.[index] : 1}
-                        index={index}
-                        branchIndex={branchIndex}
-                      />
-                    );})
+                    item.item.map((item, index) => {
+                      return (
+                        <Cart
+                          key={index}
+                          {...item}
+                          cartItemId={item?.cart_item_id}
+                          itmeslug={item?.slug}
+                          product_id={item?.product_id}
+                          variant_id={item?.product_variant_id}
+                          deleteCartItem={deleteCartItem}
+                          incrementQuantity={handleIncrement}
+                          decrementQuantity={handleDecrement}
+                          cartItemQuantity={quantity ? quantity?.[branchIndex]?.[index] : 1}
+                          index={index}
+                          branchIndex={branchIndex}
+                        />
+                      );
+                    })
                 )
               ) : (
                 <Typography sx={{ fontWeight: "500", color: "#687188", my: 2 }}>
@@ -353,7 +362,7 @@ const handleDecrement = (product_variant_id, branch, index) => {
             </Grid>
 
             <Grid item xs={12} md={4}>
-              {cartItems?.branch && cartItems?.branch?.length > 0 ? (
+              {cartItems?.free_delivery_title ? (
                 <Box
                   sx={{ p: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)", mb: 1 }}
                 >

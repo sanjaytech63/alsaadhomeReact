@@ -5,7 +5,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import tamaraImg from "../../src/assets/tamara.svg"
 import { useNavigate } from 'react-router-dom';
-import { useCheckOutStore } from '../store/useCheckOutStore';
 import { useAddressStore } from '../store/useAddressStore';
 import { checkOutServices } from '../utils/services/checkOutServices';
 import { google_place_api, showToast } from '../utils/helper';
@@ -42,6 +41,7 @@ const Checkout = () => {
     const [selectedArea, setSelectedArea] = useState([]);
     const [checkout, setCheckOut] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [saveLoad, setSaveLoad] = useState(false);
     const [initialValues, setInitialValues] = useState({
         country_id: selectedCountry?.id,
         city_id: '',
@@ -61,6 +61,7 @@ const Checkout = () => {
         country_code: selectedCity?.country_code || "",
     });
 
+    const { getCart } = useCartStore();
 
     useEffect(() => {
         const fetchAddress = async () => {
@@ -127,7 +128,6 @@ const Checkout = () => {
         }
     }
 
-
     // balling address
     const { countries, fetchCountries } = useCountryStore();
     const [address, setAddress] = useState("");
@@ -146,7 +146,6 @@ const Checkout = () => {
     const setSelectedCountry = useSettingsStore(
         (state) => state?.setSelectedCountry
     );
-
 
     const locationSelected = () => {
         if (searchResult) {
@@ -320,7 +319,6 @@ const Checkout = () => {
 
     const fetchCheckOut = async (values) => {
         let cart_id = localStorage.getItem("cart_id");
-
         let checkoutData = {
             "address": values?.address,
             "device_type": "web",
@@ -347,15 +345,18 @@ const Checkout = () => {
             "note": values?.note
         }
         try {
+            setSaveLoad(true);
             const response = await checkOutServices.checkOut(checkoutData);
             if (response && response.status === 200) {
+                setSaveLoad(false);
                 setCheckOut(response?.data);
             }
         } catch (error) {
             console.log(error);
+            setSaveLoad(false);
         }
     };
-    const { getCart } = useCartStore();
+
     const addPlaceOrder = async () => {
         if (!checkout?.checkout_id) {
             console.error("checkout_id is undefined");
@@ -368,10 +369,10 @@ const Checkout = () => {
             const req = {
                 order_delivery_type_id: "standard",
                 checkout_id: encryptedCheckoutId,
-                payment_method: 1,
-                customer_id: storedUserInfo.id.toString(),
+                payment_method: "1",
+                customer_id: storedUserInfo?.id?.toString(),
             };
-            const response = await placeOrderApi.placeOreder(req);
+            const response = await placeOrderApi?.placeOreder(req);
             if (response && response.status === 200) {
                 await getCart();
                 showToast("success", response.message, "success");
@@ -874,12 +875,11 @@ const Checkout = () => {
                                         variant="contained"
                                         sx={{ backgroundColor: "#bb1f2a" }}
                                     >
-                                        Save Address
+                                        {saveLoad ? <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}><CircularProgress color="#333" size={24} /> Saving... </Box> : "Save Address"}
                                     </Button>
                                 </Box>
                             )}
                         </Formik>
-
                     </Grid>
 
                     <ChekOutMap

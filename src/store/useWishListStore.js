@@ -25,7 +25,7 @@ export const useWishListStore = create((set, get) => ({
         let wishlistData = wishList.find(
             (item) => item.product_variant_id?.toString() === product_variant_id?.toString()
         );
-        
+
         if (wishlistData) {
             await removeWishList(wishlistData.wishlist_id);
         } else {
@@ -43,7 +43,7 @@ export const useWishListStore = create((set, get) => ({
         try {
             const req = { product_id, product_variant_id };
             const response = await wishListApi.addToWishList(req);
-    
+
             if (response.status === 200) {
                 set((state) => ({
                     wishList: [...state.wishList, { ...response.data, product_variant_id }],
@@ -55,7 +55,7 @@ export const useWishListStore = create((set, get) => ({
             console.error("Error adding to wishlist:", error);
             set({ error, loading: false });
         }
-    },    
+    },
 
     removeWishList: async (wishlist_id) => {
         set({ loading: true });

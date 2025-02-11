@@ -18,7 +18,6 @@ function OrderDetails() {
     };
 
     const { id: orderId } = useParams();
-
     const orderDetails = async () => {
         try {
             setLoading(true);

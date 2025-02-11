@@ -13,8 +13,7 @@ const WishList = () => {
   const navigate = useNavigate();
 
   const { isItemInCart, addToCart } = useCartStore();
-  const { wishList, getWishList, removeWishList,loading, error  } = useWishListStore();
-  console.log(wishList,'vvfhg');
+  const { wishList, getWishList, removeWishList, } = useWishListStore();
 
   const navigateToCart = () => {
     navigate('/cart');
@@ -26,10 +25,6 @@ const WishList = () => {
     }
     getWishListItem();
   }, []);
-
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div style={{ minHeight: '100vh' }}>

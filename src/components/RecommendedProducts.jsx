@@ -134,8 +134,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                             objectFit: "cover",
                           }}
                           component="img"
-                          // src={item?.image}
-                          src='https://cdn.pixabay.com/photo/2021/11/14/12/53/ship-6794508_1280.jpg'
+                          src={item?.image}
                           alt={item?.title}
                           loading="lazy"
                         />

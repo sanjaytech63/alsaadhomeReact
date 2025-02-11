@@ -32,8 +32,7 @@ const BlogSideBar = ({ data }) => {
                             <CardMedia
                                 sx={{ maxWidth: "100%", width: "80px", objectFit: "cover" }}
                                 component="img"
-                                // src={post?.image}
-                                src='https://cdn.pixabay.com/photo/2021/11/08/11/19/buildings-6778915_1280.jpg'
+                                src={post?.image}
                                 alt={post?.title_blog}
                                 loading="lazy"
                             />

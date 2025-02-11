@@ -58,16 +58,15 @@ const DealsSlider = ({ DealsSlider }) => {
                         {DealsSlider.length > 0 && [...DealsSlider, ...DealsSlider].map((item) => (
                             <Link
                                 className="link-none"
-                                key={item.id}
-                                to={`/search/banner/${item.id}`}
+                                key={item?.id}
+                                to={`/search/banner/${item?.id}`}
                             >
                                 <Box
                                     component="img"
                                     draggable="false"
-                                    // src={item.image}
-                                    src="https://cdn.pixabay.com/photo/2024/05/22/00/01/product-8779375_1280.jpg"
+                                    src={item?.image}
                                     loading="lazy"
-                                    alt={item.banner_name}
+                                    alt={item?.banner_name}
                                     sx={{
                                         width: "100%",
                                         height: matchesSM ? "200px" : "220px",

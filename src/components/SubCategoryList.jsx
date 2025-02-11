@@ -169,8 +169,8 @@ const SubCategoryList = () => {
                           height: "200px",
                           objectFit: "cover",
                         }}
-                        src={item.image}
-                        alt={item.name}
+                        src={item?.image}
+                        alt={item?.name}
                         loading="lazy"
                       />
                       {/* Text on image */}

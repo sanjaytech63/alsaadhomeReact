@@ -24,8 +24,7 @@ const BlogCards = ({ blog, loading }) => {
                                 },
                             }}
                             component="img"
-                            // src={blog?.image}
-                            src='https://cdn.pixabay.com/photo/2021/11/25/09/27/building-6822998_1280.jpg'
+                            src={blog?.image}
                             alt={blog?.title_blog}
                             loading="lazy"
                         />
