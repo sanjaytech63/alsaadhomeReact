@@ -21,26 +21,7 @@ const Home = () => {
   const [data, setData] = useState(null);
   const [getRec, setGetRec] = useState(null);
   const [getNewPro, setGetNewPro] = useState(null);
-  const { fetchCartProductIds } = useCartStore();
-  const { addToCart, createToCart } = useCartStore();
-  const { getWishList } = useWishListStore();
-
-  useEffect(() => {
-    const fetchCartId = async () => {
-      try {
-        const cartId = localStorage.getItem("cart_id");
-        if (!cartId) {
-          await createToCart();
-        } else {
-          await fetchCartProductIds();
-        }
-      } catch (error) {
-        console.error("Error retrieving cart_id:", error);
-      }
-    };
-
-    fetchCartId();
-  }, [fetchCartProductIds, createToCart]);
+  const { addToCart } = useCartStore();
 
   const fetchHomeData = async () => {
     try {

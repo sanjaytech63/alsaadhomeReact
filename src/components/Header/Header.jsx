@@ -24,6 +24,8 @@ import ForgotPasswordModal from "../../auth/Login/ForgotPasswordModal.jsx";
 import { PermIdentity } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import MobileOtpDialog from "../../auth/MobileOtp/index.js";
+import useCartStore from "../../store/useCartStore.js";
+
 const Header = () => {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("en");
@@ -31,6 +33,7 @@ const Header = () => {
   const [openRegister, setOpenRegister] = useState(false);
   const { countries, fetchCountries } = useCountryStore();
   const [openForgotPassword, setOpenForgotPassword] = useState(false);
+  const { fetchCartProductIds, createToCart } = useCartStore();
   const [openMobileOtp, setOpenMobileOtp] = useState(false);
   const [userId, setUserId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -47,6 +50,23 @@ const Header = () => {
     (state) => state?.setSelectedCountry
   );
   const setUserInfo = useUserStore((state) => state.setUserInfo);
+  useEffect(() => {
+    const fetchCartId = async () => {
+      try {
+        const cartId = localStorage.getItem("cart_id");
+        console.log("Cart ID:", cartId);
+        if (!cartId) {
+          await createToCart();
+        } else {
+          await fetchCartProductIds();
+        }
+      } catch (error) {
+        console.error("Error retrieving cart_id:", error);
+      }
+    };
+
+    fetchCartId();
+  }, [fetchCartProductIds, createToCart]);
 
   useEffect(() => {
     document.body.style.direction = language === "ar" ? "rtl" : "ltr";
@@ -221,7 +241,7 @@ const Header = () => {
           setOpenMobileOtp(true);
         } else {
           setOpenForgotPassword(false);
-          showToast("success", response.message, "success");
+          showToast("success", "OTP has been sent to your email", "success");
         }
 
       } else {

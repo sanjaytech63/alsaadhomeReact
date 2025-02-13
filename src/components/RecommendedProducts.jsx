@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import CustomButtonGroup from './CustomButtonGroup';
 import useCartStore from '../store/useCartStore';
 import { useWishListStore } from '../store/useWishListStore';
+import useUserStore from '../store/user';
+import { showToast } from '../utils/helper';
 
 const RecommendedProducts = ({ productsCard, title, addToCart }) => {
   const theme = useTheme();
@@ -16,7 +18,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
   // const isLoading = useLoaderStore((state) => state.isLoading);
   const { toggleWishlist, isItemInWishlist } = useWishListStore();
 
-  
+  const { isLoggedIn } = useUserStore();
   // if (isLoading) {
   //   return <NewArrivalsShimmer />;
   // }
@@ -312,7 +314,13 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                               },
                               color: "#292b2c",
                             }}
-                            onClick={() => toggleWishlist(item?.product_id, item?.product_variant_id,)}
+                            onClick={() => {
+                              if (isLoggedIn === true) {
+                                toggleWishlist(item?.product_id?.toString(), item?.product_variant_id?.toString())
+                              } else {
+                                showToast("error", "Please login to add to wishlist", "danger")
+                              }
+                            }}
                             aria-label="add to wishlist"
                           >
                             <FavoriteBorder sx={{ fontSize: "1rem" }} />

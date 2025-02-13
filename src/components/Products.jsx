@@ -1,8 +1,6 @@
 import { Box, Container, Grid } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import useLoaderStore from "../store/loaderStore";
-import ProductShimmer from "./ShimerEffect/ProductShimmer";
 
 const Products = ({ products }) => {
 

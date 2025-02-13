@@ -38,7 +38,9 @@ const ProductListing = () => {
   const handleCloseModal = () => setIsModalOpen(false);
   const [price, setPrice] = useState({ min: "", max: "" });
   const [sortOrder, setSortOrder] = useState([]);
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState();
+  const [brandShow, setBrandShow] = useState(false);
+  const [styleShowMore, setStyleShowMore] = useState([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -224,7 +226,9 @@ const ProductListing = () => {
     setSelectedColor([]);
     setSortOrder("");
     setPrice({ min: "", max: "" });
-    setShowMore(false);
+    setShowMore([]);
+    setBrandShow(false)
+    setStyleShowMore([]);
     setOtherSelectedAttributes([]);
     setTotalPages(1);
     setCurrentPage(1);
@@ -363,6 +367,7 @@ const ProductListing = () => {
               <ProductListingSideBar
                 sortOptions={sortOptions}
                 price={price}
+                
                 handlePriceChange={handlePriceChange}
                 handleChangeSort={handleChangeSort}
                 sortOrder={sortOrder}
@@ -371,6 +376,10 @@ const ProductListing = () => {
                 tagsToShow={showMore ? filterBrands : filterBrands?.slice(0, 5)}
                 showMore={showMore}
                 setShowMore={setShowMore}
+                setStyleShowMore={setStyleShowMore}
+                styleShowMore={styleShowMore}
+                setBrandShow={setBrandShow}
+                brandShow={brandShow}
                 setSelectedBrands={setSelectedBrands}
                 tags={filterBrands}
                 sizes={filterSizes}
@@ -410,6 +419,10 @@ const ProductListing = () => {
               tagsToShow={showMore ? filterBrands : filterBrands?.slice(0, 5)}
               showMore={showMore}
               setShowMore={setShowMore}
+              setStyleShowMore={setStyleShowMore}
+              styleShowMore={styleShowMore}
+              setBrandShow={setBrandShow}
+              brandShow={brandShow}
               setSelectedBrands={setSelectedBrands}
               tags={filterBrands}
               sizes={filterSizes}

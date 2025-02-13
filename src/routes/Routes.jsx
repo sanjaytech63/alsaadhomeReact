@@ -55,7 +55,7 @@ const router = createBrowserRouter([
       { path: "/wishlist", element: <PrivateRoute><WishList /></PrivateRoute> },
       { path: "/change-password", element: <PrivateRoute><ChangePassword /></PrivateRoute> },
       { path: "/category", element: <Category /> },
-      { path: "/products/:product_slug", element: <PrivateRoute><ProductDetails /></PrivateRoute> },
+      { path: "/products/:product_slug", element: <ProductDetails /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/category/:subcategory", element: <SubCategoryList /> },

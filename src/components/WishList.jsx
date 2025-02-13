@@ -143,8 +143,7 @@ const WishList = () => {
                         objectFit: 'cover',
                       }}
                       component="img"
-                      // src={item?.image || '/placeholder.jpg'}
-                      src='https://cdn.pixabay.com/photo/2020/09/13/14/24/coffee-5568374_1280.jpg'
+                      src={item?.image}
                       alt={item?.title || 'Product Image'}
                       loading="lazy"
                     />

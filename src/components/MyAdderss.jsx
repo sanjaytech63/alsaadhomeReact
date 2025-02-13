@@ -13,6 +13,7 @@ import {
   FormControlLabel,
   Checkbox,
   InputAdornment,
+  FormHelperText,
 } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { Link, useLocation } from "react-router-dom";
@@ -49,9 +50,6 @@ const MyAddress = () => {
   const handleOpen = () => {
     setOpen(!open);
   };
-  // const { addresses, getShipping, loading, error, deleteShippingAddress } = useAddressStore();
-
-
 
   const [address, setAddress] = useState("");
   const [searchResult, setSearchResult] = useState();
@@ -85,16 +83,16 @@ const MyAddress = () => {
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
-    mobile_number: Yup.string().required('Phone number is required'),
-    country_code: Yup.string().required('Country code is required'),
+    mobile_number: Yup.string()
+      .matches(/^\d+$/, 'Only numbers are allowed')
+      .required('Phone number is required'),
     email: Yup.string()
       .email('Invalid email address')
       .required('Email is required'),
     address: Yup.string().required('Address is required'),
-    city: Yup.string().required('City is required'),
-    area: Yup.string().required('Area is required'),
-    country: Yup.string().notRequired(),
+    country_id: Yup.string().notRequired(),
   });
+
 
   function onLoad(autocomplete) {
     if (autocomplete) {
@@ -449,7 +447,7 @@ const MyAddress = () => {
                 </Button>
               </Box>
               <Formik
-                initialValues={initialValues || {}}
+                initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={async (values, { resetForm }) => {
                   await addNewAddress(values);
@@ -469,326 +467,331 @@ const MyAddress = () => {
                   return (
                     <>
                       {open ? (
-                        <Box>
-                          <TextField
-                            name="name"
-                            value={values.name}
-                            onChange={handleChange}
-                            fullWidth
-                            label="Name"
-                            variant="outlined"
-                            sx={{ marginBottom: 2 }}
-                          />
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                              gap: { sm: 2, xs: 0 },
-                            }}
-                          >
-                            <Grid container spacing={2}>
-                              <Grid item xs={5} sm={4}>
-                                <FormControl fullWidth>
-                                  <Select
-                                    disablePortal
-                                    MenuProps={{ disableScrollLock: true }}
-                                    value={selectedCountry?.code || ""}
-                                    variant="outlined"
-                                    sx={{
-                                      padding: "2px 4px",
-                                      border: "1px solid #ccc",
-                                      ".MuiOutlinedInput-notchedOutline": {
-                                        border: "none",
-                                      },
-                                      ".MuiSelect-select": {
-                                        padding: "13px 0px",
-                                        fontSize: "14px",
-                                        color: "#333",
-                                      },
-                                    }}
-                                  >
-                                    <MenuItem value={selectedCountry?.code || ""}>
-                                      <img
-                                        src={selectedCountry?.flag}
-                                        alt={selectedCountry?.name}
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                          marginRight: "4px",
-                                        }}
-                                      />
-                                      {selectedCountry?.code}
-                                    </MenuItem>
-                                  </Select>
-                                </FormControl>
-                              </Grid>
-
-                              <Grid item xs={7} sm={8}>
-                                <TextField
-                                  name="mobile_number"
-                                  value={values.mobile_number}
-                                  onChange={handleChange}
-                                  fullWidth
-                                  type="number"
-                                  label="Mobile Number"
-                                  error={touched.mobile_number && Boolean(errors.mobile_number)}
-                                  helperText={touched.mobile_number && errors.mobile_number}
-                                  required
-                                />
-                              </Grid>
-                            </Grid>
-                          </Box>
-
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              mt: 2,
-                              alignItems: "center",
-                              gap: { sm: 2, xs: 0 },
-                            }}
-                          >
-                            <Grid container spacing={2}>
-                              <Grid item xs={5} sm={4}>
-                                <FormControl fullWidth>
-                                  <Select
-                                    disablePortal
-                                    MenuProps={{ disableScrollLock: true }}
-                                    value={selectedCountry?.code || ""}
-                                    variant="outlined"
-                                    sx={{
-                                      padding: "2px 4px",
-                                      border: "1px solid #ccc",
-                                      ".MuiOutlinedInput-notchedOutline": {
-                                        border: "none",
-                                      },
-                                      ".MuiSelect-select": {
-                                        padding: "13px 0px",
-                                        fontSize: "14px",
-                                        color: "#333",
-                                      },
-                                    }}
-                                  >
-                                    <MenuItem value={selectedCountry.code}>
-                                      <img
-                                        src={selectedCountry.flag}
-                                        alt={selectedCountry.name}
-                                        style={{
-                                          width: "23px",
-                                          height: "23px",
-                                          marginRight: "4px",
-                                        }}
-                                      />
-                                      {selectedCountry.code}
-                                    </MenuItem>
-                                  </Select>
-                                </FormControl>
-                              </Grid>
-
-                              <Grid item xs={7} sm={8}>
-                                <TextField
-                                  name="alternate_number"
-                                  value={values.alternate_number}
-                                  onChange={handleChange}
-                                  fullWidth
-                                  type="number"
-                                  label="Whatsapp Number"
-                                  error={
-                                    touched.alternate_number && Boolean(errors.alternate_number)}
-                                  helperText={
-                                    touched.alternate_number && errors.alternate_number
-                                  }
-                                  required
-                                />
-                              </Grid>
-                            </Grid>
-                          </Box>
-
-                          <TextField
-                            name="email"
-                            value={values.email}
-                            onChange={handleChange}
-                            fullWidth
-                            label="Email"
-                            variant="outlined"
-                            error={touched.email && Boolean(errors.email)}
-                            helperText={touched.email && errors.email}
-                            sx={{ my: 2 }}
-                          />
-
-                          <FormControl fullWidth>
-                            <Select
-                              disablePortal
-                              MenuProps={{ disableScrollLock: true }}
-                              fullWidth
-                              variant="outlined"
-                              value={selectedCountry?.country_name || ""}
-                              onChange={(event) => {
-                                const selectedCountry = countries.find(
-                                  (country) =>
-                                    country.country_name === event.target.value
-                                );
-                                setSelectedCountry(selectedCountry);
-                              }}
-                              sx={{ marginBottom: 2 }}
-                            >
-                              {countries.map((country, index) => (
-                                <MenuItem
-                                  key={index}
-                                  value={country.country_name}
-                                  sx={{
-                                    fontSize: 14,
-                                    ":hover": {
-                                      backgroundColor: "#bb1f2a",
-                                      color: "#fff",
-                                    },
-                                  }}
-                                >
-                                  {country.country_name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-
-                          <FormControl fullWidth>
-                            <Select
-                              disablePortal
-                              MenuProps={{ disableScrollLock: true }}
-                              fullWidth
-                              variant="outlined"
-                              value={selectedCity}
-                              onChange={(e) => setSelectedCity(e.target.value)}
-                              sx={{ marginBottom: 2 }}
-                            >
-                               <MenuItem disabled value="Select City">Select City</MenuItem>
-                              {city?.map((item) => (
-                                <MenuItem key={item.id} value={item.id}>
-                                  {item.city_name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                          <FormControl fullWidth>
-                            <Select
-                              disablePortal
-                              MenuProps={{ disableScrollLock: true }}
-                              fullWidth
-                              variant="outlined"
-                              value={selectedArea}
-                              onChange={(e) => setSelectedArea(e.target.value)}
-                              sx={{ marginBottom: 2 }}
-                            >
-                              <MenuItem disabled value="Select Area">Select Area</MenuItem>
-                              {area?.map((item) => (
-                                <MenuItem key={item.id} value={item.id}>
-                                  {item.area_name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-
-                          <TextField
-                            name="appartment"
-                            value={values.appartment}
-                            onChange={handleChange}
-                            type="text"
-                            fullWidth
-                            label="Apartment No."
-                            variant="outlined"
-                            sx={{ marginBottom: 2 }}
-                            error={touched.appartment && Boolean(errors.appartment)}
-                            helperText={touched.appartment && errors.appartment}
-                          />
-
-                          <TextField
-                            name="building"
-                            value={values.building}
-                            onChange={handleChange}
-                            fullWidth
-                            label="Building No."
-                            variant="outlined"
-                            sx={{ marginBottom: 2 }}
-                            error={touched.building && Boolean(errors.building)}
-                            helperText={touched.building && errors.building}
-                          />
-
-                          <TextField
-                            name="note"
-                            value={values.note}
-                            onChange={handleChange}
-                            fullWidth
-                            label="Note"
-                            variant="outlined"
-                            sx={{ marginBottom: 2 }}
-                            error={touched.note && Boolean(errors.note)}
-                            helperText={touched.note && errors.note}
-                          />
-
+                        <form onSubmit={handleSubmit} >
                           <Box>
                             <TextField
+                              name="name"
+                              value={values?.name}
+                              onChange={handleChange}
                               fullWidth
-                              label="Address"
+                              label="Name"
                               variant="outlined"
-                              name="address"
-                              value={values.address}
-                              error={touched.address && Boolean(errors.address)}
-                              helperText={touched.address && errors.address}
                               sx={{ marginBottom: 2 }}
-                              InputProps={{
-                                endAdornment: (
-                                  <InputAdornment
-                                    onClick={handleOpenDailog}
-                                    sx={{ cursor: "pointer" }}
-                                    position="end"
-                                  >
-                                    <LocationOnIcon />
-                                  </InputAdornment>
-                                ),
-                              }}
+                              error={touched?.name && Boolean(errors?.name)}
+                              helperText={touched?.name && errors?.name}
                             />
-                          </Box>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                gap: { sm: 2, xs: 0 },
+                              }}
+                            >
+                              <Grid container spacing={2}>
+                                <Grid item xs={5} sm={4}>
+                                  <FormControl fullWidth>
+                                    <Select
+                                      disablePortal
+                                      MenuProps={{ disableScrollLock: true }}
+                                      value={selectedCountry?.code || ""}
+                                      variant="outlined"
+                                      sx={{
+                                        padding: "2px 4px",
+                                        border: "1px solid #ccc",
+                                        ".MuiOutlinedInput-notchedOutline": {
+                                          border: "none",
+                                        },
+                                        ".MuiSelect-select": {
+                                          padding: "13px 0px",
+                                          fontSize: "14px",
+                                          color: "#333",
+                                        },
+                                      }}
+                                    >
+                                      <MenuItem value={selectedCountry?.code || ""}>
+                                        <img
+                                          src={selectedCountry?.flag}
+                                          alt={selectedCountry?.name}
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                            marginRight: "4px",
+                                          }}
+                                        />
+                                        {selectedCountry?.code}
+                                      </MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </Grid>
 
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                name="is_default"
-                                onChange={handleChange}
-                                value={values.is_default}
-                                sx={{
-                                  "&.Mui-checked": {
-                                    color: "#bb1f2a",
-                                  },
+                                <Grid item xs={7} sm={8}>
+                                  <TextField
+                                    name="mobile_number"
+                                    value={values.mobile_number}
+                                    onChange={handleChange}
+                                    fullWidth
+                                    type="number"
+                                    label="Mobile Number"
+                                    error={touched.mobile_number && Boolean(errors.mobile_number)}
+                                    helperText={touched.mobile_number && errors.mobile_number}
+                                    required
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                mt: 2,
+                                alignItems: "center",
+                                gap: { sm: 2, xs: 0 },
+                              }}
+                            >
+                              <Grid container spacing={2}>
+                                <Grid item xs={5} sm={4}>
+                                  <FormControl fullWidth>
+                                    <Select
+                                      disablePortal
+                                      MenuProps={{ disableScrollLock: true }}
+                                      value={selectedCountry?.code || ""}
+                                      variant="outlined"
+                                      sx={{
+                                        padding: "2px 4px",
+                                        border: "1px solid #ccc",
+                                        ".MuiOutlinedInput-notchedOutline": {
+                                          border: "none",
+                                        },
+                                        ".MuiSelect-select": {
+                                          padding: "13px 0px",
+                                          fontSize: "14px",
+                                          color: "#333",
+                                        },
+                                      }}
+                                    >
+                                      <MenuItem value={selectedCountry.code}>
+                                        <img
+                                          src={selectedCountry.flag}
+                                          alt={selectedCountry.name}
+                                          style={{
+                                            width: "23px",
+                                            height: "23px",
+                                            marginRight: "4px",
+                                          }}
+                                        />
+                                        {selectedCountry.code}
+                                      </MenuItem>
+                                    </Select>
+                                  </FormControl>
+                                </Grid>
+
+                                <Grid item xs={7} sm={8}>
+                                  <TextField
+                                    name="alternate_number"
+                                    value={values.alternate_number}
+                                    onChange={handleChange}
+                                    fullWidth
+                                    type="number"
+                                    label="Whatsapp Number"
+                                    error={
+                                      touched.alternate_number && Boolean(errors.alternate_number)}
+                                    helperText={
+                                      touched.alternate_number && errors.alternate_number
+                                    }
+                                    required
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+
+                            <TextField
+                              name="email"
+                              value={values.email}
+                              onChange={handleChange}
+                              fullWidth
+                              label="Email"
+                              variant="outlined"
+                              error={touched.email && Boolean(errors.email)}
+                              helperText={touched.email && errors.email}
+                              sx={{ my: 2 }}
+                            />
+
+                            <FormControl fullWidth>
+                              <Select
+                                disablePortal
+                                MenuProps={{ disableScrollLock: true }}
+                                fullWidth
+                                variant="outlined"
+                                value={selectedCountry?.country_name || ""}
+                                onChange={(event) => {
+                                  const selectedCountry = countries.find(
+                                    (country) =>
+                                      country.country_name === event.target.value
+                                  );
+                                  setSelectedCountry(selectedCountry);
+                                }}
+                                sx={{ marginBottom: 2 }}
+                              >
+                                {countries.map((country, index) => (
+                                  <MenuItem
+                                    key={index}
+                                    value={country.country_name}
+                                    sx={{
+                                      fontSize: 14,
+                                      ":hover": {
+                                        backgroundColor: "#bb1f2a",
+                                        color: "#fff",
+                                      },
+                                    }}
+                                  >
+                                    {country.country_name}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+
+                            <FormControl fullWidth>
+                              <Select 
+                                disablePortal
+                                MenuProps={{ disableScrollLock: true }}
+                                fullWidth
+                                variant="outlined"
+                                value={selectedCity}
+                                onChange={(e) => setSelectedCity(e.target.value)}
+                                sx={{ marginBottom: 2 }}
+                              >
+                                <MenuItem disabled value="Select City">Select City</MenuItem>
+                                {city?.map((item) => (
+                                  <MenuItem key={item.id} value={item.id}>
+                                    {item.city_name}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+
+                            </FormControl>
+                            <FormControl fullWidth >
+                              <Select
+                                disablePortal
+                                MenuProps={{ disableScrollLock: true }}
+                                fullWidth
+                                variant="outlined"
+                                value={selectedArea}
+                                onChange={(e) => setSelectedArea(e.target.value)}
+                                sx={{ marginBottom: 2 }}
+                              >
+                                <MenuItem disabled value="Select Area">Select Area</MenuItem>
+                                {area?.map((item) => (
+                                  <MenuItem key={item.id} value={item.id}>
+                                    {item.area_name}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+
+                            <TextField
+                              name="appartment"
+                              value={values.appartment}
+                              onChange={handleChange}
+                              type="text"
+                              fullWidth
+                              label="Apartment No."
+                              variant="outlined"
+                              sx={{ marginBottom: 2 }}
+                              error={touched.appartment && Boolean(errors.appartment)}
+                              helperText={touched.appartment && errors.appartment}
+                            />
+
+                            <TextField
+                              name="building"
+                              value={values.building}
+                              onChange={handleChange}
+                              fullWidth
+                              label="Building No."
+                              variant="outlined"
+                              sx={{ marginBottom: 2 }}
+                              error={touched.building && Boolean(errors.building)}
+                              helperText={touched.building && errors.building}
+                            />
+
+                            <TextField
+                              name="note"
+                              value={values.note}
+                              onChange={handleChange}
+                              fullWidth
+                              label="Note"
+                              variant="outlined"
+                              sx={{ marginBottom: 2 }}
+                              error={touched.note && Boolean(errors.note)}
+                              helperText={touched.note && errors.note}
+                            />
+
+                            <Box>
+                              <TextField
+                                fullWidth
+                                label="Address"
+                                variant="outlined"
+                                name="address"
+                                value={values.address}
+                                error={touched.address && Boolean(errors.address)}
+                                helperText={touched.address && errors.address}
+                                sx={{ marginBottom: 2 }}
+                                InputProps={{
+                                  endAdornment: (
+                                    <InputAdornment
+                                      onClick={handleOpenDailog}
+                                      sx={{ cursor: "pointer" }}
+                                      position="end"
+                                    >
+                                      <LocationOnIcon />
+                                    </InputAdornment>
+                                  ),
                                 }}
                               />
-                            }
-                            label="Set as Default Address"
-                          />
+                            </Box>
 
-                          <Box
-                            sx={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              gap: 2,
-                              mt: 2,
-                            }}
-                          >
-                            <Button
-                              onClick={() => addNewAddress(values)}
-                              variant="contained"
-                              sx={{ backgroundColor: "#bb1f2a" }}
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  name="is_default"
+                                  onChange={handleChange}
+                                  value={values.is_default}
+                                  sx={{
+                                    "&.Mui-checked": {
+                                      color: "#bb1f2a",
+                                    },
+                                  }}
+                                />
+                              }
+                              label="Set as Default Address"
+                            />
+
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-start",
+                                gap: 2,
+                                mt: 2,
+                              }}
                             >
-                              Save Address
-                            </Button>
-                            <Button
-                              variant="outlined"
-                              onClick={handleOpen}
-                              sx={{ color: "#bb1f2a", borderColor: "#bb1f2a" }}
-                            >
-                              Cancel
-                            </Button>
+                              <Button
+                                type="submit"
+                                variant="contained"
+                                sx={{ backgroundColor: "#bb1f2a" }}
+                              >
+                                Save Address
+                              </Button>
+                              <Button
+                                variant="outlined"
+                                onClick={handleOpen}
+                                sx={{ color: "#bb1f2a", borderColor: "#bb1f2a" }}
+                              >
+                                Cancel
+                              </Button>
+                            </Box>
                           </Box>
-                        </Box>
+                        </form>
                       ) : (
                         <>
                           <hr />

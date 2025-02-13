@@ -22,13 +22,12 @@ import { showToast } from "../utils/helper";
 const Cart = ({
   image,
   title,
-  list_price,
   colors,
+  item,
   sizes,
   pattern_image,
   deleteCartItem,
   cartItemId,
-  itmeslug,
   product_id,
   variant_id,
   quantity,
@@ -37,7 +36,12 @@ const Cart = ({
   cartItemQuantity,
   index,
   branchIndex,
+  sale_price,
+  list_price,
+  discount_label
 }) => {
+  console.log(item?.title);
+
   return (
     <Card
       sx={{ display: "flex", mb: 2, boxShadow: " 0 0 7px rgb(0 0 0 / 10%)" }}
@@ -45,8 +49,7 @@ const Cart = ({
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Box
           component="img"
-          // src={image}
-          src="https://cdn.pixabay.com/photo/2020/01/30/17/49/book-4806076_1280.jpg"
+          src={image}
           alt={title}
           loading="lazy"
           sx={{
@@ -62,7 +65,9 @@ const Cart = ({
             product_id: product_id,
             variant_id: variant_id
           }} className="link-none"
-            to={`/products/${itmeslug}`} >
+
+            to={`/products/${title}?product_id=${product_id}&variant_id=${variant_id}`} >
+
             <Typography sx={{
               fontSize: { sm: '1.1rem', xs: '1rem' }, fontWeight: 600, textTransform: 'capitalize', display: '-webkit-box',
               WebkitBoxOrient: 'vertical',
@@ -77,12 +82,23 @@ const Cart = ({
               }
             }}>{title}</Typography>
           </Link>
-          <Typography
-            variant="body1"
-            sx={{ fontWeight: "500", lineHeight: "2" }}
-          >
-            Price: {list_price} AED
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            Price:  <Typography sx={{ fontSize: "20px", fontWeight: "600", color: "#bb1f2a" }}>
+              {sale_price > 0 ? sale_price : list_price} AED
+            </Typography>
+
+            {sale_price > 0 && (
+              <Typography sx={{ fontSize: "14px", color: "gray", textDecoration: "line-through" }}>
+                {list_price} AED
+              </Typography>
+            )}
+
+            {discount_label && (
+              <Typography sx={{ fontSize: "14px", color: "green" }}>
+                {discount_label}
+              </Typography>
+            )}
+          </Box>
           {colors && colors.length > 0 ? (
             <Typography
               variant="body1"
@@ -159,7 +175,7 @@ const Cart = ({
           </Box>
         </CardContent>
       </Box>
-    </Card>
+    </Card >
   );
 };
 
@@ -198,25 +214,19 @@ const CartPage = () => {
       const maxItemQuantity =
         cartItems?.branch?.[branch]?.item?.[index]?.quantity || maxQuantity;
 
-      if (currentQuantity < maxQuantity && currentQuantity < maxItemQuantity) {
-        // Deep copy to avoid modifying state directly
-        const updatedQuantities = quantity.map((b, i) =>
-          i === branch ? [...b] : b
-        );
-
+      if (currentQuantity < maxItemQuantity) {
+        const updatedQuantities = [...quantity];
+        updatedQuantities[branch] = [...updatedQuantities[branch]];
         updatedQuantities[branch][index] = currentQuantity + 1;
         setQuantity(updatedQuantities);
 
-        // Debounce to avoid unnecessary API calls
+        // Debounce API call
         if (debounceRef.current) {
           clearTimeout(debounceRef.current);
         }
+
         debounceRef.current = setTimeout(() => {
-          incrementQuantity(
-            product_variant_id,
-            maxQuantity,
-            updatedQuantities[branch][index]
-          );
+          incrementQuantity(product_variant_id, updatedQuantities[branch][index]);
         }, 500);
       } else {
         showToast("warning", "Maximum quantity reached!", "danger");
@@ -225,6 +235,7 @@ const CartPage = () => {
       console.warn("Invalid branch or index provided.");
     }
   };
+
 
 
 
@@ -250,10 +261,6 @@ const CartPage = () => {
       console.warn("Invalid branch or index provided.");
     }
   };
-
-
-
-
 
   return (
     <>
@@ -334,12 +341,15 @@ const CartPage = () => {
               {cartItems?.branch && cartItems?.branch?.length > 0 ? (
                 cartItems?.branch?.map(
                   (item, branchIndex) =>
-                    item.item &&
-                    item.item.map((item, index) => {
+                    item?.item &&
+                    item?.item?.map((item, index) => {
                       return (
                         <Cart
                           key={index}
                           {...item}
+                          sale_price={item?.sale_price}
+                          list_price={item?.list_price}
+                          discount_label={item?.discount_label}
                           cartItemId={item?.cart_item_id}
                           itmeslug={item?.slug}
                           product_id={item?.product_id}

@@ -21,8 +21,11 @@ const useCartStore = create((set, get) => ({
 
     try {
       const res = await cardApi.creteCart(params);
+      console.log("Create Cart API Response:", res); // 🔹 Check if this runs
       if (res && res.status === 200) {
-        const cartId = res.data.cart_id;
+        const cartId = res?.data?.cart_id;
+        console.error("Error: API did not return a valid cart_id!", cartId);
+
         localStorage.setItem("cart_id", cartId);
         return cartId;
       }
@@ -40,7 +43,7 @@ const useCartStore = create((set, get) => ({
     const { setCartIds } = get();
     try {
       const response = await cardApi.getCartProductIds({
-        cart_id: localStorage.getItem("cart_id"),
+        cart_id: localStorage?.getItem("cart_id"),
         branch_id: 1,
         type: "branch",
       });
@@ -56,10 +59,10 @@ const useCartStore = create((set, get) => ({
 
   addToCart: async (id, qty) => {
     const { cartIds, setCartIds } = get();
-    let cartId = localStorage.getItem("cart_id");
+    let cartId = localStorage?.getItem("cart_id");
 
     if (!cartId) {
-      cartId = await get().creteToCart();
+      cartId = await get().createToCart();
       if (!cartId) {
         return;
       }
@@ -164,7 +167,7 @@ const useCartStore = create((set, get) => ({
 
   deleteCartItem: async (cartItemId) => {
     const params = {
-      cart_id: localStorage.getItem("cart_id"),
+      cart_id: localStorage?.getItem("cart_id"),
       cart_item_id: cartItemId,
     };
     try {
@@ -184,6 +187,7 @@ const useCartStore = create((set, get) => ({
 
   isItemInCart: (product_variant_id) => {
     const { cartIds } = get();
+    console.log(product_variant_id, cartIds, 'cartIds')
     return cartIds.includes(product_variant_id?.toString());
   },
 }));

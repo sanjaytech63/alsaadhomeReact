@@ -22,6 +22,8 @@ const ResultList = ({ data, handleClose }) => {
     );
   }
 
+  console.log(data, "data");
+
   return (
     <Box
       sx={{
@@ -44,7 +46,7 @@ const ResultList = ({ data, handleClose }) => {
           height: '100%',
         }}
       >
-        {data.map((item) => (
+        {data?.map((item) => (
           <Grid
             item
             xs={6}
@@ -55,11 +57,10 @@ const ResultList = ({ data, handleClose }) => {
               pb: 2,
             }}
           >
-            <Link state={{
-              product_id: item.product_id,
-              variant_id: item.product_variant_id
-            }} className="link-none"
-              to={`/products/${item.slug}`} >
+            <Link
+              className="link-none"
+              to={`/products/${item?.slug}?product_id=${item?.product_id?.toString()}&variant_id=${item?.product_variant_id?.toString()}`}
+            >
               <Card
                 onClick={() => {
                   handleClose();

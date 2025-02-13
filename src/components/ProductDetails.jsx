@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { Container, Grid, Typography, Button, Box, List, ListItem, Link, Card, CardContent, useTheme, Breadcrumbs, Rating, IconButton, CardMedia, useMediaQuery, } from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Carousel from "react-multi-carousel";
@@ -18,9 +18,13 @@ import { showToast } from "../utils/helper";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import RecommendedProducts from "./RecommendedProducts";
 import { WhatsappShareButton, WhatsappIcon, FacebookShareButton, FacebookIcon } from "react-share";
+import useUserStore from "../store/user";
+
+
 const ProductDetails = () => {
-  const { isItemInCart, addToCart, incrementQuantity, decrementQuantity } = useCartStore();
+  const { isItemInCart, addToCart, incrementQuantity, decrementQuantity, getCart,cartItems } = useCartStore();
   const { toggleWishlist, isItemInWishlist } = useWishListStore();
+  const { isLoggedIn } = useUserStore();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -35,7 +39,19 @@ const ProductDetails = () => {
   const [getDetails, setGetDetails] = useState(null);
   const [getSimilar, setGetSimilar] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (images?.length > 0) {
+      const firstImage = images?.[0]?.items?.[0]?.photo?.[0]?.src;
+      if (firstImage) {
+        setSelectedImage(firstImage);
+      }
+    }
+  }, [images]);
+
+
+  const [loading, setLoading] = useState(false);
+  const timeoutRef = useRef(null);
   const navigate = useNavigate();
 
   const handleSelectImage = (src) => {
@@ -90,27 +106,41 @@ const ProductDetails = () => {
   const productId = searchParams.get("product_id");
   const variantId = searchParams.get("variant_id");
 
-  const handleIncrement = (variant_id, maxQuantity) => {
-    let inCart = isItemInCart(variant_id);
-    if (maxQuantity > selectedQuantity) {
+  let inCart = isItemInCart(selectedProductInfo?.variant_id);
+  console.log(inCart, selectedProductInfo?.variant_id)
+
+  const handleIncrement = (product_variant_id, maxQuantity, qty) => {
+
+
+    let inCart = isItemInCart(product_variant_id?.toString());
+    console.log(inCart);
+    if (maxQuantity > qty) {
       if (inCart) {
         setSelectedQuantity(selectedQuantity + 1)
-        debouncedIncrement(productId, selectedQuantity);
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+        }
+        timeoutRef.current = setTimeout(() => {
+          debouncedIncrement(product_variant_id, qty + 1);
+        }, 500);
       } else {
         setSelectedQuantity(selectedQuantity + 1)
       }
     } else {
-      showToast("error", 'You have booked all the products');
+      showToast("error", ('You have booked all the products'));
     }
   };
 
-  const handleDecrement = (variant_id, maxQuantity) => {
-    if (selectedQuantity > 1 && selectedQuantity <= maxQuantity) {
+  const debouncedIncrement = useCallback((productI, qty) => {
+    incrementQuantity(productI, qty);
+  }, []);
+
+  const handleDecrement = (variant_id, maxQuantity, qty) => {
+    if (qty > 1) {
       let inCart = isItemInCart(variant_id);
       if (inCart) {
         setSelectedQuantity(selectedQuantity - 1)
-        debouncedDecrement(variant_id, selectedQuantity);
-
+        debouncedDecrement(variant_id, qty - 1);
       } else {
         setSelectedQuantity(selectedQuantity - 1)
       }
@@ -119,18 +149,41 @@ const ProductDetails = () => {
     }
   };
 
-  const debouncedIncrement = useCallback((productI, qty) => {
-    incrementQuantity(productI, qty);
-  }, []);
+
+  const getCartQuantityByVariantId = (variantId) => {
+    if (cartItems && cartItems.branch) {
+        for (let branch of cartItems.branch) {
+            const foundItem = branch.item.find(item => item.product_variant_id?.toString() === variantId.toString());
+            if (foundItem) {
+                return foundItem.cart_quantity;
+            }
+        }
+    }
+    return 1;
+};
+
+useEffect(() => {
+  if (cartItems && selectedProductInfo) {
+      let qty = getCartQuantityByVariantId(Number(selectedProductInfo?.variant_id))
+      setSelectedQuantity(qty || 1)
+  }
+}, [selectedProductInfo, cartItems])
+
 
 
   const debouncedDecrement = useCallback((productI, qty) => {
     decrementQuantity(productI, qty);
   }, []);
 
+
+    useEffect(() => {
+      getCart();
+    }, [])
+
   const handleColorChange = (variantId, variantItemInfo) => {
-    if (selectedColorIndex === variantId) return;
-    const selectedVariant = variantItemInfo?.items?.find(item => item?.variant_id?.toString() === variantId);
+    if (selectedColorIndex?.toString() == variantId) return;
+    const selectedVariant = variantItemInfo?.items?.find(item => item?.variant_id == variantId);
+
     if (selectedVariant) {
       setSelectedProductInfo(selectedVariant);
       if (variantItemInfo?.sizes) {
@@ -148,7 +201,7 @@ const ProductDetails = () => {
     }
     try {
       const res = await homeApi.getProductDetails({
-        customer_id: storedUserInfo.id.toString(),
+        customer_id: storedUserInfo.id,
         product_id: productId,
         variant_id: variantId,
       });
@@ -159,14 +212,16 @@ const ProductDetails = () => {
         if (variants && variants?.length > 0) {
           const flattenedItems = variants.flatMap((variant) => variant?.items || []);
           const selectedProductInfo = flattenedItems.find((info) =>
-            info?.variant_id?.toString() === variantId?.toString()
+            info?.variant_id?.toString() === variantId
           );
+
           if (selectedProductInfo) {
             const selectedVariantIndex = variants?.findIndex((variant) =>
-              variant.items.some((item) => item?.variant_id?.toString() === selectedProductInfo?.variant_id?.toString())
+              variant.items.some((item) => item?.variant_id === selectedProductInfo?.variant_id)
             );
             const selectedSizes = variants[selectedVariantIndex]?.sizes || [];
-            setSizes(selectedSizes);
+            const size = selectedSizes?.find((size) => size?.variant_id == selectedProductInfo?.variant_id);
+            setSizes(size);
             setSelectedColorIndex(selectedProductInfo?.variant_id);
             setProductData(variants);
             if (selectedProductInfo) {
@@ -187,6 +242,7 @@ const ProductDetails = () => {
     }
   }, [productId]);
 
+console.log(variantId, 'variantId')
 
   useEffect(() => {
     if (variantId) {
@@ -245,7 +301,7 @@ const ProductDetails = () => {
   const getSimilarProduct = async () => {
     setLoading(true)
     let reqBody = {
-      customer_id: storedUserInfo.id.toString(),
+      customer_id: storedUserInfo.id,
       product_id: productId,
       product_varaint_id: variantId
     };
@@ -265,6 +321,8 @@ const ProductDetails = () => {
   useEffect(() => {
     getSimilarProduct();
   }, []);
+
+  console.log()
 
   if (loading) {
     return <Loading />;
@@ -411,7 +469,7 @@ const ProductDetails = () => {
                             <CardMedia
                               onClick={() => handleSelectImage(p?.src)}
                               component="img"
-                              src={  p?.src}
+                              src={p?.src}
                               alt="Product Image"
                               loading="lazy"
                               sx={{
@@ -571,13 +629,16 @@ const ProductDetails = () => {
                                         py: 1,
                                         px: 1,
                                         mr: 2,
+                                        gap: 2,
+                                        fontSize: "15px",
+                                        borderRadius: "5px",
                                         background: "#bb1f2a",
                                         color: "#fff",
-                                        '&:hover': { background: "#a61c25" } // Optional hover effect
+                                        '&:hover': { background: "#a61c25" }
                                       }}
                                       onClick={() => {
                                         if (!isItemInCart(product?.product_variant_id?.toString())) {
-                                          addToCart(product?.product_variant_id?.toString());
+                                          addToCart(product?.product_variant_id);
                                         } else {
                                           navigate("/cart");
                                         }
@@ -596,7 +657,7 @@ const ProductDetails = () => {
                                           d="M1015.66 284a31.82 31.82 0 0 0-25.999-13.502h-99.744L684.78 95.666c-24.976-24.976-65.52-25.008-90.495 0L392.638 270.498h-82.096l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.568 0-31.776 14.224-31.776 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.592 23.183h431.968c13.408 0 25.376-8.4 29.904-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM639.537 140.93l152.032 129.584H487.457zm175.488 579.263H429.538L328.386 334.065h616.096zm-63.023 127.936c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80"
                                         />
                                       </svg>
-                                      {isItemInCart(product?.product_variant_id?.toString()) ? "Go to Cart" : "Add to Cart"}
+                                      <Typography> {isItemInCart(product?.product_variant_id?.toSting()) ? "Go to Cart" : "Add to Cart"}</Typography>
                                     </IconButton>
                                   </Box>
 
@@ -650,27 +711,28 @@ const ProductDetails = () => {
               </Box>
 
               <Box sx={{ display: "flex", alignItems: "center", mt: 1, gap: 2 }}>
-                Color:
+                Pattern:
                 {productData?.length > 0 &&
                   productData.map((variantItemInfo, index) => {
                     const { pattern, colors, sizes } = variantItemInfo;
-                    const patternVariantId = pattern?.variant_id?.toString();
-                    const colorVariantId = colors?.variant_id?.toString();
+                    const patternVariantId = pattern?.variant_id;
+                    const colorVariantId = colors?.variant_id;
+
                     const isActive =
-                      selectedProductInfo?.variant_id?.toString() === patternVariantId ||
-                      selectedProductInfo?.variant_id?.toString() === colorVariantId ||
-                      sizes?.some(size => size.variant_id?.toString() === selectedProductInfo?.variant_id?.toString());
-                    const borderColor = isActive ? "#bb1f2a" : "#fff";
+                      selectedProductInfo?.variant_id == patternVariantId ||
+                      selectedProductInfo?.variant_id == colorVariantId ||
+                      sizes?.some(size => size.variant_id === selectedProductInfo?.variant_id);
+                    const borderColor = isActive ? "#bb1f2a" : "gray";
                     if (patternVariantId) {
                       return (
-
-                        <Box key={index} onClick={() => handleColorChange(patternVariantId, variantItemInfo)}
+                        <Box key={index}
                           sx={{
                             cursor: 'pointer',
                             display: "flex"
                           }}
                         >
-                          <CardMedia
+                          {/* <Typography sx={{ fontSize: "14px", fontWeight: "600", color: "#687188",display:"inline-block" }}>Pattern:</Typography> */}
+                          <CardMedia onClick={() => handleColorChange(patternVariantId, variantItemInfo)}
                             component={"img"}
                             src={variantItemInfo?.pattern?.image}
                             sx={{
@@ -684,9 +746,10 @@ const ProductDetails = () => {
                       );
                     } else {
                       return (
-                        <Box key={index} onClick={() => handleColorChange(colorVariantId, variantItemInfo)}  >
+                        <Box key={index}   >
+                          {/* <Typography sx={{ fontSize: "14px", fontWeight: "600", color: "#687188" }}>Color:</Typography> */}
                           {variantItemInfo?.colors?.all_colors?.map((c, i) => (
-                            <Box key={i} sx={{ backgroundColor: c, width: "25px", height: "25px", borderRadius: "50%", border: isActive ? `solid 1px ${borderColor}` : `solid 1px ${borderColor}`, }} />
+                            <Box key={i} onClick={() => handleColorChange(colorVariantId, variantItemInfo)} sx={{ backgroundColor: c, width: "25px", height: "25px", borderRadius: "50%", border: isActive ? `solid 1px ${borderColor}` : `solid 1px ${borderColor}`, }} />
                           ))}
                         </Box>
                       );
@@ -696,7 +759,7 @@ const ProductDetails = () => {
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 3 }}>
               <Typography sx={{}} >
-                {selectedProductInfo?.size_group_name}:
+                {selectedProductInfo?.size_group_name}
               </Typography>
               <Typography sx={{ px: 1, py: 0.5, backgroundColor: "#bb1f2a", color: "#fff", borderRadius: "4px", cursor: "pointer" }} >
                 {selectedProductInfo?.size_name}
@@ -723,22 +786,22 @@ const ProductDetails = () => {
 
             <Box display="flex" flexDirection="column" my={2} alignItems="flex-start" gap={4}>
               <Box display="flex" alignItems="center" gap={1}>
-                <Box sx={{ backgroundColor: "#eee", px: 1, cursor: "pointer" }} onClick={() => handleDecrement(selectedProductInfo?.variant_id, selectedProductInfo?.quantity)} size="small" >
+                <Box sx={{ backgroundColor: "#eee", px: 1, cursor: "pointer" }} onClick={() => handleDecrement(selectedProductInfo?.variant_id, selectedProductInfo?.quantity, selectedQuantity)} size="small" >
                   -
                 </Box>
                 {
                   selectedQuantity
                 }
                 {productData && (
-                  <Box sx={{ backgroundColor: "#eee", px: 1, cursor: "pointer" }} onClick={() => handleIncrement(selectedProductInfo?.variant_id, selectedProductInfo?.quantity)}>
+                  <Box sx={{ backgroundColor: "#eee", px: 1, cursor: "pointer" }} onClick={() => handleIncrement(selectedProductInfo?.variant_id, selectedProductInfo?.quantity, selectedQuantity)}>
                     +
                   </Box>
                 )}
 
                 <Button onClick={() => {
-                  if (!isItemInCart(variantId)) {
-                    addToCart(variantId);
-                  }else{
+                  if (!isItemInCart(selectedProductInfo?.variant_id)) {
+                    addToCart(variantId?.toString());
+                  } else {
                     navigate("/cart")
                   }
                 }}
@@ -760,7 +823,7 @@ const ProductDetails = () => {
                         d="M1015.66 284a31.82 31.82 0 0 0-25.999-13.502h-99.744L684.78 95.666c-24.976-24.976-65.52-25.008-90.495 0L392.638 270.498h-82.096l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.568 0-31.776 14.224-31.776 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.592 23.183h431.968c13.408 0 25.376-8.4 29.904-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM639.537 140.93l152.032 129.584H487.457zm175.488 579.263H429.538L328.386 334.065h616.096zm-63.023 127.936c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80"
                       />
                     </svg>
-                  </IconButton>  {isItemInCart(variantId) ? "Go to Cart" : "Add to Cart"}
+                  </IconButton> { isItemInCart(selectedProductInfo?.variant_id) ? "Go to Cart" : "Add to Cart"}
                 </Button>
                 <IconButton
 
@@ -784,7 +847,14 @@ const ProductDetails = () => {
                     },
                     color: "#292b2c",
                   }}
-                  onClick={() => toggleWishlist(productId, variantId)}
+
+                  onClick={() => {
+                    if (isLoggedIn === true) {
+                      toggleWishlist(productId, variantId)
+                    } else {
+                      showToast("error", "Please login to add to wishlist", "danger")
+                    }
+                  }}
                   aria-label="add to wishlist"
                 >
                   <FavoriteBorder sx={{ fontSize: "1rem" }} />
@@ -838,9 +908,9 @@ const ProductDetails = () => {
                 </Box>
               </Box>
             </Box>
-            {selectedProductInfo?.description?.toString() && (
+            {selectedProductInfo?.description && (
               <Box sx={{ color: "#687188" }}>
-                <Typography>{parse(selectedProductInfo?.description?.toString())}</Typography>
+                <Typography>{parse(selectedProductInfo?.description)}</Typography>
               </Box>
             )}
 

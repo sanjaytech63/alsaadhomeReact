@@ -23,11 +23,10 @@ import ChekOutMap from '../components/Map/ChekOutMap';
 import placeOrderApi from '../utils/services/placeOrder';
 import { decryptData, encryptData } from '../utils/services/AlsaadRSA';
 import useCartStore from '../store/useCartStore';
-
+import { Done, Close } from "@mui/icons-material";
 const Checkout = () => {
     const [countryCode, setCountryCode] = useState("+ 968");
     const [open, setOpen] = useState(false);
-    const [cuoponCode, setCuoponCode] = useState(null);
     const [opneShhipingAddress, setOpenShhipingAddress] = useState(false);
     const [checked, setChecked] = useState(false);
     const { addresses, getShipping } = useAddressStore();
@@ -37,11 +36,10 @@ const Checkout = () => {
     const selectedCountry = useSettingsStore((state) => state.selectedCountry);
     const [city, setCity] = useState(null);
     const [area, setArea] = useState(null);
-    const [selectedCity, setSelectedCity] = useState([]);
-    const [selectedArea, setSelectedArea] = useState([]);
+    const [selectedCity, setSelectedCity] = useState("Select City");
+    const [selectedArea, setSelectedArea] = useState("Select Area");
     const [checkout, setCheckOut] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [saveLoad, setSaveLoad] = useState(false);
     const [initialValues, setInitialValues] = useState({
         country_id: selectedCountry?.id,
         city_id: '',
@@ -60,6 +58,8 @@ const Checkout = () => {
         is_default: "",
         country_code: selectedCity?.country_code || "",
     });
+    const [cuoponCode, setCuoponCode] = useState("");
+    const [appliedCoupon, setAppliedCoupon] = useState(null);
 
     const { getCart } = useCartStore();
 
@@ -105,28 +105,39 @@ const Checkout = () => {
 
 
     const addCuoponCode = async (id, cuoponCode) => {
-        if (!cuoponCode) {
-            return;
-        }
+        if (!cuoponCode) return;
+
         setLoading(true);
         try {
             const req = {
                 code: cuoponCode,
                 checkout_id: id
-            }
+            };
             const response = await checkOutServices.addCoupon(req);
+
             if (response && response.status === 200) {
                 showToast("success", response.message, "success");
-                setCuoponCode("");
-                setLoading(false);
+                setAppliedCoupon(cuoponCode);
+                setCuoponCode(cuoponCode);
             }
-
         } catch (error) {
-            console.log(error, "error in addCuoponCode");
+            console.error("Error in addCuoponCode:", error);
+        } finally {
             setLoading(false);
-
         }
-    }
+    };
+
+    const handleApplyCoupon = () => {
+        if (cuoponCode.trim()) {
+            addCuoponCode(checkout?.checkout_id, cuoponCode);
+        }
+    };
+
+    const handleRemoveCoupon = () => {
+        setCuoponCode("");
+        setAppliedCoupon(null);
+    };
+
 
     // balling address
     const { countries, fetchCountries } = useCountryStore();
@@ -162,17 +173,17 @@ const Checkout = () => {
     const storedUserInfo = JSON.parse(localStorage.getItem("USER") || "{}");
     const validationSchema = Yup.object({
         name: Yup.string().required('Name is required'),
-        mobile_number: Yup.string().required('Phone number is required'),
-        country_code: Yup.string().required('Country code is required'),
+        mobile_number: Yup.string()
+            .matches(/^\d+$/, 'Only numbers are allowed')
+            .required('Phone number is required'),
         email: Yup.string()
             .email('Invalid email address')
             .required('Email is required'),
-        address: Yup.string().required('Address is required'),
-        city: Yup.string().required('City is required'),
-        area: Yup.string().required('Area is required'),
-        country: Yup.string().notRequired(),
+        address: Yup.string().notRequired(),
+        city_id: Yup.string().notRequired(),
+        area_id: Yup.string().notRequired(),
+        country_id: Yup.string().notRequired(),
     });
-
 
     const getCity = async () => {
         try {
@@ -220,9 +231,6 @@ const Checkout = () => {
         googleMapsApiKey: google_place_api,
         libraries: ["places"],
     });
-
-
-
 
     const getLocation = useCallback(() => {
         if (navigator.geolocation) {
@@ -276,7 +284,6 @@ const Checkout = () => {
                 `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${google_place_api}`
             );
 
-
             let newCity = "";
             for (let component of response.data.results[0].address_components) {
                 for (let type of component.types) {
@@ -287,7 +294,6 @@ const Checkout = () => {
                 }
                 if (newCity) break;
             }
-
 
             if (response?.data?.results?.length > 0) {
                 setInitialValues((pri) => ({
@@ -329,7 +335,7 @@ const Checkout = () => {
             "token": "",
             "is_coupon_applied": cuoponCode,
             "email": values?.email,
-            customer_id: storedUserInfo.id.toString(),
+            customer_id: storedUserInfo.id,
             "applied_coupon": cuoponCode,
             cart_id: cart_id,
             "version": "36",
@@ -345,15 +351,13 @@ const Checkout = () => {
             "note": values?.note
         }
         try {
-            setSaveLoad(true);
             const response = await checkOutServices.checkOut(checkoutData);
             if (response && response.status === 200) {
-                setSaveLoad(false);
                 setCheckOut(response?.data);
+                showToast("success", response?.data?.message, "success");
             }
         } catch (error) {
             console.log(error);
-            setSaveLoad(false);
         }
     };
 
@@ -409,31 +413,46 @@ const Checkout = () => {
                                         value={cuoponCode}
                                         onChange={(e) => setCuoponCode(e.target.value)}
                                         fullWidth
-                                        name='coupon'
+                                        name="coupon"
                                         label="Enter Coupon"
                                         variant="outlined"
                                         sx={{
-                                            height: '52px',
-                                            '& .MuiOutlinedInput-root': {
-                                                height: '100%',
-                                                borderRadius: { sm: 0, xs: '8px 0 0 8px' },
+                                            height: "52px",
+                                            "& .MuiOutlinedInput-root": {
+                                                height: "100%",
+                                                borderRadius: { sm: 0, xs: "8px 0 0 8px" },
                                             },
+                                        }}
+                                        InputProps={{
+                                            endAdornment: appliedCoupon ? (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={handleRemoveCoupon} size="small">
+                                                        <Close color="error" />
+                                                    </IconButton>
+                                                    <Done color="success" />
+                                                </InputAdornment>
+                                            ) : null,
                                         }}
                                     />
                                 </Grid>
                                 <Grid item xs={6} sm={4}>
-                                    <Button onClick={() => addCuoponCode(checkout?.checkout_id, cuoponCode)}
+                                    <Button
+                                        onClick={handleApplyCoupon}
                                         fullWidth
-                                        disabled={!cuoponCode?.trim()}
+                                        disabled={!cuoponCode?.trim() || appliedCoupon}
                                         variant="contained"
                                         sx={{
-                                            borderRadius: { sm: 0, xs: '0 8px 8px 0' },
-                                            height: '52px',
+                                            borderRadius: { sm: 0, xs: "0 8px 8px 0" },
+                                            height: "52px",
                                             padding: 0,
-                                            backgroundColor: '#bb1f2a',
+                                            backgroundColor: appliedCoupon ? "green" : "#bb1f2a",
                                         }}
                                     >
-                                        {loading ? <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}><CircularProgress color="#333" size={24} /> Loading... </Box> : "Apply Coupon"}
+                                        {loading ? (
+                                            <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}>
+                                                <CircularProgress color="#fff" size={24} /> Loading...
+                                            </Box>
+                                        ) : appliedCoupon ? "Applied" : "Apply Coupon"}
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -451,7 +470,7 @@ const Checkout = () => {
                             Billing Details
                         </Typography>
                         <Formik
-                            initialValues={initialValues || {}}
+                            initialValues={initialValues}
                             validationSchema={validationSchema}
                             onSubmit={async (values, { resetForm }) => {
                                 await fetchCheckOut(values);
@@ -459,7 +478,6 @@ const Checkout = () => {
                             }}
                             enableReinitialize
                         >
-
                             {({ handleChange,
                                 handleBlur,
                                 handleSubmit,
@@ -467,14 +485,17 @@ const Checkout = () => {
                                 errors,
                                 touched,
                                 isValid, }) => (
-                                <Box sx={{}}>
+                                <form onSubmit={handleSubmit} noValidate autoComplete="off">
                                     <TextField
                                         name="name"
+                                        type="text"
                                         value={values?.name}
                                         onChange={handleChange}
                                         fullWidth
                                         label="Name"
                                         variant="outlined"
+                                        error={touched.name && Boolean(errors.name)}
+                                        helperText={touched.name && errors.name}
                                         sx={{ marginBottom: 2 }}
                                     />
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: { sm: 2, xs: 0 } }}>
@@ -606,142 +627,7 @@ const Checkout = () => {
                                     <Button fullWidth onClick={handleOpenShhipingAddress} variant="contained" sx={{ marginBottom: 2, backgroundColor: "#bb1f2a" }}>
                                         Shipping Address
                                     </Button>
-                                    {/* shhipping address */}
-                                    <Dialog disablePortal
-                                        MenuProps={{ disableScrollLock: true }} open={opneShhipingAddress} onClose={handleCloseShhipingAddress} fullWidth maxWidth="md">
-                                        <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                            <Typography variant="h6">Shipping Address</Typography>
-                                            <IconButton
-                                                edge="end"
-                                                color="inherit"
-                                                onClick={handleCloseShhipingAddress}
-                                                aria-label="close"
-                                                sx={{ position: 'absolute', right: "20px", }}
-                                            >
-                                                <CloseIcon />
-                                            </IconButton>
-                                        </DialogTitle>
-                                        <DialogContent>
-                                            <Box sx={{ height: '400px', width: '100%', overflow: 'auto', }}>
-                                                {/* Header */}
-                                                <Box
-                                                    sx={{
-                                                        display: "grid",
-                                                        gridTemplateColumns: "repeat(5, 1fr)",
-                                                        gap: 2,
-                                                        alignItems: "center",
-                                                    }}
-                                                >
-                                                    <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>Country</Typography>
-                                                    <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>City</Typography>
-                                                    <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>Area</Typography>
-                                                    <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>Address</Typography>
-                                                    <Typography sx={{ fontWeight: "600", fontSize: "16px", textAlign: "center" }}>
-                                                        Select
-                                                    </Typography>
-                                                </Box>
 
-                                                {/* Data Rows */}
-                                                {addresses.map((item) => (
-                                                    <Box
-                                                        key={item?.id}
-                                                        sx={{
-                                                            display: "grid",
-                                                            gridTemplateColumns: "repeat(5, 1fr)",
-                                                            gap: 2,
-                                                            my: 1,
-                                                            alignItems: "center",
-                                                            borderBottom: '1px solid #eee'
-                                                        }}
-                                                    >
-                                                        <Typography
-                                                            sx={{
-                                                                color: "#292b2c",
-                                                                textTransform: "capitalize",
-                                                                fontSize: { sm: "16px", xs: "14px" },
-                                                            }}
-                                                        >
-                                                            {item?.country}
-                                                        </Typography>
-
-                                                        <Typography
-                                                            sx={{
-                                                                color: "#292b2c",
-                                                                textTransform: "capitalize",
-                                                                fontSize: { sm: "16px", xs: "14px" },
-                                                            }}
-                                                        >
-                                                            {item?.city}
-                                                        </Typography>
-
-                                                        <Typography
-                                                            sx={{
-                                                                color: "#292b2c",
-                                                                textTransform: "capitalize",
-                                                                fontSize: { sm: "16px", xs: "14px" },
-                                                            }}
-                                                        >
-                                                            {item?.area || "N/A"}
-                                                        </Typography>
-
-                                                        <Typography
-                                                            sx={{
-                                                                color: "#292b2c",
-                                                                textTransform: "capitalize",
-                                                                fontSize: { sm: "16px", xs: "14px" },
-                                                            }}
-                                                        >
-                                                            {item?.address.split(" ").slice(0, 5).join(" ")}
-                                                            {item?.address.split(" ").length > 5 ? "..." : ""}
-                                                        </Typography>
-
-                                                        <Button
-                                                            variant="contained"
-                                                            sx={{
-                                                                backgroundColor: "#bb1f2a",
-                                                                color: "#fff",
-                                                                textTransform: "capitalize",
-                                                                fontSize: { sm: "16px", xs: "14px" },
-                                                                justifySelf: "center",
-                                                            }}
-                                                        >
-                                                            Select
-                                                        </Button>
-                                                    </Box>
-
-                                                ))}
-                                            </Box>
-                                        </DialogContent>
-
-
-                                    </Dialog>
-                                    {/* google maps */}
-                                    <Dialog disablePortal
-                                        MenuProps={{ disableScrollLock: true }} open={open} onClose={handleClose} fullWidth maxWidth="md">
-                                        <DialogTitle>
-                                            <TextField label="Enter a location" variant="outlined" sx={{ width: '90%', marginBottom: 2 }} />
-                                            <IconButton
-                                                edge="end"
-                                                color="inherit"
-                                                onClick={handleClose}
-                                                aria-label="close"
-                                                sx={{ position: 'absolute', right: "20px", top: "20px" }}
-                                            >
-                                                <CloseIcon />
-                                            </IconButton>
-                                        </DialogTitle>
-                                        <DialogContent>
-                                            <Box sx={{ height: '400px', width: '100%' }}>
-                                                <iframe
-                                                    src="https://www.google.com/maps?q=Shanghai+location&output=embed"
-                                                    style={{ border: 0, width: '100%', height: '100%' }}
-                                                    allowFullScreen
-                                                    loading="lazy"
-                                                    title="Google Maps"
-                                                />
-                                            </Box>
-                                        </DialogContent>
-                                    </Dialog>
                                     <FormControl fullWidth>
                                         <Select
                                             disablePortal
@@ -776,7 +662,7 @@ const Checkout = () => {
                                         </Select>
                                     </FormControl>
 
-                                    <FormControl fullWidth>
+                                    <FormControl fullWidth >
                                         <Select
                                             disablePortal
                                             MenuProps={{ disableScrollLock: true }}
@@ -786,6 +672,7 @@ const Checkout = () => {
                                             onChange={(e) => setSelectedCity(e.target.value)}
                                             sx={{ marginBottom: 2 }}
                                         >
+                                            <MenuItem disabled value="Select City">Select City</MenuItem>
                                             {city?.map((item) => (
                                                 <MenuItem key={item?.id} value={item?.id}>
                                                     {item?.city_name}
@@ -793,7 +680,7 @@ const Checkout = () => {
                                             ))}
                                         </Select>
                                     </FormControl>
-                                    <FormControl fullWidth>
+                                    <FormControl fullWidth >
                                         <Select
                                             disablePortal
                                             MenuProps={{ disableScrollLock: true }}
@@ -803,7 +690,7 @@ const Checkout = () => {
                                             onChange={(e) => setSelectedArea(e.target.value)}
                                             sx={{ marginBottom: 2 }}
                                         >
-                                            <MenuItem value="Select City">Select Area</MenuItem>
+                                            <MenuItem value="Select Area">Select Area</MenuItem>
                                             {area?.map((item) => (
                                                 <MenuItem key={item?.id} value={item?.id}>
                                                     {item?.area_name}
@@ -811,6 +698,7 @@ const Checkout = () => {
                                             ))}
                                         </Select>
                                     </FormControl>
+
                                     <TextField
                                         name="appartment"
                                         value={values?.appartment}
@@ -871,13 +759,14 @@ const Checkout = () => {
                                         />
                                     </Box>
                                     <Button
-                                        onClick={() => fetchCheckOut(values)}
+                                        type='submit'
                                         variant="contained"
+                                        disabled={!isValid}
                                         sx={{ backgroundColor: "#bb1f2a" }}
                                     >
-                                        {saveLoad ? <Box sx={{ display: "flex", alignItems: "center", gap: 1, color: "white" }}><CircularProgress color="#333" size={24} /> Saving... </Box> : "Save Address"}
+                                        Save Address
                                     </Button>
-                                </Box>
+                                </form>
                             )}
                         </Formik>
                     </Grid>
@@ -1119,7 +1008,142 @@ const Checkout = () => {
                         </Box>
                     </Grid>
                 </Grid>
+                {/* shhipping address */}
+                <Dialog disablePortal
+                    MenuProps={{ disableScrollLock: true }} open={opneShhipingAddress} onClose={handleCloseShhipingAddress} fullWidth maxWidth="md">
+                    <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <Typography variant="h6">Shipping Address</Typography>
+                        <IconButton
+                            edge="end"
+                            color="inherit"
+                            onClick={handleCloseShhipingAddress}
+                            aria-label="close"
+                            sx={{ position: 'absolute', right: "20px", }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </DialogTitle>
+                    <DialogContent>
+                        <Box sx={{ height: '400px', width: '100%', overflow: 'auto', }}>
+                            {/* Header */}
+                            <Box
+                                sx={{
+                                    display: "grid",
+                                    gridTemplateColumns: "repeat(5, 1fr)",
+                                    gap: 2,
+                                    alignItems: "center",
+                                }}
+                            >
+                                <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>Country</Typography>
+                                <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>City</Typography>
+                                <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>Area</Typography>
+                                <Typography sx={{ fontWeight: "600", fontSize: "16px" }}>Address</Typography>
+                                <Typography sx={{ fontWeight: "600", fontSize: "16px", textAlign: "center" }}>
+                                    Select
+                                </Typography>
+                            </Box>
 
+                            {/* Data Rows */}
+                            {addresses.map((item) => (
+                                <Box
+                                    key={item?.id}
+                                    sx={{
+                                        display: "grid",
+                                        gridTemplateColumns: "repeat(5, 1fr)",
+                                        gap: 2,
+                                        my: 1,
+                                        alignItems: "center",
+                                        borderBottom: '1px solid #eee'
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            color: "#292b2c",
+                                            textTransform: "capitalize",
+                                            fontSize: { sm: "16px", xs: "14px" },
+                                        }}
+                                    >
+                                        {item?.country}
+                                    </Typography>
+
+                                    <Typography
+                                        sx={{
+                                            color: "#292b2c",
+                                            textTransform: "capitalize",
+                                            fontSize: { sm: "16px", xs: "14px" },
+                                        }}
+                                    >
+                                        {item?.city}
+                                    </Typography>
+
+                                    <Typography
+                                        sx={{
+                                            color: "#292b2c",
+                                            textTransform: "capitalize",
+                                            fontSize: { sm: "16px", xs: "14px" },
+                                        }}
+                                    >
+                                        {item?.area || "N/A"}
+                                    </Typography>
+
+                                    <Typography
+                                        sx={{
+                                            color: "#292b2c",
+                                            textTransform: "capitalize",
+                                            fontSize: { sm: "16px", xs: "14px" },
+                                        }}
+                                    >
+                                        {item?.address.split(" ").slice(0, 5).join(" ")}
+                                        {item?.address.split(" ").length > 5 ? "..." : ""}
+                                    </Typography>
+
+                                    <Button
+                                        variant="contained"
+                                        sx={{
+                                            backgroundColor: "#bb1f2a",
+                                            color: "#fff",
+                                            textTransform: "capitalize",
+                                            fontSize: { sm: "16px", xs: "14px" },
+                                            justifySelf: "center",
+                                        }}
+                                    >
+                                        Select
+                                    </Button>
+                                </Box>
+
+                            ))}
+                        </Box>
+                    </DialogContent>
+
+
+                </Dialog>
+                {/* google maps */}
+                <Dialog disablePortal
+                    MenuProps={{ disableScrollLock: true }} open={open} onClose={handleClose} fullWidth maxWidth="md">
+                    <DialogTitle>
+                        <TextField label="Enter a location" variant="outlined" sx={{ width: '90%', marginBottom: 2 }} />
+                        <IconButton
+                            edge="end"
+                            color="inherit"
+                            onClick={handleClose}
+                            aria-label="close"
+                            sx={{ position: 'absolute', right: "20px", top: "20px" }}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    </DialogTitle>
+                    <DialogContent>
+                        <Box sx={{ height: '400px', width: '100%' }}>
+                            <iframe
+                                src="https://www.google.com/maps?q=Shanghai+location&output=embed"
+                                style={{ border: 0, width: '100%', height: '100%' }}
+                                allowFullScreen
+                                loading="lazy"
+                                title="Google Maps"
+                            />
+                        </Box>
+                    </DialogContent>
+                </Dialog>
             </Container>
         </Box>
     );

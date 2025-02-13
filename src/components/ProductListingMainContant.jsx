@@ -14,10 +14,12 @@ import { FavoriteBorder } from "@mui/icons-material";
 import useCartStore from "../store/useCartStore";
 import { useWishListStore } from "../store/useWishListStore";
 import Loading from "./Loading";
+import useUserStore from "../store/user";
+import { showToast } from "../utils/helper";
 const ProductListingMainContant = ({ productsCard = [] }) => {
   const { isItemInCart, addToCart } = useCartStore();
   const { toggleWishlist, isItemInWishlist } = useWishListStore();
-
+  const { isLoggedIn } = useUserStore();
 
   return (
     <Grid container spacing={{ xs: 0, sm: 2 }}>
@@ -219,7 +221,14 @@ const ProductListingMainContant = ({ productsCard = [] }) => {
                         },
                         color: "#292b2c",
                       }}
-                      onClick={() => toggleWishlist(item?.product_id?.toString(), item?.product_variant_id?.toString())}
+                      onClick={() => {
+                        if (isLoggedIn === true) {
+                          toggleWishlist(item?.product_id?.toString(), item?.product_variant_id?.toString())
+                        } else {
+                          showToast("error", "Please login to add to wishlist", "danger")
+                        }
+                      }}
+
                       aria-label="add to wishlist"
                     >
                       <FavoriteBorder sx={{ fontSize: "1rem" }} />

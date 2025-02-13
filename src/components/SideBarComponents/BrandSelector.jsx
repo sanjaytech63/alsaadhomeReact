@@ -2,14 +2,15 @@ import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
 import { Box, Chip, Typography } from '@mui/material';
 import React from 'react'
 
-const BrandSelector = ({ tagsToShow, selectedBrands, toggleBrand, showMore, setShowMore, tags, label }) => {
+const BrandSelector = ({selectedBrands, toggleBrand, brandShow, setBrandShow, tags, label }) => {
+    const tag = brandShow ? tags : tags.slice(0, 5);
     return (
         <>
             <Typography variant="h5" sx={{ my: 2, color: "#292b2c", fontWeight: "600", fontSize: "1.5rem" }}>
                 {label}
             </Typography>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                {tagsToShow.map((tag) => {
+                {tag.map((tag) => {
                     const isSelected = selectedBrands.includes(tag.attributes_value_id);
                     return (
                         <Chip
@@ -40,10 +41,10 @@ const BrandSelector = ({ tagsToShow, selectedBrands, toggleBrand, showMore, setS
                     );
                 })}
             </Box>
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                {tags.length > 5 && (
+            {tag?.length > 4 && (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                     <Typography
-                        onClick={() => setShowMore(!showMore)}
+                        onClick={() => setBrandShow(!brandShow)}
                         sx={{
                             mt: 2,
                             color: "#bb1f2a",
@@ -51,10 +52,10 @@ const BrandSelector = ({ tagsToShow, selectedBrands, toggleBrand, showMore, setS
                             cursor: "pointer",
                         }}
                     >
-                        {showMore ? "Show Less" : "Show More"}
+                        {brandShow ? "Show Less" : "Show More"}
                     </Typography>
-                )}
-            </Box >
+                </Box>
+            )}
         </>
     )
 }

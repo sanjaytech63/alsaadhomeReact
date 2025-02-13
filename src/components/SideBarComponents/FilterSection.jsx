@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import FilterChip from './FilterChip';
 
-const FilterSection = ({ label, items, selectedItems, toggleItem, showMore, setShowMore }) => {
-    const tags = showMore ? items : items.slice(0, 5);
+const FilterSection = ({ label, items, selectedItems, toggleItem, styleShowMore, setStyleShowMore, id }) => {
+    const tags = styleShowMore?.includes(id) ? items : items.slice(0, 5);
     return (
         <Box mt={4}>
             <Typography variant="h5" sx={{ my: 2, color: "#292b2c", fontWeight: "600", fontSize: "1.5rem" }}>
@@ -25,7 +25,17 @@ const FilterSection = ({ label, items, selectedItems, toggleItem, showMore, setS
             {items.length > 5 && (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                     <Typography
-                        onClick={() => setShowMore(!showMore)}
+                        onClick={() =>
+                        {
+                            console.log(id, 'showMore id')
+                            setStyleShowMore((prev) =>
+                                prev.includes(id)
+                                    ? prev.filter(id => id !== id)
+                                    : [...prev, id]
+                            )
+                        }
+                        }
+
                         sx={{
                             mt: 2,
                             color: "#bb1f2a",
@@ -33,7 +43,7 @@ const FilterSection = ({ label, items, selectedItems, toggleItem, showMore, setS
                             cursor: "pointer",
                         }}
                     >
-                        {showMore ? "Show Less" : "Show More"}
+                        {styleShowMore?.includes(id) ? "Show Less" : "Show More"}
                     </Typography>
                 </Box>
             )}
