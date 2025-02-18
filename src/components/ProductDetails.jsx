@@ -22,7 +22,7 @@ import useUserStore from "../store/user";
 
 
 const ProductDetails = () => {
-  const { isItemInCart, addToCart, incrementQuantity, decrementQuantity, getCart,cartItems } = useCartStore();
+  const { isItemInCart, addToCart, incrementQuantity, decrementQuantity, getCart, cartItems } = useCartStore();
   const { toggleWishlist, isItemInWishlist } = useWishListStore();
   const { isLoggedIn } = useUserStore();
   const [open, setOpen] = useState(false);
@@ -41,10 +41,10 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
-    if (images?.length > 0) {
-      const firstImage = images?.[0]?.items?.[0]?.photo?.[0]?.src;
+    if (selectedProductInfo?.photo?.length > 0) {
+      const firstImage = selectedProductInfo?.photo?.map((item) => item?.src);
       if (firstImage) {
-        setSelectedImage(firstImage);
+        setSelectedImage(firstImage[0]);
       }
     }
   }, [images]);
@@ -146,23 +146,23 @@ const ProductDetails = () => {
 
 
   const getCartQuantityByVariantId = (variantId) => {
-    if (cartItems && cartItems.branch) {
-        for (let branch of cartItems.branch) {
-            const foundItem = branch.item.find(item => item.product_variant_id == variantId);
-            if (foundItem) {
-                return foundItem.cart_quantity;
-            }
+    if (cartItems && cartItems?.branch) {
+      for (let branch of cartItems?.branch) {
+        const foundItem = branch?.item.find(item => item?.product_variant_id == variantId);
+        if (foundItem) {
+          return foundItem?.cart_quantity;
         }
+      }
     }
     return 1;
-};
+  };
 
-useEffect(() => {
-  if (cartItems && selectedProductInfo) {
+  useEffect(() => {
+    if (cartItems && selectedProductInfo) {
       let qty = getCartQuantityByVariantId(Number(selectedProductInfo?.variant_id))
       setSelectedQuantity(qty || 1)
-  }
-}, [selectedProductInfo, cartItems])
+    }
+  }, [selectedProductInfo, cartItems])
 
 
 
@@ -171,9 +171,9 @@ useEffect(() => {
   }, []);
 
 
-    useEffect(() => {
-      getCart();
-    }, [])
+  useEffect(() => {
+    getCart();
+  }, [])
 
   const handleColorChange = (variantId, variantItemInfo) => {
     if (selectedColorIndex?.toString() == variantId) return;
@@ -236,8 +236,6 @@ useEffect(() => {
       setLoading(false)
     }
   }, [productId]);
-
-console.log(variantId, 'variantId')
 
   useEffect(() => {
     if (variantId) {
@@ -317,7 +315,6 @@ console.log(variantId, 'variantId')
     getSimilarProduct();
   }, []);
 
-  console.log()
 
   if (loading) {
     return <Loading />;
@@ -431,7 +428,6 @@ console.log(variantId, 'variantId')
                       }}
                     />
                   )}
-
                 </div>
               </Box>
               <Box sx={{ minHeight: "150px", mt: 3, width: "100%" }}>
@@ -440,7 +436,7 @@ console.log(variantId, 'variantId')
                   additionalTransfrom={0}
                   autoPlaySpeed={3000}
                   renderButtonGroupOutside
-                  arrows={false}
+                  arrows={true}
                   draggable
                   infinite={true}
                   responsive={{
@@ -454,32 +450,29 @@ console.log(variantId, 'variantId')
                   swipeable
                   customButtonGroup={matchesSM ? <CustomButtonGroup /> : null}
                 >
-                  {images?.length > 0 &&
-                    images.map((v, i) =>
-                      v?.items?.length > 0 &&
-                      v?.items?.map((item, j) =>
-                        item?.photo?.length > 0 &&
-                        item?.photo?.map((p, k) => (
-                          <Box sx={{ px: 1 }} key={p?.id || `${i}-${j}-${k}`}>
-                            <CardMedia
-                              onClick={() => handleSelectImage(p?.src)}
-                              component="img"
-                              src={p?.src}
-                              alt="Product Image"
-                              loading="lazy"
-                              sx={{
-                                width: { sm: "170px", xs: "100%" },
-                                height: { sm: "110px", xs: "80px" },
-                                objectFit: "cover",
-                                cursor: "pointer",
-                                borderRadius: "8px",
-                                border: selectedImage === p?.src ? "2px solid #bb1f2a" : "none",
-                              }}
-                            />
-                          </Box>
-                        ))
-                      )
-                    )}
+                  {
+                    selectedProductInfo?.photo?.length > 0 && selectedProductInfo?.photo?.map((p) => (
+                      <Box sx={{ px: 1 }} key={p?.id}>
+                        <CardMedia
+                          onClick={() => handleSelectImage(p?.src)}
+                          component="img"
+                          src={p?.src}
+                          alt="Product Image"
+                          loading="lazy"
+                          sx={{
+                            width: { sm: "170px", xs: "100%" },
+                            height: { sm: "110px", xs: "80px" },
+                            objectFit: "cover",
+                            cursor: "pointer",
+                            borderRadius: "8px",
+                            border: selectedImage === p?.src ? "2px solid #bb1f2a" : "none",
+                          }}
+                        />
+                      </Box>
+                    ))
+                  }
+
+
                 </Carousel>
               </Box>
               {selectedProductInfo?.is_bundle_product === true && (
@@ -513,7 +506,7 @@ console.log(variantId, 'variantId')
                         additionalTransfrom={0}
                         autoPlaySpeed={3000}
                         renderButtonGroupOutside
-                        arrows={false}
+                        arrows={true}
                         draggable
                         infinite={true}
                         responsive={{
@@ -818,7 +811,7 @@ console.log(variantId, 'variantId')
                         d="M1015.66 284a31.82 31.82 0 0 0-25.999-13.502h-99.744L684.78 95.666c-24.976-24.976-65.52-25.008-90.495 0L392.638 270.498h-82.096l-51.408-177.28c-20.16-69.808-68.065-77.344-87.713-77.344H34.333c-17.568 0-31.776 14.224-31.776 31.776S16.78 79.425 34.332 79.425h137.056c4.336 0 17.568 0 26.593 31.184l176.848 649.936c3.84 13.712 16.336 23.183 30.592 23.183h431.968c13.408 0 25.376-8.4 29.904-21.024l152.256-449.68c3.504-9.744 2.048-20.592-3.888-29.024zM639.537 140.93l152.032 129.584H487.457zm175.488 579.263H429.538L328.386 334.065h616.096zm-63.023 127.936c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80m-288 0c-44.192 0-80 35.808-80 80s35.808 80 80 80s80-35.808 80-80s-35.808-80-80-80"
                       />
                     </svg>
-                  </IconButton> { isItemInCart(selectedProductInfo?.variant_id) ? "Go to Cart" : "Add to Cart"}
+                  </IconButton> {isItemInCart(selectedProductInfo?.variant_id) ? "Go to Cart" : "Add to Cart"}
                 </Button>
                 <IconButton
 

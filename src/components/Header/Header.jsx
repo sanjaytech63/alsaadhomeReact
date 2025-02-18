@@ -54,7 +54,6 @@ const Header = () => {
     const fetchCartId = async () => {
       try {
         const cartId = localStorage.getItem("cart_id");
-        console.log("Cart ID:", cartId);
         if (!cartId) {
           await createToCart();
         } else {

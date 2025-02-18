@@ -116,7 +116,7 @@ const ContactForm = () => {
                                 {/* reCAPTCHA */}
                                 <Grid item xs={12}>
                                     <ReCAPTCHA
-                                        sitekey="6LfKpIYqAAAAAI_nzop_agYeyO6ef0IzEogfESd-"
+                                        sitekey="6LcLi9oqAAAAAJTn6WmA_WN3C6NEEdBblgOT10Jb"
                                         ref={recaptcha}
                                     />
                                 </Grid>

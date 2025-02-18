@@ -13,7 +13,7 @@ import { showToast } from '../utils/helper';
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { blogApi } from '../utils/services/blogServices';
-
+import sanitizeHtml from 'sanitize-html';
 const BlogDetailsCard = ({ blog }) => {
     const [userComment, setUserComment] = useState({
         name: "",
@@ -208,9 +208,9 @@ const BlogDetailsCard = ({ blog }) => {
                 ({blog?.comment})  comment
             </Typography >
             <Box sx={{ my: 1 }}>
-                {blog?.blog_comment && blog?.blog_comment.map((comment, index) => (
+                {blog?.blog_comment && blog?.blog_comment?.map((comment, index) => (
                     <>
-                        <Grid container spacing={2} >
+                        <Grid container spacing={2} key={index}>
                             {/* Avatar */}
                             <Grid item>
                                 <CardMedia
@@ -232,7 +232,7 @@ const BlogDetailsCard = ({ blog }) => {
                                         ":hover": { color: "#bb1f2a", cursor: "pointer" },
                                     }}
                                 >
-                                    {comment?.coustmer_name}
+                                    {typeof comment?.customer_name === 'string' ? parse(comment?.customer_name) : ''}
                                 </Typography>
                                 <Typography
                                     sx={{
@@ -247,13 +247,13 @@ const BlogDetailsCard = ({ blog }) => {
                                 <Typography
                                     sx={{ my: 1, color: "#687188", fontSize: "16px" }}
                                 >
-                                    {comment?.message}
+                                    {typeof comment?.message === 'string' ? sanitizeHtml(comment?.message) : ''}
                                 </Typography>
                             </Grid>
                         </Grid>
                     </>
                 ))}
-            </Box >
+            </Box>
             <Formik
                 initialValues={userComment}
                 validationSchema={validationSchema}
@@ -271,7 +271,7 @@ const BlogDetailsCard = ({ blog }) => {
                     touched,
                     handleSubmit,
                 }) => (
-                    <Box component="form" onSubmit={handleSubmit}>  
+                    <Box component="form" onSubmit={handleSubmit}>
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={4}>
                                 <TextField
@@ -314,7 +314,7 @@ const BlogDetailsCard = ({ blog }) => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Button
-                                    type="submit"  
+                                    type="submit"
                                     sx={{
                                         backgroundColor: "#bb1f2a",
                                         color: "#fff",

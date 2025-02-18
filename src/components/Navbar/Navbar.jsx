@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Drawer, ListItem, Box, Container, Badge, Divider, Button, Typography } from '@mui/material';
 import { IoSearchOutline, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { BsCart3 } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
-import { Close, FavoriteBorder } from '@mui/icons-material';
+import {FavoriteBorder } from '@mui/icons-material';
 import useCartStore from '../../store/useCartStore';
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useWishListStore } from '../../store/useWishListStore';
@@ -22,7 +22,7 @@ const Navbar = () => {
     const navigateToWishList = () => {
         navigate("/wishlist");
     }
-    const {wishList,getWishList} = useWishListStore();
+    const { wishList, getWishList } = useWishListStore();
     const wishListCount = wishList.length;
     const storedUserInfo = localStorage.getItem("USER");
 
@@ -30,14 +30,14 @@ const Navbar = () => {
         getCart();
         const getWishListData = async () => {
             try {
-              await getWishList();
+                await getWishList();
             } catch (error) {
-              console.log(error)
+                console.log(error)
             }
-          }
-          getWishListData();
-      
-    }, [])
+        }
+        getWishListData();  
+
+    },[])
 
     const navList = [
         { name: "Home", slug: "/" },
@@ -188,8 +188,7 @@ const Navbar = () => {
                                                     >
                                                         <img
                                                             style={{ width: '80px', height: '60px', objectFit: 'cover' }}
-                                                            // src={item.image}
-                                                            src='https://cdn.pixabay.com/photo/2020/09/13/14/24/coffee-5568374_1280.jpg'
+                                                            src={item?.image}
                                                             alt={item.title}
                                                         />
                                                         <Box>

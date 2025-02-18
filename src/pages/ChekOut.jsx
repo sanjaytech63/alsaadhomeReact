@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControl, Dialog, DialogTitle, IconButton, DialogContent, CardMedia, InputAdornment, CircularProgress } from '@mui/material';
+import { Grid, TextField, Button, Typography, Container, Box, Select, MenuItem, Checkbox, FormControl, Dialog, DialogTitle, IconButton, DialogContent, CardMedia, InputAdornment, CircularProgress, selectClasses } from '@mui/material';
 import { FaRegCreditCard } from "react-icons/fa6";
 import CloseIcon from '@mui/icons-material/Close';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
@@ -40,22 +40,23 @@ const Checkout = () => {
     const [selectedArea, setSelectedArea] = useState("Select Area");
     const [checkout, setCheckOut] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState(null);
     const [initialValues, setInitialValues] = useState({
         country_id: selectedCountry?.id,
-        city_id: '',
-        area_id: "",
-        area: "",
-        address: "",
+        city_id: selectClasses?.city_id,
+        area_id: selectClasses?.area_id,
+        area: selectedAddress?.area,
+        address: selectedAddress?.address,
         latitude: "",
         longitude: "",
-        appartment: "",
-        building: "",
-        note: "",
-        name: "",
-        mobile_number: "",
-        alternate_number: "",
-        email: "",
-        is_default: "",
+        appartment: selectedAddress?.appartment,
+        building: selectedAddress?.building,
+        note: selectedAddress?.note,
+        name: selectedAddress?.name,
+        mobile_number: selectedAddress?.mobile_number,
+        alternate_number: selectedAddress?.alternate_number,
+        email: selectedAddress?.email,
+        is_default: selectedAddress?.is_default,
         country_code: selectedCity?.country_code || "",
     });
     const [cuoponCode, setCuoponCode] = useState("");
@@ -323,32 +324,54 @@ const Checkout = () => {
         }
     };
 
-    const fetchCheckOut = async (values) => {
+    function getDefaultAddress() {
+        if (addresses && addresses?.length > 0) {
+            const isDefault = addresses?.find((item) => item.is_default === 0);
+            if (isDefault) {
+                setSelectedAddress(isDefault);
+                fetchCheckOut(isDefault)
+                setInitialValues(isDefault);
+            } else {
+                fetchCheckOut(addresses[0])
+                setSelectedAddress(addresses[0]);
+                setInitialValues(addresses[0]);
+            }
+        }
+    }
+
+    useEffect(() => {
+        getDefaultAddress()
+    }, [addresses])
+
+    const fetchCheckOut = async (selectedAddress) => {
+
+        const add = selectedAddress;
+
         let cart_id = localStorage.getItem("cart_id");
         let checkoutData = {
-            "address": values?.address,
+            "address": add?.address,
             "device_type": "web",
-            "whatsapp_number": values?.alternate_number,
-            "city_id": selectedCity,
-            "area_id": selectedArea,
+            "whatsapp_number": add?.alternate_number,
+            "city_id": add?.city_id ?? selectedCity,
+            "area_id": add?.area_id ?? selectedArea,
             country_code: selectedCountry?.country_code,
             "token": "",
             "is_coupon_applied": cuoponCode,
-            "email": values?.email,
+            "email": add?.email,
             customer_id: storedUserInfo.id,
             "applied_coupon": cuoponCode,
             cart_id: cart_id,
             "version": "36",
-            "userName": values?.name,
+            "userName": add?.name,
             "currency": "AED",
             country_id: selectedCountry?.id,
-            "mobile_number": values?.mobile_number,
+            "mobile_number": add?.mobile_number,
             "is_wallet": "0",
-            "area_name": values?.area_name,
-            "appartment": values?.appartment,
-            "building": values?.building,
+            "area_name": add?.area_name,
+            "appartment": add?.appartment,
+            "building": add?.building,
             "order_shipping_type": "standard",
-            "note": values?.note
+            "note": add?.note
         }
         try {
             const response = await checkOutServices.checkOut(checkoutData);
@@ -472,7 +495,7 @@ const Checkout = () => {
                         <Formik
                             initialValues={initialValues}
                             validationSchema={validationSchema}
-                            onSubmit={async (values, { resetForm }) => {
+                            onSubmit={async ({ values, resetForm }) => {
                                 await fetchCheckOut(values);
                                 resetForm();
                             }}
@@ -481,11 +504,12 @@ const Checkout = () => {
                             {({ handleChange,
                                 handleBlur,
                                 handleSubmit,
-                                values,
                                 errors,
+                                values,
                                 touched,
                                 isValid, }) => (
-                                <form onSubmit={handleSubmit} noValidate autoComplete="off">
+
+                                <form onSubmit={handleSubmit}>
                                     <TextField
                                         name="name"
                                         type="text"
