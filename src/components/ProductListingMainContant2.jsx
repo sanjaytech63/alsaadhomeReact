@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,17 +9,42 @@ import {
   Grid,
   Button,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FavoriteBorder } from "@mui/icons-material";
 import useCartStore from "../store/useCartStore";
 import { useWishListStore } from "../store/useWishListStore";
 import { showToast } from "../utils/helper";
 import useUserStore from "../store/user";
+import Login from "../auth/Login/Login";
+import Register from "../auth/Register/Register";
+import ForgotPasswordModal from "../auth/Login/ForgotPasswordModal";
 
 const ProductListingMainContant2 = ({ productsCard }) => {
   const { isItemInCart, addToCart } = useCartStore();
   const { toggleWishlist, isItemInWishlist } = useWishListStore();
   const { isLoggedIn } = useUserStore();
+
+
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
+
+  const handleOpenLogin = () => setOpenLogin(true);
+  const handleCloseLogin = () => setOpenLogin(false);
+  const handleOpenRegister = () => setOpenRegister(true);
+  const handleCloseRegister = () => setOpenRegister(false);
+  const [openForgotPassword, setOpenForgotPassword] = useState(false);
+  const handleForgotPassword = () => setOpenForgotPassword(true);
+  
+  const switchToRegister = () => {
+    handleCloseLogin();
+    handleOpenRegister();
+  };
+
+  const switchToLogin = () => {
+    handleCloseRegister();
+    handleOpenLogin();
+  };
+
 
   return (
     <>
@@ -210,7 +235,7 @@ const ProductListingMainContant2 = ({ productsCard }) => {
                       if (isLoggedIn === true) {
                         toggleWishlist(item?.product_id?.toString(), item?.product_variant_id?.toString())
                       } else {
-                        showToast("error", "Please login to add to wishlist", "danger")
+                        handleOpenLogin();
                       }
                     }}
                     aria-label="add to wishlist"
@@ -220,6 +245,7 @@ const ProductListingMainContant2 = ({ productsCard }) => {
                 </Box>
               </CardContent>
             </Card>
+
           </Grid>
         ))
       ) : (
@@ -246,6 +272,29 @@ const ProductListingMainContant2 = ({ productsCard }) => {
           </Typography>
         </Box>
       )}
+       <Login
+              open={openLogin}
+              handleOpenRegister={handleOpenRegister}
+              handleOpenLogin={handleOpenLogin}
+              handleClose={handleCloseLogin}
+              handleCloseRegister={handleCloseRegister}
+              switchToRegister={switchToRegister}
+              handleForgotPassword={handleForgotPassword}
+
+            />
+            <Register
+              open={openRegister}
+              handleOpenLogin={handleOpenLogin}
+              switchToLogin={switchToLogin}
+              handleClose={handleCloseRegister}
+              handleCloseLogin={handleCloseLogin}
+              handleOpenRegister={handleOpenRegister}
+            />
+            <ForgotPasswordModal
+              open={openForgotPassword}
+              handleClose={() => setOpenForgotPassword(false)}
+              handleOpenLogin={handleOpenLogin}
+            />
     </>
   );
 };

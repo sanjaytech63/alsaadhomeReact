@@ -1,6 +1,6 @@
 import { FavoriteBorder } from '@mui/icons-material';
 import BoltIcon from '@mui/icons-material/Bolt';
-import React from "react";
+import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
 import { Box, useMediaQuery, useTheme, IconButton, Typography, Container, Card, Chip, CardMedia, CardContent, Rating } from "@mui/material";
 import { Link } from 'react-router-dom';
@@ -8,20 +8,44 @@ import CustomButtonGroup from './CustomButtonGroup';
 import useCartStore from '../store/useCartStore';
 import { useWishListStore } from '../store/useWishListStore';
 import useUserStore from '../store/user';
-import { showToast } from '../utils/helper';
+import Login from '../auth/Login/Login';
+import Register from '../auth/Register/Register';
+import ForgotPasswordModal from '../auth/Login/ForgotPasswordModal';
+import { useSettingsStore } from '../store/useSettingsStore';
 
 const RecommendedProducts = ({ productsCard, title, addToCart }) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
   const isRTL = theme.direction === 'rtl';
   const { isItemInCart } = useCartStore();
-  // const isLoading = useLoaderStore((state) => state.isLoading);
   const { toggleWishlist, isItemInWishlist } = useWishListStore();
-
   const { isLoggedIn } = useUserStore();
-  // if (isLoading) {
-  //   return <NewArrivalsShimmer />;
-  // }
+
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
+
+  const handleOpenLogin = () => setOpenLogin(true);
+  const handleCloseLogin = () => setOpenLogin(false);
+  const handleOpenRegister = () => setOpenRegister(true);
+  const handleCloseRegister = () => setOpenRegister(false);
+  const [openForgotPassword, setOpenForgotPassword] = useState(false);
+  const handleForgotPassword = () => setOpenForgotPassword(true);
+
+  const switchToRegister = () => {
+    handleCloseLogin();
+    handleOpenRegister();
+  };
+
+  const switchToLogin = () => {
+    handleCloseRegister();
+    handleOpenLogin();
+  };
+
+  const selectedCountry = useSettingsStore((state) => state?.selectedCountry);
+  const setSelectedCountry = useSettingsStore(
+    (state) => state?.setSelectedCountry
+  );
+
   return (
     <div className="w-100 ">
       <Container maxWidth="lg" sx={{ padding: 0 }}>
@@ -318,7 +342,7 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
                               if (isLoggedIn === true) {
                                 toggleWishlist(item?.product_id?.toString(), item?.product_variant_id?.toString())
                               } else {
-                                showToast("error", "Please login to add to wishlist", "danger")
+                                handleOpenLogin()
                               }
                             }}
                             aria-label="add to wishlist"
@@ -350,6 +374,34 @@ const RecommendedProducts = ({ productsCard, title, addToCart }) => {
               )}
           </Carousel>
         </Box>
+        <Login
+          open={openLogin}
+          handleOpenRegister={handleOpenRegister}
+          handleOpenLogin={handleOpenLogin}
+          handleClose={handleCloseLogin}
+          handleCloseRegister={handleCloseRegister}
+          switchToRegister={switchToRegister}
+          handleForgotPassword={handleForgotPassword}
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
+        />
+        <Register
+          open={openRegister}
+          handleOpenLogin={handleOpenLogin}
+          switchToLogin={switchToLogin}
+          handleClose={handleCloseRegister}
+          handleCloseLogin={handleCloseLogin}
+          handleOpenRegister={handleOpenRegister}
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
+        />
+        <ForgotPasswordModal
+          open={openForgotPassword}
+          handleClose={() => setOpenForgotPassword(false)}
+          handleOpenLogin={handleOpenLogin}
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
+        />
       </Container>
     </div>
   );

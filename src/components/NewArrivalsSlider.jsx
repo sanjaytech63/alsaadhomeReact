@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Carousel from "react-multi-carousel";
 import {
   Box,
@@ -20,7 +20,9 @@ import CustomButtonGroup from "./CustomButtonGroup";
 import useCartStore from "../store/useCartStore";
 import { useWishListStore } from "../store/useWishListStore";
 import useUserStore from "../store/user";
-import { showToast } from "../utils/helper";
+import Login from "../auth/Login/Login";
+import Register from "../auth/Register/Register";
+import ForgotPasswordModal from "../auth/Login/ForgotPasswordModal";
 const NewArrivalsSlider = ({ productsCard, addToCart }) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("lg"));
@@ -28,6 +30,27 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
   const { isItemInCart } = useCartStore();
   const { toggleWishlist, isItemInWishlist } = useWishListStore();
   const { isLoggedIn } = useUserStore();
+  
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
+
+  const handleOpenLogin = () => setOpenLogin(true);
+  const handleCloseLogin = () => setOpenLogin(false);
+  const handleOpenRegister = () => setOpenRegister(true);
+  const handleCloseRegister = () => setOpenRegister(false);
+  const [openForgotPassword, setOpenForgotPassword] = useState(false);
+  const handleForgotPassword = () => setOpenForgotPassword(true);
+
+  const switchToRegister = () => {
+    handleCloseLogin();
+    handleOpenRegister();
+  };
+
+  const switchToLogin = () => {
+    handleCloseRegister();
+    handleOpenLogin();
+  };
+
   return (
     <>
       {productsCard && productsCard.length > 0 && (
@@ -54,7 +77,7 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                 New Arrivals
               </Typography>
               <Link
-                to={`/search?type=display-banner&id=${"new"}`}
+                  to={`/search/banner/${"new"}`}
                 className="link-none"
               >
                 <Typography
@@ -356,7 +379,7 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                                 if (isLoggedIn === true) {
                                   toggleWishlist(item?.product_id?.toString(), item?.product_variant_id?.toString())
                                 } else {
-                                  showToast("error", "Please login to add to wishlist", "danger")
+                                  handleOpenLogin()
                                 }
                               }}
                               aria-label="add to wishlist"
@@ -386,6 +409,29 @@ const NewArrivalsSlider = ({ productsCard, addToCart }) => {
                   ))}
               </Carousel>
             </Box>
+            <Login
+              open={openLogin}
+              handleOpenRegister={handleOpenRegister}
+              handleOpenLogin={handleOpenLogin}
+              handleClose={handleCloseLogin}
+              handleCloseRegister={handleCloseRegister}
+              switchToRegister={switchToRegister}
+              handleForgotPassword={handleForgotPassword}
+
+            />
+            <Register
+              open={openRegister}
+              handleOpenLogin={handleOpenLogin}
+              switchToLogin={switchToLogin}
+              handleClose={handleCloseRegister}
+              handleCloseLogin={handleCloseLogin}
+              handleOpenRegister={handleOpenRegister}
+            />
+            <ForgotPasswordModal
+              open={openForgotPassword}
+              handleClose={() => setOpenForgotPassword(false)}
+              handleOpenLogin={handleOpenLogin}
+            />
           </Container>
         </div>
       )}

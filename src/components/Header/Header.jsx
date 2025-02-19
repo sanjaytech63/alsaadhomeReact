@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Select,
   MenuItem,
@@ -42,6 +42,31 @@ const Header = () => {
   const handleOpenRegister = () => setOpenRegister(true);
   const handleCloseRegister = () => setOpenRegister(false);
   const handleForgotPassword = () => setOpenForgotPassword(true);
+  const { isLoggedIn, setUserInfo, logout, userInfo } = useUserStore();
+console.log(userInfo,  '----')
+  const switchToRegister = () => {
+    handleCloseLogin();
+    handleOpenRegister();
+  };
+
+  const switchToLogin = () => {
+    handleCloseRegister();
+    handleOpenLogin();
+  };
+
+  const ReintializeUserData = useCallback(async () => {
+    const storedUserInfo = await localStorage.getItem("USER");  
+    if (storedUserInfo) {
+      let data = await JSON.parse(storedUserInfo);
+      console.log(data?.name , "name data")
+      setUserInfo(data);
+    }
+  }, []);
+  
+  useEffect(() => {
+    ReintializeUserData();
+  }, [ReintializeUserData]);
+ 
 
   const handleLanguageChange = (event) => setLanguage(event.target.value);
 
@@ -49,7 +74,6 @@ const Header = () => {
   const setSelectedCountry = useSettingsStore(
     (state) => state?.setSelectedCountry
   );
-  const setUserInfo = useUserStore((state) => state.setUserInfo);
   useEffect(() => {
     const fetchCartId = async () => {
       try {
@@ -81,9 +105,7 @@ const Header = () => {
 
   useEffect(() => {
     fetchCountries();
-  }, []);
-
-
+  }, [fetchCountries]);
 
   const handleRegister = async (values) => {
     setLoading(true);
@@ -412,10 +434,11 @@ const Header = () => {
                     handleGoogleSignIn={handleGoogleSignIn}
                     handleForgotPassword={handleForgotPassword}
                     loading={loading}
+                    switchToRegister={switchToRegister}
                   />
                   <Register
                     open={openRegister}
-                    handleOpenLogin={handleOpenLogin}
+                    switchToLogin={switchToLogin}
                     handleClose={handleCloseRegister}
                     countries={countries}
                     selectedCountry={selectedCountry}
@@ -427,7 +450,6 @@ const Header = () => {
                     open={openForgotPassword}
                     handleClose={() => setOpenForgotPassword(false)}
                     handleOpenLogin={handleOpenLogin}
-                    // handleCloseLogin={handleCloseLogin}
                     countries={countries}
                     selectedCountry={selectedCountry}
                     setSelectedCountry={setSelectedCountry}

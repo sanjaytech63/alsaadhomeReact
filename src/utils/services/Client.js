@@ -45,8 +45,8 @@ axiosInstance.interceptors.request.use(
       showToast("error", "No internet connection");
     }
 
-    if (userStore && userStore?.loginToken) {
-      config.headers["Authorization"] = `Bearer ${userStore.loginToken}`;
+    if (userStore && userStore?.userInfo?.token) {
+      config.headers["Authorization"] = `Bearer ${userStore?.userInfo?.token}`;
     }
 
     // Modify headers if required

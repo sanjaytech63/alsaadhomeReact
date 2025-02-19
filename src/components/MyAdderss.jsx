@@ -318,10 +318,13 @@ const MyAddress = () => {
     }
   }
 
+  useEffect(() => {
+    fetchCountries();
+  }, [fetchCountries]);
 
   useEffect(() => {
     getShipping();
-  }, [])
+  }, []);
 
   const deleteShippingAddress = async (id) => {
     try {
@@ -341,6 +344,8 @@ const MyAddress = () => {
   if (useLoaderStore.getState().isLoading === true) {
     return <Loading />
   }
+
+
 
   return (
     <div style={{ minHeight: "100vh" }}>

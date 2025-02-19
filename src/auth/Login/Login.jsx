@@ -5,24 +5,59 @@ import AppleIcon from "@mui/icons-material/Apple";
 import { Close } from "@mui/icons-material";
 import { Formik } from "formik";
 import * as Yup from "yup";
-
+import useUserStore from "../../store/user";
+import { showToast, mergeCartCall } from "../../utils/helper";
+import { encryptData } from "../../utils/services/AlsaadRSA";
+import { userService } from "../../utils/services/userServices";
+import { useNavigate } from "react-router-dom";
 const Login = ({
   handleClose,
   open,
-  handleOpenRegister,
   handleCloseRegister,
   countries,
   selectedCountry,
   setSelectedCountry,
-  handleLogin,
   handleGoogleSignIn,
   handleForgotPassword,
-  loading
+  switchToRegister
 }) => {
-  const switchToRegister = () => {
-    handleClose();
-    handleOpenRegister();
-  };
+  const [loading, setLoading] = useState(false);
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const [openLogin, setOpenLogin] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogin = async (values) => {
+    setLoading(true);
+    const encrypted = encryptData(values.password || "");
+    try {
+      const request = {
+        "email": values.isEmail ? values.email : values.phone,
+        "password": encrypted,
+        "lang_type": 'en',
+        country_code: values.isEmail ? "" : values.countryCode,
+
+      }
+      const response = await userService.signIn(request);
+      if (response && response.status === 200) {
+        setLoading(false);
+        mergeCartCall(
+          localStorage.getItem("cart_id"),
+          response?.data?.id
+        );
+        setUserInfo(response.data);
+        setOpenLogin(false);
+        showToast("success", response.message, "success");
+        navigate("/");
+        window.location.reload();
+      } else {
+        showToast("error", response.message, "danger");
+        setLoading(false);
+      }
+    } catch (error) {
+      showToast("error", error.message, "danger");
+      setLoading(false);
+    }
+  }
 
   const handleForgot = () => {
     handleClose();

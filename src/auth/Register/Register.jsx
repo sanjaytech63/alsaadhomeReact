@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -16,20 +16,27 @@ import { Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { showToast } from "../../utils/helper";
+import { userService } from "../../utils/services/userServices";
+import { encryptData } from "../../utils/services/AlsaadRSA";
+import useUserStore from "../../store/user";
+import { useSettingsStore } from "../../store/useSettingsStore";
+import { useCountryStore } from "../../store/useCountryStore";
 const Register = ({
   handleClose,
   open,
-  handleOpenLogin,
-  countries,
-  selectedCountry,
-  setSelectedCountry,
-  handleRegister,
-  loading
+  switchToLogin,
 }) => {
-  const switchToLogin = () => {
-    handleClose();
-    handleOpenLogin();
-  };
+
+  const [loading, setLoading] = useState(false);
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const [openRegister, setOpenRegister] = useState(false);
+  const { countries, fetchCountries } = useCountryStore();
+
+  const selectedCountry = useSettingsStore((state) => state?.selectedCountry);
+  const setSelectedCountry = useSettingsStore(
+    (state) => state?.setSelectedCountry
+  );
 
   const navigate = useNavigate();
 
@@ -51,6 +58,45 @@ const Register = ({
       .required("Please confirm your password"),
     name: Yup.string().required("Name is required"),
   });
+
+  const handleRegister = async (values) => {
+    setLoading(true);
+    const encryptCPass = encryptData(values.confirm_password || "");
+    const encryptPass = encryptData(values.password || "");
+    let request = {
+      email: values.email,
+      phone: values.phone,
+      name: values.name,
+      country_code: values.countryCode,
+      password: encryptPass,
+      confirm_password: encryptCPass,
+      lang_type: 'en',
+    };
+
+    try {
+      let response = await userService.signUp(request);
+      if (response && response.status === 200) {
+        setLoading(false);
+        setOpenRegister(false);
+        setUserInfo(response.data);
+        showToast("success", response.message, "success");
+        navigate("/");
+        window.location.reload();
+      } else {
+        showToast("error", response.message, "danger");
+        setLoading(false);
+      }
+    } catch (error) {
+      showToast("error", error.message, "danger");
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchCountries();
+  }, []);
 
   return (
     <div style={{}}>
@@ -168,7 +214,7 @@ const Register = ({
                                 onChange={(event) => {
                                   const selectedCountry = countries.find(
                                     (country) =>
-                                      country.code === event.target.value
+                                      country?.code === event.target.value
                                   );
                                   setSelectedCountry(selectedCountry);
                                 }}
@@ -186,7 +232,7 @@ const Register = ({
                                   },
                                 }}
                               >
-                                {countries.map((country, index) => (
+                                {countries?.map((country, index) => (
                                   <MenuItem key={index} value={country.code}>
                                     <img
                                       src={country.flag}

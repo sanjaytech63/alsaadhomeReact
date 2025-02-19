@@ -5,7 +5,7 @@ import { BsCart3 } from "react-icons/bs";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/biglogo.avif';
 import SearchBar from '../SearchBar';
-import {FavoriteBorder } from '@mui/icons-material';
+import { FavoriteBorder } from '@mui/icons-material';
 import useCartStore from '../../store/useCartStore';
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useWishListStore } from '../../store/useWishListStore';
@@ -35,9 +35,9 @@ const Navbar = () => {
                 console.log(error)
             }
         }
-        getWishListData();  
+        getWishListData();
 
-    },[])
+    }, [])
 
     const navList = [
         { name: "Home", slug: "/" },
